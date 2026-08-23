@@ -1,0 +1,22 @@
+{
+  "name": "pm-business-case",
+  "version": "2.1.0",
+  "description": "Reliability-first business case formation for PMs and executives: evidence ledgers, market and customer proof, alternatives, economics, commercialization, falsification, and investment decisions.",
+  "author": {
+    "name": "sandeep9889123",
+    "email": "211499229+sandeep9889123@users.noreply.github.com",
+    "url": "https://github.com/sandeep9889123"
+  },
+  "keywords": [
+    "product-management",
+    "business-case",
+    "investment-case",
+    "market-research",
+    "evidence",
+    "strategy",
+    "gtm",
+    "decision-quality"
+  ],
+  "homepage": "https://github.com/sandeep9889123/pm-skills",
+  "license": "MIT"
+}
