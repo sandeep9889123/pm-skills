@@ -99,6 +99,24 @@
         "Never say"
       ]
     },
+    "pm-market-research/skills/market-sizing/SKILL.md": {
+      "must_contain": [
+        "Evidence Ledger",
+        "Reconcile, Do Not Average Blindly",
+        "SOM From Reachability, Not Optimism",
+        "UNKNOWN",
+        "Sensitivity Analysis"
+      ]
+    },
+    "pm-market-research/skills/user-personas/SKILL.md": {
+      "must_contain": [
+        "HYPOTHESIS-ONLY",
+        "Do not force exactly three personas",
+        "Verify Quotes",
+        "OBSERVED",
+        "Contradiction Pass"
+      ]
+    },
     "pm-product-discovery/skills/summarize-interview/SKILL.md": {
       "must_contain": [
         "Verify every verbatim quote",
