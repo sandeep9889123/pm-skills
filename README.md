@@ -10,7 +10,7 @@ The upstream project provides an excellent PM framework marketplace. This fork k
 
 > **Does the skill still make a good product decision when the first search is weak, the evidence is sparse, the user is wrong, the data is noisy, or the model is overconfident?**
 
-The baseline currently contains **68 PM skills and 42 chained workflows across 9 plugins**.
+The baseline currently contains **74 PM skills and 47 chained workflows across 10 plugins**.
 
 ## Why this fork exists
 
@@ -30,6 +30,7 @@ This fork is designed to reduce that class of failure by adding:
 - **Semantic quality tests in addition to structural CI**
 - **Hard gates for decision-critical errors**
 - **Enterprise AI PM workflows and evaluation patterns**
+- **Reliability-first business case formation with staged investment gates**
 
 ## Reliability Contract
 
@@ -52,6 +53,7 @@ See:
 - [`docs/standards/PM_SKILL_QUALITY_STANDARD_V1.md`](docs/standards/PM_SKILL_QUALITY_STANDARD_V1.md)
 - [`docs/standards/RELIABILITY_CONTRACT_V1.md`](docs/standards/RELIABILITY_CONTRACT_V1.md)
 - [`reliability/SCENARIO_CATALOG.md`](reliability/SCENARIO_CATALOG.md)
+- [`reliability/business_case_golden_scenarios.json`](reliability/business_case_golden_scenarios.json)
 - [`docs/audit/PM_SKILLS_AUDIT_V1.md`](docs/audit/PM_SKILLS_AUDIT_V1.md)
 
 ## What is new in this fork
@@ -103,11 +105,12 @@ This fork adds tests for **behavioral safeguards**. Examples:
 - competitor analysis cannot regress to a one-query negative conclusion
 - interview summaries must verify verbatim quotes
 - A/B analysis must not claim 80% power using a formula that omits the power term
+- business cases cannot promote unsourced P0 facts or irreversible investment decisions through unresolved evidence
 - every plugin is mapped to adversarial scenario families
 
 ### 5. Enterprise AI PM direction
 
-The next differentiated plugin layer focuses on the decisions PMs increasingly own in AI products:
+The differentiated plugin layer focuses on the decisions PMs increasingly own in AI products:
 
 - AI use-case prioritization
 - evaluation contracts and golden datasets
@@ -118,9 +121,31 @@ The next differentiated plugin layer focuses on the decisions PMs increasingly o
 - build vs buy vs partner
 - rollout, rollback, observability, trust, and governance
 
+### 6. Investment-grade business case automation
+
+`pm-business-case` turns business-case formation into a gated evidence workflow rather than a narrative template.
+
+It enforces:
+
+- claim-level evidence ledgers
+- source verification and freshness
+- search exhaustion before absence claims
+- customer, buyer, and JTBD proof
+- build vs buy vs partner vs do-nothing analysis
+- falsifiable PoCs with baselines and kill criteria
+- reconstructable economics and pricing evidence
+- commercialization and pilot-to-production logic
+- platform/reuse gates
+- investment-committee red-teaming
+- BUILD / BUY / PARTNER / EXPERIMENT / DEFER / KILL / NOT READY outcomes
+
+The included validator rejects structural evidence defects before a case can be treated as investment-ready.
+
 ## Start here
 
-**Competitor research** → use `competitor-analysis` and inspect the new search-exhaustion and contradiction pass.
+**Business case** → `/build-business-case`
+
+**Competitor research** → use `competitor-analysis` and inspect the search-exhaustion and contradiction pass.
 
 **Product discovery** → `/discover`
 
@@ -150,6 +175,7 @@ claude plugin install pm-go-to-market@pm-skills
 claude plugin install pm-marketing-growth@pm-skills
 claude plugin install pm-toolkit@pm-skills
 claude plugin install pm-ai-shipping@pm-skills
+claude plugin install pm-business-case@pm-skills
 ```
 
 ### Codex CLI
@@ -166,6 +192,7 @@ codex plugin add pm-go-to-market@pm-skills
 codex plugin add pm-marketing-growth@pm-skills
 codex plugin add pm-toolkit@pm-skills
 codex plugin add pm-ai-shipping@pm-skills
+codex plugin add pm-business-case@pm-skills
 ```
 
 Claude slash commands remain Claude-specific. In Codex, describe the workflow in plain language when a command is not directly exposed.
@@ -173,57 +200,63 @@ Claude slash commands remain Claude-specific. In Codex, describe the workflow in
 ## Available plugins
 
 <details>
-<summary><strong>1. pm-product-discovery</strong> — discovery and validation (13 skills, 5 commands)</summary>
+<summary><strong>1. pm-product-discovery</strong> - discovery and validation (13 skills, 5 commands)</summary>
 
 Ideation, assumptions, experiments, interviews, Opportunity Solution Trees, feature requests, and discovery metrics.
 </details>
 
 <details>
-<summary><strong>2. pm-product-strategy</strong> — strategy and business model (12 skills, 5 commands)</summary>
+<summary><strong>2. pm-product-strategy</strong> - strategy and business model (12 skills, 5 commands)</summary>
 
 Product strategy, vision, pricing, value propositions, canvases, SWOT, PESTLE, Porter's Five Forces, and Ansoff.
 </details>
 
 <details>
-<summary><strong>3. pm-execution</strong> — delivery and decision artifacts (16 skills, 11 commands)</summary>
+<summary><strong>3. pm-execution</strong> - delivery and decision artifacts (16 skills, 11 commands)</summary>
 
 PRDs, OKRs, roadmaps, sprints, retrospectives, stories, test scenarios, stakeholder management, pre-mortems, and red-teaming.
 </details>
 
 <details>
-<summary><strong>4. pm-market-research</strong> — research and competitive intelligence (7 skills, 3 commands)</summary>
+<summary><strong>4. pm-market-research</strong> - research and competitive intelligence (7 skills, 3 commands)</summary>
 
 Competitors, market sizing, personas, segmentation, customer journeys, and feedback analysis. This is the first plugin receiving the new reliability guards.
 </details>
 
 <details>
-<summary><strong>5. pm-data-analytics</strong> — quantitative product analysis (3 skills, 3 commands)</summary>
+<summary><strong>5. pm-data-analytics</strong> - quantitative product analysis (3 skills, 3 commands)</summary>
 
 SQL, cohort analysis, and A/B test analysis.
 </details>
 
 <details>
-<summary><strong>6. pm-go-to-market</strong> — enterprise and product GTM (6 skills, 3 commands)</summary>
+<summary><strong>6. pm-go-to-market</strong> - enterprise and product GTM (6 skills, 3 commands)</summary>
 
 Beachheads, ICPs, GTM strategy, motions, growth loops, and battlecards.
 </details>
 
 <details>
-<summary><strong>7. pm-marketing-growth</strong> — positioning and growth (5 skills, 2 commands)</summary>
+<summary><strong>7. pm-marketing-growth</strong> - positioning and growth (5 skills, 2 commands)</summary>
 
 Positioning, value propositions, product naming, marketing ideas, and North Star metrics.
 </details>
 
 <details>
-<summary><strong>8. pm-toolkit</strong> — PM utilities (4 skills, 5 commands)</summary>
+<summary><strong>8. pm-toolkit</strong> - PM utilities (4 skills, 5 commands)</summary>
 
 Resume review, proofreading, NDA drafting, and privacy-policy support.
 </details>
 
 <details>
-<summary><strong>9. pm-ai-shipping</strong> — reviewability for AI-built products (2 skills, 5 commands)</summary>
+<summary><strong>9. pm-ai-shipping</strong> - reviewability for AI-built products (2 skills, 5 commands)</summary>
 
 System documentation, intended-vs-implemented auditing, test derivation, security review, performance review, and shipping readiness.
+</details>
+
+<details>
+<summary><strong>10. pm-business-case</strong> - evidence-led investment decisions (6 skills, 5 commands)</summary>
+
+Business-case orchestration, evidence ledgers, market and customer proof, economics, commercialization, falsification, red-teaming, refresh, and staged investment decisions.
 </details>
 
 ## Reliability roadmap
@@ -237,14 +270,15 @@ System documentation, intended-vs-implemented auditing, test derivation, securit
 - [x] Interview quote verification guard
 - [x] A/B power-analysis correction
 - [x] Semantic regression tests for P0 guards
+- [x] Reliability-first business case plugin with deterministic evidence validation
 
 ### Next
 
 - [ ] Expand behavioral golden scenarios across every high-risk skill
-- [ ] Add evidence contracts to research-heavy skills
+- [ ] Add evidence contracts to remaining research-heavy skills
 - [ ] Add Enterprise AI PM plugin
 - [ ] Add enterprise-product workflows
-- [ ] Add executive-decision workflows
+- [ ] Expand executive-decision workflows beyond business cases
 - [ ] Track skill-quality score changes release by release
 
 ## Contribution philosophy
@@ -257,7 +291,7 @@ Correctness fixes and generic reliability improvements that benefit the original
 
 **Fork differentiation**
 
-Enterprise AI PM capabilities, semantic evaluation infrastructure, opinionated evidence contracts, and executive decision workflows may evolve faster here.
+Enterprise AI PM capabilities, semantic evaluation infrastructure, opinionated evidence contracts, business-case automation, and executive decision workflows may evolve faster here.
 
 ## Attribution
 
