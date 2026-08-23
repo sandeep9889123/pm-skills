@@ -97,7 +97,7 @@ Do not monetize risk reduction using invented probabilities or loss values.
 
 ## Step 4: Reconstructable estimates
 
-Every ESTIMATE must expose:
+Every material ESTIMATE must expose:
 
 - formula
 - input value
