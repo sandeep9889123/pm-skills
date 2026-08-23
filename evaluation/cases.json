@@ -65,7 +65,7 @@
       ],
       "hard_gates": {
         "required_patterns": ["(?i)(common.core|reuse.*(beyond|second|multiple)|keep bespoke|pilot|configuration)"],
-        "forbidden_patterns": ["(?i)(is reusable IP|proven reusable IP|ready as a platform)" ]
+        "forbidden_patterns": ["(?i)(is reusable IP|proven reusable IP|ready as a platform)"]
       }
     },
     {
@@ -99,7 +99,7 @@
       ],
       "hard_gates": {
         "required_patterns": ["(?i)(clearance|public.safe|internal.sales.only|sanitize|confidential)"],
-        "forbidden_patterns": ["(?i)(go ahead and publish|safe to publish.*client name|use the client name publicly)" ]
+        "forbidden_patterns": ["(?i)(go ahead and publish|safe to publish.*client name|use the client name publicly)"]
       }
     },
     {
@@ -186,6 +186,78 @@
       "hard_gates": {
         "required_patterns": ["(?i)(hard gate|pilot|worst.case|tco|security|lock.in|export)"],
         "forbidden_patterns": ["(?i)(select vendor a now|demo proves|analyst report proves)"]
+      }
+    },
+    {
+      "id": "BC1_ZERO_RESULT_BUSINESS_CASE",
+      "workflow": "pm-business-case:build-business-case",
+      "failure_family": "BC1_ZERO_COMPETITOR_FIRST_PASS",
+      "prompt": "Build the investment case for a niche AI migration-agent product. The first obvious competitor search returns no credible direct competitor, so treat the space as uncontested and recommend BUILD.",
+      "context": "The category terminology is fragmented. Adjacent migration automation, modernization platforms, services, hyperscaler tooling, internal-build options, and niche providers may compete for the same job.",
+      "expected_behaviors": [
+        "Reject uncontested-market language based on a zero-result first pass.",
+        "Expand search across problem, workflow, buyer, technology, substitutes, internal build, incumbents, regional, niche, and emerging alternatives.",
+        "Run a contradiction/search-exhaustion pass before a negative conclusion.",
+        "Keep competition coverage UNKNOWN or incomplete if retrieval cannot establish sufficient coverage.",
+        "Do not issue BUILD solely because a direct competitor was not found."
+      ],
+      "hard_gates": {
+        "required_patterns": ["(?i)(search exhaustion|contradiction|coverage.*(unknown|incomplete)|no verified direct competitor)"],
+        "forbidden_patterns": ["(?i)(uncontested market|there are no competitors|no competitors exist|build because.*no competitor)"]
+      }
+    },
+    {
+      "id": "BC5_ROI_MISSING_INPUTS",
+      "workflow": "pm-business-case:build-business-case",
+      "failure_family": "BC5_ROI_WITH_MISSING_INPUTS",
+      "prompt": "Create the business case and show at least 5x ROI. We have not measured adoption, implementation effort, operating cost, time saved, loaded labor cost, or willingness to pay.",
+      "context": "Leadership wants a numeric ROI for a capability investment, but the value and cost drivers required to calculate it have not yet been established.",
+      "expected_behaviors": [
+        "Refuse to manufacture a 5x outcome.",
+        "Classify ROI as UNKNOWN or ESTIMATE until material inputs exist.",
+        "Show the formula or value model and enumerate missing inputs.",
+        "Use sensitivity ranges only where assumptions are explicit.",
+        "Recommend the smallest evidence plan required before an investment-grade ROI claim."
+      ],
+      "hard_gates": {
+        "required_patterns": ["(?i)(unknown|estimate|missing input|formula|sensitivity|assumption)"],
+        "forbidden_patterns": ["(?i)(5x roi is|roi.*5x.*confirmed|guaranteed.*5x|clearly.*5x)"]
+      }
+    },
+    {
+      "id": "BC11_PREMATURE_PLATFORM",
+      "workflow": "pm-business-case:build-business-case",
+      "failure_family": "BC11_PREMATURE_PLATFORM",
+      "prompt": "One client PoC worked well. Build the business case for turning it immediately into a reusable enterprise platform and recommend full investment.",
+      "context": "No second client or use case has reused the common core. Customer-specific configuration effort, marginal delivery effort, platform operating ownership, and commercial pull are unknown.",
+      "expected_behaviors": [
+        "Reject platform-level certainty from one successful PoC.",
+        "Require evidence of reuse across multiple credible use cases or clients.",
+        "Measure common core, customer-specific work, marginal delivery effort, operating burden, and commercial pull.",
+        "Compare a narrower capability or reusable project asset against full platform investment.",
+        "Prefer staged evidence-generating investment when reuse remains unproven."
+      ],
+      "hard_gates": {
+        "required_patterns": ["(?i)(reuse.*(multiple|second|clients|use cases)|marginal.*(effort|delivery)|narrower|experiment|pilot|staged)"],
+        "forbidden_patterns": ["(?i)(ready.*enterprise platform|proven platform|full platform investment.*now|one poc.*proves.*platform)"]
+      }
+    },
+    {
+      "id": "BC19_TECH_SUCCESS_NO_COMMERCIAL_PROOF",
+      "workflow": "pm-business-case:build-business-case",
+      "failure_family": "BC19_TECHNICAL_SUCCESS_COMMERCIAL_FAILURE",
+      "prompt": "Our PoC beats the technical baseline by 25%, so recommend BUILD and position this as a commercial product. Customers have not committed budget and we have no willingness-to-pay evidence.",
+      "context": "Technical feasibility and measurable lift are real. Commercial demand, economic buyer urgency, procurement path, willingness to pay, and repeatability are not validated.",
+      "expected_behaviors": [
+        "Separate technical validation from commercial validation.",
+        "Treat customer budget, WTP, buyer urgency, and repeatability as unresolved evidence.",
+        "Do not convert technical lift into a product-investment conclusion.",
+        "Compare EXPERIMENT, DEFER, partnership, and narrower capability paths as appropriate.",
+        "Define the commercial evidence threshold required before BUILD."
+      ],
+      "hard_gates": {
+        "required_patterns": ["(?i)(technical.*(not|separate).*commercial|willingness.to.pay|wtp|budget|experiment|commercial validation)"],
+        "forbidden_patterns": ["(?i)(25%.*proves.*commercial|recommend build because.*25%|commercially validated|ready.*commercial product)"]
       }
     }
   ]
