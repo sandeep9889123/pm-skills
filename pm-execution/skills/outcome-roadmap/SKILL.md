@@ -1,63 +1,73 @@
 ---
 name: outcome-roadmap
-description: "Transform an output-focused roadmap into an outcome-focused one that communicates strategic intent. Rewrites initiatives as outcome statements reflecting user and business impacts. Use when shifting to outcome roadmaps, making a roadmap more strategic, or rewriting feature lists as outcomes."
+description: "Create or transform an outcome-focused roadmap that links evidence-backed problems, desired outcomes, bets, learning milestones, dependencies, and decision points without false delivery certainty. Use when making roadmaps more strategic or planning capability/product portfolios."
 ---
 
-# Transform Roadmap to Outcome-Focused Format
+# Outcome-Focused Roadmap
 
 ## Purpose
 
-You are an experienced product manager helping $ARGUMENTS shift from output-focused roadmaps (which emphasize features) to outcome-focused roadmaps (which emphasize customer and business impact). This skill rewrites initiatives as outcome statements that inspire and measure what matters.
+Communicate **what outcomes matter, why they matter, what bets are being made, what must be learned, and when decisions will be revisited**. Do not disguise an uncertain portfolio as a feature calendar.
 
-## Context
+## Method
 
-Output-focused roadmaps create false precision and misalign teams around features rather than results. Outcome-focused roadmaps clarify the customer problems being solved and the business value expected, enabling flexible execution and strategic thinking.
+1. **Gather strategy and evidence**
+   For each initiative capture target segment, observed problem, baseline/metric if known, strategic link, urgency, constraints, and confidence.
 
-## Instructions
+2. **Uncover intended outcome**
+   For each output ask:
+   - what customer behavior/state should change?
+   - what business/operational outcome follows?
+   - what evidence supports this mechanism?
+   - could another solution achieve the same outcome more cheaply?
 
-1. **Gather Information**: If the user provides a current roadmap, read it carefully. If they mention strategy documents or company objectives, use web search to understand how the roadmap should align with broader goals.
+3. **Separate commitment types**
+   Classify items:
+   - `COMMITTED`: external/hard dependency with justified timing
+   - `BET`: chosen investment with uncertainty
+   - `DISCOVERY`: learning needed before commitment
+   - `OPTION`: plausible later opportunity
+   - `MAINTENANCE/RISK`: reliability/compliance/debt obligation
 
-2. **Think Step by Step**:
-   - For each initiative, ask: "What outcome are we trying to achieve?"
-   - What customer problem are we solving?
-   - What business metric will improve?
-   - How will this impact the customer experience or business?
-   - Is there a better, different way to achieve the same outcome?
+   Do not present all five as equally committed roadmap features.
 
-3. **Transformation Process**: For each initiative on the roadmap:
-   - **Identify the Output**: What feature or project is planned?
-   - **Uncover the Outcome**: Why are we building it? What changes for customers or business?
-   - **Rewrite as Outcome Statement**: Use this format:
-     ```
-     Enable [customer segment] to [desired customer outcome] so that [business impact]
-     ```
+4. **Write outcome statements**
+   Use precise but non-fabricated outcome language. If no baseline exists, do not invent a percentage target. Define baseline-establishment work first.
 
-4. **Example Transformation**:
-   - **Output (Old)**: Q2: Build advanced search filters, implement AI recommendations, redesign dashboard
-   - **Outcome (New)**:
-     - Q2: Enable customers to find products 50% faster through intuitive discovery
-     - Q2: Increase average order value by 20% through personalized AI recommendations
-     - Q2: Help operators monitor all systems with 80% reduction in dashboard load time
+5. **Map bets to outcomes**
+   Show multiple possible bets where appropriate. Roadmap should preserve solution flexibility.
 
-5. **Structure Output**: Present the transformed roadmap with:
-   - Original initiatives listed by quarter/phase
-   - Outcome statements for each initiative
-   - Key metrics that will indicate success
-   - Dependencies or sequencing notes
+6. **Add learning and decision milestones**
+   Examples: customer evidence threshold, prototype result, technical spike, evaluation gate, pilot outcome, security readiness, GTM proof.
 
-6. **Include Strategic Context**: For the overall roadmap, add:
-   - How outcomes align with company strategy
-   - Key assumptions about customer needs
-   - Flexible release windows (quarters, not specific dates)
+7. **Dependencies and capacity**
+   Show cross-team/platform/data/GTM dependencies, resource contention, and what is displaced by each commitment.
 
-7. **Save the Output**: If substantial, save as a markdown document: `Outcome-Roadmap-[year].md`
+## Reliability / Roadmap Certainty Gate
 
-## Notes
+- Never convert leadership aspiration into a customer outcome without evidence.
+- Never imply exact delivery dates from a strategy-level roadmap when dependencies/estimates do not justify them.
+- Flag items whose outcome has no measurable signal.
+- Flag output lists rewritten as “outcomes” without changing the underlying decision logic.
+- Show uncertainty/confidence and decision dates explicitly.
+- Include kill/pivot conditions for major bets.
+- Surface portfolio concentration: too many bets depending on the same unproven assumption, platform, client, or market.
+- Include operational work required to sustain existing products, not only new launches.
 
-- An outcome should be testable and measurable
-- Multiple outputs may achieve one outcome; focus on the outcome, not the feature list
-- Outcome roadmaps are more resilient to change—embrace flexibility
-- If unsure what outcome a feature drives, ask: "So what?" until you reach real customer/business value
+## Output
+
+| Horizon | Outcome | Evidence | Bet / discovery | Metric | Confidence | Dependency | Decision gate |
+|---|---|---|---|---|---|---|---|
+
+Then include:
+- explicit non-goals / not-now items
+- capacity allocation by strategic theme
+- assumptions shared across roadmap
+- key risks
+- next 3 leadership decisions
+
+### Decision
+For each bet: `COMMIT | DISCOVER | CONTINUE | PIVOT | STOP | DEFER`.
 
 ---
 

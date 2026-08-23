@@ -2,6 +2,18 @@
 
 ## Unreleased
 
+### Enterprise Transformation Wave 2
+
+- Added **`pm-enterprise-transformation`** with 12 skills and 4 workflows for four recurring leadership motions: Building Future Capabilities, Client Success → Sales GTM, Sales Transformation, and Tooling & Automation.
+- Added `/build-future-capability`: recurring-demand evidence → right-to-win → reuse classification → business case → pilot/kill decision.
+- Added `/proof-to-gtm`: verified delivery proof → NDA-safe claims → transferable case study → ICP/discovery/proof → GTM asset and measurement plan.
+- Added `/transform-sales`: funnel/cohort diagnosis → solution-selling playbook → controlled conversion experiments with quality/economic guardrails.
+- Added `/automate-pm-workflow`: current-state workflow → automation suitability → build/buy/tool selection → HITL/governance → shadow/pilot rollout.
+- Added decision skills for capability opportunity radar, reusable accelerator thesis, investment business cases, client-proof extraction, case-study-to-GTM, account expansion, sales funnel diagnosis, solution-to-sales playbooks, pipeline experiments, PM workflow automation, tool selection, and automation governance.
+- Hardened 13 high-value existing primitives: `product-strategy`, `pricing-strategy`, `create-prd`, `gtm-strategy`, `competitive-battlecard`, `prioritize-features`, `north-star-metric`, `outcome-roadmap`, `stakeholder-map`, `pre-mortem`, both experiment-design skills, and `user-segmentation`.
+- Expanded semantic behavior contracts and adversarial scenarios to cover one-client-demand bias, fake reusable IP, unsupported client success claims, sales-quality degradation, pilot-to-production failure, sales-to-delivery promise drift, automation ROI/review burden, uncontrolled side effects, and vendor-demo happy-path bias.
+- Refreshed the root README and marketplace to the new 80-skill / 46-workflow / 10-plugin enterprise decision system.
+
 ### Reliability-first fork
 
 - Reframed the fork around **evidence integrity, adversarial reliability, Enterprise AI PM, and semantic decision quality** while preserving explicit attribution to the upstream `phuryn/pm-skills` project.

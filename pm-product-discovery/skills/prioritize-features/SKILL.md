@@ -1,47 +1,94 @@
 ---
 name: prioritize-features
-description: "Prioritize a backlog of feature ideas based on impact, effort, risk, and strategic alignment with top 5 recommendations. Use when prioritizing a feature backlog, making scope decisions, or ranking product ideas."
+description: "Prioritize product opportunities or features using outcome impact, evidence confidence, effort, risk, strategic fit, and opportunity cost. Use when making scope, portfolio, or backlog investment decisions."
 ---
 
-## Prioritize Feature Backlog
+## Prioritize Product Opportunities / Features
 
-Evaluate and rank a backlog of feature ideas to identify the top 5 to pursue.
+Prioritize only as precisely as the evidence allows. The goal is to allocate scarce capacity to the highest expected value learning or outcome, not to manufacture a ranked list.
 
 ### Context
 
-You are helping prioritize features for **$ARGUMENTS**.
+If the user provides spreadsheets, backlogs, customer evidence, strategy, or opportunity assessments, read them directly.
 
-If the user provides files (spreadsheets, backlogs, opportunity assessments), read and analyze them directly.
+## Step 1: Define the decision
 
-### Domain Context
+State:
+- product/business outcome
+- time horizon
+- capacity/budget constraint
+- target segment
+- hard commitments/dependencies
+- risk tolerance
 
-For framework selection guidance, see the `prioritization-frameworks` skill. Key recommendations:
+Without a decision constraint, prioritization is usually just scoring theatre.
 
-**Opportunity Score** (Dan Olsen, *The Lean Product Playbook*) is recommended for evaluating customer problems: Opportunity Score = Importance × (1 − Satisfaction), normalized to 0–1. High Importance + low Satisfaction = best opportunities. Prioritize **problems (opportunities)**, not solutions.
+## Step 2: Separate problem from solution
 
-**ICE** is recommended for quick scoring of initiatives: Impact (Opportunity Score × # Customers) × Confidence × Ease. **RICE** adds Reach as a separate factor for larger teams.
+Where possible, assess **opportunities/problems first**, then solutions. A popular feature request may be one proposed solution to a deeper job/pain.
 
-### Instructions
+## Step 3: Build evidence ledger
 
-The user will describe their product objective, desired outcomes, and provide feature ideas. Work through these steps:
+For each candidate capture:
+- user/problem evidence
+- reach/frequency
+- severity/economic consequence
+- strategic linkage
+- expected mechanism
+- confidence
+- effort range
+- dependencies
+- downside/failure risk
+- reversibility
+- learning value
 
-1. **Understand priorities**: Confirm the product objective and success metrics.
+Mark unsupported inputs `UNKNOWN` instead of assigning convenient scores.
 
-2. **Evaluate each feature** against:
-   - **Impact**: How much does it move the needle on desired outcomes? Consider Opportunity Score if customer data is available.
-   - **Effort**: How much development, design, and coordination is required?
-   - **Risk**: How much uncertainty exists? What assumptions need testing?
-   - **Strategic alignment**: How well does it fit the product vision and current goals?
+## Step 4: Choose framework to fit uncertainty
 
-3. **Recommend the top 5 features** with:
-   - Clear ranking (1-5)
-   - Brief rationale for each selection
-   - Key trade-offs considered
-   - What was deprioritized and why
+Use Opportunity Score, ICE, RICE, cost of delay, expected value, or qualitative portfolio judgment only where input quality supports it. Do not convert low-confidence guesses into precise composite scores.
 
-4. **Present as a prioritization table** if helpful.
+## Step 5: Rank by decision quality
 
-Think step by step. Save as markdown if the output is substantial.
+Prefer tiers when evidence does not justify exact order:
+- `COMMIT`
+- `VALIDATE NEXT`
+- `DEFER`
+- `DROP`
+
+Only provide exact top-N rankings when meaningful differences survive uncertainty/sensitivity checks.
+
+## Step 6: Opportunity-cost and dependency pass
+
+For each `COMMIT`, state:
+- what gets delayed or not funded;
+- what prerequisite must be true;
+- whether another smaller experiment could resolve uncertainty first;
+- whether the initiative is reversible.
+
+## Edge cases / anti-patterns
+
+- Do not force “top 5” when only two candidates are supported.
+- Do not reward large reach if evidence of value is weak.
+- Do not let executive/customer seniority substitute for problem evidence.
+- Do not treat committed delivery obligations and speculative bets as identical backlog items.
+- Do not double-count reach and impact across overlapping scoring dimensions.
+- Do not ignore maintenance, support, compliance, or operational load.
+- Do not rank a 10× uncertain estimate above a well-supported smaller bet without showing sensitivity.
+
+## Output
+
+| Candidate | Outcome | Evidence | Confidence | Impact range | Effort range | Risk | Learning value | Decision |
+|---|---|---|---|---|---|---|---|---|
+
+Then show:
+- capacity allocation
+- deprioritized items and why
+- top uncertainty to test
+- sensitivity: what input change would reorder priorities
+
+### Decision
+`COMMIT | VALIDATE | DEFER | DROP` per candidate, with no false precision.
 
 ---
 

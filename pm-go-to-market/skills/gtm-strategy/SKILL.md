@@ -1,87 +1,132 @@
 ---
 name: gtm-strategy
-description: "Create a go-to-market strategy covering marketing channels, messaging, success metrics, and launch timeline. Use when planning a product launch, creating a GTM plan from scratch, or defining a launch strategy for a new market."
+description: "Create a go-to-market strategy covering market entry, ICP, buying process, channels, messaging, proof, implementation, economics, success metrics, and rollout. Use when planning a product/solution launch, entering a new market, or building an enterprise GTM motion."
 ---
 # GTM Strategy
 
 ## Overview
-Create a comprehensive go-to-market strategy for a product launch. This skill covers marketing channels, messaging development, success metrics definition, and launch planning.
 
-## When to Use
-- Planning a product launch
-- Creating a GTM plan from scratch
-- Defining a launch strategy for a new market
-- Developing product-to-market fit strategy
-- Preparing a product go-live roadmap
+Create a go-to-market strategy that explains **who will buy, why now, how they will decide, what proof they need, how the solution reaches production, and how the motion becomes economically repeatable**.
 
-## How It Works
+## Step 1: Evidence and Market Entry
 
-### Step 1: Gather Research Data
-The system will help you load and analyze early research about your product and target market. Provide:
-- Product description and key features
-- Target market segment details
-- Market research or validation data
-- Competitive landscape information
-- Any available customer interviews or survey data
+Gather and classify:
+- customer/problem evidence
+- ICP/segment evidence
+- current alternatives and competitors
+- willingness-to-pay/commercial signals
+- delivery/implementation evidence
+- existing channel/account access
+- market/regulatory timing
 
-### Step 2: Define Marketing Channels
-Evaluate which channels best reach your target audience:
-- Digital marketing channels (paid search, social media, display)
-- Content and inbound channels (blog, SEO, thought leadership)
-- Sales and outbound channels (direct outreach, partnerships)
-- Community and grassroots channels
-- Product-led and viral channels
+Label load-bearing claims `FACT`, `INFERENCE`, `ASSUMPTION`, `ESTIMATE`, `UNKNOWN`, or `STALE`.
 
-### Step 3: Develop Messaging
-Create audience-specific messaging that resonates:
-- Core value proposition for target segment
-- Key differentiators and competitive advantages
-- Pain point validation and solution mapping
-- Proof points and social proof strategies
-- Channel-specific messaging variations
+Do not infer market readiness from a product launch, one customer, or a large TAM.
 
-### Step 4: Define Success Metrics
-Establish measurable KPIs to track launch success:
-- Awareness metrics (impressions, reach, brand recall)
-- Engagement metrics (CTR, cost per engagement, time on site)
-- Conversion metrics (signups, demos requested, trials started)
-- Revenue metrics (MRR, customer acquisition cost, lifetime value)
-- Market metrics (market share, segment penetration)
+## Step 2: Define ICP, Anti-ICP, and Trigger
 
-### Step 5: Create Launch Plan
-Build a phased launch timeline:
-- Pre-launch preparation (messaging, channels, timeline)
-- Launch day activities and announcements
-- Post-launch momentum (content, partnerships, communities)
-- Measurement and optimization cadence
-- Success criteria and go/no-go decision points
+Specify:
+- firmographic/operational context
+- job/problem severity
+- trigger event / why now
+- buyer, champion, users, blockers
+- required data/integrations/security readiness
+- budget/source of funds
+- disqualifiers / anti-ICP
 
-## Input Format
-Use $ARGUMENTS to pass:
-- Product name and description
-- Target market segment
-- Research data or file path
-- Launch timeline and constraints
-- Budget or resource limitations
+## Step 3: Map the Buying and Production Journey
+
+For enterprise motions map:
+`awareness → problem discovery → qualification → solution/proof → technical/security review → commercial/procurement → pilot/PoC if needed → implementation → adoption → expansion/renewal`.
+
+Identify stage exit evidence, owners, friction, and where deals can die.
+
+A successful PoC is not a successful GTM motion if production conversion is weak.
+
+## Step 4: Positioning and Messaging
+
+Develop:
+- category/problem framing
+- value proposition by buyer/user
+- differentiated mechanism
+- proof points and evidence confidence
+- objection responses
+- competitor/substitute positioning
+
+Do not claim superiority without evidence. Where a competitor genuinely wins, say so and narrow the ICP.
+
+## Step 5: Proof Strategy
+
+Match proof to buyer risk:
+- credible case study
+- benchmark/evaluation
+- architecture/security evidence
+- demo
+- workshop
+- pilot
+- reference customer
+
+Use the cheapest proof that resolves the decision risk. Avoid defaulting to expensive PoCs.
+
+## Step 6: Channels and Sales Motion
+
+Evaluate channel fit using access, trust, economics, cycle time, buyer behavior, and internal capacity. Consider account-led, sales-led, partner-led, PLG, content/inbound, events/community, and ecosystem routes only where they fit the ICP.
+
+## Step 7: GTM Economics
+
+Model:
+- ACV/deal value range
+- gross margin / cost to serve
+- CAC or acquisition effort where measurable
+- sales/solution-engineering capacity
+- implementation effort
+- sales cycle
+- pilot conversion
+- expansion/renewal
+- payback or break-even logic
+
+Use scenarios when inputs are uncertain.
+
+## Step 8: Metrics and Experiment Plan
+
+Separate:
+- leading evidence metrics
+- funnel conversion
+- cycle time
+- deal quality
+- implementation/adoption
+- economics
+- expansion/retention
+
+Define baseline, target/range, guardrails, owner, and decision rule where possible.
+
+## Reliability / Red-Team Gate
+
+Before recommending launch:
+- test whether buyer and user are different;
+- test whether the chosen segment can actually be reached;
+- verify that proof matches the buyer's main risk;
+- expose security/procurement/implementation friction;
+- test whether sales can repeat the motion without founder/heroics;
+- check whether discounts/services hide weak product economics;
+- check production conversion after pilots;
+- challenge channel popularity bias;
+- state what would make the beachhead wrong.
 
 ## Output
-A structured GTM strategy document including:
-- Recommended marketing channels with justification
-- Channel-specific messaging and positioning
-- Launch timeline with key milestones
-- KPI targets and measurement framework
-- Risk mitigation strategies
-- 90-day execution roadmap
 
-## Framework
-This skill applies Product Compass GTM strategy methodology, focusing on market selection, channel fit, and message-market fit for sustainable product growth.
+Produce:
+1. ICP / anti-ICP / trigger
+2. buying journey and stage gates
+3. positioning and proof
+4. channel/motion choice and alternatives
+5. sales/delivery handoff
+6. GTM economics scenarios
+7. 90-day experiment plan
+8. risks and kill/revisit criteria
 
-## Tips
-- Start with your most confident customer segment
-- Validate assumptions through customer interviews before full launch
-- Focus on a few channels excellently rather than many channels poorly
-- Establish baseline metrics before launch to measure impact
-- Plan for feedback loops and optimization
+### Decision
+`LAUNCH | PILOT BEACHHEAD | VALIDATE | HOLD | REFRAME` with confidence and what would change the recommendation.
 
 ---
 
@@ -91,4 +136,3 @@ This skill applies Product Compass GTM strategy methodology, focusing on market 
 - [OpenAI’s Product Leader Shares 3-Layer Distribution Framework To Win Mind & Market Share in the AI World](https://www.productcompass.pm/p/distribution-framework-ai-products)
 - [Product-Led Growth 101, Part 1/2](https://www.productcompass.pm/p/product-led-growth-101-12)
 - [How to Design a Value Proposition Customers Can't Resist?](https://www.productcompass.pm/p/how-to-design-value-proposition-template)
-- [How to Achieve Product-Market Fit? Part I: Market and Value Proposition](https://www.productcompass.pm/p/how-to-achieve-the-product-market)

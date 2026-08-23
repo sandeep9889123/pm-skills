@@ -7,76 +7,115 @@ description: "Create a Product Requirements Document using a comprehensive 8-sec
 
 ## Purpose
 
-You are an experienced product manager responsible for creating a comprehensive Product Requirements Document (PRD) for $ARGUMENTS. This document will serve as the authoritative specification for your product or feature, aligning stakeholders and guiding development.
+Create a PRD that records the product decision and the evidence behind it, not merely a polished specification.
 
 ## Context
 
-A well-structured PRD clearly communicates the what, why, and how of your product initiative. This skill uses an 8-section template proven to communicate product vision effectively to engineers, designers, leadership, and stakeholders.
+A strong PRD aligns product, design, engineering, data, delivery, GTM, and leadership on the problem, scope, behavior, quality bar, risks, and what remains unproven.
 
 ## Instructions
 
-1. **Gather Information**: If the user provides files, read them carefully. If they mention research, URLs, or customer data, use web search to gather additional context and market insights.
+1. **Gather Information**: If the user provides files, read them carefully. If they mention research, URLs, customer data, or existing systems, gather relevant context before writing.
 
-2. **Think Step by Step**: Before writing, analyze:
-   - What problem are we solving?
-   - Who are we solving it for?
-   - How will we measure success?
-   - What are our constraints and assumptions?
+2. **Decision-first framing**: Before solution detail, state:
+   - What decision are we making?
+   - What user/business problem is supported by evidence?
+   - Why now?
+   - What alternatives exist, including doing nothing?
+   - What assumptions remain unproven?
 
-3. **Apply the PRD Template**: Create a document with these 8 sections:
+3. **Apply the PRD Template**:
 
-   **1. Summary** (2-3 sentences)
-   - What is this document about?
+### 1. Executive Summary
+What, for whom, why now, intended outcome, and current confidence.
 
-   **2. Contacts**
-   - Name, role, and comment for key stakeholders
+### 2. Contacts / Ownership
+Decision owner, product owner, design, engineering, data/AI, delivery/QA, GTM/support, and approvers as applicable.
 
-   **3. Background**
-   - Context: What is this initiative about?
-   - Why now? Has something changed?
-   - Is this something that just recently became possible?
+### 3. Background & Evidence
+- observed problem and evidence
+- current workflow/alternative
+- frequency/severity
+- prior attempts
+- relevant research/market/context
+- evidence gaps
 
-   **4. Objective**
-   - What's the objective? Why does it matter?
-   - How will it benefit the company and customers?
-   - How does it align with vision and strategy?
-   - Key Results: How will you measure success? (Use SMART OKR format)
+Label load-bearing claims `FACT`, `INFERENCE`, `ASSUMPTION`, `ESTIMATE`, `UNKNOWN`, or `STALE`.
 
-   **5. Market Segment(s)**
-   - For whom are we building this?
-   - What constraints exist?
-   - Note: Markets are defined by people's problems/jobs, not demographics
+### 4. Objective & Success Contract
+- customer outcome
+- business outcome
+- product/operational metrics
+- baseline if known
+- target/range
+- guardrails
+- measurement method and owner
 
-   **6. Value Proposition(s)**
-   - What customer jobs/needs are we addressing?
-   - What will customers gain?
-   - Which pains will they avoid?
-   - Which problems do we solve better than competitors?
-   - Consider the Value Curve framework
+Do not invent baselines or targets. If unknown, define how they will be established.
 
-   **7. Solution**
-   - 7.1 UX/Prototypes (wireframes, user flows)
-   - 7.2 Key Features (detailed feature descriptions)
-   - 7.3 Technology (optional, only if relevant)
-   - 7.4 Assumptions (what we believe but haven't proven)
+### 5. Target Users / Segments / JTBD
+- primary user/buyer
+- job/context
+- eligibility and exclusions
+- user versus buyer differences
+- accessibility/localization or enterprise constraints where relevant
 
-   **8. Release**
-   - How long could it take?
-   - What goes in the first version vs. future versions?
-   - Avoid exact dates; use relative timeframes
+### 6. Scope and Requirements
+Separate:
+- `P0 Must Have`
+- `P1 Should Have`
+- `P2 Later/Optional`
+- `Non-goals`
 
-4. **Use Accessible Language**: Write for a primary school graduate. Avoid jargon. Use clear, short sentences.
+For each P0 requirement include acceptance criteria plus failure/edge cases.
 
-5. **Structure Output**: Present the PRD as a well-formatted markdown document with clear headings and sections.
+### 7. Solution & Decision Log
+- proposed experience/workflow
+- key product decisions and rationale
+- alternatives rejected and why
+- dependencies/integrations/data
+- permissions/privacy/security
+- AI behavior/evaluation/HITL when applicable
+- analytics/instrumentation
+- operational/support requirements
 
-6. **Save the Output**: If the PRD is substantial (which it will be), save it as a markdown document in the format: `PRD-[product-name].md`
+### 8. Release / Validation Plan
+- smallest releasable/testable version
+- rollout cohort
+- pre-launch gates
+- experiment/evaluation plan
+- rollback or disable path
+- unresolved questions
+- revisit triggers
 
-## Notes
+## Reliability and Scope Gate
 
-- Be specific and data-driven where possible
-- Link each section back to the overall strategy
-- Flag assumptions clearly so the team can validate them
-- Keep the document concise but complete
+Before finalizing:
+
+- Do not convert a solution request into a validated problem.
+- If evidence for the problem is weak, label the PRD `DISCOVERY / HYPOTHESIS`, not implementation-ready.
+- Every P0 item must trace to a user/business outcome, hard constraint, or risk. Remove orphan requirements.
+- Include unhappy paths, permissions, empty states, recovery, interruption, data failure, integration failure, and abuse/misuse scenarios when relevant.
+- Separate **desired behavior** from **implementation suggestion** unless the technology choice is itself a product constraint.
+- State what is deliberately not built and why.
+- For AI features, define dataset/evaluation, hard gates, confidence/uncertainty behavior, human review, cost/latency, safety/privacy, and rollback. Model accuracy alone is not acceptance.
+- For enterprise products, include buyer/admin/user roles, implementation, security/procurement dependencies, auditability, and sales-to-delivery assumptions when relevant.
+- Avoid date certainty when dependencies/evidence do not support it.
+
+## Final Decision Block
+
+```text
+Status: DISCOVERY | READY FOR DESIGN | READY FOR BUILD | BLOCKED
+Decision:
+Strongest evidence:
+Top assumptions:
+P0 hard gates:
+Key trade-offs:
+What would change scope/decision:
+Owner:
+```
+
+Use accessible language. Save substantial output as `PRD-[product-name].md`.
 
 ---
 

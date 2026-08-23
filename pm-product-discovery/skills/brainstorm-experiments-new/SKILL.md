@@ -1,40 +1,77 @@
 ---
 name: brainstorm-experiments-new
-description: "Design lean startup experiments (pretotypes) for a new product. Creates XYZ hypotheses and suggests low-effort validation methods like landing pages, explainer videos, and pre-orders. Use when validating a new product idea, creating pretotypes, or testing market demand."
+description: "Design falsifiable, low-cost experiments for a new product or capability using behavioral evidence, explicit decision thresholds, guardrails, and kill/iterate criteria. Use when validating demand, willingness to pay, workflow fit, or a new enterprise/AI solution before scaling investment."
 ---
 
-## Design Lean Startup Experiments (New Product)
+## Design Experiments for a New Product / Capability
 
-Create XYZ hypotheses and design pretotype experiments to validate a new product concept with minimal effort.
+## Purpose
 
-### Context
+Resolve the most load-bearing uncertainty with the cheapest credible evidence. The objective is not to generate a list of experiment ideas.
 
-You are helping validate a new product concept: **$ARGUMENTS** using lean startup methodology.
+## Step 1: Define the decision and assumption
 
-If the user provides files (market research, landing page mockups), read them first.
+State:
+- decision to make after the experiment
+- assumption being tested
+- why it is load-bearing
+- current evidence/confidence
+- cost of false positive and false negative
 
-### Instructions
+Use an XYZ-style behavioral hypothesis where useful, but do not invent X thresholds. Derive thresholds from economics, strategy, prior evidence, or clearly label them as provisional.
 
-1. **Create an XYZ Hypothesis** in the form: "At least X% of Y will do Z"
-   - **X%**: The percentage of the target market expected to engage
-   - **Y**: The specific target market (e.g., "mid-size luxury sedan buyers")
-   - **Z**: How they will engage with the product
+## Step 2: Choose evidence strength appropriate to the claim
 
-2. **Suggest 2-3 pretotype experiments** to test the hypothesis with minimal effort. Consider:
-   - **Landing Page**: Test interest by measuring sign-ups or clicks
-   - **Explainer Video**: Test understanding and appeal through engagement metrics
-   - **Email Campaign**: Test demand through response and click-through rates
-   - **Pre-Order / Waitlist**: Test willingness to pay through skin-in-the-game commitment
-   - **Concierge / Manual MVP**: Deliver the service manually to test value
+Possible methods:
+- problem interviews / workflow observation
+- concierge/manual delivery
+- fake door / landing page
+- prototype/task test
+- design-partner commitment
+- paid discovery
+- LOI/pre-order/deposit when appropriate
+- pricing/WTP test
+- technical/evaluation spike
+- shadow workflow
 
-3. **Key principles** (Alberto Savoia, *The Right It*):
-   - **Skin-in-the-Game**: Test willingness to pay — not just interest. Real commitment (time, money, reputation) is the only reliable signal.
-   - **Your Own Data (YODA)**: Collect your own data through experiments rather than relying on Others' Data (ODP) like market reports or analogies. "The market for your idea does not care about the market for someone else's idea."
-   - Measure actual behavior, not users' opinions
+A click is weak evidence for willingness to pay. A waitlist is weak evidence for enterprise production readiness.
 
-4. **For each experiment**, specify the hypothesis being tested, the method, the metric, and the success threshold.
+## Step 3: Design the experiment contract
 
-Think step by step. Save as markdown if substantial.
+For each experiment specify:
+- assumption
+- target cohort and recruitment method
+- intervention/prototype
+- behavioral metric
+- baseline if available
+- success, failure, and inconclusive criteria
+- minimum evidence/sample logic
+- guardrails / ethical constraints
+- contamination/bias risks
+- time/effort/cost
+- next decision for each outcome
+
+## Reliability / Edge Cases
+
+- Avoid convenience samples being generalized to the full ICP.
+- Distinguish stated interest from costly commitment/behavior.
+- Do not change thresholds after seeing results without labeling exploratory analysis.
+- Avoid testing multiple assumptions at once when failure cannot be diagnosed.
+- Include a disconfirming version of the test when possible.
+- For B2B enterprise products, validate buyer, user, technical/implementation, security, and budget risks separately where they are independent.
+- For AI products, validate quality/evaluation and workflow value separately. A compelling demo does not prove reliable production performance.
+- For reusable capabilities, test independent demand across accounts rather than repeated asks from one account.
+- If the experiment cannot change a decision, do not run it.
+
+## Output
+
+| Assumption | Experiment | Evidence strength | Metric | Success | Failure | Bias/risk | Decision |
+|---|---|---|---|---|---|---|---|
+
+Then recommend the **single highest-value next experiment** and why it dominates alternatives.
+
+### Decision outcomes
+`PROCEED | ITERATE | PIVOT | KILL | NEED MORE EVIDENCE`.
 
 ---
 
