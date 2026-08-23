@@ -1,68 +1,79 @@
 ---
 name: north-star-metric
-description: "Define a North Star Metric and 3-5 supporting input metrics that form a metrics constellation. Classify the business game (Attention, Transaction, Productivity) and validate against 7 criteria for an effective North Star. Use when choosing a North Star Metric, setting up a metrics framework, learning about the North Star Framework, or deciding what to measure."
+description: "Define and validate a North Star Metric and supporting input/guardrail metrics using customer value, causal plausibility, data quality, segment behavior, and business sustainability. Use when deciding what a product or business should optimize."
 ---
 # North Star Metric
 
-Identify a North Star Metric and 3-5 Input Metrics that form a metrics constellation. Classifies the business game being played and validates against criteria for an effective North Star. Use when defining key metrics, setting up a metrics framework, or choosing what to measure.
+Choose a metric that represents delivered customer value and is useful for decisions. Do not choose a metric merely because it is easy to measure or sounds strategic.
 
-## Domain Context
+## Step 1: Understand the value system
 
-NSM is **NOT**: multiple metrics, a revenue/LTV metric (must be customer-centric), an OKR (that's a goal-setting technique), or a strategy (but choosing the right NSM is a strategic choice).
+Capture:
+- customer/job and successful outcome
+- business model
+- frequency/cadence of value delivery
+- buyer vs user if different
+- value creation versus value capture
+- current measurement/data quality
+- known failure/abuse modes
 
-NSM **IS**: a single, customer-centric KPI that reflects the value customers get from the product and serves as a leading indicator of long-term business success. You can use Key Results (OKRs) to express expected change in NSM.
+## Step 2: Generate multiple candidates
 
-Free resource: [The North Star Framework 101 (PDF)](https://learn.productcompass.pm/nsm101)
+Do not jump to the first plausible metric. Generate 3–5 candidates and evaluate each.
 
-## When to Use
+Useful business-game framing may include attention, transaction, productivity, or other context-specific value mechanics, but do not force a company into one taxonomy if its model is hybrid.
 
-- Defining your company's key metric framework
-- Setting up a metrics tracking system
-- Choosing what to measure and optimize for
-- Evaluating potential North Star candidates
-- Triggers: North Star metric, north star, key metric, what to measure, metrics framework, OMTM
+## Step 3: Validate each candidate
 
-## The Three Business Games
+A strong NSM should:
+1. represent customer value actually realized, not activity alone;
+2. be understandable and consistently defined;
+3. be measurable with acceptable latency/data quality;
+4. be influenced by teams without encouraging obvious gaming;
+5. correlate plausibly with durable business health;
+6. distinguish healthy from unhealthy usage where relevant;
+7. remain meaningful across important segments or explicitly state segment limitations;
+8. have input metrics teams can act on;
+9. have guardrails that prevent local optimization damage.
 
-Before identifying your North Star, classify your business into one of these three games:
+## Reliability / Causal Gate
 
-- **Attention Game**: How much time do customers spend using your product? (Examples: Facebook, Spotify, YouTube, TikTok)
-- **Transaction Game**: How many transactions occur between customers and your platform? (Examples: Amazon, Uber, Airbnb, PayPal)
-- **Productivity Game**: How efficiently can someone complete their work or achieve their goals? (Examples: Canva, Dropbox, Loom, Notion)
+Before selecting:
+- Do not claim a candidate is a leading indicator of revenue/retention without evidence. Label that relationship `HYPOTHESIS` until validated.
+- Test for Goodhart's Law: how could the organization increase the metric while making the customer/business worse?
+- Check denominator effects, seasonality, cohort mix, and segment reversal.
+- Separate **value delivered** from **usage volume**. More usage can mean friction in productivity products.
+- Avoid vanity metrics such as raw signups, page views, messages, or time spent unless they genuinely represent the value mechanism.
+- Test whether enterprise buyer value differs from end-user value.
+- Include quality/safety/reliability guardrails for AI or high-risk workflows.
+- If no single metric responsibly represents the system, say so. Use a primary value metric plus a small health constellation rather than forcing a misleading NSM.
 
-## Prompt
+## Step 4: Inputs and guardrails
 
-You are a metrics strategist specializing in North Star metrics and growth measurement frameworks.
+For the selected candidate define:
+- exact numerator/denominator/window
+- unit of analysis
+- eligible population
+- data source/owner
+- lag/freshness
+- input metrics with causal hypothesis
+- guardrails
+- segmentation cuts
+- alert thresholds only when baselines support them
 
-Given the following business context: $ARGUMENTS
+## Step 5: Validation plan
 
-**Step 1: Classify the Business Game**
-Determine which game this company plays: Attention, Transaction, or Productivity.
+Test whether changes in the candidate are associated with retention, expansion, successful task completion, or another durable outcome using historical cohorts/experiments where possible.
 
-**Step 2: Identify the North Star Metric**
-Suggest a single metric that meets all seven criteria for an effective North Star:
+## Output
 
-1. **Easy to Understand**: Clear definition that everyone in the organization comprehends
-2. **Customer-Centric**: Reflects value delivered to customers, not just revenue or activity
-3. **Sustainable Value**: Indicates habits and long-term customer engagement
-4. **Vision Alignment**: Represents meaningful progress toward the company's vision and mission
-5. **Quantitative**: Measurable with clear, numeric tracking
-6. **Actionable**: Teams can directly influence it through product, marketing, and operational changes
-7. **Leading Indicator**: Predicts future business success and revenue growth
+| Candidate | Customer-value fidelity | Actionability | Data quality | Gaming risk | Business-health evidence | Decision |
+|---|---|---|---|---|---|---|
 
-**Step 3: Identify Input Metrics**
-Define 3-5 Input Metrics (also called leading indicators) that most directly influence and drive the North Star Metric. Each input metric should:
-- Be easier to move in the short term
-- Directly contribute to the North Star outcome
-- Help identify where optimization efforts should focus
+Then provide metric contract, inputs, guardrails, failure modes, and validation plan.
 
-## Tips for Best Results
-
-- Provide details about your business model and revenue model
-- Share your company's vision, mission, or long-term goals
-- Include current metrics you're tracking
-- Mention key customer segments and use cases
-- Describe the primary value you deliver to customers
+### Decision
+`ADOPT | PILOT | VALIDATE RELATIONSHIP | USE METRIC SET | REJECT`.
 
 ---
 
