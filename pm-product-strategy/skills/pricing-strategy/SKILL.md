@@ -25,13 +25,13 @@ If the user provides files (competitor pricing, survey data, financial models, o
 
    | Model | Best For | Example |
    |---|---|---|
-   | **Flat-rate** | Simple products, predictable costs | Basecamp ($99/mo flat) |
+   | **Flat-rate** | Simple products, predictable costs | Basecamp |
    | **Per-seat** | Collaboration tools, team products | Slack, Figma |
    | **Usage-based** | Infrastructure, API products | AWS, Twilio |
-   | **Tiered** | Products with distinct user segments | Most SaaS (Free/Pro/Enterprise) |
+   | **Tiered** | Products with distinct user segments | Most SaaS |
    | **Freemium** | Products with viral/network effects | Spotify, Notion |
    | **Freemium + usage** | Platform products | Vercel, OpenAI API |
-   | **Value-based** | High-impact enterprise tools | Salesforce, Palantir |
+   | **Value-based** | High-impact enterprise tools | Enterprise software/services |
 
 3. **Analyze competitive pricing**:
    - Map competitor pricing tiers and what's included
@@ -41,31 +41,28 @@ If the user provides files (competitor pricing, survey data, financial models, o
 
 4. **Design the pricing structure**:
    - **Tiers**: Define 2-4 tiers with clear differentiation
-   - **Feature gating**: Which features go in which tier? (Use value metrics, not arbitrary limits)
-   - **Value metric**: What unit do you charge on? (users, events, storage, API calls)
-   - **Anchor pricing**: Set the most popular tier to feel like the obvious choice
-   - **Annual discount**: Typically 15-20% off monthly pricing
+   - **Feature gating**: Which features go in which tier? Use value metrics, not arbitrary limits
+   - **Value metric**: What unit do you charge on? users, events, storage, API calls, outcomes, etc.
+   - **Anchor pricing**: Make comparisons intentional, not manipulative
+   - **Contract cadence**: Monthly/annual/multi-year only where justified by buying behavior and cost structure
 
 5. **Estimate price sensitivity**:
-   - Van Westendorp Price Sensitivity Meter (if survey data available):
-     - Too cheap → quality concerns
-     - Cheap → good value
-     - Expensive → starting to hesitate
-     - Too expensive → won't buy
-   - Alternatively, estimate based on competitor pricing and value delivered
+   - Use Van Westendorp only when real survey data exists and the sample/context are credible
+   - Use conjoint/Gabor-Granger, sales evidence, historical deal data, or controlled tests when appropriate
+   - Competitor pricing is context, not willingness-to-pay evidence
 
 6. **Plan pricing experiments**:
-   - A/B test pricing pages (different price points, tier names, feature bundles)
-   - Founder-led sales conversations to test willingness to pay
-   - Landing page tests with different price anchors
-   - Cohort analysis of conversion rates by price point
+   - sales conversations with structured questions
+   - proposal or packaging tests across comparable cohorts
+   - landing/pricing page tests when buying motion supports them
+   - controlled changes with margin/conversion/retention guardrails
 
 7. **Output a pricing recommendation**:
    ```
    Recommended Model: [Model type]
    Value Metric: [What you charge on]
 
-   | Tier | Price | Target Segment | Key Features | Positioning |
+   | Tier | Price/Range | Target Segment | Value Boundary | Evidence |
    |---|---|---|---|---|
 
    Key Assumptions:
@@ -74,6 +71,36 @@ If the user provides files (competitor pricing, survey data, financial models, o
    Risks:
    - [Risk] → [Mitigation]
    ```
+
+## Reliability and Economics Gate
+
+Before recommending a price:
+
+- classify key inputs as `MEASURED`, `SOURCE-BACKED`, `ESTIMATE`, `ASSUMPTION`, or `UNKNOWN`;
+- do not infer willingness to pay from competitor list price;
+- distinguish list price, realized price, discounting, services/implementation, minimum commitments, and usage overages;
+- verify whether public competitor prices are current and comparable;
+- model gross margin and cost-to-serve, especially for AI/usage-heavy products;
+- test whether the proposed value metric scales with customer value rather than merely vendor cost;
+- check price cliffs, bill shock, procurement friction, predictability, and gaming incentives;
+- model at least conservative/base/upside economics when volume or usage is uncertain;
+- identify the break-even condition if WTP or volume is unknown;
+- include enterprise implementation/support burden in TCO where relevant;
+- state where price discrimination/packaging may create fairness, trust, or channel conflict;
+- recommend `TEST` rather than a precise price when evidence is weak.
+
+### Contradiction pass
+
+Ask:
+- Could higher conversion at a lower price destroy margin or support capacity?
+- Could a usage metric discourage the behavior customers need to succeed?
+- Is the proposed premium supported by differentiated value or only positioning language?
+- Are high-WTP interview respondents different from actual buyers?
+- Would procurement prefer predictability even when usage-based pricing is theoretically efficient?
+
+### Decision
+
+End with `LAUNCH | PILOT | TEST WTP | REPACKAGE | HOLD`, confidence, load-bearing assumptions, and what evidence would change the recommendation.
 
 Think step by step. Save as markdown. Flag any assumptions that need validation before launch.
 
