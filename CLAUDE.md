@@ -6,7 +6,7 @@ Guidance for AI agents (Claude Code, Cowork, Codex, and others) working in this 
 
 **PM Skills: Reliability-First Enterprise AI Edition** (`sandeep9889123/pm-skills`) is a fork of `phuryn/pm-skills` with **10 independent plugins, 80 skills, and 46 commands/workflows**.
 
-The upstream marketplace supplies the core PM framework foundation. This fork adds reliability contracts, adversarial scenarios, semantic behavior guards, hardened decision-critical skills, and enterprise transformation / Enterprise AI PM extensions.
+The upstream marketplace supplies the core PM framework foundation. This fork adds reliability contracts, adversarial scenarios, semantic behavior guards, hardened decision-critical skills, enterprise transformation, and model-agnostic behavioral evaluation.
 
 Upstream creator/maintainer: Paweł Huryn — https://github.com/phuryn/pm-skills
 
@@ -18,30 +18,29 @@ Preserve upstream MIT attribution. Do not relabel upstream skills as fork-origin
 
 For decision-critical behavior use:
 
-`Observed failure → adversarial scenario → runtime guard → semantic regression test`
+`Observed failure → adversarial scenario → runtime guard → semantic regression test → behavioral benchmark`
 
 High-consequence skills should distinguish `FACT`, `INFERENCE`, `ASSUMPTION`, `ESTIMATE`, `UNKNOWN`, and `STALE` where applicable, seek disconfirming evidence, avoid false precision, define decision gates, and state what would change the recommendation.
-
-See `docs/standards/`, `reliability/scenario_matrix.json`, and `tests/test_reliability_contracts.py`.
 
 ## Repo Structure
 
 ```
-pm-skills/                           <- repo root
-├── .claude-plugin/marketplace.json  <- root marketplace manifest (lists all 10 plugins)
-├── .docs/images/                    <- images used by README
-├── .github/workflows/               <- CI: tests.yml, tag-on-merge.yml
-├── CHANGELOG.md                     <- release source of truth
-├── CLAUDE.md                        <- this file
-├── AGENTS.md                        <- pointer to CLAUDE.md
-├── CONTRIBUTING.md
+pm-skills/
+├── .claude-plugin/marketplace.json
+├── .github/workflows/
+├── CHANGELOG.md
+├── CLAUDE.md
 ├── README.md
 ├── LICENSE
 ├── validate_plugins.py
-├── reliability/                     <- scenario catalogs + machine-readable contracts
-├── docs/standards/                  <- PM skill quality and reliability standards
-├── docs/audit/                      <- baseline audit and backlog
-├── tests/                           <- structural + semantic-regression tests
+├── reliability/                     <- scenario catalogs + behavior contracts
+├── evaluation/                      <- golden cases + captured-output scorer
+│   ├── README.md
+│   ├── cases.json
+│   └── score_output.py
+├── docs/standards/                  <- PM skill quality/reliability standards
+├── docs/audit/                      <- audit and backlog
+├── tests/                           <- structural + semantic + eval-harness tests
 └── pm-{name}/                       <- 10 plugin directories
     ├── .claude-plugin/plugin.json
     ├── skills/{skill}/SKILL.md
@@ -77,21 +76,10 @@ pm-skills/                           <- repo root
 - High-risk behavior guards referenced by `reliability/scenario_matrix.json` must not be removed without updating the scenario/test intentionally.
 - Do not weaken a hard gate just to make an output more optimistic or concise.
 
-## What's Visible Where
-
-| Location | Visible in | Notes |
-|----------|-----------|-------|
-| `marketplace.json` → `description` | marketplace browser / CLI | One-line marketplace positioning |
-| `plugin.json` → `description` | plugin list / CLI | Per-plugin summary |
-| `SKILL.md` frontmatter → `description` | skill auto-loading | Include clear trigger phrases |
-| command frontmatter | command discovery | Short/actionable |
-| root `README.md` | GitHub | Public documentation |
-| `CLAUDE.md` | repo agents | Maintenance source of truth |
-
 ## Versioning & Releases
 
 - `CHANGELOG.md` is the source of truth. The newest `## vX.Y.Z — YYYY-MM-DD` heading is the released version; `## Unreleased` may contain pending fork changes.
-- Keep every released version in sync across `marketplace.json`, all **10** `plugin.json` files, and the latest released changelog heading. There is no independent per-plugin versioning in the current repo tests.
+- Keep every released version in sync across `marketplace.json`, all **10** `plugin.json` files, and the latest released changelog heading.
 - Every user-facing change gets a changelog bullet under `## Unreleased`.
 - Semver: breaking = major; new skills/commands or changed behavior = minor; fixes/docs = patch.
 
@@ -102,10 +90,11 @@ pm-skills/                           <- repo root
 1. Reproduce/understand the failure mode.
 2. Decide whether it is global, plugin-specific, or skill-specific.
 3. Add/update an adversarial scenario.
-4. Add a runtime behavior guard in the affected skill/workflow when material.
+4. Add a runtime behavior guard when material.
 5. Add/update a semantic regression contract for decision-critical guards.
-6. Check adjacent skills for the same failure pattern.
-7. Document the user-facing change in `CHANGELOG.md`.
+6. Add or mutate a behavioral golden case when the failure should be observable in model output.
+7. Check adjacent skills for the same failure pattern.
+8. Document the user-facing change in `CHANGELOG.md`.
 
 ### Negative conclusions
 
@@ -119,11 +108,35 @@ Do not convert targets, inferred outcomes, team-wide results, or confidential cl
 
 Any workflow causing external side effects should define permissions, validation, HITL policy, auditability, retries/idempotency, rollback/compensating action, monitoring, ownership, and a kill switch proportional to risk.
 
-## Article Links in Upstream Skills
+## Behavioral Evaluation
 
-- Existing mapped upstream skills may include `### Further Reading` links.
-- Preserve neutral tone and original attribution.
-- Do not add promotional claims or imply endorsement by upstream authors of fork-specific work.
+`evaluation/cases.json` is the frozen adversarial benchmark suite. `evaluation/score_output.py` scores captured model outputs.
+
+### Evaluation rules
+
+- Keep case prompts/context frozen during a benchmark run.
+- Evaluate **first-run** outputs. Do not coach the model with “you missed something” before scoring.
+- Deterministic hard gates are deliberately narrow and catastrophic. Do not use regex to pretend to judge nuanced PM reasoning.
+- Nuanced quality uses the 100-point rubric with a human or independent evaluator model, scoring every dimension 0–5 with rationale.
+- Default pass is 90/100 **and zero hard-gate failures**.
+- A 100/100 rubric score must never override a hard-gate failure.
+- Blind evaluator identity to model name where practical.
+- For stochastic comparisons, prefer multiple fresh runs and report mean, range, and hard-gate failure rate.
+- Do not tune a skill only to literal benchmark wording. Add mutated cases to test the underlying failure family.
+- Do not claim “100/100 PM skills” unless the exact benchmark scope, model/version, runs, scoring method, and results support that claim.
+
+### Adding a golden case
+
+A case should include:
+- unique id
+- workflow/skill
+- failure family
+- frozen prompt
+- context the model should reason from
+- expected behaviors
+- narrow required/forbidden hard-gate patterns
+
+Every new case must keep the shared rubric weights totaling 100 and should be covered by `tests/test_behavioral_eval_harness.py`.
 
 ## Operational Procedures
 
@@ -133,12 +146,9 @@ Any workflow causing external side effects should define permissions, validation
 3. If totals changed, update `marketplace.json` description.
 4. Add/update plugin entry in marketplace when plugin set changes.
 5. Update `reliability/scenario_matrix.json` for new plugins or new high-risk contracts.
-6. Add a `CHANGELOG.md` bullet under `## Unreleased`.
-7. Check this `CLAUDE.md` for stale counts/structure.
-
-### After a description change
-- Check public README/marketplace copy if the change affects positioning.
-- Keep skill descriptions concise enough for auto-loading.
+6. Consider whether a behavioral golden case should be added/updated.
+7. Add a `CHANGELOG.md` bullet under `## Unreleased`.
+8. Check this `CLAUDE.md` for stale counts/structure.
 
 ## Validation
 
@@ -146,20 +156,19 @@ Any workflow causing external side effects should define permissions, validation
 
 `tests/test_consistency.py` checks marketplace-vs-disk plugin list, versions, README counts, changelog format, and plugin command references.
 
-`tests/test_reliability_contracts.py` checks global/plugin scenario coverage and protects decision-critical runtime guard phrases from silent regression.
+`tests/test_reliability_contracts.py` checks scenario coverage and protects decision-critical runtime guard phrases from silent regression.
+
+`tests/test_behavioral_eval_harness.py` validates benchmark schema, 100-point weights, enterprise workflow coverage, known-bad hard-gate failures, and hard-gate precedence over a 100/100 soft score.
 
 ```bash
 python3 validate_plugins.py
 python3 -m unittest discover -s tests -v
 ```
 
-These semantic tests are guard-regression tests, not yet a complete end-to-end LLM quality benchmark. Do not claim they prove 100% output accuracy.
+The behavioral harness makes quality measurable on defined cases. It still does not prove universal correctness on unseen PM decisions.
 
-## What to Suggest After Completing Work
+## Upstream / Fork Boundary
 
-Prioritize evidence and validation over repo churn:
-- after a behavioral change, identify the failure scenario it prevents;
-- after adding a high-risk skill, add semantic contracts;
-- after adding a plugin, update marketplace/counts/scenarios/agent guidance;
-- before release, run structural + semantic tests and inspect the diff;
-- propose upstream PRs only for generic fixes that cleanly benefit `phuryn/pm-skills`.
+- Generic correctness/reliability fixes that cleanly benefit upstream can be proposed to `phuryn/pm-skills`.
+- Enterprise transformation, Enterprise AI PM, opinionated evidence contracts, and behavioral evaluation can evolve independently in this fork.
+- Preserve neutral attribution and never imply upstream endorsement of fork-specific behavior.
