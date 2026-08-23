@@ -4,9 +4,9 @@ Guidance for AI agents (Claude Code, Cowork, Codex, and others) working in this 
 
 ## Project Overview
 
-**PM Skills: Reliability-First Enterprise AI Edition** (`sandeep9889123/pm-skills`) is a fork of `phuryn/pm-skills` with **10 independent plugins, 80 skills, and 46 commands/workflows**.
+**PM Skills: Reliability-First Enterprise AI Edition** (`sandeep9889123/pm-skills`) is a fork of `phuryn/pm-skills` with **11 independent plugins, 86 skills, and 51 commands/workflows**.
 
-The upstream marketplace supplies the core PM framework foundation. This fork adds reliability contracts, adversarial scenarios, semantic behavior guards, hardened decision-critical skills, enterprise transformation, and model-agnostic behavioral evaluation.
+The upstream marketplace supplies the core PM framework foundation. This fork adds reliability contracts, adversarial scenarios, semantic behavior guards, hardened decision-critical skills, enterprise transformation, reliability-first business-case automation, and model-agnostic behavioral evaluation.
 
 Upstream creator/maintainer: Paweł Huryn — https://github.com/phuryn/pm-skills
 
@@ -18,9 +18,11 @@ Preserve upstream MIT attribution. Do not relabel upstream skills as fork-origin
 
 For decision-critical behavior use:
 
-`Observed failure → adversarial scenario → runtime guard → semantic regression test → behavioral benchmark`
+`Observed failure → adversarial scenario → runtime guard → deterministic proof obligation → semantic regression test → behavioral benchmark`
 
 High-consequence skills should distinguish `FACT`, `INFERENCE`, `ASSUMPTION`, `ESTIMATE`, `UNKNOWN`, and `STALE` where applicable, seek disconfirming evidence, avoid false precision, define decision gates, and state what would change the recommendation.
+
+For business cases, `PROPOSAL` and `DECISION_THRESHOLD` are additional explicit states. Unsupported decision-critical content must not be promoted to verified evidence merely because an executive-ready artifact is requested.
 
 ## Repo Structure
 
@@ -41,14 +43,14 @@ pm-skills/
 ├── docs/standards/                  <- PM skill quality/reliability standards
 ├── docs/audit/                      <- audit and backlog
 ├── tests/                           <- structural + semantic + eval-harness tests
-└── pm-{name}/                       <- 10 plugin directories
+└── pm-{name}/                       <- 11 plugin directories
     ├── .claude-plugin/plugin.json
     ├── skills/{skill}/SKILL.md
     ├── commands/{command}.md
     └── README.md
 ```
 
-### The 10 plugins
+### The 11 plugins
 
 | Plugin | Focus |
 |--------|-------|
@@ -62,6 +64,7 @@ pm-skills/
 | `pm-toolkit` | Resume, NDA, privacy, proofreading utilities |
 | `pm-ai-shipping` | AI-built app reviewability, intended-vs-implemented, tests, security/performance |
 | `pm-enterprise-transformation` | Future capabilities, client proof→GTM, sales transformation, tooling/automation |
+| `pm-business-case` | Evidence-led business cases, proof gates, economics, falsification, investment decisions |
 
 ## Key Design Rules
 
@@ -75,11 +78,43 @@ pm-skills/
 - Keep frontmatter lean; put detailed behavior in the body.
 - High-risk behavior guards referenced by `reliability/scenario_matrix.json` must not be removed without updating the scenario/test intentionally.
 - Do not weaken a hard gate just to make an output more optimistic or concise.
+- A deterministic validator is a proof-obligation check, not a truth oracle. Do not claim it verifies external reality.
+
+## Business Case Reliability
+
+`pm-business-case` is the generalized fail-closed business-case engine. `pm-enterprise-transformation/solution-business-case` remains the specialized future-capability business-case primitive inside the Enterprise Transformation operating system.
+
+Business-case decisions must follow evidence before narrative. The default sequence is:
+
+`Signal → Customer → JTBD → Alternatives → Right-to-win → Build/Buy/Partner/Do Nothing → Hypothesis → PoC → Evidence → Economics → GTM → Investment Decision → Reuse → Platform`
+
+Mandatory rules:
+
+- Never fabricate citations, competitors, customer quotes, market sizes, pricing, benchmarks, financial inputs, dates, or source details.
+- User-supplied competitors and external claims are leads until verified, unless an authoritative internal source-of-truth artifact is explicitly supplied.
+- A zero-result first search must trigger search expansion and contradiction checking, never an empty-market conclusion.
+- Tool/search failure means `coverage incomplete / UNKNOWN` for affected claims.
+- Decision-critical FACT claims require one directly authoritative primary source or two independent credible sources.
+- Material ESTIMATE claims require method/formula, explicit inputs, units, and source claim IDs where available.
+- BUILD must be compared with BUY, PARTNER, and DO NOTHING/current-state alternatives.
+- A PoC must be falsifiable and state what it cannot prove.
+- Technical validation is not commercial validation.
+- One client or one PoC is not sufficient evidence of platform/reusable-accelerator readiness.
+- BUILD, BUY, or PARTNER is blocked while P0 evidence remains UNKNOWN, STALE, unverified, or materially contradicted.
+- `NOT READY` and `EXPERIMENT` are valid outcomes and are preferable to manufactured certainty.
+
+When a business-case run writes an evidence ledger, execute when available:
+
+```bash
+python pm-business-case/scripts/validate_evidence.py evidence-ledger.json
+```
+
+Do not weaken the validator or relabel claims merely to force a pass.
 
 ## Versioning & Releases
 
 - `CHANGELOG.md` is the source of truth. The newest `## vX.Y.Z — YYYY-MM-DD` heading is the released version; `## Unreleased` may contain pending fork changes.
-- Keep every released version in sync across `marketplace.json`, all **10** `plugin.json` files, and the latest released changelog heading.
+- Keep every released version in sync across `marketplace.json`, all **11** `plugin.json` files, and the latest released changelog heading.
 - Every user-facing change gets a changelog bullet under `## Unreleased`.
 - Semver: breaking = major; new skills/commands or changed behavior = minor; fixes/docs = patch.
 
@@ -158,7 +193,9 @@ Every new case must keep the shared rubric weights totaling 100 and should be co
 
 `tests/test_reliability_contracts.py` checks scenario coverage and protects decision-critical runtime guard phrases from silent regression.
 
-`tests/test_behavioral_eval_harness.py` validates benchmark schema, 100-point weights, enterprise workflow coverage, known-bad hard-gate failures, and hard-gate precedence over a 100/100 soft score.
+`tests/test_business_case_contracts.py` protects business-case proof obligations, deterministic evidence-validator behavior, and 20 adversarial business-case scenarios.
+
+`tests/test_behavioral_eval_harness.py` validates benchmark schema, 100-point weights, enterprise/business-case workflow coverage, known-bad hard-gate failures, and hard-gate precedence over a 100/100 soft score.
 
 ```bash
 python3 validate_plugins.py
@@ -170,5 +207,5 @@ The behavioral harness makes quality measurable on defined cases. It still does 
 ## Upstream / Fork Boundary
 
 - Generic correctness/reliability fixes that cleanly benefit upstream can be proposed to `phuryn/pm-skills`.
-- Enterprise transformation, Enterprise AI PM, opinionated evidence contracts, and behavioral evaluation can evolve independently in this fork.
+- Enterprise transformation, Enterprise AI PM, opinionated evidence contracts, business-case reliability, and behavioral evaluation can evolve independently in this fork.
 - Preserve neutral attribution and never imply upstream endorsement of fork-specific behavior.
