@@ -85,6 +85,25 @@ For each target segment:
 11. Surface critical hypotheses that must be true for success
 12. Suggest low-effort experiments to test key assumptions
 
+## Reliability and Decision Gate
+
+A completed canvas is not automatically a strategy.
+
+Before finalizing:
+
+1. **Separate evidence** into `FACT`, `INFERENCE`, `ASSUMPTION`, `ESTIMATE`, `UNKNOWN`, and `STALE` for load-bearing claims.
+2. **State the decision** the strategy is intended to enable. If no meaningful choice is being made, say so.
+3. **Compare at least one credible alternative strategy**, including status quo when relevant. Do not evaluate the preferred strategy in isolation.
+4. **Expose opportunity cost**: what resources, segments, capabilities, or initiatives lose investment because of this choice?
+5. **Test coherence**: segment, value proposition, capabilities, growth motion, economics, and defensibility must reinforce one another. Flag contradictions.
+6. **Challenge the moat**: distinguish current advantage from a defensible mechanism. `Brand`, `AI`, `data`, or `first mover` are not moats without a mechanism competitors cannot or will not replicate economically.
+7. **Model reversibility**: identify decisions that are cheap to reverse versus path-dependent commitments.
+8. **Define falsification**: for the top 3 strategy assumptions, state evidence that would prove the strategy wrong and the cheapest test.
+9. **Use scenarios** when uncertainty is material: conservative/base/upside or equivalent, not one-point certainty.
+10. **Conclude with a decision**: `COMMIT | TEST | HOLD | REFRAME`, with what would change the recommendation.
+
+Do not manufacture market size, customer demand, unit economics, or differentiation to fill a canvas section.
+
 ## Notes
 - Ensure all 9 elements fit together logically
 - Identify what must be true for this strategy to work (hypotheses)
