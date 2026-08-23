@@ -146,13 +146,13 @@ Classify evidence:
 - signed contract
 - procurement history
 - pricing test
-- explicit WTP research
+- explicit willingness to pay (WTP) research
 - comparable verified price
 - public list price
 - analyst estimate
 - internal proposal
 
-A confident pricing recommendation requires credible WTP or comparable commercial evidence.
+A confident pricing recommendation requires credible willingness to pay (WTP) or comparable commercial evidence.
 
 Without it, use PROPOSAL or ESTIMATE and define a pricing experiment.
 
@@ -272,7 +272,7 @@ Do not make a confident ROI, revenue, payback, margin, or pricing claim when:
 - inputs are not traceable;
 - adoption or win rate is arbitrary;
 - market size is used as revenue forecast;
-- WTP is assumed;
+- willingness to pay is assumed;
 - one-time and recurring costs are mixed;
 - pilot economics ignore production conversion;
 - platform economics assume reuse that has not been demonstrated.
