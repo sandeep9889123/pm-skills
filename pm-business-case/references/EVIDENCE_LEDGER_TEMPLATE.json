@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0",
+  "decision_context": {
+    "decision": "",
+    "scope": "",
+    "decision_owner": "",
+    "time_horizon": "",
+    "geography": "",
+    "as_of_date": ""
+  },
+  "claims": [
+    {
+      "claim_id": "C001",
+      "claim_text": "",
+      "state": "UNKNOWN",
+      "priority": "P0",
+      "decision_critical": true,
+      "sources": [],
+      "basis_claim_ids": [],
+      "formula": "",
+      "inputs": [],
+      "verification_status": "UNVERIFIED",
+      "freshness_status": "UNKNOWN",
+      "contradiction_status": "NOT_CHECKED",
+      "notes": ""
+    }
+  ],
+  "decision": {
+    "status": "NOT READY",
+    "rationale_claim_ids": [],
+    "blocking_claim_ids": ["C001"]
+  }
+}

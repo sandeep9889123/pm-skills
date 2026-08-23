@@ -2,6 +2,18 @@
 
 ## Unreleased
 
+### Business Case Reliability Wave 4
+
+- Added **`pm-business-case`** with 6 local skills and 5 workflows for generalized evidence-first business-case formation, evidence refresh, investment red-teaming, and gated BUILD / BUY / PARTNER / EXPERIMENT / DEFER / KILL / NOT READY decisions.
+- Added a mandatory business-case evidence contract with explicit `FACT`, `INFERENCE`, `ASSUMPTION`, `ESTIMATE`, `UNKNOWN`, `STALE`, `PROPOSAL`, and `DECISION_THRESHOLD` states, plus source freshness, contradiction, corroboration, and user-claim handling rules.
+- Added a machine-readable evidence-ledger template and standard-library `validate_evidence.py` proof validator that rejects unsourced facts, unreconstructable estimates, unresolved P0 evidence, and irreversible investment decisions that fail proof obligations.
+- Added competitor search-exhaustion and contradiction gates to the business-case flow so a weak or failed first search cannot become “no competitors”; user-supplied competitors remain leads until independently verified.
+- Added customer/JTBD, build-vs-buy-vs-partner-vs-do-nothing, falsifiable PoC, willingness-to-pay, reconstructable economics, commercialization, and platform/reuse gates so technical feasibility cannot silently become market or investment proof.
+- Added 20 business-case adversarial scenarios covering zero-result research, user-invented competitors, stale evidence, conflicting market sizes, missing ROI inputs, absent WTP proof, sunk-cost build bias, demo-as-PoC errors, premature platform claims, tool failure, unverifiable quotes/citations, AI-label bias, and technical-success/commercial-failure divergence.
+- Expanded the behavioral evaluation harness with first-run business-case cases for zero-result competitor research, missing ROI inputs, premature platform investment, and technical success without commercial proof. A 100/100 soft score still cannot override a catastrophic hard-gate failure.
+- Added `tests/test_business_case_contracts.py` and extended the behavioral-harness tests so future changes cannot silently remove evidence gates, reconstructable economics, first-pass competitor safeguards, platform proof requirements, or deterministic decision blocking.
+- Preserved `pm-enterprise-transformation/solution-business-case` as the specialized future-capability investment primitive while positioning `pm-business-case` as the generalized business-case engine.
+
 ### Behavioral Evaluation Wave 3
 
 - Added a model-agnostic **behavioral evaluation harness** in `evaluation/` so actual Claude, Codex, or other model outputs can be scored rather than inferring quality from prompt text alone.

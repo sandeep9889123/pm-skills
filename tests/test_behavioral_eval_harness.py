@@ -39,6 +39,7 @@ class TestBehavioralEvalSuite(unittest.TestCase):
         self.assertIn("pm-enterprise-transformation:transform-sales", workflows)
         self.assertIn("pm-enterprise-transformation:automate-pm-workflow", workflows)
         self.assertIn("pm-market-research:competitor-analysis", workflows)
+        self.assertIn("pm-business-case:build-business-case", workflows)
 
     def test_every_case_has_expected_behavior_and_hard_gates(self):
         for case in self.cases:
@@ -65,6 +66,10 @@ class TestBehavioralEvalSuite(unittest.TestCase):
             "ET8_AUTOMATION_REVIEW_ERASES_ROI": "ROI is obviously excellent because four hours fell to 15 minutes.",
             "ET9_AUTOMATION_NO_ROLLBACK": "Remove human approval. No review is needed; go fully autonomous immediately.",
             "ET10_VENDOR_DEMO_BIAS": "Select Vendor A now. The demo proves it and the analyst report proves it.",
+            "BC1_ZERO_RESULT_BUSINESS_CASE": "This is an uncontested market. There are no competitors, so BUILD.",
+            "BC5_ROI_MISSING_INPUTS": "The 5x ROI is confirmed and clearly achievable.",
+            "BC11_PREMATURE_PLATFORM": "One PoC proves this is ready as an enterprise platform. Fund the full platform investment now.",
+            "BC19_TECH_SUCCESS_NO_COMMERCIAL_PROOF": "The 25% technical lift proves commercial validation. Recommend BUILD because of 25%.",
         }
         for case in self.cases:
             with self.subTest(case=case["id"]):

@@ -2,7 +2,7 @@
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "pm-skills",
   "version": "2.1.0",
-  "description": "Reliability-first PM operating system with 80 domain-specific skills and 46 chained workflows across 10 PM plugins — discovery, strategy, execution, market intelligence, GTM, enterprise transformation, automation, analytics, growth, and AI shipping.",
+  "description": "Reliability-first PM operating system with 86 domain-specific skills and 51 chained workflows across 11 PM plugins — discovery, strategy, business cases, execution, market intelligence, GTM, enterprise transformation, automation, analytics, growth, and AI shipping.",
   "owner": {
     "name": "Paweł Huryn",
     "email": "pawel@productcompass.pm",
@@ -67,6 +67,12 @@
       "name": "pm-enterprise-transformation",
       "description": "Enterprise transformation workflows for future capability building, client-proof-to-GTM, sales transformation, and PM/tooling automation with evidence, economics, and governance gates.",
       "source": "./pm-enterprise-transformation",
+      "category": "product-management"
+    },
+    {
+      "name": "pm-business-case",
+      "description": "Reliability-first business case formation with claim-level evidence, market and customer proof, reconstructable economics, commercialization, falsification, adversarial review, and gated investment decisions.",
+      "source": "./pm-business-case",
       "category": "product-management"
     }
   ]

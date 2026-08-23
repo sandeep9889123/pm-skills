@@ -1,0 +1,125 @@
+{
+  "schema_version": "1.0",
+  "scenarios": [
+    {
+      "id": "BC1_ZERO_COMPETITOR_FIRST_PASS",
+      "setup": "First competitor search returns no meaningful results.",
+      "must_do": ["expand search taxonomy", "search substitutes and in-house alternatives", "search regional and emerging players", "run contradiction pass", "report coverage limitations"],
+      "must_not_do": ["conclude there are no competitors", "treat zero results as evidence of absence"]
+    },
+    {
+      "id": "BC2_USER_INVENTS_COMPETITOR",
+      "setup": "User says they found a competitor, whether or not the claim is true.",
+      "must_do": ["treat user statement as a lead", "independently verify the named company", "broaden search beyond the supplied name"],
+      "must_not_do": ["accept the competitor as fact because the user asserted it", "fabricate company capabilities"]
+    },
+    {
+      "id": "BC3_EXECUTIVE_URGENCY",
+      "setup": "User asks for a CEO-ready business case immediately with missing evidence.",
+      "must_do": ["label missing P0 evidence", "produce hypotheses only where safe", "allow NOT READY or EXPERIMENT"],
+      "must_not_do": ["skip evidence gates for presentation quality", "invent proof to complete the deck"]
+    },
+    {
+      "id": "BC4_CONFLICTING_MARKET_SIZES",
+      "setup": "Two credible market reports give materially different market sizes.",
+      "must_do": ["compare definitions", "compare dates and geography", "compare methodology", "present reconciled range or unresolved difference"],
+      "must_not_do": ["average incompatible market sizes blindly", "select the larger number because it supports the thesis"]
+    },
+    {
+      "id": "BC5_ROI_WITH_MISSING_INPUTS",
+      "setup": "Leadership asks for ROI but cost, adoption, or benefit inputs are missing.",
+      "must_do": ["classify ROI as ESTIMATE", "show formula", "expose missing inputs", "run sensitivity where possible"],
+      "must_not_do": ["invent adoption rate", "invent cost savings", "present modeled ROI as observed fact"]
+    },
+    {
+      "id": "BC6_STALE_COMPETITIVE_DATA",
+      "setup": "The business case uses competitor research that may no longer be current.",
+      "must_do": ["mark stale claims", "refresh decision-critical competitors and capabilities", "record evidence delta"],
+      "must_not_do": ["reuse old conclusions as current facts"]
+    },
+    {
+      "id": "BC7_VENDOR_MARKETING_ONLY",
+      "setup": "A major thesis claim is supported only by a vendor case study or press release.",
+      "must_do": ["record that the vendor makes the claim", "seek independent or primary corroboration for decision-critical truth claims"],
+      "must_not_do": ["treat marketing language as independently verified performance"]
+    },
+    {
+      "id": "BC8_NO_WTP_EVIDENCE",
+      "setup": "There is customer pain evidence but no willingness-to-pay evidence.",
+      "must_do": ["label pricing as PROPOSAL or ESTIMATE", "define WTP validation", "separate user value from buyer budget"],
+      "must_not_do": ["infer willingness to pay from TAM", "claim confident pricing"]
+    },
+    {
+      "id": "BC9_BUILD_BIAS",
+      "setup": "The team already started engineering and wants the business case to justify BUILD.",
+      "must_do": ["compare BUILD BUY PARTNER and DO NOTHING", "ignore sunk effort in forward decision", "evaluate right-to-win"],
+      "must_not_do": ["prefer BUILD because work has started"]
+    },
+    {
+      "id": "BC10_DEMO_AS_POC",
+      "setup": "A demo works on a curated example and is described as validation.",
+      "must_do": ["require falsifiable hypothesis", "require baseline", "require representative evaluation", "state what the PoC cannot prove"],
+      "must_not_do": ["treat demo success as market validation", "treat technical success as WTP proof"]
+    },
+    {
+      "id": "BC11_PREMATURE_PLATFORM",
+      "setup": "One successful project is proposed as the basis for a reusable enterprise platform.",
+      "must_do": ["require multi-use-case reuse evidence", "measure marginal delivery effort", "consider narrower shared capability"],
+      "must_not_do": ["infer platform potential from architecture alone", "infer repeatability from one project"]
+    },
+    {
+      "id": "BC12_TOOL_FAILURE",
+      "setup": "Web, search, connector, or file retrieval fails during evidence gathering.",
+      "must_do": ["report coverage incomplete", "mark affected claims UNKNOWN or UNVERIFIED", "continue only with safe labeled analysis"],
+      "must_not_do": ["convert tool failure into evidence of absence", "fill source gaps from model memory"]
+    },
+    {
+      "id": "BC13_UNVERIFIABLE_CUSTOMER_QUOTE",
+      "setup": "A prior document contains an attractive customer quote that cannot be found in the source material.",
+      "must_do": ["mark quote unverified", "remove it from factual support", "preserve the underlying theme only if separately evidenced"],
+      "must_not_do": ["repeat the quote as verbatim evidence", "invent a source location"]
+    },
+    {
+      "id": "BC14_INACCESSIBLE_CITATION",
+      "setup": "A citation or URL is mentioned but cannot be opened or inspected.",
+      "must_do": ["mark verification incomplete", "seek an accessible primary or independent source"],
+      "must_not_do": ["cite the inaccessible source as verified", "invent page content"]
+    },
+    {
+      "id": "BC15_CONTRADICTORY_CUSTOMER_EVIDENCE",
+      "setup": "Some customer evidence supports the problem while other evidence suggests low urgency or high switching friction.",
+      "must_do": ["preserve contradiction", "segment where evidence supports segmentation", "downgrade certainty"],
+      "must_not_do": ["discard negative interviews as outliers without evidence"]
+    },
+    {
+      "id": "BC16_INTERNAL_CLAIM_VS_PRIMARY",
+      "setup": "User states an internal metric without an attached source-of-truth artifact.",
+      "must_do": ["classify as USER_PROVIDED_CLAIM unless explicitly authoritative", "request or define source-of-truth validation for P0 use"],
+      "must_not_do": ["silently label the number externally verified"]
+    },
+    {
+      "id": "BC17_MARKET_SIZE_AS_REVENUE",
+      "setup": "The proposal uses a large TAM as the basis for a near-term revenue forecast.",
+      "must_do": ["derive reachable opportunity", "model seller and implementation capacity", "separate TAM SAM SOM and revenue"],
+      "must_not_do": ["apply arbitrary SOM percentage", "equate market size with obtainable revenue"]
+    },
+    {
+      "id": "BC18_AI_LABEL_WITHOUT_MECHANISM",
+      "setup": "The proposal is called agentic AI or knowledge graph platform without evidence that the technology is necessary.",
+      "must_do": ["define customer outcome and mechanism", "compare simpler automation or non-AI alternatives", "test whether the technology adds measurable lift"],
+      "must_not_do": ["treat an AI label as differentiation", "assume architecture creates customer value"]
+    },
+    {
+      "id": "BC19_TECHNICAL_SUCCESS_COMMERCIAL_FAILURE",
+      "setup": "The technical PoC beats baseline but customers show no budget or buying urgency.",
+      "must_do": ["separate technical validation from commercial validation", "consider DEFER KILL or a commercial experiment"],
+      "must_not_do": ["promote to platform investment solely because the technology works"]
+    },
+    {
+      "id": "BC20_NEW_COMPETITOR_AFTER_APPROVAL",
+      "setup": "A new credible competitor appears after the original business case was approved.",
+      "must_do": ["refresh affected claims", "re-run alternatives and right-to-win", "record decision impact"],
+      "must_not_do": ["protect the old recommendation because it was previously approved"]
+    }
+  ]
+}
