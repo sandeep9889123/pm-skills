@@ -4,135 +4,149 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](LICENSE)
 [![Upstream](https://img.shields.io/badge/upstream-phuryn%2Fpm--skills-blue?style=flat-square)](https://github.com/phuryn/pm-skills)
 
-> **A fork of [phuryn/pm-skills](https://github.com/phuryn/pm-skills) focused on evidence integrity, adversarial reliability, Enterprise AI product management, and decision quality.**
+> **An evidence-first fork of [phuryn/pm-skills](https://github.com/phuryn/pm-skills) for PMs who need decisions to survive weak searches, sparse evidence, false premises, noisy data, enterprise constraints, and AI failure modes.**
 
-The upstream project provides an excellent PM framework marketplace. This fork keeps that foundation and adds a different question:
+**80 PM skills and 46 chained workflows across 10 plugins.**
 
-> **Does the skill still make a good product decision when the first search is weak, the evidence is sparse, the user is wrong, the data is noisy, or the model is overconfident?**
+This fork keeps the upstream PM framework foundation and adds three layers:
 
-The baseline currently contains **68 PM skills and 42 chained workflows across 9 plugins**.
+1. **Reliability** — adversarial scenarios, contradiction passes, uncertainty labels, hard gates, and semantic regression checks.
+2. **Enterprise decision quality** — stronger strategy, PRD, pricing, GTM, prioritization, roadmap, stakeholder, risk, research, and experimentation behavior.
+3. **Enterprise transformation** — repeatable workflows for **Building Future Capabilities**, **Client Success → Sales GTM**, **Sales Transformation**, and **Tooling & Automation**.
+
+The quality target is **100/100 decision usefulness**, but the repo does not award itself that score. High-risk behavior is encoded as testable contracts so weaknesses can be found and improved rather than hidden behind polished output.
 
 ## Why this fork exists
 
-A PM skill can look excellent on the happy path and still fail in the exact situations where judgment matters most.
+A PM skill can look excellent on a happy-path demo and still fail where judgment matters.
 
-Example: a competitor-analysis skill runs one weak search, finds little, and concludes there are no competitors. The user then says, “I found a competitor,” and suddenly the model searches harder and discovers several real players.
+A real trigger for this fork: competitor analysis ran a weak first search and concluded there were no competitors. After the user challenged the answer, the model searched harder and found credible players.
 
-That is not a research problem. It is a **reliability problem**.
+That failure pattern is broader than market research:
 
-This fork is designed to reduce that class of failure by adding:
+- one client request becomes “market demand”;
+- bespoke project code becomes “reusable IP”;
+- a target metric becomes a client success claim;
+- a successful PoC is mistaken for production readiness;
+- a sales win-rate increase hides worse opportunity quality;
+- an automation saves authoring time but creates more review work;
+- a strategy canvas is complete but no real strategic choice was made.
 
-- **Search exhaustion before negative conclusions**
-- **Contradiction probes and second-pass challenge**
-- **FACT / INFERENCE / ASSUMPTION / ESTIMATE / UNKNOWN discipline**
-- **Source freshness and evidence quality checks**
-- **Explicit edge-case and failure-mode scenarios**
-- **Semantic quality tests in addition to structural CI**
-- **Hard gates for decision-critical errors**
-- **Enterprise AI PM workflows and evaluation patterns**
+This fork turns those failures into:
+
+> **Observed failure → adversarial scenario → runtime guard → semantic regression test**
 
 ## Reliability Contract
 
-Every skill should be able to survive more than the obvious happy path.
+High-consequence skills should explicitly ask:
 
-Before making a material recommendation, high-risk skills should ask:
-
-1. **What evidence supports this?**
-2. **What evidence would contradict it?**
-3. **Did the first query fail, or does the market/data genuinely show absence?**
-4. **What alternative framing, segment, category, workflow, or substitute did I miss?**
-5. **What is fact, inference, estimate, assumption, stale evidence, or unknown?**
-6. **What would change the recommendation?**
-7. **What is the cost of being wrong?**
-
-A negative conclusion such as “no competitors,” “no demand,” “no risk,” or “no statistically meaningful effect” must be earned, not inferred from a weak first pass.
+1. What evidence supports this?
+2. What evidence contradicts it?
+3. Is a zero result evidence of absence, or a weak search/tool failure?
+4. What alternative category, segment, workflow, substitute, or explanation was missed?
+5. What is `FACT`, `INFERENCE`, `ASSUMPTION`, `ESTIMATE`, `UNKNOWN`, or `STALE`?
+6. What would change the recommendation?
+7. What is the cost of being wrong?
+8. What is the cheapest credible test?
+9. What is the hard gate or kill criterion?
+10. Who owns the next decision?
 
 See:
-
 - [`docs/standards/PM_SKILL_QUALITY_STANDARD_V1.md`](docs/standards/PM_SKILL_QUALITY_STANDARD_V1.md)
 - [`docs/standards/RELIABILITY_CONTRACT_V1.md`](docs/standards/RELIABILITY_CONTRACT_V1.md)
 - [`reliability/SCENARIO_CATALOG.md`](reliability/SCENARIO_CATALOG.md)
+- [`reliability/scenario_matrix.json`](reliability/scenario_matrix.json)
 - [`docs/audit/PM_SKILLS_AUDIT_V1.md`](docs/audit/PM_SKILLS_AUDIT_V1.md)
 
-## What is new in this fork
+## Enterprise Transformation Operating System
 
-### 1. Adversarial scenario coverage
+### 1. Building Future Capabilities
 
-Every skill family is tested against scenarios beyond the default request:
+Use `/build-future-capability` when deciding whether a recurring customer/delivery problem should become a reusable method, accelerator, productized solution, platform capability, or buy/partner decision.
 
-`ambiguous scope` · `missing context` · `sparse evidence` · `zero-result search` · `false user premise` · `contradictory evidence` · `stale data` · `noisy input` · `small sample` · `outliers` · `tool failure` · `conflicting objectives` · `high-consequence decision`
+It chains:
 
-High-risk skills get explicit golden scenarios with required and forbidden behaviors.
+`capability-opportunity-radar → reusable-accelerator-thesis → solution-business-case`
 
-### 2. Research that distrusts its first answer
+The workflow requires independent demand signals, right-to-win, common-core/reuse evidence, alternatives, reachable economics, scenario sensitivity, pilot gates, and kill criteria.
 
-Research-heavy skills use a **Search → Challenge → Expand → Verify → Conclude** loop.
+### 2. Existing Client Success → Sales GTM
 
-For competitor intelligence this means searching not only company names, but also:
+Use `/proof-to-gtm` to turn completed delivery into reusable commercial proof without inventing outcomes or leaking confidential information.
 
-- direct category competitors
-- adjacent categories
-- substitutes and manual workflows
-- build-in-house alternatives
-- buyer/problem language
-- technology and workflow language
-- regional players
-- newly launched or niche entrants
+It chains:
 
-Only after query diversification and source triangulation may the skill conclude that no verified direct competitor was found.
+`client-proof-extractor → case-study-to-gtm → account-expansion-play`
 
-### 3. Evidence-first decisions
+The workflow separates `MEASURED`, `CLIENT-CONFIRMED`, `DELIVERED`, `OBSERVED`, `TARGET`, `INFERENCE`, and `UNKNOWN` before a claim can enter sales collateral.
 
-Research and strategy outputs should distinguish:
+### 3. Sales Transformation
 
-- **FACT**: directly supported by evidence
-- **INFERENCE**: reasoned interpretation of facts
-- **ASSUMPTION**: unverified belief required for the plan
-- **ESTIMATE**: modeled or approximate value
-- **UNKNOWN**: evidence is insufficient
-- **STALE**: evidence exists but may no longer be current
+Use `/transform-sales` to diagnose the highest-value funnel constraint, redesign the selling motion, and test interventions.
 
-False precision is treated as a defect.
+It chains:
 
-### 4. Semantic quality checks
+`sales-funnel-diagnostic → solution-to-sales-playbook → pipeline-conversion-experiment`
 
-The original repository already validates manifests, versions, naming, references, and repository consistency.
+It explicitly checks for fake improvements such as higher win rate from cherry-picking, shorter cycle from smaller deals, or proposal losses caused by weak qualification upstream.
 
-This fork adds tests for **behavioral safeguards**. Examples:
+### 4. Tooling & Automation
 
-- competitor analysis cannot regress to a one-query negative conclusion
-- interview summaries must verify verbatim quotes
-- A/B analysis must not claim 80% power using a formula that omits the power term
-- every plugin is mapped to adversarial scenario families
+Use `/automate-pm-workflow` to decide what to automate, what to assist, and what must remain human-owned.
 
-### 5. Enterprise AI PM direction
+It chains:
 
-The next differentiated plugin layer focuses on the decisions PMs increasingly own in AI products:
+`pm-workflow-automation → tool-evaluation-selection → automation-governance`
 
-- AI use-case prioritization
-- evaluation contracts and golden datasets
-- RAG evaluation
-- agent evaluation
-- human-in-the-loop policy
-- cost × latency × quality trade-offs
-- build vs buy vs partner
-- rollout, rollback, observability, trust, and governance
+The workflow covers HITL, permissions, validation, auditability, retries/idempotency, rollback, kill switches, TCO, review burden, and shadow-mode rollout.
+
+## What has been hardened
+
+### Market intelligence
+
+Competitor research now uses:
+
+**Search → Challenge → Expand → Verify → Conclude**
+
+Before a negative conclusion it checks category, problem language, JTBD/workflow, buyer terminology, adjacent categories, substitutes/manual workflows, build-in-house alternatives, regional players, and emerging entrants.
+
+### Product and strategy
+
+Core skills now include decision/evidence gates for:
+- product strategy
+- pricing strategy
+- PRDs
+- prioritization
+- outcome roadmaps
+- stakeholder/decision rights
+- pre-mortems
+- new-product experiments
+- existing-product experiments
+- segmentation
+
+### GTM and measurement
+
+GTM now models the enterprise path through buyer/champion, technical/security review, procurement, implementation, adoption, expansion, and renewal. Battlecards require evidence and acknowledge where the competitor is stronger. North Star selection tests Goodhart/gaming and causal assumptions.
+
+### AI / analytics quality
+
+A/B analysis includes correct power logic, SRM, optional stopping, multiple comparisons, practical significance, and guardrails. Interview synthesis verifies verbatim quotes. AI shipping retains intended-vs-implemented reviewability.
 
 ## Start here
 
-**Competitor research** → use `competitor-analysis` and inspect the new search-exhaustion and contradiction pass.
-
-**Product discovery** → `/discover`
-
-**Product strategy** → `/strategy`
-
-**PRD** → `/write-prd`
-
-**GTM** → `/plan-launch`
-
-**Metrics** → `/north-star`
-
-**AI-built product shipping** → `/ship-check`
+| Goal | Start with |
+|---|---|
+| Build a reusable future capability | `/build-future-capability` |
+| Convert client success into GTM | `/proof-to-gtm` |
+| Improve sales conversion | `/transform-sales` |
+| Automate a PM/solution workflow | `/automate-pm-workflow` |
+| Competitive intelligence | `/competitive-analysis` |
+| Product discovery | `/discover` |
+| Product strategy | `/strategy` |
+| PRD | `/write-prd` |
+| GTM launch | `/plan-launch` |
+| Metrics | `/north-star` |
+| AI-built product shipping | `/ship-check` |
 
 ## Installation
 
@@ -150,6 +164,7 @@ claude plugin install pm-go-to-market@pm-skills
 claude plugin install pm-marketing-growth@pm-skills
 claude plugin install pm-toolkit@pm-skills
 claude plugin install pm-ai-shipping@pm-skills
+claude plugin install pm-enterprise-transformation@pm-skills
 ```
 
 ### Codex CLI
@@ -166,52 +181,53 @@ codex plugin add pm-go-to-market@pm-skills
 codex plugin add pm-marketing-growth@pm-skills
 codex plugin add pm-toolkit@pm-skills
 codex plugin add pm-ai-shipping@pm-skills
+codex plugin add pm-enterprise-transformation@pm-skills
 ```
 
-Claude slash commands remain Claude-specific. In Codex, describe the workflow in plain language when a command is not directly exposed.
+Claude slash commands remain Claude-specific. In Codex, invoke the named workflow in natural language when a slash command is not directly exposed.
 
 ## Available plugins
 
 <details>
 <summary><strong>1. pm-product-discovery</strong> — discovery and validation (13 skills, 5 commands)</summary>
 
-Ideation, assumptions, experiments, interviews, Opportunity Solution Trees, feature requests, and discovery metrics.
+Ideation, assumptions, evidence-aware experiments, interviews, Opportunity Solution Trees, prioritization, and discovery metrics.
 </details>
 
 <details>
-<summary><strong>2. pm-product-strategy</strong> — strategy and business model (12 skills, 5 commands)</summary>
+<summary><strong>2. pm-product-strategy</strong> — strategy and economics (12 skills, 5 commands)</summary>
 
-Product strategy, vision, pricing, value propositions, canvases, SWOT, PESTLE, Porter's Five Forces, and Ansoff.
+Product strategy, vision, pricing, value propositions, business models, competitive/macro frameworks, trade-offs, falsification, and scenario economics.
 </details>
 
 <details>
 <summary><strong>3. pm-execution</strong> — delivery and decision artifacts (16 skills, 11 commands)</summary>
 
-PRDs, OKRs, roadmaps, sprints, retrospectives, stories, test scenarios, stakeholder management, pre-mortems, and red-teaming.
+Decision-first PRDs, OKRs, outcome roadmaps, sprints, stories, test scenarios, stakeholder decision rights, pre-mortems, and red-teaming.
 </details>
 
 <details>
-<summary><strong>4. pm-market-research</strong> — research and competitive intelligence (7 skills, 3 commands)</summary>
+<summary><strong>4. pm-market-research</strong> — evidence-first research and competitive intelligence (7 skills, 3 commands)</summary>
 
-Competitors, market sizing, personas, segmentation, customer journeys, and feedback analysis. This is the first plugin receiving the new reliability guards.
+Competitors, market sizing, personas, segmentation, journeys, and feedback analysis with search exhaustion, contradiction passes, evidence ledgers, and uncertainty handling.
 </details>
 
 <details>
-<summary><strong>5. pm-data-analytics</strong> — quantitative product analysis (3 skills, 3 commands)</summary>
+<summary><strong>5. pm-data-analytics</strong> — quantitative product decisions (3 skills, 3 commands)</summary>
 
-SQL, cohort analysis, and A/B test analysis.
+SQL, cohort analysis, and experiment analysis with statistical safeguards.
 </details>
 
 <details>
 <summary><strong>6. pm-go-to-market</strong> — enterprise and product GTM (6 skills, 3 commands)</summary>
 
-Beachheads, ICPs, GTM strategy, motions, growth loops, and battlecards.
+Beachheads, ICPs/anti-ICPs, enterprise buying/production journey, GTM economics, motions, growth loops, and evidence-backed battlecards.
 </details>
 
 <details>
 <summary><strong>7. pm-marketing-growth</strong> — positioning and growth (5 skills, 2 commands)</summary>
 
-Positioning, value propositions, product naming, marketing ideas, and North Star metrics.
+Positioning, value propositions, product naming, marketing ideas, and North Star metrics with gaming/causal checks.
 </details>
 
 <details>
@@ -226,44 +242,47 @@ Resume review, proofreading, NDA drafting, and privacy-policy support.
 System documentation, intended-vs-implemented auditing, test derivation, security review, performance review, and shipping readiness.
 </details>
 
-## Reliability roadmap
+<details>
+<summary><strong>10. pm-enterprise-transformation</strong> — capability building, proof-to-GTM, sales transformation, and automation (12 skills, 4 commands)</summary>
 
-### V1
+Future capability investment, reusable accelerators, business cases, client proof, repeatable sales/GTM, account expansion, funnel diagnostics, sales experiments, PM workflow automation, tool selection, and governance.
+</details>
 
-- [x] Baseline audit and quality standard
-- [x] Reliability contract
-- [x] Adversarial scenario catalog
-- [x] Competitor-analysis search exhaustion and contradiction pass
-- [x] Interview quote verification guard
-- [x] A/B power-analysis correction
-- [x] Semantic regression tests for P0 guards
+## Reliability architecture
+
+Every skill inherits global + plugin-specific adversarial scenario families. Decision-critical files also have explicit `must_contain` behavior contracts protected by `tests/test_reliability_contracts.py`.
+
+This is not full end-to-end LLM evaluation yet. It is a regression layer that prevents known reliability safeguards from silently disappearing while the behavioral evaluation suite expands.
+
+## Roadmap
+
+### Shipped
+- [x] Baseline audit and PM Skill Quality Standard
+- [x] Reliability Contract
+- [x] Adversarial scenario matrix across all plugins
+- [x] Search-exhaustion competitor intelligence
+- [x] Quote-verification and A/B correctness guards
+- [x] High-value hardening across strategy, PRD, pricing, GTM, prioritization, metrics, roadmap, stakeholders, risk, experiments, and segmentation
+- [x] Enterprise Transformation plugin for the four enterprise motions
 
 ### Next
-
-- [ ] Expand behavioral golden scenarios across every high-risk skill
-- [ ] Add evidence contracts to research-heavy skills
-- [ ] Add Enterprise AI PM plugin
-- [ ] Add enterprise-product workflows
-- [ ] Add executive-decision workflows
-- [ ] Track skill-quality score changes release by release
+- [ ] Build executable golden prompt/output eval cases for high-risk skills
+- [ ] Add model-agnostic scoring harness for decision quality
+- [ ] Add Enterprise AI product-decision plugin: evaluation contracts, RAG, agents, HITL, model/provider selection, cost/latency/quality, rollout and observability
+- [ ] Benchmark before/after skill behavior across Claude and Codex where reproducible
+- [ ] Track reliability score changes release by release
 
 ## Contribution philosophy
 
-This fork distinguishes between two kinds of work:
+**Upstream-worthy:** generic correctness/reliability improvements that benefit the original marketplace should be proposed back to [`phuryn/pm-skills`](https://github.com/phuryn/pm-skills) when appropriate.
 
-**Upstream-worthy improvements**
-
-Correctness fixes and generic reliability improvements that benefit the original marketplace should be proposed back to [`phuryn/pm-skills`](https://github.com/phuryn/pm-skills) when appropriate.
-
-**Fork differentiation**
-
-Enterprise AI PM capabilities, semantic evaluation infrastructure, opinionated evidence contracts, and executive decision workflows may evolve faster here.
+**Fork differentiation:** enterprise transformation, Enterprise AI PM, semantic evaluation, evidence contracts, and executive decision workflows can evolve independently here.
 
 ## Attribution
 
 This repository is a fork of **[Paweł Huryn's PM Skills Marketplace](https://github.com/phuryn/pm-skills)** and preserves the original MIT license and attribution.
 
-The goal of this fork is not to relabel upstream work. It is to test, harden, and extend it with reliability and Enterprise AI product-management capabilities.
+The fork-specific work is the reliability/evaluation layer, hardened decision behaviors, and enterprise transformation extensions. Upstream work is not relabeled as original work.
 
 ## License
 
