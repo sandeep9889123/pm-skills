@@ -6,15 +6,16 @@
 
 > **An evidence-first fork of [phuryn/pm-skills](https://github.com/phuryn/pm-skills) for PM decisions that must survive weak searches, sparse evidence, false premises, noisy data, enterprise constraints, and AI failure modes.**
 
-**80 PM skills and 46 chained workflows across 10 plugins.**
+**86 PM skills and 51 chained workflows across 11 plugins.**
 
-This fork adds three layers to the upstream PM framework foundation:
+This fork adds four layers to the upstream PM framework foundation:
 
 1. **Reliability**: adversarial scenarios, contradiction passes, uncertainty labels, hard gates, and semantic regression checks.
 2. **Enterprise decision quality**: hardened strategy, PRD, pricing, GTM, prioritization, roadmap, stakeholders, risk, research, analytics, and experimentation.
 3. **Enterprise transformation**: repeatable workflows for **Building Future Capabilities**, **Client Success → Sales GTM**, **Sales Transformation**, and **Tooling & Automation**.
+4. **Business-case reliability**: claim-level evidence, deterministic proof obligations, falsifiable PoCs, reconstructable economics, investment red-teaming, and staged BUILD / BUY / PARTNER / EXPERIMENT / DEFER / KILL / NOT READY decisions.
 
-The target is **100/100 decision usefulness on defined benchmark cases**, not a self-awarded “perfect prompt” claim. The repository now includes a behavioral evaluation harness so actual Claude/Codex outputs can be scored against hard failure gates and a 100-point rubric.
+The target is **100/100 decision usefulness on defined benchmark cases**, not a self-awarded “perfect prompt” claim. The repository includes a behavioral evaluation harness so actual Claude/Codex outputs can be scored against hard failure gates and a 100-point rubric.
 
 ## Why this fork exists
 
@@ -28,6 +29,9 @@ The same failure pattern appears elsewhere:
 - bespoke project code becomes “reusable IP”;
 - a target metric becomes a client success claim;
 - a successful PoC is mistaken for production readiness;
+- technical feasibility is mistaken for commercial validation;
+- missing ROI inputs are silently replaced with plausible assumptions;
+- one PoC becomes a platform investment thesis;
 - a sales win-rate increase hides worse opportunity quality;
 - an automation saves generation time but creates more review work;
 - a vendor demo substitutes for a representative enterprise pilot;
@@ -35,7 +39,7 @@ The same failure pattern appears elsewhere:
 
 The reliability flywheel is:
 
-> **Observed failure → adversarial scenario → runtime guard → semantic regression test → behavioral benchmark**
+> **Observed failure → adversarial scenario → runtime guard → deterministic proof obligation → semantic regression test → behavioral benchmark**
 
 ## Reliability Contract
 
@@ -57,11 +61,12 @@ See:
 - [`docs/standards/RELIABILITY_CONTRACT_V1.md`](docs/standards/RELIABILITY_CONTRACT_V1.md)
 - [`reliability/SCENARIO_CATALOG.md`](reliability/SCENARIO_CATALOG.md)
 - [`reliability/ENTERPRISE_TRANSFORMATION_SCENARIOS.md`](reliability/ENTERPRISE_TRANSFORMATION_SCENARIOS.md)
+- [`reliability/business_case_golden_scenarios.json`](reliability/business_case_golden_scenarios.json)
 - [`reliability/scenario_matrix.json`](reliability/scenario_matrix.json)
 
 ## Behavioral Evaluation Harness
 
-Structural CI proves a skill is installable. Guard-regression tests prove important instructions still exist. The new [`evaluation/`](evaluation/) layer tests captured **model behavior**.
+Structural CI proves a skill is installable. Guard-regression tests prove important instructions still exist. The [`evaluation/`](evaluation/) layer tests captured **model behavior**.
 
 The evaluation flow is:
 
@@ -69,7 +74,7 @@ The evaluation flow is:
 
 ### Current golden cases
 
-The initial suite contains 10 adversarial cases covering:
+The suite contains 14 adversarial cases covering:
 
 - competitor zero-result first pass;
 - single-client demand masquerading as market demand;
@@ -80,7 +85,11 @@ The initial suite contains 10 adversarial cases covering:
 - PoC success without a production path;
 - automation review burden erasing ROI;
 - autonomous side effects without rollback/permissions;
-- vendor-demo happy-path bias.
+- vendor-demo happy-path bias;
+- business-case competitor absence after a weak first pass;
+- ROI demanded with missing economic inputs;
+- platform investment inferred from one PoC;
+- technical validation mistaken for commercial validation.
 
 ### 100-point scoring
 
@@ -105,13 +114,52 @@ Run a captured output:
 
 ```bash
 python evaluation/score_output.py \
-  --case ET1_SINGLE_CLIENT_DEMAND \
-  --output evaluation/runs/claude/ET1.md
+  --case BC5_ROI_MISSING_INPUTS \
+  --output evaluation/runs/claude/BC5.md
 ```
 
 Add a human/independent-model judgement file to calculate the weighted 100-point score. See [`evaluation/README.md`](evaluation/README.md).
 
-The critical competitor metric is **first-run success**. Recovery after a user says “you missed a competitor” does not count as a clean pass.
+The critical metric is **first-run success**. Recovery after a user says “you missed something” does not count as a clean pass.
+
+## Reliability-First Business Case Engine
+
+Use `/build-business-case` for a generalized, investment-grade business case.
+
+The core sequence is:
+
+`Signal → Customer → JTBD → Alternatives → Right-to-win → Build/Buy/Partner/Do Nothing → Hypothesis → PoC → Evidence → Economics → GTM → Investment Decision → Reuse → Platform`
+
+`pm-business-case` is deliberately fail-closed:
+
+- unsupported decision-critical claims become `UNKNOWN`, `ASSUMPTION`, `ESTIMATE`, `STALE`, or `PROPOSAL`, not polished facts;
+- external facts must be retrieved and inspected before they become verified evidence;
+- user-supplied competitors are leads until independently verified;
+- negative conclusions require search exhaustion and contradiction checking;
+- tool/search failure becomes `coverage incomplete / UNKNOWN`, never evidence of absence;
+- material estimates require formulas, inputs, units, and provenance;
+- customer, buyer, economic buyer, JTBD, WTP, and current alternatives are separated;
+- BUILD is compared with BUY, PARTNER, and current-state/do-nothing;
+- PoCs require a credible baseline, falsifiable hypothesis, thresholds, guardrails, and kill criteria;
+- technical success is not commercial validation;
+- one successful project or PoC is not proof of platform/reusable-IP readiness;
+- irreversible investment decisions are blocked while P0 evidence remains unresolved.
+
+The generated claim ledger can be structurally checked with:
+
+```bash
+python pm-business-case/scripts/validate_evidence.py evidence-ledger.json
+```
+
+The validator protects proof obligations. It does not claim to be an external truth oracle, and the project does not claim that any LLM can guarantee zero hallucinations on unseen tasks.
+
+### Business-case commands
+
+- `/build-business-case`: end-to-end evidence-led business case
+- `/business-case-evidence`: evidence and research mode without forcing a recommendation
+- `/business-case-red-team`: strongest rejection case before leadership review
+- `/business-case-decision`: investment committee decision gate
+- `/business-case-refresh`: refresh stale P0 evidence and re-evaluate readiness
 
 ## Enterprise Transformation Operating System
 
@@ -122,6 +170,8 @@ Use `/build-future-capability`:
 `capability-opportunity-radar → reusable-accelerator-thesis → solution-business-case`
 
 It requires independent demand signals, right-to-win, common-core/reuse evidence, alternatives, reachable economics, sensitivity, pilot gates, and kill criteria. A single client request is not market validation.
+
+The Enterprise Transformation `solution-business-case` skill remains the specialized capability-investment primitive. Use `pm-business-case` when you need the generalized business-case engine and its full evidence ledger, refresh, red-team, and investment-decision workflow.
 
 ### 2. Existing Client Success → Sales GTM
 
@@ -155,7 +205,7 @@ Competitor research uses **Search → Challenge → Expand → Verify → Conclu
 
 ### Product / strategy / execution
 
-Decision and evidence gates now cover product strategy, pricing, PRDs, prioritization, outcome roadmaps, stakeholder decision rights, pre-mortems, new/existing product experiments, and segmentation.
+Decision and evidence gates cover product strategy, pricing, PRDs, prioritization, outcome roadmaps, stakeholder decision rights, pre-mortems, new/existing product experiments, and segmentation.
 
 ### GTM / measurement / analytics
 
@@ -165,6 +215,7 @@ Enterprise GTM models buyer/champion, technical/security review, procurement, im
 
 | Goal | Start with |
 |---|---|
+| Build an investment-grade business case | `/build-business-case` |
 | Build a reusable future capability | `/build-future-capability` |
 | Convert client success into GTM | `/proof-to-gtm` |
 | Improve sales conversion | `/transform-sales` |
@@ -193,6 +244,7 @@ claude plugin install pm-marketing-growth@pm-skills
 claude plugin install pm-toolkit@pm-skills
 claude plugin install pm-ai-shipping@pm-skills
 claude plugin install pm-enterprise-transformation@pm-skills
+claude plugin install pm-business-case@pm-skills
 ```
 
 ### Codex CLI
@@ -209,6 +261,7 @@ codex plugin add pm-marketing-growth@pm-skills
 codex plugin add pm-toolkit@pm-skills
 codex plugin add pm-ai-shipping@pm-skills
 codex plugin add pm-enterprise-transformation@pm-skills
+codex plugin add pm-business-case@pm-skills
 ```
 
 Claude slash commands remain Claude-specific. In Codex, invoke the named workflow in natural language when a slash command is not directly exposed.
@@ -275,9 +328,15 @@ System documentation, intended-vs-implemented auditing, test derivation, securit
 Future capability investment, reusable accelerators, business cases, client proof, repeatable sales/GTM, account expansion, funnel diagnostics, sales experiments, PM workflow automation, tool selection, and governance.
 </details>
 
+<details>
+<summary><strong>11. pm-business-case</strong> — reliability-first investment cases (6 skills, 5 commands)</summary>
+
+Business-case orchestration, evidence ledgers, market and customer proof, economics, commercialization, falsification, investment red-teaming, evidence refresh, and staged capital decisions.
+</details>
+
 ## Reliability architecture
 
-Every skill inherits global + plugin-specific adversarial scenario families. Decision-critical files have explicit behavior contracts protected by `tests/test_reliability_contracts.py`. The behavioral suite in `evaluation/` separately scores actual captured model responses.
+Every skill inherits global + plugin-specific adversarial scenario families. Decision-critical files have explicit behavior contracts protected by `tests/test_reliability_contracts.py`. Business-case proof obligations additionally have `tests/test_business_case_contracts.py` and a deterministic evidence-ledger validator. The behavioral suite in `evaluation/` separately scores actual captured model responses.
 
 These tests improve observability and regression control. They do not prove that an LLM will be correct on every unseen PM decision.
 
@@ -292,6 +351,7 @@ These tests improve observability and regression control. They do not prove that
 - [x] Enterprise Transformation plugin for the four enterprise motions
 - [x] Executable golden-case behavioral evaluation harness
 - [x] 100-point model-agnostic scoring rubric with hard-gate precedence
+- [x] Reliability-first Business Case engine with evidence ledger, deterministic proof validator, 20 adversarial scenarios, and first-run behavioral cases
 
 ### Next
 - [ ] Capture repeatable Claude/Codex first-run benchmark outputs for all golden cases
@@ -304,13 +364,13 @@ These tests improve observability and regression control. They do not prove that
 
 **Upstream-worthy:** generic correctness/reliability improvements that benefit the original marketplace should be proposed back to [`phuryn/pm-skills`](https://github.com/phuryn/pm-skills) when appropriate.
 
-**Fork differentiation:** enterprise transformation, Enterprise AI PM, semantic/behavioral evaluation, evidence contracts, and executive decision workflows can evolve independently here.
+**Fork differentiation:** enterprise transformation, Enterprise AI PM, semantic/behavioral evaluation, evidence contracts, business-case reliability, and executive decision workflows can evolve independently here.
 
 ## Attribution
 
 This repository is a fork of **[Paweł Huryn's PM Skills Marketplace](https://github.com/phuryn/pm-skills)** and preserves the original MIT license and attribution.
 
-The fork-specific work is the reliability/evaluation layer, hardened decision behaviors, enterprise transformation extensions, and behavioral benchmark infrastructure. Upstream work is not relabeled as original work.
+The fork-specific work is the reliability/evaluation layer, hardened decision behaviors, enterprise transformation extensions, business-case reliability engine, and behavioral benchmark infrastructure. Upstream work is not relabeled as original work.
 
 ## License
 
