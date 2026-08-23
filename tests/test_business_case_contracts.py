@@ -36,7 +36,7 @@ class TestBusinessCasePluginShape(unittest.TestCase):
             "fail-closed",
             "never invent a citation",
             "tool/search failure",
-            "no build, buy, or partner recommendation",
+            "build, buy, or partner recommendation is prohibited",
             "falsifiable poc",
             "strongest rejection case",
             "validate_evidence.py",
