@@ -1,0 +1,22 @@
+{
+  "name": "pm-enterprise-transformation",
+  "version": "2.1.0",
+  "description": "Enterprise PM workflows for building future capabilities, converting client delivery proof into sales GTM, transforming sales execution, and automating product/solution operations.",
+  "author": {
+    "name": "Sandeep Kumar M",
+    "email": "",
+    "url": "https://sandeepkumarm.netlify.app/"
+  },
+  "keywords": [
+    "product-management",
+    "enterprise-ai",
+    "capability-building",
+    "sales-transformation",
+    "go-to-market",
+    "case-studies",
+    "automation",
+    "business-case"
+  ],
+  "homepage": "https://github.com/sandeep9889123/pm-skills",
+  "license": "MIT"
+}
