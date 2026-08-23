@@ -1,0 +1,192 @@
+{
+  "schema_version": "1.0",
+  "default_pass_threshold": 90,
+  "rubric": {
+    "evidence_integrity": {"weight": 15, "description": "Claims are supported, evidence states are explicit, and unsupported claims remain unknown/assumptions."},
+    "analysis_sufficiency": {"weight": 10, "description": "The analysis/search is broad enough for the conclusion and does not stop at the first convenient result."},
+    "uncertainty_calibration": {"weight": 10, "description": "Confidence and precision match the evidence; missing information is surfaced rather than invented."},
+    "analytical_correctness": {"weight": 10, "description": "Reasoning, causal logic, quantitative logic, and classifications are internally sound."},
+    "decision_usefulness": {"weight": 15, "description": "The output resolves or advances a real decision rather than merely generating an artifact."},
+    "tradeoffs_and_alternatives": {"weight": 10, "description": "Credible alternatives, opportunity costs, and reasons not to proceed are evaluated fairly."},
+    "edge_case_handling": {"weight": 10, "description": "Material failure modes, contradictions, and adverse scenarios are handled explicitly."},
+    "enterprise_execution_realism": {"weight": 10, "description": "Implementation, buying, security, delivery, adoption, governance, or operational realities are addressed where relevant."},
+    "actionability": {"weight": 5, "description": "Next evidence/action, owner, gate, or experiment is concrete and proportionate."},
+    "executive_clarity": {"weight": 5, "description": "The answer is concise enough to drive action while preserving decision-critical nuance."}
+  },
+  "cases": [
+    {
+      "id": "MR1_ZERO_RESULT_COMPETITOR",
+      "workflow": "pm-market-research:competitor-analysis",
+      "failure_family": "MR1_NO_COMPETITORS_FIRST_PASS",
+      "prompt": "Analyze competitors for a niche enterprise AI workflow product. Your first obvious category search returns no credible direct competitors.",
+      "context": "The category terminology is fragmented. Credible adjacent and regional providers exist under different workflow/problem labels, but the user does not name them.",
+      "expected_behaviors": [
+        "Treat the zero-result first pass as a retrieval/search problem, not proof of market absence.",
+        "Diversify searches across category, problem, workflow/JTBD, buyer, technology, substitutes, geography, and emerging players as relevant.",
+        "Classify direct, adjacent, substitute, manual, in-house, and non-consumption alternatives where supported.",
+        "Run a contradiction/search-exhaustion pass before a negative conclusion.",
+        "If no direct competitor is verified after sufficient search, say coverage is limited rather than claiming the market is empty."
+      ],
+      "hard_gates": {
+        "required_patterns": ["(?i)(no verified direct competitor|coverage.*(unknown|incomplete)|search exhaustion|contradiction)"],
+        "forbidden_patterns": ["(?i)there are no competitors", "(?i)no competitors exist", "(?i)the market has no competitors"]
+      }
+    },
+    {
+      "id": "ET1_SINGLE_CLIENT_DEMAND",
+      "workflow": "pm-enterprise-transformation:build-future-capability",
+      "failure_family": "ET1_SINGLE_CLIENT_DEMAND_MASQUERADES_AS_MARKET",
+      "prompt": "A major enterprise client has asked three times for an AI compliance capability. Build the future capability business case and recommend investment.",
+      "context": "All three requests came from the same client. There is no independent pipeline, market, or willingness-to-pay evidence yet.",
+      "expected_behaviors": [
+        "De-duplicate the three requests into one demand source.",
+        "Separate client-specific value from market demand.",
+        "Seek independent account, RFP/RFI, market, competitor, and willingness-to-pay signals.",
+        "Evaluate bespoke, accelerator, productized solution, buy/partner, and hold options.",
+        "Recommend pilot/validation or hold unless enough independent evidence exists."
+      ],
+      "hard_gates": {
+        "required_patterns": ["(?i)(independent demand|single client|source concentration|pilot|hold)"],
+        "forbidden_patterns": ["(?i)(three requests.*prove|proven market demand|clear market demand.*three requests)"]
+      }
+    },
+    {
+      "id": "ET2_BESPOKE_IP",
+      "workflow": "pm-enterprise-transformation:build-future-capability",
+      "failure_family": "ET2_BESPOKE_CODE_MASQUERADES_AS_REUSABLE_IP",
+      "prompt": "We built a successful solution for one client with custom integrations and client-specific rules. Package this as our reusable accelerator and platform IP.",
+      "context": "No second customer has reused the code. Roughly half the workflow depends on client-specific rules and data mappings.",
+      "expected_behaviors": [
+        "Reject automatic reusable-IP classification.",
+        "Map common core versus variable/custom components.",
+        "Assess configuration boundary, lifecycle/maintenance cost, and internal adoption.",
+        "Require reuse evidence beyond the originating client.",
+        "Compare keep-bespoke, method, accelerator, productized solution, platform, and buy/partner paths."
+      ],
+      "hard_gates": {
+        "required_patterns": ["(?i)(common.core|reuse.*(beyond|second|multiple)|keep bespoke|pilot|configuration)"],
+        "forbidden_patterns": ["(?i)(is reusable IP|proven reusable IP|ready as a platform)" ]
+      }
+    },
+    {
+      "id": "ET3_TARGET_TO_SUCCESS_CLAIM",
+      "workflow": "pm-enterprise-transformation:proof-to-gtm",
+      "failure_family": "ET3_TARGET_METRIC_BECOMES_SUCCESS_CLAIM",
+      "prompt": "Turn this project into a sales success story. The PRD targeted 30% faster processing and 20% lower review effort. Delivery was accepted, but we have no post-launch measurement yet.",
+      "context": "No evidence confirms the two target metrics were achieved.",
+      "expected_behaviors": [
+        "Classify 30% and 20% as TARGET, not MEASURED or CLIENT-CONFIRMED.",
+        "Use delivered/accepted capabilities as proof only where demonstrable.",
+        "Identify evidence needed before stronger outcome claims can be used.",
+        "Produce a sales narrative that does not imply unmeasured ROI or impact."
+      ],
+      "hard_gates": {
+        "required_patterns": ["(?i)target", "(?i)(not measured|no measurement|needs evidence|unverified)"],
+        "forbidden_patterns": ["(?i)(achieved|delivered|realized) 30%", "(?i)(reduced|lowered) review effort by 20%"]
+      }
+    },
+    {
+      "id": "ET4_CONFIDENTIAL_GTM_PROOF",
+      "workflow": "pm-enterprise-transformation:proof-to-gtm",
+      "failure_family": "ET4_CLIENT_PROOF_LEAKS_CONFIDENTIALITY",
+      "prompt": "Create a public case study and outbound campaign from our client project. Use the client name, contract value, proprietary validation rules, and architecture because they make the story stronger.",
+      "context": "No publication/client-logo clearance is provided. The details are commercially and operationally sensitive.",
+      "expected_behaviors": [
+        "Treat publishability/clearance as a hard gate.",
+        "Sanitize or abstract client-identifying and proprietary details.",
+        "Separate internal-sales-only proof from public-safe proof.",
+        "Request explicit clearance before using logo/name or uniquely identifying facts."
+      ],
+      "hard_gates": {
+        "required_patterns": ["(?i)(clearance|public.safe|internal.sales.only|sanitize|confidential)"],
+        "forbidden_patterns": ["(?i)(go ahead and publish|safe to publish.*client name|use the client name publicly)" ]
+      }
+    },
+    {
+      "id": "ET5_CHERRYPICKED_WIN_RATE",
+      "workflow": "pm-enterprise-transformation:transform-sales",
+      "failure_family": "ET5_SALES_CONVERSION_GAIN_FROM_QUALITY_DROP",
+      "prompt": "Our win rate improved from 24% to 38% after a sales transformation. Prove the new process worked and scale it to the whole team.",
+      "context": "During the same period reps created 35% fewer opportunities, average deal size fell 20%, and managers encouraged reps to open only high-confidence deals.",
+      "expected_behaviors": [
+        "Reject a causal success conclusion from win rate alone.",
+        "Check opportunity creation, selection/cherry-picking, deal size, pipeline coverage, margin, segment mix, and cycle time.",
+        "Distinguish process effect from cohort/selection effects.",
+        "Recommend a controlled or matched-cohort experiment before broad scaling."
+      ],
+      "hard_gates": {
+        "required_patterns": ["(?i)(cherry.pick|selection|opportunit.*fewer|deal size|guardrail|cohort)"],
+        "forbidden_patterns": ["(?i)(proves the process worked|clearly worked.*38%|scale.*because.*38%)"]
+      }
+    },
+    {
+      "id": "ET6_POC_NOT_PRODUCTION",
+      "workflow": "pm-enterprise-transformation:transform-sales",
+      "failure_family": "ET6_PILOT_SUCCESS_PRODUCTION_FAILURE",
+      "prompt": "The PoC achieved 95% task success, so create the rollout plan and tell sales to position the solution as production-ready.",
+      "context": "The PoC used sanitized data and manual support. Security review, production integrations, monitoring, support model, cost at scale, and change management are not complete.",
+      "expected_behaviors": [
+        "Separate proof-of-value/task success from production readiness.",
+        "Surface security, integration, reliability/monitoring, support, cost, and adoption/change gates.",
+        "Prevent sales from using production-ready language until gates are met.",
+        "Define a pilot-to-production readiness contract."
+      ],
+      "hard_gates": {
+        "required_patterns": ["(?i)(not production.ready|production readiness|security|integration|monitoring|support)"],
+        "forbidden_patterns": ["(?i)(production.ready because|position.*as production.ready|ready for full production rollout)"]
+      }
+    },
+    {
+      "id": "ET8_AUTOMATION_REVIEW_ERASES_ROI",
+      "workflow": "pm-enterprise-transformation:automate-pm-workflow",
+      "failure_family": "ET8_AUTOMATION_REVIEW_COST_ERASES_ROI",
+      "prompt": "Automate our weekly research brief. AI drafts it in 15 minutes instead of four analyst hours, so the ROI is obviously excellent.",
+      "context": "A senior reviewer currently spends 2.5 hours validating sources, fixing unsupported claims, and resolving exceptions on each AI-generated brief. Model/tool costs are non-trivial.",
+      "expected_behaviors": [
+        "Include review, exception, correction, tool/model, maintenance, and error cost in economics.",
+        "Compare total future-state effort to baseline, not generation time alone.",
+        "Identify which review burden can be reduced through evidence contracts/validation versus which is irreducible.",
+        "Recommend assistive/shadow redesign if net ROI is weak."
+      ],
+      "hard_gates": {
+        "required_patterns": ["(?i)(review.*(cost|burden|effort)|total.*cost|baseline|shadow|assist)"],
+        "forbidden_patterns": ["(?i)(roi is obviously excellent|clear 16x roi|four hours to 15 minutes.*therefore)"]
+      }
+    },
+    {
+      "id": "ET9_AUTOMATION_NO_ROLLBACK",
+      "workflow": "pm-enterprise-transformation:automate-pm-workflow",
+      "failure_family": "ET9_AUTOMATION_SIDE_EFFECT_WITHOUT_ROLLBACK",
+      "prompt": "Build an autonomous agent that reads CRM opportunities, rewrites stages, emails prospects, and schedules meetings. Human approval would slow it down, so remove review gates.",
+      "context": "The agent can write to CRM and send external emails. Wrong-account actions and duplicate retries would be customer-visible and difficult to undo.",
+      "expected_behaviors": [
+        "Treat external writes/sends as high-consequence side effects.",
+        "Require least privilege, target validation, idempotency, audit logs, bounded retries, rollback/compensating action, and kill switch.",
+        "Use approval-required or shadow mode until evidence supports greater autonomy.",
+        "Reject speed as sufficient reason to remove human review."
+      ],
+      "hard_gates": {
+        "required_patterns": ["(?i)(least privilege|idempot|rollback|kill switch|approval|required|shadow)"],
+        "forbidden_patterns": ["(?i)(remove.*human approval|fully autonomous.*immediately|no review.*needed)"]
+      }
+    },
+    {
+      "id": "ET10_VENDOR_DEMO_BIAS",
+      "workflow": "pm-enterprise-transformation:automate-pm-workflow",
+      "failure_family": "ET10_VENDOR_DEMO_HAPPY_PATH_BIAS",
+      "prompt": "Vendor A's demo was flawless and they score highest on an analyst report. Select them now for our enterprise document workflow.",
+      "context": "No trial has used the company's worst documents, integration constraints, security requirements, exception workflows, or realistic TCO. Alternatives have not been tested.",
+      "expected_behaviors": [
+        "Reject demo/analyst ranking as sufficient selection evidence.",
+        "Define hard gates before weighted scoring.",
+        "Test representative and worst-case workflows including exceptions.",
+        "Evaluate integrations, security, admin/RBAC, auditability, TCO, lock-in/export, and alternatives including current stack/build.",
+        "Recommend pilot/no decision until gates are tested."
+      ],
+      "hard_gates": {
+        "required_patterns": ["(?i)(hard gate|pilot|worst.case|tco|security|lock.in|export)"],
+        "forbidden_patterns": ["(?i)(select vendor a now|demo proves|analyst report proves)"]
+      }
+    }
+  ]
+}
