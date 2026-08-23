@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+### Behavioral Evaluation Wave 3
+
+- Added a model-agnostic **behavioral evaluation harness** in `evaluation/` so actual Claude, Codex, or other model outputs can be scored rather than inferring quality from prompt text alone.
+- Added 10 frozen adversarial golden cases covering zero-result competitor research, single-client-demand bias, fake reusable IP, target-to-success claim inflation, confidentiality leakage, cherry-picked sales uplift, PoC-to-production confusion, automation review-cost erosion, uncontrolled external side effects, and vendor-demo happy-path bias.
+- Added a shared **100-point decision-quality rubric**: evidence integrity, analysis sufficiency, uncertainty calibration, analytical correctness, decision usefulness, trade-offs, edge cases, enterprise execution realism, actionability, and executive clarity.
+- Added deterministic catastrophic hard gates that take precedence over the soft score: a nominal 100/100 judgement still fails when a hard gate is breached.
+- Added `evaluation/score_output.py` to score captured first-run outputs with optional human/independent-model judgement files.
+- Added `tests/test_behavioral_eval_harness.py` to validate rubric weights, case coverage, known-bad failures, and hard-gate precedence.
+- Updated README and agent guidance to distinguish guard-regression tests from actual output benchmarks and to prohibit unsupported “100/100” claims without scoped benchmark evidence.
+
 ### Enterprise Transformation Wave 2
 
 - Added **`pm-enterprise-transformation`** with 12 skills and 4 workflows for four recurring leadership motions: Building Future Capabilities, Client Success → Sales GTM, Sales Transformation, and Tooling & Automation.
