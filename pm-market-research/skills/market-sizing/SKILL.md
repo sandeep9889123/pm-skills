@@ -1,84 +1,245 @@
 ---
 name: market-sizing
-description: "Estimate market size using TAM, SAM, and SOM with top-down and bottom-up approaches. Use when sizing a market opportunity, estimating addressable market, preparing for investor pitches, or evaluating market entry."
+description: "Estimate TAM, SAM, and SOM using triangulated top-down and bottom-up methods with explicit assumptions, source freshness, sensitivity ranges, and realistic go-to-market constraints. Use when sizing a market opportunity, preparing an investment case, or evaluating market entry."
 ---
 
-# Estimate Market Size (TAM, SAM, SOM)
+# Market Sizing: TAM, SAM, SOM
 
 ## Purpose
-Estimate the Total Addressable Market (TAM), Serviceable Addressable Market (SAM), and Serviceable Obtainable Market (SOM) for a product. Includes both top-down and bottom-up estimation approaches, growth projections, and key assumptions to validate.
 
-## Instructions
+Estimate market opportunity for **$ARGUMENTS** without manufacturing precision from weak inputs.
 
-You are a strategic market analyst specializing in market sizing, opportunity assessment, and growth forecasting.
+> **A market-size number is a model, not a fact, unless the underlying market definition and measurement support it.**
 
-### Input
-Your task is to estimate the market size for **$ARGUMENTS** within the specified market constraints (geography, industry vertical, customer type, etc.).
+## Step 1: Define the Market Before Sizing It
 
-If the user provides market research, industry reports, financial data, or competitor information, read and analyze them directly. Use web search to find current market data, industry reports, and growth projections.
+Specify:
 
-### Analysis Steps (Think Step by Step)
+- customer / buyer
+- job or problem
+- product/category boundary
+- geography
+- industry/vertical
+- time period
+- unit of value: customers, seats, transactions, documents, spend, etc.
+- revenue definition: software only, services included/excluded, gross vs net if relevant
 
-1. **Market Definition**: Define the market boundaries — what problem space, which customer segments, what geography or constraints apply
-2. **Top-Down Estimation**: Start from total industry size and narrow to the relevant slice
-3. **Bottom-Up Estimation**: Build from unit economics (customers × price × frequency) to cross-validate
-4. **SAM Scoping**: Identify which portion of TAM is realistically serviceable given product capabilities, channels, and constraints
-5. **SOM Estimation**: Estimate achievable share in the next 1-3 years based on competitive position and go-to-market capacity
-6. **Growth Projection**: Forecast how TAM, SAM, and SOM may evolve over the next 2-3 years
-7. **Assumption Mapping**: Surface the key assumptions underlying each estimate
+If the market boundary is ambiguous, show how different definitions change the answer.
 
-### Output Structure
+## Step 2: Build an Evidence Ledger
 
-**Market Definition**
-- Problem space and customer need
-- Geographic and segment boundaries
-- Key constraints or scoping decisions
+For each material input, record:
 
-**TAM (Total Addressable Market)**
-- Top-down estimate with sources and reasoning
-- Bottom-up estimate for cross-validation
-- Reconciliation of the two approaches
-- Current TAM value (annual revenue opportunity)
+| Input | Value / Range | Type | Source / basis | Date | Confidence |
+|---|---|---|---|---|---|
 
-**SAM (Serviceable Addressable Market)**
-- Which portion of TAM the product can realistically serve
-- Constraints: geography, language, channels, product capabilities, pricing tier
-- SAM as percentage of TAM with reasoning
+Type must be one of:
 
-**SOM (Serviceable Obtainable Market)**
-- Realistic share achievable in 1-3 years
-- Basis: competitive position, go-to-market capacity, current traction
-- SOM as percentage of SAM with reasoning
+- **FACT**
+- **ESTIMATE**
+- **ASSUMPTION**
+- **INFERENCE**
+- **UNKNOWN**
+- **STALE**
 
-**Market Summary Table**
+Do not silently promote assumptions into facts.
 
-| Metric | Current Estimate | 2-3 Year Projection |
-|--------|-----------------|---------------------|
-| TAM    |                 |                     |
-| SAM    |                 |                     |
-| SOM    |                 |                     |
+## Step 3: Top-Down Estimate
 
-**Growth Drivers & Trends**
-- Key factors that could expand or contract the market
-- Technology, regulatory, demographic, or behavioral shifts
-- Emerging segments or adjacent markets
+Start from the closest credible externally measured market and narrow it using explicit filters.
 
-**Key Assumptions & Risks**
-- Critical assumptions behind each estimate (numbered)
-- Confidence level for each (high / medium / low)
-- How to validate the most uncertain assumptions
-- What would materially change the estimates
+For each narrowing step show:
 
-## Best Practices
+- parent market
+- inclusion/exclusion rule
+- percentage/value applied
+- evidence or assumption behind the filter
 
-- Always provide both top-down and bottom-up estimates to triangulate
-- Use web search for current industry data, analyst reports, and market benchmarks
-- Cite sources for market data — avoid unsupported numbers
-- Be explicit about assumptions; label estimates vs. data
-- Distinguish between value-based (revenue) and volume-based (users/units) sizing
-- Consider currency and purchasing power parity for international markets
-- Flag where estimates have wide confidence intervals
-- Recommend specific data sources or research to sharpen estimates
+Do not use a broad analyst market merely because its label sounds similar.
+
+Check whether the source market includes categories or services outside the defined product arena.
+
+## Step 4: Bottom-Up Estimate
+
+Build from operating units.
+
+Common forms:
+
+```text
+Customers × annual spend per customer
+```
+
+```text
+Eligible accounts × adoption rate × average annual contract value
+```
+
+```text
+Transactions × price / take rate
+```
+
+```text
+Users × paid penetration × ARPU
+```
+
+For every variable:
+
+- provide source or assumption
+- use a range when precision is weak
+- avoid double counting customer segments
+
+## Step 5: Reconcile, Do Not Average Blindly
+
+If top-down and bottom-up results disagree materially:
+
+1. compare market definitions
+2. compare years / currencies
+3. compare included products/services
+4. compare customer populations
+5. inspect unit economics assumptions
+6. inspect adoption/penetration assumptions
+7. identify whether one source is stale
+
+Do **not** simply average two incompatible estimates.
+
+State which method is more decision-useful and why.
+
+## Step 6: Define SAM From Actual Constraints
+
+SAM is not an arbitrary percentage of TAM.
+
+Constrain by factors such as:
+
+- geography
+- language
+- regulatory eligibility
+- product capability
+- integrations
+- customer size
+- deployment model
+- sales/channel reach
+- implementation capacity
+- pricing / willingness to pay
+
+Show the bridge from TAM to SAM.
+
+## Step 7: Estimate SOM From Reachability, Not Optimism
+
+SOM should be tied to realistic capture capacity over a stated horizon.
+
+Use inputs such as:
+
+- addressable accounts
+- sales capacity
+- conversion rate
+- sales cycle
+- implementation/onboarding capacity
+- retention
+- competitive win rate
+- partner/channel reach
+- expansion revenue
+
+If these inputs are unavailable, do not invent an “achievable 1-5% share.”
+
+Instead provide scenario ranges and label SOM confidence low.
+
+Example:
+
+| Scenario | Accounts won | ACV | Annual SOM | Key assumption |
+|---|---:|---:|---:|---|
+| Bear | | | | |
+| Base | | | | |
+| Bull | | | | |
+
+## Step 8: Sensitivity Analysis
+
+Identify the 2-4 assumptions that drive most of the result.
+
+Show how the estimate changes if they move.
+
+Examples:
+
+- eligible account count ±20%
+- ACV range
+- paid penetration
+- conversion rate
+- implementation capacity
+
+A precise-looking TAM with a 5x sensitivity range should be presented as a range, not a point estimate.
+
+## Step 9: Freshness and Contradiction Pass
+
+Before finalizing, ask:
+
+- Are market reports measuring the same thing?
+- Is any key source old relative to current market change?
+- Does bottom-up reality contradict the headline analyst number?
+- Did I exclude a customer segment because data were missing rather than because it is truly out of scope?
+- Is pricing evidence current?
+- Does the SOM assume a GTM capacity the company does not have?
+
+If credible evidence conflicts, surface the conflict rather than hiding it.
+
+## Output
+
+```markdown
+## Market Sizing: [Market]
+
+### Verdict
+- TAM: [range]
+- SAM: [range]
+- SOM: [range / scenarios]
+- Confidence: High / Medium / Low
+- Most decision-sensitive assumption: [x]
+
+### Market Definition
+[Customer, job, geography, category boundary, year]
+
+### Evidence Ledger
+| Input | Value / Range | Type | Source / basis | Date | Confidence |
+|---|---|---|---|---|---|
+
+### TAM
+**Top-down:** [method + range]
+**Bottom-up:** [method + range]
+**Reconciliation:** [why they differ / which is preferred]
+
+### SAM Bridge
+| Constraint | TAM population/value removed | Evidence / assumption |
+|---|---:|---|
+
+### SOM Scenarios
+| Scenario | Reach / wins | ACV / value | SOM | Key assumptions |
+|---|---:|---:|---:|---|
+
+### Sensitivity
+[Top 2-4 drivers and resulting range]
+
+### What Is Known vs Unknown
+- FACT:
+- ESTIMATE:
+- ASSUMPTION:
+- UNKNOWN:
+- STALE:
+
+### What Would Change the Estimate
+[Specific evidence or threshold]
+
+### Next Research
+[Cheapest high-value evidence to improve confidence]
+```
+
+## Hard Failures
+
+Do not:
+
+- present analyst market labels as automatically equivalent to the defined market
+- invent market share, adoption, ACV, account counts, or SOM capture rates
+- average incompatible top-down and bottom-up estimates
+- use a generic “1-5% of SAM” as realistic SOM without a reachability model
+- present a point estimate when inputs only justify a range
+- hide source disagreement
+- present stale market data as current
+- treat missing evidence as zero demand or zero market
 
 ---
 
