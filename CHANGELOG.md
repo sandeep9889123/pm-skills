@@ -13,6 +13,10 @@
 - Hardened `user-personas` against forced persona counts, invented demographics, unsupported “research-backed” claims, and unverified quotes.
 - Hardened `summarize-interview` with verbatim-quote verification, observation-vs-inference separation, contradiction preservation, and small-N research safeguards.
 - Corrected `ab-test-analysis` power guidance so a target such as 80% power requires the beta / `z_(1-beta)` term; added SRM, optional-stopping, multiple-comparison, practical-significance, guardrail, and invalid-test decision logic.
+- Added the **pm-business-case** plugin with 6 local skills and 5 commands for evidence-first business case formation, evidence refresh, investment red-teaming, and gated BUILD / BUY / PARTNER / EXPERIMENT / DEFER / KILL / NOT READY decisions.
+- Added a mandatory business-case evidence contract, machine-readable evidence ledger template, and standard-library `validate_evidence.py` validator that blocks unsourced facts, unreconstructable estimates, unresolved P0 evidence, and irreversible investment decisions that fail proof obligations.
+- Added 20 business-case golden failure scenarios covering zero-result competitor searches, user-invented competitors, stale evidence, conflicting market sizes, missing ROI inputs, absent WTP proof, build bias, demo-as-PoC errors, premature platform claims, tool failure, AI-label bias, and technical-success/commercial-failure divergence.
+- Added dedicated business-case regression tests so future edits cannot silently remove evidence gates, competitor search exhaustion, customer-demand safeguards, reconstructable economics, strongest-rejection logic, or the deterministic decision validator.
 
 ## v2.1.0 — 2026-07-03
 
