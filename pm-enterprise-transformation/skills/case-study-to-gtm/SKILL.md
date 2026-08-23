@@ -62,6 +62,7 @@ Prerequisite: use only claims that survived evidence/confidentiality review. If 
 - Never imply that one client proves market-wide demand.
 - Never use a client logo/name without clearance.
 - Never claim ROI unless cost and benefit assumptions are defensible.
+- **Do not claim broad transferability until it has been tested beyond the reference account.**
 - Do not hide fit constraints that made the success possible.
 - Search for evidence that the target ICP differs materially from the reference client.
 - If the case is not transferable, recommend `ACCOUNT-SPECIFIC`, not a broader GTM push.
