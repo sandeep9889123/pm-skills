@@ -1,74 +1,94 @@
 ---
 name: competitive-battlecard
-description: "Create sales-ready competitive battlecards comparing your product against a specific competitor — positioning, feature comparison, objection handling, and win/loss patterns. Use when preparing sales teams, creating competitive materials, or responding to 'why not competitor X?'"
+description: "Create evidence-backed sales-ready competitive battlecards comparing your product against a specific competitor — positioning, proof, objections, fit, and win/loss patterns. Use when preparing sales teams or responding to 'why not competitor X?'"
 ---
 
 ## Competitive Battlecard
 
-Create a concise, sales-ready battlecard for use against a specific competitor.
+Create a concise, current, evidence-backed battlecard for use against a specific competitor.
 
 ### Context
 
-You are creating a competitive battlecard for **$ARGUMENTS**.
+Research the competitor's current product, pricing, positioning, and recent changes. If the user provides feature lists, win/loss data, sales calls, case studies, or internal notes, treat them as evidence to verify, not automatically as fact.
 
-Use web search to research the competitor's current product, pricing, positioning, and recent changes. If the user provides files (feature lists, win/loss data, sales call notes), read them first.
+## Evidence rules
 
-### Instructions
+Classify important claims as:
+- `VERIFIED`: current primary/credible evidence
+- `INTERNAL OBSERVATION`: supported by win/loss or field evidence
+- `INFERENCE`: reasoned but not directly verified
+- `STALE`: evidence may no longer reflect current product
+- `UNKNOWN`: insufficient evidence
 
-1. **Research the competitor** (use web search):
-   - Current product offerings and features
-   - Pricing tiers and model
-   - Target market and positioning
-   - Recent product launches or changes
-   - Known strengths and weaknesses
-   - Customer reviews and sentiment (G2, Capterra, Reddit)
+Never invent competitor weaknesses, customer complaints, pricing, market share, or win/loss patterns to fill the template.
 
-2. **Create the battlecard** with these sections:
+## Instructions
 
-   ### Company Overview
-   - Founded, HQ, funding/revenue (if public)
-   - Target market and ICP
-   - Positioning in one sentence
+1. **Define competitive context**
+   A competitor can be stronger for some segments. State the target ICP, use case, and buyer before declaring a winner.
 
-   ### Quick Comparison
+2. **Research current competitor evidence**
+   - official product/docs/pricing
+   - recent releases
+   - target segment and messaging
+   - integrations/security/implementation when material
+   - independent reviews/community evidence as experience signals
+   - internal verified win/loss evidence
 
-   | Capability | Us | Them | Winner |
-   |---|---|---|---|
-   | [Feature area 1] | [Our approach] | [Their approach] | [Us/Them/Tie] |
-   | [Feature area 2] | ... | ... | ... |
-   | Pricing | ... | ... | ... |
-   | Support | ... | ... | ... |
+3. **Compare by decision criteria, not feature count**
 
-   ### Where We Win
-   - [Advantage 1]: [Proof point or customer quote]
-   - [Advantage 2]: [Specific capability they lack]
-   - [Advantage 3]: [Better approach with reasoning]
+   | Buyer criterion | Us | Them | Evidence | Fit by segment |
+   |---|---|---|---|---|
 
-   ### Where They Win
-   - [Their strength 1]: [Our counter-positioning]
-   - [Their strength 2]: [How we mitigate this gap]
+   Avoid a generic `Winner` column when trade-offs depend on segment/context.
 
-   ### Common Objections & Responses
+4. **Where we win**
+   Every claim requires a mechanism and proof. If proof is missing, label it a positioning hypothesis.
 
-   | Prospect Says | Respond With |
-   |---|---|
-   | "Competitor X has [feature]" | "[Our alternative approach and why it's better for them]" |
-   | "They're cheaper" | "[Value framing: total cost of ownership, ROI, hidden costs]" |
-   | "They're more established" | "[Our advantages: speed, innovation, focus, support]" |
+5. **Where they win**
+   State genuine strengths. Do not disguise competitor advantages as objection-handling opportunities.
 
-   ### Landmines to Plant
-   Questions to ask the prospect that highlight competitor weaknesses:
-   - "How important is [area where we excel] to your team?"
-   - "Have you evaluated [specific capability they lack]?"
+6. **Qualification / disqualification**
+   Define deals where we should pursue, where the competitor may be a better fit, and what evidence should be collected during discovery.
 
-   ### Win/Loss Patterns
-   - We tend to win when: [pattern]
-   - We tend to lose when: [pattern]
-   - Key differentiator in competitive deals: [what tips the scale]
+7. **Objections and responses**
+   Responses must be truthful, specific, and buyer-relevant. Do not use unsupported TCO/ROI claims.
 
-3. **Keep it scannable**: Sales reps need to reference this during calls. Use tables, bold text, and short bullets.
+8. **Competitive discovery questions**
+   Ask neutral questions that surface decision criteria. Avoid manipulative “landmines” based on unverified competitor deficiencies.
 
-Save as markdown. Format for easy printing or sharing in Notion/Confluence.
+9. **Win/loss patterns**
+   Only state patterns when enough comparable internal data exists. Include sample/time period and confidence. Otherwise list hypotheses to validate.
+
+## Contradiction pass
+
+Before delivery ask:
+- Has the competitor shipped something that invalidates this card?
+- Are we comparing list price to realized price?
+- Are review complaints representative or anecdotes?
+- Does our claimed advantage depend on services/custom work?
+- Is the battlecard optimized to win bad-fit deals?
+- What would the competitor's best salesperson say is wrong with this card?
+
+## Output
+
+### One-screen rep card
+- ICP fit
+- 3 decision criteria
+- where we win with proof
+- where they win
+- discovery questions
+- objections
+- disqualifiers
+- evidence freshness date
+
+### Detailed evidence appendix
+Source/claim/confidence/staleness for material assertions.
+
+### Decision
+`USE | USE WITH CAVEATS | REFRESH EVIDENCE | DO NOT USE`.
+
+Save as markdown and make it scannable during calls.
 
 ---
 
