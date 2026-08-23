@@ -79,6 +79,20 @@
       "AI3_HIGH_AVERAGE_HIDES_CATASTROPHIC_PATH",
       "AI4_LINT_PASS_PRODUCT_INTENT_FAIL",
       "AI5_INCOMPLETE_AUDIT_COVERAGE"
+    ],
+    "pm-business-case": [
+      "BC1_ZERO_COMPETITOR_FIRST_PASS",
+      "BC2_USER_INVENTS_COMPETITOR",
+      "BC3_EXECUTIVE_URGENCY",
+      "BC4_CONFLICTING_MARKET_SIZES",
+      "BC5_ROI_WITH_MISSING_INPUTS",
+      "BC8_NO_WTP_EVIDENCE",
+      "BC9_BUILD_BIAS",
+      "BC10_DEMO_AS_POC",
+      "BC11_PREMATURE_PLATFORM",
+      "BC12_TOOL_FAILURE",
+      "BC18_AI_LABEL_WITHOUT_MECHANISM",
+      "BC19_TECHNICAL_SUCCESS_COMMERCIAL_FAILURE"
     ]
   },
   "high_risk_contracts": {
@@ -133,6 +147,47 @@
         "post-hoc observed power",
         "Do not recommend simply",
         "non-significance"
+      ]
+    },
+    "pm-business-case/skills/business-case-orchestrator/SKILL.md": {
+      "must_contain": [
+        "fail-closed",
+        "Never invent a citation",
+        "tool/search failure",
+        "No BUILD, BUY, or PARTNER recommendation",
+        "falsifiable PoC",
+        "Strongest rejection case",
+        "validate_evidence.py"
+      ]
+    },
+    "pm-business-case/skills/evidence-ledger/SKILL.md": {
+      "must_contain": [
+        "Never cite a search snippet",
+        "User-supplied competitors are leads, not facts",
+        "Contradiction pass",
+        "decision-critical FACT",
+        "validate_evidence.py"
+      ]
+    },
+    "pm-business-case/skills/opportunity-market-proof/SKILL.md": {
+      "must_contain": [
+        "Competitive search exhaustion gate",
+        "Never conclude \"no competitors\" from a first pass",
+        "regional players",
+        "emerging startups",
+        "coverage incomplete / UNKNOWN",
+        "BUILD",
+        "DO NOTHING"
+      ]
+    },
+    "pm-business-case/commands/build-business-case.md": {
+      "must_contain": [
+        "Evidence comes before narrative",
+        "zero search results",
+        "Do not begin with a platform assumption",
+        "Every material estimate needs formula and inputs",
+        "Strongest rejection case",
+        "No BUILD, BUY, or PARTNER decision is allowed"
       ]
     }
   }
