@@ -1,47 +1,80 @@
 ---
 name: stakeholder-map
-description: "Build a stakeholder map using a power/interest grid, identify communication strategies per quadrant, and generate a communication plan. Use when managing stakeholders, preparing for a launch, aligning cross-functional teams, or planning stakeholder engagement."
+description: "Map stakeholders by decision rights, incentives, power, interest, impact, and evidence needs, then design an enterprise communication and alignment plan. Use when managing complex cross-functional/client initiatives, launches, sales pursuits, or transformation programs."
 ---
 
-## Stakeholder Mapping & Communication Plan
+## Stakeholder Mapping & Decision Plan
 
-Map stakeholders on a Power × Interest grid and create a tailored communication plan for each group.
+## Purpose
 
-### Context
+Understand **who decides, who influences, who implements, who bears risk, who uses the outcome, and what evidence each stakeholder needs**. A simple power/interest grid is a starting point, not the complete operating model.
 
-You are helping build a stakeholder map for **$ARGUMENTS**.
+## Method
 
-If the user provides files (org charts, project briefs, team rosters), read them first. If they describe the product or initiative, use that context to infer likely stakeholders.
+1. **Identify stakeholders from evidence**
+   Use org charts, project briefs, contracts, meeting notes, decision history, RACI, account maps, or the user's explicit context. Do not invent named stakeholders or motivations.
 
-### Instructions
+2. **Map each stakeholder**
+   Capture:
+   - role / function
+   - decision right or veto
+   - power/influence
+   - interest and impact
+   - incentives / success criteria
+   - concerns / downside exposure
+   - information/evidence needed
+   - current stance: supporter / neutral / uncertain / blocker / unknown
+   - relationship/communication owner
 
-1. **Identify stakeholders**: List all relevant individuals and groups — executives, engineering leads, designers, marketing, sales, support, legal, finance, external partners, and end users.
+3. **Distinguish roles**
+   Where relevant separate:
+   - economic buyer
+   - product/user champion
+   - end users
+   - technical/security approver
+   - procurement/legal
+   - executive sponsor
+   - implementation/delivery owner
+   - operations/support
+   - regulator/partner/external dependency
 
-2. **Classify each stakeholder** on two dimensions:
-   - **Power** (High/Low): Their ability to influence decisions, resources, or outcomes
-   - **Interest** (High/Low): How much the project directly affects them or how engaged they are
+4. **Map decisions, not meetings**
+   For each upcoming decision specify who is `DECIDER`, `RECOMMENDER`, `INPUT`, `EXECUTOR`, `INFORMED`, and any veto/approval requirement.
 
-3. **Place stakeholders in the Power × Interest grid**:
+5. **Identify incentive conflicts**
+   Examples: speed vs risk, innovation vs stability, revenue vs delivery feasibility, user value vs procurement cost, local team vs platform standardization.
 
-   | | High Interest | Low Interest |
-   |---|---|---|
-   | **High Power** | **Manage Closely** — Regular 1:1s, involve in decisions, seek their input early | **Keep Satisfied** — Periodic updates, escalate only critical issues |
-   | **Low Power** | **Keep Informed** — Regular status updates, invite to demos, gather feedback | **Monitor** — Light-touch updates, available on request |
+6. **Design evidence-based engagement**
+   Tailor message, proof, channel, timing, and ask to stakeholder need. Avoid one generic status update for everyone.
 
-4. **For each quadrant**, recommend:
-   - Communication frequency (daily, weekly, bi-weekly, monthly)
-   - Communication format (1:1, email, Slack, meeting, dashboard)
-   - Key messages and framing
-   - Potential risks if this stakeholder is neglected
+## Reliability / Politics Gate
 
-5. **Create a communication plan table**:
+- Do not infer personal motives as facts. Label hypotheses about incentives/stance.
+- Do not equate seniority with actual decision authority.
+- Do not ignore low-power stakeholders who bear implementation/adoption burden.
+- Distinguish formal approval from informal veto/influence.
+- Identify absent stakeholders who will enter later, especially security, procurement, legal, finance, delivery, and operations in enterprise contexts.
+- Flag conflicts the PM cannot resolve alone and define escalation/decision forum.
+- Avoid manipulative stakeholder tactics; optimize for transparent decision quality.
 
-   | Stakeholder | Role | Power | Interest | Strategy | Frequency | Channel | Key Message |
-   |---|---|---|---|---|---|---|---|
+## Output
 
-6. **Flag potential conflicts**: Identify stakeholders with competing interests and suggest alignment strategies.
+### Stakeholder map
+| Stakeholder/role | Decision right | Power | Impact | Stance/confidence | Evidence needed | Owner | Next action |
+|---|---|---|---|---|---|---|---|
 
-Think step by step. Save the stakeholder map as a markdown document.
+### Decision map
+| Decision | Decider | Recommender | Required inputs | Veto/approval | Date/trigger |
+|---|---|---|---|---|---|
+
+### Communication plan
+Only include cadence that serves a decision, risk, dependency, or adoption need.
+
+### Critical alignment risks
+For each: evidence, consequence, mitigation, escalation trigger.
+
+### Decision
+`ALIGNED | ALIGNMENT WORK REQUIRED | DECISION RIGHTS UNCLEAR | ESCALATE`.
 
 ---
 
