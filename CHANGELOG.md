@@ -1,5 +1,19 @@
 # Changelog
 
+## Unreleased
+
+### Reliability-first fork
+
+- Reframed the fork around **evidence integrity, adversarial reliability, Enterprise AI PM, and semantic decision quality** while preserving explicit attribution to the upstream `phuryn/pm-skills` project.
+- Added a repo-wide **Reliability Contract V1** covering evidence states, first-pass skepticism, negative-conclusion gates, user false-premise handling, contradiction passes, search exhaustion, quantitative integrity, tool failure, and hard-failure conditions.
+- Added an **Adversarial Scenario Catalog** plus machine-readable scenario matrix. Every skill inherits global scenarios; every plugin adds domain-specific failure cases.
+- Added semantic regression tests so critical PM behavior guards cannot disappear silently during future edits or upstream syncs.
+- Hardened `competitor-analysis` and `/competitive-analysis` against the observed failure where a weak first search produces “no competitors” until the user challenges the answer. The workflow now searches category/problem/workflow/buyer/technology/substitute/regional/emerging framings, verifies user-supplied competitors independently, and runs a contradiction pass before negative conclusions.
+- Hardened `market-sizing` against false precision, incompatible top-down/bottom-up estimates, arbitrary SOM percentages, stale evidence, and hidden assumptions.
+- Hardened `user-personas` against forced persona counts, invented demographics, unsupported “research-backed” claims, and unverified quotes.
+- Hardened `summarize-interview` with verbatim-quote verification, observation-vs-inference separation, contradiction preservation, and small-N research safeguards.
+- Corrected `ab-test-analysis` power guidance so a target such as 80% power requires the beta / `z_(1-beta)` term; added SRM, optional-stopping, multiple-comparison, practical-significance, guardrail, and invalid-test decision logic.
+
 ## v2.1.0 — 2026-07-03
 
 ### pm-ai-shipping
