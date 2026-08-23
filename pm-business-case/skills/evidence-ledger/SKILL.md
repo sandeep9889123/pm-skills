@@ -47,7 +47,7 @@ Classify user input deliberately:
 
 User confidence does not change evidence state.
 
-If the user says "I found a competitor" after a zero-result first pass, independently verify the named company and expand the search taxonomy. Do not merely add the company to the matrix.
+User-supplied competitors are leads, not facts. If the user says "I found a competitor" after a zero-result first pass, independently verify the named company and expand the search taxonomy. Do not merely add the company to the matrix.
 
 ## Required claim record
 
