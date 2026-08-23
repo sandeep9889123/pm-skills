@@ -1,15 +1,15 @@
 ---
-description: Analyze the competitive landscape — identify competitors, compare strengths and weaknesses, find differentiation opportunities
-argument-hint: "<your product or market>"
+description: Research the competitive landscape with search exhaustion, contradiction checks, evidence confidence, and direct/adjacent/substitute competitor classification
+argument-hint: "<your product, market, or competitive question>"
 ---
 
-# /competitive-analysis -- Competitive Landscape Analysis
+# /competitive-analysis -- Reliability-First Competitive Intelligence
 
-Research and analyze your competitive landscape. Identifies direct and indirect competitors, maps positioning, and surfaces differentiation opportunities.
+Research the competitive landscape without treating a weak first search as proof that the market is empty.
 
 ## Invocation
 
-```
+```text
 /competitive-analysis AI-powered project management tools
 /competitive-analysis Our product vs Notion, Asana, and Monday.com
 /competitive-analysis [upload a competitor list or market brief]
@@ -17,81 +17,152 @@ Research and analyze your competitive landscape. Identifies direct and indirect 
 
 ## Workflow
 
-### Step 1: Understand the Competitive Context
+### Step 1: Define the Competitive Arena
 
-Ask:
-- What is your product? What category does it compete in?
-- Any specific competitors you want analyzed? Or should I identify them?
-- What's the lens? (feature comparison, positioning, pricing, go-to-market)
-- What will you use this analysis for? (strategy, sales enablement, investor pitch, product roadmap)
+Establish:
 
-### Step 2: Identify Competitors
+- product / problem being solved
+- target user and economic buyer
+- geography / vertical
+- core JTBD or workflow
+- what decision this research must inform
 
-Apply the **competitor-analysis** skill:
+Define competitor broadly enough to include products, services, in-house solutions, and workflows that compete for the same outcome or budget.
 
-- Identify 5 direct competitors (same category, same buyer)
-- Identify 2-3 indirect competitors (different approach, same job-to-be-done)
-- Note emerging/disruptive players if relevant
-- Use web research to gather current information
+### Step 2: Run the First Search Pass
 
-### Step 3: Analyze Each Competitor
+Apply the **competitor-analysis** skill.
 
-For each competitor:
-- **Positioning**: How they describe themselves, target audience, key messaging
-- **Strengths**: What they do well, where they win
-- **Weaknesses**: Where they fall short, common complaints
-- **Pricing**: Model and price points (if public)
-- **Market traction**: Funding, team size, customer base signals
-- **Recent moves**: New features, partnerships, pivots
+Build a candidate set across:
 
-### Step 4: Generate Competitive Analysis
+- direct competitors
+- adjacent competitors
+- substitutes
+- manual/service alternatives
+- in-house/build alternatives
+- emerging/regional players
 
-```
-## Competitive Analysis: [Your Product/Market]
+Do not force exactly five direct competitors. Use the number supported by evidence.
 
-**Date**: [today]
-**Analyzed**: [count] competitors
+### Step 3: Search Exhaustion and Contradiction Pass
 
-### Market Overview
-[2-3 sentences on market dynamics, trends, and where it's heading]
+Before accepting a small or empty competitive set:
 
-### Competitive Landscape
-| Competitor | Category | Target | Positioning | Strength | Weakness |
-|-----------|----------|--------|------------|----------|----------|
+- reformulate the search using category, problem, workflow, buyer, and technology language
+- search substitutes and alternatives
+- check relevant geography/vertical variants
+- check emerging/new entrants
+- diversify source classes when tools allow
+- explicitly ask: **“If the user told me I missed a competitor, what would I search next?”**
 
-### Feature Comparison Matrix
-| Capability | Your Product | Competitor A | Competitor B | Competitor C |
-|-----------|-------------|-------------|-------------|-------------|
+If the user supplies a competitor name, verify it independently before classification.
 
-### Positioning Map
-[2x2 matrix showing competitive positioning on key dimensions]
+If coverage remains weak, report **coverage incomplete / UNKNOWN** rather than “no competitors.”
+
+### Step 4: Verify and Classify
+
+For every material competitor, capture:
+
+- competitive type
+- why it competes for the same job/budget
+- target segment
+- current positioning
+- evidence source/freshness
+- confidence
+
+Separate:
+
+- FACT
+- INFERENCE
+- ESTIMATE
+- UNKNOWN
+- STALE
+
+Do not invent private pricing, market share, customer counts, funding, product capabilities, or traction.
+
+### Step 5: Analyze the Highest-Priority Competitors
+
+For each verified player:
+
+- positioning
+- target customer / buyer
+- JTBD and workflow
+- strengths
+- verified weaknesses / customer pain
+- pricing/business model when public
+- GTM/distribution
+- recent moves when current evidence exists
+- threat level and why
+
+### Step 6: Synthesize the Market
+
+Do not stop at a feature matrix.
+
+Answer:
+
+- Where is the market converging?
+- Which competitors are structurally different?
+- Which alternatives are most likely to win the same customer budget?
+- What appears table stakes?
+- What differentiation is actually supported by evidence?
+- Which competitor is most strategically dangerous?
+- What remains unresolved?
+
+### Step 7: Generate the Competitive Intelligence Brief
+
+```markdown
+## Competitive Intelligence: [Product / Market]
+
+### Executive View
+- Competitive arena:
+- Verified direct competitors:
+- Important adjacent/substitute alternatives:
+- Highest-priority threat:
+- Coverage confidence: High / Medium / Low
+- Biggest unknown:
+
+### Search Coverage
+[Query framings, source classes, geography/vertical coverage, known gaps]
+
+### Competitive Set
+| Competitor | Type | Target | Core job | Why it competes | Confidence |
+|---|---|---|---|---|---|
+
+### Detailed Competitor Analysis
+[Evidence-backed profiles for highest-priority players]
+
+### Competitive Pattern
+[Where the market is converging/diverging]
 
 ### Differentiation Opportunities
-1. **[Opportunity]** — [why it's defensible and valuable]
-2. ...
+| Opportunity | Evidence | Why competitors appear weak | Confidence | Cheapest validation |
+|---|---|---|---|---|
 
-### Competitive Threats
-1. **[Threat]** — [what to watch for, recommended response]
-2. ...
+### Threats
+[Threat, mechanism, evidence, recommended response]
 
-### Recommendations
-- **Double down on**: [your unique advantages]
-- **Close the gap on**: [table-stakes features you're missing]
-- **Ignore**: [competitor moves that aren't worth responding to]
+### Contradiction / What Could Change This View
+[Unresolved players, stale evidence, excluded scopes, assumptions]
+
+### Recommendation
+- Double down on:
+- Close gap on:
+- Avoid competing on:
+- Next evidence to obtain:
 ```
 
-Save as markdown.
+### Step 8: Offer Next Steps
 
-### Step 5: Offer Next Steps
+- create a battlecard for a verified competitor
+- develop positioning against the highest-priority alternatives
+- identify product gaps only after validating whether they matter to the target segment
+- schedule a refresh when the market is changing quickly
 
-- "Want me to **create a battlecard** for sales against a specific competitor?"
-- "Should I **develop positioning** that differentiates from the top competitors?"
-- "Want me to **identify feature gaps** to close and add to the roadmap?"
+## Hard Rules
 
-## Notes
-
-- Web research is used for current competitor data — results are as fresh as available sources
-- Distinguish between "table stakes" (must-have to compete) and "differentiators" (must-have to win)
-- Don't just list features — analyze *why* competitors make the choices they make
-- Pricing intelligence should note whether pricing is public, usage-based, or requires sales contact
-- Update this analysis quarterly — competitive landscapes shift fast
+- Never say “no competitors” because one search returned little.
+- Never accept a user-supplied competitor as fact without verification.
+- Never force a fixed number of competitors by inventing weak matches.
+- Never confuse a different category label with a different customer job.
+- Never hide unknown evidence behind polished prose.
+- Never treat tool failure as market absence.

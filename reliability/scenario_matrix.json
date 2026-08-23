@@ -1,0 +1,139 @@
+{
+  "schema_version": "1.0",
+  "global_scenarios": [
+    "G1_AMBIGUOUS_SCOPE",
+    "G2_MISSING_CONTEXT",
+    "G3_FALSE_USER_PREMISE",
+    "G4_USER_CHALLENGE",
+    "G5_SPARSE_EVIDENCE",
+    "G6_ZERO_RESULT_FIRST_PASS",
+    "G7_CONTRADICTORY_EVIDENCE",
+    "G8_STALE_EVIDENCE",
+    "G9_NOISY_INCOMPLETE_INPUT",
+    "G10_OUTLIER_INPUT",
+    "G11_TOOL_FAILURE",
+    "G12_CONFLICTING_OBJECTIVES",
+    "G13_HIGH_CONSEQUENCE",
+    "G14_UNJUSTIFIED_CERTAINTY"
+  ],
+  "plugin_scenarios": {
+    "pm-product-discovery": [
+      "D1_QUOTE_HALLUCINATION",
+      "D2_SMALL_N_DISCOVERY",
+      "D3_SOLUTION_LOADED_INTERVIEW",
+      "D4_FEATURE_REQUEST_POPULARITY_TRAP",
+      "D5_NON_FALSIFIABLE_EXPERIMENT"
+    ],
+    "pm-product-strategy": [
+      "S1_NO_TRADEOFF_STRATEGY",
+      "S2_MOAT_BY_ASSERTION",
+      "S3_MARKET_SIZE_VS_RIGHT_TO_WIN",
+      "S4_PRICING_WITHOUT_WTP",
+      "S5_STALE_MARKET_STRUCTURE"
+    ],
+    "pm-execution": [
+      "E1_UNVALIDATED_SOLUTION_PRD",
+      "E2_P0_SCOPE_INFLATION",
+      "E3_MISSING_FAILURE_ACCEPTANCE_CRITERIA",
+      "E4_ROADMAP_CERTAINTY_THEATRE",
+      "E5_RED_TEAM_MANUFACTURES_RISK"
+    ],
+    "pm-market-research": [
+      "MR1_NO_COMPETITORS_FIRST_PASS",
+      "MR2_USER_INVENTS_COMPETITOR",
+      "MR3_ADJACENT_TAXONOMY_BLIND_SPOT",
+      "MR4_REGIONAL_BLIND_SPOT",
+      "MR5_MARKET_SIZE_SOURCE_DISAGREEMENT",
+      "MR6_FALSE_PRECISION_SOM",
+      "MR7_PERSONA_INVENTION"
+    ],
+    "pm-data-analytics": [
+      "A1_UNDERPOWERED_TEST",
+      "A2_INCORRECT_POWER_CALCULATION",
+      "A3_OPTIONAL_STOPPING",
+      "A4_SAMPLE_RATIO_MISMATCH",
+      "A5_SIGNIFICANT_BUT_TRIVIAL",
+      "A6_SEGMENT_REVERSAL"
+    ],
+    "pm-go-to-market": [
+      "GTM1_USER_BUYER_MISMATCH",
+      "GTM2_CHANNEL_POPULARITY_TRAP",
+      "GTM3_PILOT_WITHOUT_PRODUCTION_PATH",
+      "GTM4_MISSING_GTM_ECONOMICS"
+    ],
+    "pm-marketing-growth": [
+      "M1_FEATURE_ONLY_POSITIONING",
+      "M2_VANITY_NORTH_STAR",
+      "M3_NAMING_COLLISION",
+      "M4_TACTICS_WITHOUT_GROWTH_MECHANISM"
+    ],
+    "pm-toolkit": [
+      "T1_LEGAL_TEMPLATE_OVERCONFIDENCE",
+      "T2_RESUME_METRIC_INFLATION",
+      "T3_EDIT_CHANGES_MEANING",
+      "T4_PRIVACY_POLICY_WITHOUT_DATA_FLOW"
+    ],
+    "pm-ai-shipping": [
+      "AI1_DOCS_SECURE_CODE_DISAGREES",
+      "AI2_CODE_ENFORCED_DOCS_SILENT",
+      "AI3_HIGH_AVERAGE_HIDES_CATASTROPHIC_PATH",
+      "AI4_LINT_PASS_PRODUCT_INTENT_FAIL",
+      "AI5_INCOMPLETE_AUDIT_COVERAGE"
+    ]
+  },
+  "high_risk_contracts": {
+    "pm-market-research/skills/competitor-analysis/SKILL.md": {
+      "must_contain": [
+        "Search Exhaustion Gate",
+        "Contradiction Pass",
+        "No verified direct competitor",
+        "UNKNOWN",
+        "tool/search failure"
+      ]
+    },
+    "pm-market-research/commands/competitive-analysis.md": {
+      "must_contain": [
+        "Search Exhaustion and Contradiction Pass",
+        "If the user told me I missed a competitor",
+        "coverage incomplete / UNKNOWN",
+        "Never say"
+      ]
+    },
+    "pm-market-research/skills/market-sizing/SKILL.md": {
+      "must_contain": [
+        "Evidence Ledger",
+        "Reconcile, Do Not Average Blindly",
+        "SOM From Reachability, Not Optimism",
+        "UNKNOWN",
+        "Sensitivity Analysis"
+      ]
+    },
+    "pm-market-research/skills/user-personas/SKILL.md": {
+      "must_contain": [
+        "HYPOTHESIS-ONLY",
+        "Do not force exactly three personas",
+        "Verify Quotes",
+        "OBSERVED",
+        "Contradiction Pass"
+      ]
+    },
+    "pm-product-discovery/skills/summarize-interview/SKILL.md": {
+      "must_contain": [
+        "Verify every verbatim quote",
+        "UNVERIFIED QUOTE",
+        "Quote verification",
+        "OBSERVED",
+        "INFERENCE"
+      ]
+    },
+    "pm-data-analytics/skills/ab-test-analysis/SKILL.md": {
+      "must_contain": [
+        "z_(1-beta)",
+        "Sample Ratio Mismatch",
+        "post-hoc observed power",
+        "Do not recommend simply",
+        "non-significance"
+      ]
+    }
+  }
+}

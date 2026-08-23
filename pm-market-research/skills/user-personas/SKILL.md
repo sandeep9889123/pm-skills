@@ -1,64 +1,186 @@
 ---
 name: user-personas
-description: "Create refined user personas from research data — 3 personas with JTBD, pains, gains, and unexpected insights. Use when building personas from survey data, creating user profiles from research, or segmenting users for product decisions."
+description: "Create evidence-backed behavioral personas from research data, or clearly labeled hypothesis personas when evidence is insufficient. Avoids forced persona counts, invented demographics, and unverified quotes. Use when synthesizing interviews, surveys, usage data, or segment research into actionable user archetypes."
 ---
 
-# User Personas
+# Evidence-Backed User Personas
 
 ## Purpose
-Create detailed, actionable user personas from research data that capture the true diversity of your user base. This skill generates research-backed personas with jobs-to-be-done, pain points, desired outcomes, and unexpected behavioral insights to guide product decisions.
 
-## Instructions
+Create useful user archetypes for **$ARGUMENTS** without inventing “research-backed” personas when the research is missing, sparse, or contradictory.
 
-You are an experienced product researcher specializing in persona development and user research synthesis.
+> **A persona is a synthesis of evidence, not a creative-writing character.**
 
-### Input
-Your task is to create 3 refined user personas for **$ARGUMENTS**.
+## Step 1: Classify the Evidence State
 
-If the user provides CSV, Excel, survey responses, interview transcripts, or other research data files, read and analyze them directly using available tools. Extract key patterns, demographics, motivations, and behaviors.
+Before creating personas, determine which mode applies.
 
-### Analysis Steps (Think Step by Step)
+### RESEARCH-BACKED
 
-1. **Data Collection**: Read and review all provided research data and documents
-2. **Pattern Recognition**: Identify recurring characteristics, goals, pain points, and behaviors across users
-3. **Segmentation**: Group similar users into distinct personas based on shared motivations and jobs-to-be-done
-4. **Enrichment**: For each persona, synthesize data into a coherent profile
-5. **Validation**: Cross-reference insights to ensure personas are grounded in actual research findings
+Enough user evidence exists to support recurring behavioral/JTBD patterns.
 
-### Output Structure
+### PROVISIONAL
 
-For each of the 3 personas, provide:
+Some evidence exists, but sample size, coverage, or consistency is too weak for strong segmentation.
 
-**Persona Name & Demographics**
-- Age range, role/title, company size (if B2B), key characteristics
+### HYPOTHESIS-ONLY
 
-**Primary Job-to-be-Done**
-- The core outcome the persona is trying to achieve
-- Context and frequency of the job
+Little or no user research exists.
 
-**Top 3 Pain Points**
-- Specific challenges or obstacles preventing job completion
-- Impact and severity of each pain
+In this mode, do **not** call the output research-backed personas. Call them **Hypothesis Personas** and list what must be validated.
 
-**Top 3 Desired Gains**
-- Benefits, outcomes, or solutions the persona seeks
-- How they measure success
+## Step 2: Inspect the Data Before Choosing the Number of Personas
 
-**One Unexpected Insight**
-- A counterintuitive behavioral pattern or motivation derived from the data
-- Why this matters for product decisions
+Do not force exactly three personas.
 
-**Product Fit Assessment**
-- How $ARGUMENTS addresses (or could address) this persona's needs
-- Potential friction points or unmet needs
+Use the smallest number of personas that captures meaningful differences in:
 
-## Best Practices
+- job to be done
+- trigger/context
+- behavior/workflow
+- pain severity
+- desired outcome
+- buying/adoption constraint
+- current alternative
 
-- Ground all insights in actual data; avoid assumptions
-- Use direct quotes from research when available
-- Identify behavioral patterns, not just demographic categories
-- Make personas distinct and non-overlapping where possible
-- Flag any data gaps or areas requiring additional research
+If the evidence supports two meaningful groups, create two.
+
+If it supports four, create four.
+
+If it supports no stable grouping, say that segmentation is not yet supported.
+
+## Step 3: Prefer Behavioral Segmentation Over Decorative Demographics
+
+Use demographics only when they materially explain behavior or buying needs.
+
+Do not invent:
+
+- age
+- salary
+- company size
+- title
+- geography
+- family status
+- technical skill
+
+unless supported by the provided research or explicitly framed as a hypothesis.
+
+Prefer:
+
+- situation
+- frequency
+- workflow
+- motivation
+- JTBD
+- constraints
+- workaround
+- decision criteria
+
+## Step 4: Preserve Evidence Provenance
+
+For each important persona attribute, distinguish:
+
+- **OBSERVED**: directly supported by research
+- **INFERENCE**: interpretation across observations
+- **HYPOTHESIS**: plausible but unverified
+- **UNKNOWN**: evidence unavailable
+
+Do not convert one participant's behavior into a segment-wide property without support.
+
+## Step 5: Verify Quotes
+
+If using a verbatim quote:
+
+- confirm the wording appears in the source transcript
+- preserve meaning and context
+- never polish a paraphrase into quotation marks
+
+If exact verification is not possible, use a paraphrase without quotation marks or label `[UNVERIFIED QUOTE - do not cite]`.
+
+## Step 6: Test Persona Distinctness
+
+Before finalizing, ask:
+
+- Do these personas have meaningfully different jobs, constraints, or product decisions?
+- Would we build, position, onboard, price, or support differently because of this distinction?
+- Are two personas actually the same user with cosmetic demographic differences?
+
+Merge personas that do not change a product decision.
+
+## Step 7: Contradiction Pass
+
+Look for evidence that does not fit the proposed personas.
+
+Ask:
+
+- Which users are poorly represented?
+- Is a dominant interviewee/outlier driving the segmentation?
+- Do survey and interview signals disagree?
+- Did we segment based on our product architecture rather than user behavior?
+- Is there enough evidence to claim this pattern is recurring?
+
+Surface meaningful exceptions rather than forcing every user into a persona.
+
+## Output
+
+```markdown
+## Persona Synthesis: [Product / Problem]
+
+**Evidence mode:** RESEARCH-BACKED / PROVISIONAL / HYPOTHESIS-ONLY
+**Evidence coverage:** [interviews / surveys / usage / files]
+**Segmentation confidence:** High / Medium / Low
+
+### Segmentation Logic
+[What behavioral/JTBD dimensions separate the groups and why they matter]
+
+### Persona 1: [Descriptive behavioral name]
+
+**Core situation / trigger**
+
+**Primary JTBD**
+
+**Current workflow / alternative**
+
+**Key pains / constraints**
+
+**Desired outcomes**
+
+**Decision / adoption criteria**
+
+**Evidence**
+| Attribute | Evidence | Type | Confidence |
+|---|---|---|---|
+
+**Product implication**
+[What decision changes because this persona exists]
+
+**Unknowns / hypotheses**
+[What still needs validation]
+
+[Repeat only for personas supported by the evidence]
+
+### Cross-Persona Differences
+| Dimension | Persona A | Persona B | Why it matters |
+|---|---|---|---|
+
+### Users / Evidence That Do Not Fit Cleanly
+[Exceptions, outliers, contradictions]
+
+### Research Gaps
+[What evidence would most improve segmentation confidence]
+```
+
+## Hard Failures
+
+Do not:
+
+- force exactly three personas because a template asks for three
+- call a persona research-backed when no research was provided
+- invent demographics or quotes
+- create multiple personas that differ only cosmetically
+- hide users who contradict the segmentation
+- claim one interview establishes a recurring segment
+- use `UNKNOWN` evidence as if it were observed behavior
 
 ---
 
