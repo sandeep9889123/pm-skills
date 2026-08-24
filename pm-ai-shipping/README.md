@@ -1,34 +1,62 @@
-# pm-ai-shipping — AI Shipping Kit
+# PM AI Shipping
 
-For PMs and founders accountable for AI-built code. Document a vibe-coded app, audit it for intended-vs-implemented security gaps and performance issues, and produce a reviewer-ready shipping packet.
+AI product shipping workflows for intended-vs-implemented review, launch readiness, documentation, test derivation, security checks, and performance checks.
 
-## Overview
+This plugin is part of Sandeep Kumar M's enhanced `pm-skills` fork. It is designed for PMs shipping AI-enabled products who need practical readiness checks, not vague AI strategy language.
 
-AI agents write code fast but leave no record of *intent* — what the system should do, who may do what, where the secrets live. Without that record, no human and no auditing agent can tell whether the code is safe to ship. This kit restores reviewability: it documents the system, then audits the gap between what the docs say and what the code does — the class of bug generic scanners miss because they have no model of intent.
+## When to use
 
-Start with `/ship-check` for the full sequence, or run a single stage with the specialist commands.
+Use this plugin when you need to:
 
-## Install
+- review whether the implemented app matches the intended product behavior
+- prepare shipping artifacts
+- derive tests from product requirements
+- document an app
+- run static security and performance checks
+- identify AI-specific launch risks
+- convert prototype output into PM-ready evidence
 
-Install from the [pm-skills marketplace](https://github.com/phuryn/pm-skills) and enable the `pm-ai-shipping` plugin. Each command can be triggered with `/pm-ai-shipping:<command>` or its short `/<command>` form; skills auto-load when the topic matches.
+## Skills included
 
-## Skills (2)
+- `intended-vs-implemented`
+- `shipping-artifacts`
 
-- **shipping-artifacts** — The durable documentation set that makes an AI-built app reviewable: a core every app needs (architecture, user/permission flows, permissions, variables/secrets, test-coverage map) plus conditional docs added only when they apply (emails, cron, SEO, embedded agents/automation). Defines what each doc must capture and how a reviewer uses it.
-- **intended-vs-implemented** — The method for finding the gap between what a system is documented to do and what the code actually does, with cited evidence on both sides and without hand-wavy findings.
+## Commands included
 
-## Commands (5)
+- `/derive-tests`
+- `/document-app`
+- `/performance-audit-static`
+- `/security-audit-static`
+- `/ship-check`
 
-- `/pm-ai-shipping:ship-check` — Turn a vibe-coded repo into a reviewer-ready shipping packet: document, wire agent context, run security and performance audits, map test coverage, and compile the results.
-- `/pm-ai-shipping:document-app` — Reverse-engineer a codebase into the system documents reviewers and auditors need — a core set (architecture, flows, permissions, variables) plus conditional docs (emails, cron, SEO, automation) when they apply.
-- `/pm-ai-shipping:derive-tests` — Turn documented intent into a test-coverage map: inventory the tests that exist today, separate them from proposed tests and unverified gaps, mark each unit / guarded-live / manual, and recommend a green-before-merge CI gate.
-- `/pm-ai-shipping:security-audit-static` — Static security audit: map trust boundaries, cross-reference documented intent, self-refute every finding, and report only evidence-backed risks.
-- `/pm-ai-shipping:performance-audit-static` — Static performance audit: find N+1 queries and request waterfalls, over-fetching, missing indexes, and caching opportunities, ranked by effort and impact.
+## Operating rules
 
-## Author
+1. Distinguish demo quality from production readiness.
+2. Test intended behavior, failure behavior, and edge cases.
+3. Do not declare security or performance safety from superficial inspection.
+4. Flag assumptions and unverified implementation details.
+5. Connect findings to launch risk and user impact.
+6. Produce concrete fixes, not generic warnings.
 
-Paweł Huryn — [The Product Compass Newsletter](https://www.productcompass.pm)
+## Example use
 
-## License
+```text
+Use pm-ai-shipping to review this AI prototype before launch. Compare intended behavior with implemented behavior, derive test scenarios, flag security/performance risks, and produce a launch readiness checklist.
+```
 
-MIT
+## Output standard
+
+A strong output from this plugin should include:
+
+- intended behavior
+- implemented behavior
+- gap analysis
+- test scenarios
+- launch blockers
+- security and performance caveats
+- analytics and monitoring recommendations
+- final ship/no-ship view
+
+## Attribution
+
+Based on the original `phuryn/pm-skills` AI shipping workflows. Enhanced in this fork with stronger AI PM launch-readiness and evidence discipline.
