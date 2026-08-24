@@ -1,34 +1,73 @@
-# pm-product-strategy
+# PM Product Strategy
 
-Product strategy skills for PMs: vision, strategy canvas, startup canvas, value propositions, lean canvas, business model canvas, SWOT, PESTLE, Ansoff Matrix, Porter's Five Forces, pricing, and monetization.
+Product strategy workflows for turning market context, customer needs, competitive pressure, monetization options, and product constraints into clear strategic choices.
 
-## Skills (12)
+This plugin is part of Sandeep Kumar M's enhanced `pm-skills` fork. It preserves the upstream framework orientation while adding stronger decision discipline, evidence separation, and executive-readiness.
 
-- **ansoff-matrix** — Generate an Ansoff Matrix analysis mapping growth strategies across market penetration, market development, product development, and diversification.
-- **business-model** — Generate a Business Model Canvas with all 9 building blocks.
-- **lean-canvas** — Generate a Lean Canvas business model with sections for problem, solution, metrics, cost structure, UVP, unfair advantage, channels, segments, and revenue.
-- **monetization-strategy** — Brainstorm 3-5 monetization strategies with audience fit, risks, and validation experiments.
-- **pestle-analysis** — Perform a PESTLE analysis covering Political, Economic, Social, Technological, Legal, and Environmental factors.
-- **porters-five-forces** — Perform Porter's Five Forces analysis evaluating competitive rivalry, supplier power, buyer power, threat of substitutes, and threat of new entrants.
-- **pricing-strategy** — Analyze and design pricing strategies including pricing models, competitive pricing analysis, willingness-to-pay estimation, and price elasticity considerations.
-- **product-strategy** — Generate a comprehensive product strategy using the 9-section Product Strategy Canvas covering vision, segments, costs, value propositions, trade-offs, metrics, growth, capabilities, and defensibility.
-- **product-vision** — Brainstorm an inspiring, achievable, and emotional product vision that motivates teams.
-- **startup-canvas** — Generate a Startup Canvas combining Product Strategy (9 sections) and Business Model (Cost Structure + Revenue Streams) for a new product. An alternative to Business Model Canvas and Lean Canvas that separates strategy from business model.
-- **swot-analysis** — Perform a detailed SWOT analysis identifying strengths, weaknesses, opportunities, and threats with actionable recommendations.
-- **value-proposition** — Generate a detailed value proposition using a 6-part JTBD template (Who, Why, What before, How, What after, Alternatives).
+## When to use
 
-## Commands (5)
+Use this plugin when you need to:
 
-- `/pm-product-strategy:business-model` — Explore business models using Lean Canvas, Business Model Canvas, Startup Canvas, or Value Proposition frameworks.
-- `/pm-product-strategy:market-scan` — Comprehensive macro environment analysis — SWOT, PESTLE, Porter's Five Forces, and Ansoff Matrix in one scan.
-- `/pm-product-strategy:pricing` — Design a pricing strategy — models, competitive analysis, willingness-to-pay estimation, and pricing experiments.
-- `/pm-product-strategy:strategy` — Create a comprehensive product strategy using the 9-section Strategy Canvas — from vision to defensibility.
-- `/pm-product-strategy:value-proposition` — Design a value proposition using the 6-part JTBD template — Who, Why, What before, How, What after, Alternatives.
+- define or sharpen product strategy
+- build a market scan
+- evaluate business models
+- pressure-test pricing options
+- write a value proposition
+- compare strategic alternatives
+- use structured strategy frameworks without turning them into filler
+- prepare leadership-ready product strategy narratives
 
-## Author
+## Skills included
 
-Paweł Huryn — [The Product Compass Newsletter](https://www.productcompass.pm)
+- `ansoff-matrix`
+- `business-model`
+- `lean-canvas`
+- `monetization-strategy`
+- `pestle-analysis`
+- `porters-five-forces`
+- `pricing-strategy`
+- `product-strategy`
+- `product-vision`
+- `startup-canvas`
+- `swot-analysis`
+- `value-proposition`
 
-## License
+## Commands included
 
-MIT
+- `/business-model`
+- `/market-scan`
+- `/pricing`
+- `/strategy`
+- `/value-proposition`
+
+## Operating rules
+
+1. Strategy must force trade-offs.
+2. Do not confuse framework completion with strategic insight.
+3. Separate facts, assumptions, and judgment.
+4. Identify the market segment and competitive context before recommending a direction.
+5. Make explicit what the company should not do.
+6. Use frameworks as scaffolding, not as the final answer.
+
+## Example use
+
+```text
+Use pm-product-strategy to build a product strategy for this AI workflow product. Include customer segment, strategic options, moat hypothesis, pricing implications, risks, and decision gates.
+```
+
+## Output standard
+
+A strong output from this plugin should include:
+
+- strategic context
+- target users and segments
+- market or category dynamics
+- options considered
+- recommendation
+- trade-offs
+- risks and assumptions
+- decision checkpoints
+
+## Attribution
+
+Based on the original `phuryn/pm-skills` product strategy work. Enhanced in this fork with stronger strategy judgment, executive framing, and evidence discipline.
