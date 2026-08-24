@@ -1,79 +1,218 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "pm-skills",
-  "version": "2.1.0",
-  "description": "Reliability-first PM operating system with 86 domain-specific skills and 51 chained workflows across 11 PM plugins — discovery, strategy, business cases, execution, market intelligence, GTM, enterprise transformation, automation, analytics, growth, and AI shipping.",
+  "version": "2.2.0",
+  "description": "Reliability-first PM operating system with 86 domain-specific skills and 51 chained workflows across 11 PM plugins. This fork extends the original pm-skills with evidence-first business case, enterprise transformation, GTM, market intelligence, automation, analytics, growth, and AI shipping layers.",
   "owner": {
-    "name": "Paweł Huryn",
-    "email": "pawel@productcompass.pm",
-    "url": "https://www.productcompass.pm"
+    "name": "Sandeep Kumar M",
+    "email": "211499229+sandeep9889123@users.noreply.github.com",
+    "url": "https://github.com/sandeep9889123"
+  },
+  "metadata": {
+    "distribution": "cowork-compatible-github-marketplace",
+    "repository": "https://github.com/sandeep9889123/pm-skills",
+    "upstream": "https://github.com/phuryn/pm-skills",
+    "upstreamOwner": "Pawel Huryn",
+    "maintainerNote": "Forked from phuryn/pm-skills and enhanced with additional PM operating layers. Upstream attribution preserved. Marketplace sources use git-subdir entries to improve compatibility across Claude Cowork, Claude Desktop, and Claude Code surfaces."
   },
   "plugins": [
     {
       "name": "pm-product-discovery",
+      "displayName": "PM Product Discovery",
       "description": "Product discovery skills for PMs: ideation, experiments, assumption testing, feature prioritization, and customer interview synthesis.",
-      "source": "./pm-product-discovery",
-      "category": "product-management"
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/sandeep9889123/pm-skills.git",
+        "path": "pm-product-discovery",
+        "ref": "main"
+      },
+      "category": "product-management",
+      "tags": ["product-management", "discovery", "experiments", "prioritization", "customer-research"],
+      "repository": "https://github.com/sandeep9889123/pm-skills",
+      "homepage": "https://github.com/sandeep9889123/pm-skills/tree/main/pm-product-discovery",
+      "license": "MIT",
+      "strict": true,
+      "defaultEnabled": true
     },
     {
       "name": "pm-product-strategy",
+      "displayName": "PM Product Strategy",
       "description": "Product strategy skills for PMs: vision, strategy canvas, value propositions, lean canvas, business model canvas, SWOT, PESTLE, Ansoff Matrix, Porter's Five Forces, and monetization.",
-      "source": "./pm-product-strategy",
-      "category": "product-management"
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/sandeep9889123/pm-skills.git",
+        "path": "pm-product-strategy",
+        "ref": "main"
+      },
+      "category": "product-management",
+      "tags": ["product-management", "strategy", "positioning", "monetization", "business-model"],
+      "repository": "https://github.com/sandeep9889123/pm-skills",
+      "homepage": "https://github.com/sandeep9889123/pm-skills/tree/main/pm-product-strategy",
+      "license": "MIT",
+      "strict": true,
+      "defaultEnabled": true
     },
     {
       "name": "pm-execution",
-      "description": "Execution and product management skills: PRDs, OKRs, roadmaps, sprints, pre-mortems, stakeholder maps, user stories, prioritization frameworks, and more.",
-      "source": "./pm-execution",
-      "category": "product-management"
+      "displayName": "PM Execution",
+      "description": "Execution and product management skills: PRDs, OKRs, roadmaps, sprints, pre-mortems, stakeholder maps, user stories, prioritization frameworks, and delivery rituals.",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/sandeep9889123/pm-skills.git",
+        "path": "pm-execution",
+        "ref": "main"
+      },
+      "category": "product-management",
+      "tags": ["product-management", "execution", "prd", "okr", "roadmap", "delivery"],
+      "repository": "https://github.com/sandeep9889123/pm-skills",
+      "homepage": "https://github.com/sandeep9889123/pm-skills/tree/main/pm-execution",
+      "license": "MIT",
+      "strict": true,
+      "defaultEnabled": true
     },
     {
       "name": "pm-market-research",
-      "description": "Reliability-first market research: personas, segmentation, market sizing, sentiment, competitor analysis, evidence discipline, search exhaustion, and contradiction passes.",
-      "source": "./pm-market-research",
-      "category": "product-management"
+      "displayName": "PM Market Research",
+      "description": "Reliability-first market research for PMs: personas, segmentation, market sizing, sentiment, competitor analysis, evidence discipline, search exhaustion, and contradiction passes.",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/sandeep9889123/pm-skills.git",
+        "path": "pm-market-research",
+        "ref": "main"
+      },
+      "category": "product-management",
+      "tags": ["product-management", "market-research", "competitor-analysis", "market-sizing", "evidence"],
+      "repository": "https://github.com/sandeep9889123/pm-skills",
+      "homepage": "https://github.com/sandeep9889123/pm-skills/tree/main/pm-market-research",
+      "license": "MIT",
+      "strict": true,
+      "defaultEnabled": true
     },
     {
       "name": "pm-data-analytics",
+      "displayName": "PM Data Analytics",
       "description": "Data analytics skills for PMs: SQL, cohort analysis, and experiment analysis with statistical and decision-quality safeguards.",
-      "source": "./pm-data-analytics",
-      "category": "product-management"
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/sandeep9889123/pm-skills.git",
+        "path": "pm-data-analytics",
+        "ref": "main"
+      },
+      "category": "product-management",
+      "tags": ["product-management", "analytics", "sql", "cohorts", "experiments"],
+      "repository": "https://github.com/sandeep9889123/pm-skills",
+      "homepage": "https://github.com/sandeep9889123/pm-skills/tree/main/pm-data-analytics",
+      "license": "MIT",
+      "strict": true,
+      "defaultEnabled": true
     },
     {
       "name": "pm-go-to-market",
+      "displayName": "PM Go To Market",
       "description": "Go-to-market skills for PMs: enterprise GTM, growth loops, motions, beachhead segments, ICPs, and evidence-backed competitive battlecards.",
-      "source": "./pm-go-to-market",
-      "category": "product-management"
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/sandeep9889123/pm-skills.git",
+        "path": "pm-go-to-market",
+        "ref": "main"
+      },
+      "category": "product-management",
+      "tags": ["product-management", "go-to-market", "gtm", "icp", "sales", "battlecards"],
+      "repository": "https://github.com/sandeep9889123/pm-skills",
+      "homepage": "https://github.com/sandeep9889123/pm-skills/tree/main/pm-go-to-market",
+      "license": "MIT",
+      "strict": true,
+      "defaultEnabled": true
     },
     {
       "name": "pm-marketing-growth",
+      "displayName": "PM Marketing Growth",
       "description": "Product marketing and growth skills: marketing ideas, value propositions, North Star metrics, product naming, and positioning.",
-      "source": "./pm-marketing-growth",
-      "category": "product-management"
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/sandeep9889123/pm-skills.git",
+        "path": "pm-marketing-growth",
+        "ref": "main"
+      },
+      "category": "product-management",
+      "tags": ["product-management", "marketing", "growth", "positioning", "naming"],
+      "repository": "https://github.com/sandeep9889123/pm-skills",
+      "homepage": "https://github.com/sandeep9889123/pm-skills/tree/main/pm-marketing-growth",
+      "license": "MIT",
+      "strict": true,
+      "defaultEnabled": true
     },
     {
       "name": "pm-toolkit",
-      "description": "PM utility skills: resume review, NDA drafting, privacy policy generation, and grammar/flow checking.",
-      "source": "./pm-toolkit",
-      "category": "product-management"
+      "displayName": "PM Toolkit",
+      "description": "PM utility skills: resume review, NDA drafting, privacy policy generation, and grammar and flow checking.",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/sandeep9889123/pm-skills.git",
+        "path": "pm-toolkit",
+        "ref": "main"
+      },
+      "category": "product-management",
+      "tags": ["product-management", "toolkit", "resume", "nda", "privacy", "writing"],
+      "repository": "https://github.com/sandeep9889123/pm-skills",
+      "homepage": "https://github.com/sandeep9889123/pm-skills/tree/main/pm-toolkit",
+      "license": "MIT",
+      "strict": true,
+      "defaultEnabled": true
     },
     {
       "name": "pm-ai-shipping",
-      "description": "AI Shipping Kit — document AI-built apps, audit intended-vs-implemented gaps, derive tests, and produce reviewer-ready shipping evidence.",
-      "source": "./pm-ai-shipping",
-      "category": "product-management"
+      "displayName": "PM AI Shipping",
+      "description": "AI Shipping Kit for PMs and founders: document AI-built apps, audit intended versus implemented gaps, derive tests, and produce reviewer-ready shipping evidence.",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/sandeep9889123/pm-skills.git",
+        "path": "pm-ai-shipping",
+        "ref": "main"
+      },
+      "category": "product-management",
+      "tags": ["product-management", "ai", "shipping", "audit", "testing", "software-evidence"],
+      "repository": "https://github.com/sandeep9889123/pm-skills",
+      "homepage": "https://github.com/sandeep9889123/pm-skills/tree/main/pm-ai-shipping",
+      "license": "MIT",
+      "strict": true,
+      "defaultEnabled": true
     },
     {
       "name": "pm-enterprise-transformation",
-      "description": "Enterprise transformation workflows for future capability building, client-proof-to-GTM, sales transformation, and PM/tooling automation with evidence, economics, and governance gates.",
-      "source": "./pm-enterprise-transformation",
-      "category": "product-management"
+      "displayName": "PM Enterprise Transformation",
+      "description": "Enterprise PM workflows for building future capabilities, converting client delivery proof into sales GTM, transforming sales execution, and automating product and solution operations.",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/sandeep9889123/pm-skills.git",
+        "path": "pm-enterprise-transformation",
+        "ref": "main"
+      },
+      "category": "product-management",
+      "tags": ["product-management", "enterprise-ai", "transformation", "capability-building", "sales-transformation", "gtm"],
+      "repository": "https://github.com/sandeep9889123/pm-skills",
+      "homepage": "https://github.com/sandeep9889123/pm-skills/tree/main/pm-enterprise-transformation",
+      "license": "MIT",
+      "strict": true,
+      "defaultEnabled": true
     },
     {
       "name": "pm-business-case",
+      "displayName": "PM Business Case",
       "description": "Reliability-first business case formation with claim-level evidence, market and customer proof, reconstructable economics, commercialization, falsification, adversarial review, and gated investment decisions.",
-      "source": "./pm-business-case",
-      "category": "product-management"
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/sandeep9889123/pm-skills.git",
+        "path": "pm-business-case",
+        "ref": "main"
+      },
+      "category": "product-management",
+      "tags": ["product-management", "business-case", "investment-case", "evidence", "strategy", "decision-quality"],
+      "repository": "https://github.com/sandeep9889123/pm-skills",
+      "homepage": "https://github.com/sandeep9889123/pm-skills/tree/main/pm-business-case",
+      "license": "MIT",
+      "strict": true,
+      "defaultEnabled": true
     }
   ]
 }
