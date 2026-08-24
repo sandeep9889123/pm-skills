@@ -1,44 +1,86 @@
-# pm-execution
+# PM Execution
 
-Execution and product management skills: PRDs, OKRs, roadmaps, sprints, pre-mortems, stakeholder maps, user stories, prioritization frameworks, and more.
+Execution workflows for converting strategy and discovery into PRDs, user stories, OKRs, roadmap decisions, sprint plans, stakeholder alignment, and test scenarios.
 
-## Skills (16)
+This plugin is part of Sandeep Kumar M's enhanced `pm-skills` fork. It is designed for PMs who need to ship clearly, not create long documents that hide ambiguity.
 
-- **brainstorm-okrs** — Brainstorm team-level OKRs aligned with company objectives.
-- **create-prd** — Create a Product Requirements Document using a comprehensive 8-section template covering summary, background, objectives, market segments, value propositions, solution details, and release planning.
-- **dummy-dataset** — Generate realistic dummy datasets for testing with customizable columns, constraints, and output formats (CSV, JSON, SQL, Python script).
-- **job-stories** — Create job stories using the 'When [situation], I want to [motivation], so I can [outcome]' format with detailed acceptance criteria.
-- **outcome-roadmap** — Transform an output-focused roadmap into an outcome-focused one.
-- **pre-mortem** — Run a pre-mortem analysis on a PRD.
-- **prioritization-frameworks** — Reference guide to 9 prioritization frameworks with formulas, when-to-use guidance, and templates.
-- **release-notes** — Generate user-facing release notes from tickets, PRDs, or changelogs.
-- **retro** — Facilitate a structured sprint retrospective.
-- **sprint-plan** — Plan a sprint with capacity estimation, story selection, dependency mapping, and risk identification.
-- **stakeholder-map** — Build a stakeholder map using a power/interest grid, identify communication strategies per quadrant, and generate a communication plan.
-- **strategy-red-team** — Red-team a PRD, roadmap, or strategy by attacking its load-bearing assumptions; rank failure modes and return the cheapest test and kill criteria for each.
-- **summarize-meeting** — Summarize a meeting transcript into a structured template with date, participants, topic, summary points, and action items.
-- **test-scenarios** — Create comprehensive test scenarios from user stories with test objectives, starting conditions, user roles, step-by-step actions, and expected outcomes.
-- **user-stories** — Create user stories following the 3 C's (Card, Conversation, Confirmation) and INVEST criteria with descriptions, design links, and acceptance criteria.
-- **wwas** — Create product backlog items in Why-What-Acceptance format.
+## When to use
 
-## Commands (11)
+Use this plugin when you need to:
 
-- `/pm-execution:generate-data` — Generate realistic dummy datasets for testing — CSV, JSON, SQL inserts, or Python scripts.
-- `/pm-execution:meeting-notes` — Summarize a meeting transcript into structured notes with decisions, action items, and follow-ups.
-- `/pm-execution:plan-okrs` — Brainstorm team-level OKRs aligned with company objectives — qualitative objectives with measurable key results.
-- `/pm-execution:pre-mortem` — Run a pre-mortem risk analysis on a PRD, launch plan, or feature — identify what could go wrong before it does.
-- `/pm-execution:red-team-prd` — Red-team a PRD, roadmap, or strategy — attack its load-bearing assumptions and return the cheapest test for each before you commit.
-- `/pm-execution:sprint` — Sprint lifecycle — plan a sprint, run a retrospective, or generate release notes.
-- `/pm-execution:stakeholder-map` — Map stakeholders on a Power × Interest grid and create a tailored communication plan.
-- `/pm-execution:test-scenarios` — Generate comprehensive test scenarios from user stories or feature specs — happy paths, edge cases, and error handling.
-- `/pm-execution:transform-roadmap` — Convert a feature-based roadmap into an outcome-focused roadmap that communicates strategic intent.
-- `/pm-execution:write-prd` — Create a comprehensive Product Requirements Document from a feature idea or problem statement.
-- `/pm-execution:write-stories` — Break a feature into backlog items — user stories, job stories, or WWA format with acceptance criteria.
+- write or red-team a PRD
+- convert ideas into user stories
+- create test scenarios
+- plan OKRs
+- summarize meetings
+- map stakeholders
+- run a pre-mortem
+- structure sprint planning
+- transform output roadmaps into outcome roadmaps
+- generate dummy datasets for product analysis and prototypes
 
-## Author
+## Skills included
 
-Paweł Huryn — [The Product Compass Newsletter](https://www.productcompass.pm)
+- `brainstorm-okrs`
+- `create-prd`
+- `dummy-dataset`
+- `job-stories`
+- `outcome-roadmap`
+- `pre-mortem`
+- `prioritization-frameworks`
+- `release-notes`
+- `retro`
+- `sprint-plan`
+- `stakeholder-map`
+- `strategy-red-team`
+- `summarize-meeting`
+- `test-scenarios`
+- `user-stories`
+- `wwas`
 
-## License
+## Commands included
 
-MIT
+- `/generate-data`
+- `/meeting-notes`
+- `/plan-okrs`
+- `/pre-mortem`
+- `/red-team-prd`
+- `/sprint`
+- `/stakeholder-map`
+- `/test-scenarios`
+- `/transform-roadmap`
+- `/write-prd`
+- `/write-stories`
+
+## Operating rules
+
+1. Execution artifacts must expose decisions, dependencies, and unknowns.
+2. A PRD is not complete unless it includes acceptance criteria and non-goals.
+3. User stories must preserve the user job and business reason.
+4. Test scenarios must include edge cases and failure paths, not only happy paths.
+5. Roadmaps should connect work to outcomes.
+6. Meeting notes should produce actions, owners, decisions, and risks.
+
+## Example use
+
+```text
+Use pm-execution to write a PRD for this workflow. Include personas, problem statement, scope, non-goals, user journeys, acceptance criteria, analytics events, risks, and test scenarios.
+```
+
+## Output standard
+
+A strong output from this plugin should include:
+
+- crisp scope
+- decision log
+- requirements
+- acceptance criteria
+- owner map
+- dependency list
+- risks
+- validation plan
+- next actions
+
+## Attribution
+
+Based on the original `phuryn/pm-skills` execution workflows. Enhanced in this fork with stronger red-team, testability, and delivery-readiness standards.
