@@ -1,24 +1,62 @@
-# pm-marketing-growth
+# PM Marketing Growth
 
-Product marketing and growth skills: marketing ideas, value proposition statements, North Star metrics, product naming, and positioning.
+Marketing and growth workflows for north-star metrics, positioning, product naming, value propositions, and marketing idea generation.
 
-## Skills (5)
+This plugin is part of Sandeep Kumar M's enhanced `pm-skills` fork. It is meant to help PMs produce sharper market-facing narratives without drifting into generic marketing copy.
 
-- **marketing-ideas** — Generate 5 creative, cost-effective marketing ideas with channels, messaging, and engagement rationale.
-- **north-star-metric** — Identify a North Star Metric and 3-5 Input Metrics.
-- **positioning-ideas** — Brainstorm product positioning ideas differentiated from competitors.
-- **product-name** — Brainstorm 5 unique, memorable product names with rationale aligned to brand values and target audience.
-- **value-prop-statements** — Generate value proposition statements for marketing, sales, and onboarding from existing value propositions.
+## When to use
 
-## Commands (2)
+Use this plugin when you need to:
 
-- `/pm-marketing-growth:market-product` — Brainstorm marketing ideas, positioning, value prop statements, and product names — creative marketing toolkit.
-- `/pm-marketing-growth:north-star` — Define your North Star Metric and supporting input metrics — classify the business game and validate against best practices.
+- define a north-star metric
+- name a product or brand concept
+- write value proposition statements
+- generate positioning ideas
+- brainstorm marketing angles
+- connect product outcomes to growth loops
+- sharpen external-facing PM narratives
 
-## Author
+## Skills included
 
-Paweł Huryn — [The Product Compass Newsletter](https://www.productcompass.pm)
+- `marketing-ideas`
+- `north-star-metric`
+- `positioning-ideas`
+- `product-name`
+- `value-prop-statements`
 
-## License
+## Commands included
 
-MIT
+- `/market-product`
+- `/north-star`
+
+## Operating rules
+
+1. Do not write vague “AI-powered” positioning unless the AI value is specific.
+2. Name the target segment before writing messaging.
+3. Link every value proposition to a real user pain or measurable business outcome.
+4. A north-star metric must reflect delivered value, not vanity activity.
+5. Positioning should say what the product is not for.
+6. Marketing ideas should be tied to distribution channels and proof points.
+
+## Example use
+
+```text
+Use pm-marketing-growth to create positioning and value propositions for this product. Include target segment, pain, promise, proof, objection handling, and north-star metric.
+```
+
+## Output standard
+
+A strong output from this plugin should include:
+
+- target audience
+- problem insight
+- positioning options
+- value propositions
+- proof points
+- north-star metric
+- channel ideas
+- risks and messaging caveats
+
+## Attribution
+
+Based on the original `phuryn/pm-skills` marketing growth workflows. Enhanced in this fork with sharper positioning discipline and proof-backed messaging expectations.
