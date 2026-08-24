@@ -1,26 +1,66 @@
-# pm-go-to-market
+# PM Go To Market
 
-Go-to-market skills for PMs: GTM strategy, growth loops, GTM motions, beachhead segments, and ideal customer profiles.
+GTM workflows for translating product proof, customer segments, positioning, launch strategy, battlecards, and growth motions into practical go-to-market execution.
 
-## Skills (6)
+This plugin is part of Sandeep Kumar M's enhanced `pm-skills` fork. It is designed for PMs who need to connect product value to market adoption, sales enablement, and commercial clarity.
 
-- **beachhead-segment** — Identify the first beachhead market segment for a product launch.
-- **competitive-battlecard** — Create sales-ready competitive battlecards comparing your product against a specific competitor.
-- **growth-loops** — Identify growth loops (flywheels) for sustainable traction.
-- **gtm-motions** — Identify the best GTM motions and tools.
-- **gtm-strategy** — Create a go-to-market strategy for a product launch covering marketing channels, messaging, success metrics, and launch plan.
-- **ideal-customer-profile** — Identify the Ideal Customer Profile (ICP) from research data with demographics, behaviors, JTBD, and needs.
+## When to use
 
-## Commands (3)
+Use this plugin when you need to:
 
-- `/pm-go-to-market:battlecard` — Create a sales-ready competitive battlecard — positioning, feature comparison, objection handling, and win strategies.
-- `/pm-go-to-market:growth-strategy` — Design sustainable growth mechanisms — growth loops and GTM motions for product-led and sales-led strategies.
-- `/pm-go-to-market:plan-launch` — Create a full go-to-market strategy — beachhead segment, ICP, messaging, channels, and launch plan.
+- define ICPs
+- select a beachhead segment
+- map GTM motions
+- create launch plans
+- build competitive battlecards
+- translate proof into sales narrative
+- define growth loops
+- align product, sales, and marketing on one story
 
-## Author
+## Skills included
 
-Paweł Huryn — [The Product Compass Newsletter](https://www.productcompass.pm)
+- `beachhead-segment`
+- `competitive-battlecard`
+- `growth-loops`
+- `gtm-motions`
+- `gtm-strategy`
+- `ideal-customer-profile`
 
-## License
+## Commands included
 
-MIT
+- `/battlecard`
+- `/growth-strategy`
+- `/plan-launch`
+
+## Operating rules
+
+1. Start with the buyer, user, and buying trigger.
+2. Do not create GTM content without proof points.
+3. Separate ICP from broader TAM.
+4. Identify objections and switching costs.
+5. Match GTM motion to deal size, urgency, complexity, and buying committee.
+6. Convert product features into business outcomes and sales-ready evidence.
+
+## Example use
+
+```text
+Use pm-go-to-market to build a GTM plan for this enterprise AI solution. Include ICP, beachhead segment, buyer pains, proof points, objections, channels, launch plan, and sales enablement assets.
+```
+
+## Output standard
+
+A strong output from this plugin should include:
+
+- ICP
+- beachhead segment
+- positioning
+- proof points
+- GTM motion
+- launch plan
+- battlecard inputs
+- risks and objections
+- success metrics
+
+## Attribution
+
+Based on the original `phuryn/pm-skills` GTM workflows. Enhanced in this fork with clearer proof-to-sales translation and enterprise GTM discipline.
