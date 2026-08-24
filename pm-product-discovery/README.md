@@ -1,35 +1,74 @@
-# pm-product-discovery
+# PM Product Discovery
 
-Product discovery skills for PMs: ideation, experiments, assumption testing, feature prioritization, and customer interview synthesis.
+Product discovery workflows for moving from vague product questions to structured evidence, risks, assumptions, opportunities, and testable next steps.
 
-## Skills (13)
+This plugin is part of Sandeep Kumar M's enhanced `pm-skills` fork. It builds on the upstream PM skills foundation and adds a stronger operating expectation: do not produce generic discovery theater. Separate what is known, what is assumed, what needs validation, and what can be decided now.
 
-- **analyze-feature-requests** — Analyze and prioritize a list of feature requests by theme, strategic alignment, impact, effort, and risk.
-- **brainstorm-experiments-existing** — Design experiments to test assumptions for an existing product.
-- **brainstorm-experiments-new** — Design lean startup experiments (pretotypes) for a new product.
-- **brainstorm-ideas-existing** — Brainstorm product ideas for an existing product using multi-perspective ideation (PM, Designer, Engineer).
-- **brainstorm-ideas-new** — Brainstorm feature ideas for a new product in initial discovery.
-- **identify-assumptions-existing** — Identify risky assumptions for a feature idea in an existing product across Value, Usability, Viability, and Feasibility.
-- **identify-assumptions-new** — Identify risky assumptions for a new product idea across 8 risk categories including Go-to-Market, Strategy, and Team.
-- **interview-script** — Create a structured customer interview script with JTBD probing questions, warm-up, core exploration, and wrap-up sections.
-- **metrics-dashboard** — Define and design a product metrics dashboard with key metrics, data sources, visualization types, and alert thresholds.
-- **opportunity-solution-tree** — Build an Opportunity Solution Tree (OST) to structure product discovery — map a desired outcome to opportunities, solutions, and experiments.
-- **prioritize-assumptions** — Prioritize assumptions using an Impact × Risk matrix and suggest experiments for each.
-- **prioritize-features** — Prioritize a backlog of feature ideas based on impact, effort, risk, and strategic alignment.
-- **summarize-interview** — Summarize a customer interview transcript into a structured template with JTBD, satisfaction signals, and action items.
+## When to use
 
-## Commands (5)
+Use this plugin when you need to:
 
-- `/pm-product-discovery:brainstorm` — Brainstorm product ideas or experiments from PM, Designer, and Engineer perspectives — for existing or new products.
-- `/pm-product-discovery:discover` — Run a full product discovery cycle — from ideation through assumption mapping to experiment design.
-- `/pm-product-discovery:interview` — Prepare a customer interview script or summarize an interview transcript into structured insights.
-- `/pm-product-discovery:setup-metrics` — Design a product metrics dashboard with North Star metric, input metrics, health metrics, and alert thresholds.
-- `/pm-product-discovery:triage-requests` — Analyze, categorize, and prioritize a batch of feature requests from customers or stakeholders.
+- synthesize customer interviews
+- write interview scripts
+- triage feature requests
+- identify risky assumptions
+- generate discovery experiments
+- build an opportunity-solution tree
+- define early metrics for a problem area
+- convert scattered qualitative inputs into PM-ready evidence
 
-## Author
+## Skills included
 
-Paweł Huryn — [The Product Compass Newsletter](https://www.productcompass.pm)
+- `analyze-feature-requests`
+- `brainstorm-experiments-existing`
+- `brainstorm-experiments-new`
+- `brainstorm-ideas-existing`
+- `brainstorm-ideas-new`
+- `identify-assumptions-existing`
+- `identify-assumptions-new`
+- `interview-script`
+- `metrics-dashboard`
+- `opportunity-solution-tree`
+- `prioritize-assumptions`
+- `prioritize-features`
+- `summarize-interview`
 
-## License
+## Commands included
 
-MIT
+- `/brainstorm`
+- `/discover`
+- `/interview`
+- `/setup-metrics`
+- `/triage-requests`
+
+## Operating rules
+
+1. Start with the user problem, not the solution.
+2. Separate evidence from opinion.
+3. Do not assume demand from stakeholder urgency alone.
+4. Treat feature requests as signals, not requirements.
+5. Always expose risky assumptions before recommending experiments.
+6. Make next steps measurable, small, and decision-oriented.
+
+## Example use
+
+```text
+Use pm-product-discovery to analyze these customer requests. Group them by user job, pain severity, evidence strength, and discovery risk. Then propose the top validation experiments.
+```
+
+## Output standard
+
+A strong output from this plugin should include:
+
+- problem framing
+- user segments or jobs
+- evidence summary
+- assumption map
+- opportunity areas
+- prioritization rationale
+- experiment plan
+- open questions
+
+## Attribution
+
+Based on the original `phuryn/pm-skills` product discovery work. Enhanced in this fork with clearer evidence separation and decision-focused discovery outputs.
