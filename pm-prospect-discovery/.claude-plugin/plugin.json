@@ -1,0 +1,22 @@
+{
+  "name": "pm-prospect-discovery",
+  "version": "2.1.0",
+  "description": "Model-agnostic enterprise pre-RFP discovery for validating prospect problems, use cases, solution paths, assumptions, dependencies, and proposal readiness.",
+  "author": {
+    "name": "sandeep9889123",
+    "email": "211499229+sandeep9889123@users.noreply.github.com",
+    "url": "https://github.com/sandeep9889123"
+  },
+  "keywords": [
+    "product-management",
+    "prospect-discovery",
+    "pre-rfp",
+    "enterprise-sales",
+    "solution-discovery",
+    "assumption-testing",
+    "proposal-readiness",
+    "model-agnostic"
+  ],
+  "homepage": "https://github.com/sandeep9889123/pm-skills/tree/main/pm-prospect-discovery",
+  "license": "MIT"
+}
