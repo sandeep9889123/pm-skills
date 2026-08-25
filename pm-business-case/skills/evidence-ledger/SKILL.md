@@ -1,53 +1,61 @@
 ---
 name: evidence-ledger
-description: "Create and audit a claim-level evidence ledger for a business case. Use when researching, validating, refreshing, or reviewing facts, assumptions, estimates, citations, contradictions, source freshness, and decision readiness."
+description: "Create and audit a claim-level evidence ledger for a business case. Use when validating facts, assumptions, estimates, citations, contradictions, source freshness, confidence, and investment readiness before writing executive recommendations."
 ---
+
 # Evidence Ledger
 
-## Objective
+## Operating principle
 
-Make it impossible for unsupported business-case claims to disappear into polished prose.
+Make it impossible for unsupported claims to disappear into polished prose.
 
-Use `pm-business-case/references/EVIDENCE_CONTRACT.md` as the governing contract.
+The ledger must exist before the executive narrative. It is the source of truth for business-case claims, not an appendix produced after the story is written.
 
-The ledger is created before the executive narrative and maintained throughout the workflow.
+Use `pm-business-case/references/EVIDENCE_CONTRACT.md` as the governing contract when available.
+
+## Non-negotiable rules
+
+1. Every material claim must have a claim ID.
+2. Every material claim must have exactly one evidence state.
+3. Never fabricate sources, URLs, quotes, page numbers, companies, competitors, customers, prices, market sizes, benchmarks, dates, or metrics.
+4. Never cite a search snippet as if the underlying source was verified.
+5. Model memory can propose search leads, not decision-critical evidence.
+6. User-provided claims must be classified, not automatically trusted.
+7. Tool or retrieval failure means `UNVERIFIED` and `coverage incomplete`, not absence.
+8. P0 claims with `UNKNOWN`, `STALE`, `UNVERIFIED`, `CONTRADICTED`, or `NOT_CHECKED` cannot support a confident investment recommendation.
+9. A business case with hidden P0 uncertainty must be downgraded to NOT READY or EXPERIMENT.
 
 ## Evidence states
 
-Every material claim must be exactly one of:
+Use exactly one:
 
-- FACT
-- INFERENCE
-- ASSUMPTION
-- ESTIMATE
-- UNKNOWN
-- STALE
-- PROPOSAL
-- DECISION_THRESHOLD
+| State | Meaning |
+|---|---|
+| FACT | Directly supported by adequate evidence |
+| INFERENCE | Reasoned interpretation from verified facts |
+| ASSUMPTION | Required working belief not yet verified |
+| ESTIMATE | Modelled or approximate value with method and inputs |
+| UNKNOWN | Material fact not verified |
+| STALE | Evidence may no longer be current |
+| PROPOSAL | Future action or intended capability |
+| DECISION_THRESHOLD | Explicit pass/fail threshold for a decision gate |
 
-Do not create hybrid labels such as "likely fact". Pick the correct state and explain uncertainty in notes.
+Do not create hybrid labels such as `likely fact` or `soft proof`.
 
-## Source handling rules
+## User-provided information classification
 
-1. Retrieve and inspect external evidence before marking it VERIFIED.
-2. Never cite a search snippet as if the underlying page was verified.
-3. Never fabricate a URL, title, author, date, quote, page number, company, competitor, customer, price, market size, or benchmark.
-4. If retrieval fails, mark `verification_status=UNVERIFIED` and state `coverage incomplete / UNKNOWN` where relevant.
-5. Model memory can generate search hypotheses, never decision-critical FACT evidence.
-6. Company-authored material verifies what the company claims, not necessarily whether the claim is objectively true.
-7. Two sources copying the same announcement are one independence group, not two independent confirmations.
+Classify user inputs as:
 
-## User-provided information
-
-Classify user input deliberately:
-
-- `USER_PROVIDED_PRIMARY`: source-of-truth artifact or explicitly authoritative internal fact owned by the user.
-- `USER_PROVIDED_CLAIM`: asserted information without source-of-truth evidence.
-- `USER_PROVIDED_LEAD`: item to investigate, such as a suggested competitor.
+| Type | Use |
+|---|---|
+| USER_PROVIDED_PRIMARY | Source-of-truth artifact or explicitly authoritative internal fact |
+| USER_PROVIDED_CLAIM | Assertion without source-of-truth evidence |
+| USER_PROVIDED_LEAD | Item to investigate, such as suggested competitor, market, customer, or metric |
+| USER_PROVIDED_CONTEXT | Useful background, not proof by itself |
 
 User confidence does not change evidence state.
 
-User-supplied competitors are leads, not facts. If the user says "I found a competitor" after a zero-result first pass, independently verify the named company and expand the search taxonomy. Do not merely add the company to the matrix.
+A user-supplied competitor is a lead. Verify independently and expand the search taxonomy if it exposes a missed category.
 
 ## Required claim record
 
@@ -56,10 +64,11 @@ For every decision-critical claim capture:
 ```json
 {
   "claim_id": "C001",
-  "claim_text": "Example claim",
+  "claim_text": "Exact claim being used",
   "state": "FACT",
   "priority": "P0",
   "decision_critical": true,
+  "decision_area": "Competition",
   "sources": [
     {
       "source_type": "PRIMARY_AUTHORITATIVE",
@@ -77,21 +86,36 @@ For every decision-critical claim capture:
   "verification_status": "VERIFIED",
   "freshness_status": "CURRENT",
   "contradiction_status": "NONE_FOUND",
+  "confidence": "HIGH",
   "notes": ""
 }
 ```
 
-Use `pm-business-case/references/EVIDENCE_LEDGER_TEMPLATE.json` as the starting structure.
+Use `pm-business-case/references/EVIDENCE_LEDGER_TEMPLATE.json` when available.
 
 ## Decision criticality
 
 Use:
 
-- P0: could change BUILD, BUY, PARTNER, EXPERIMENT, DEFER, KILL, or NOT READY.
-- P1: materially changes scope, sequencing, economics, or GTM.
-- P2: useful context but not decision-determinative.
+- P0: could change BUILD, BUY, PARTNER, EXPERIMENT, DEFER, KILL, or NOT READY
+- P1: materially changes scope, sequencing, economics, GTM, or risk
+- P2: useful context, not decision-determinative
 
 Do not bury P0 unknowns among low-value research details.
+
+## Source standards
+
+Preferred support:
+
+1. primary authoritative source that directly establishes the claim
+2. internal source-of-truth artifact explicitly provided by the user
+3. two independent credible sources
+4. transparent estimate with sourced inputs
+5. clearly labeled inference from verified facts
+
+Company-authored material verifies what the company claims. It does not prove objective superiority, customer satisfaction, market leadership, or independent demand.
+
+Two sources copying the same announcement are one independence group.
 
 ## Corroboration gate
 
@@ -100,32 +124,29 @@ A decision-critical FACT requires either:
 - one primary authoritative source that directly establishes the claim, or
 - two independent credible sources.
 
-Exceptions are not granted because a claim is conventional wisdom.
-
-For high-consequence claims, prefer independent corroboration even when a primary source exists if the primary source has a strong incentive to persuade.
+For high-consequence claims, prefer independent corroboration even when a primary source exists, especially if the source has incentive to persuade.
 
 ## Contradiction pass
 
-For each P0 claim, actively search for evidence that would make the claim false, narrower, older, geographically limited, or methodologically incompatible.
+For each P0 claim, actively search for evidence that would make it false, narrower, older, geographically limited, overstated, or methodologically incompatible.
 
-Record one of:
+Record:
 
 - NONE_FOUND
 - RESOLVED
 - UNRESOLVED
 - NOT_CHECKED
 
-A P0 FACT cannot be treated as investment-ready with UNRESOLVED or NOT_CHECKED contradiction status.
+A P0 FACT is not investment-ready with UNRESOLVED or NOT_CHECKED contradiction status.
 
-## Freshness
+## Freshness discipline
 
-Do not use one universal freshness window.
+Assess freshness by claim type:
 
-Assess freshness based on the claim:
-
-- pricing, product capabilities, competitors, regulations, funding, executive roles, and market activity can become stale quickly;
-- audited historical financials may remain valid for the period they describe;
-- structural research may remain useful longer, but its applicability must still be checked.
+- pricing, competitors, product capabilities, funding, regulations, executive roles, and market activity can stale quickly
+- audited historical numbers may remain valid for their stated period
+- structural research may remain useful longer, but applicability still needs checking
+- internal delivery metrics need period, denominator, scope, and owner
 
 When current verification matters and cannot be completed, use STALE or UNKNOWN.
 
@@ -134,22 +155,24 @@ When current verification matters and cannot be completed, use STALE or UNKNOWN.
 Every ESTIMATE requires:
 
 - formula or method
-- inputs
 - units
+- inputs
 - source claim IDs for sourced inputs
 - explicit assumptions
 - sensitivity or range when material
 
-Never hide an assumption inside a spreadsheet-style number.
+Never hide an assumption inside a single number.
 
-Examples requiring ESTIMATE unless directly measured:
+Common estimates requiring method:
 
 - TAM, SAM, SOM
+- reachable accounts
+- revenue potential
 - implementation savings
 - engineering productivity
-- revenue potential
 - conversion lift
 - adoption rate
+- pricing/WTP
 - gross margin
 - payback
 - ROI
@@ -159,16 +182,17 @@ Examples requiring ESTIMATE unless directly measured:
 
 When external market estimates disagree:
 
-1. compare category definition;
-2. compare geography;
-3. compare base year;
-4. compare forecast horizon;
-5. compare methodology;
-6. compare included segments;
-7. identify whether one source cites the other;
-8. build a bottom-up estimate where possible.
+1. compare category definition
+2. compare geography
+3. compare base year
+4. compare forecast horizon
+5. compare included segments
+6. compare methodology
+7. compare source lineage
+8. identify commercial incentives
+9. build a bottom-up estimate when possible
 
-Do not average conflicting numbers merely to produce a neat midpoint.
+Do not average incompatible numbers merely to produce a neat midpoint.
 
 ## Evidence coverage report
 
@@ -176,18 +200,21 @@ Before narrative generation, output:
 
 | Area | P0 claims | Verified | Unknown/Stale | Contradicted | Readiness |
 |---|---:|---:|---:|---:|---|
+| Decision frame | | | | | |
 | Why now | | | | | |
 | Customer/JTBD | | | | | |
 | Competition | | | | | |
 | Market size | | | | | |
+| Alternatives | | | | | |
 | Right-to-win | | | | | |
 | Technical feasibility | | | | | |
 | Economics | | | | | |
 | WTP/Pricing | | | | | |
 | GTM | | | | | |
 | Reuse/Platform | | | | | |
+| Risk/Kill criteria | | | | | |
 
-If any decision area is under-covered, state it before drafting recommendations.
+If any P0 decision area is under-covered, state it before drafting recommendations.
 
 ## Validation
 
@@ -198,3 +225,59 @@ python pm-business-case/scripts/validate_evidence.py evidence-ledger.json
 ```
 
 Treat validator failure as a blocking defect. Fix evidence state, provenance, or the decision. Do not weaken the validator to make a case pass.
+
+## Required output
+
+### 1. Evidence ledger summary
+
+- number of P0/P1/P2 claims
+- verified P0 count
+- unknown/stale/unverified P0 count
+- contradiction status
+- readiness decision
+
+### 2. Claim ledger
+
+Use the required claim record format.
+
+### 3. Blocking uncertainty
+
+List P0 claims that block BUILD, BUY, PARTNER, or confident recommendation.
+
+### 4. Contradictions
+
+List resolved and unresolved contradictions.
+
+### 5. Evidence plan
+
+For each blocker:
+
+- evidence needed
+- source to retrieve
+- owner if known
+- cheapest verification action
+- decision threshold
+
+## Hard stop conditions
+
+Return `NOT READY` when:
+
+- P0 claims lack provenance
+- source freshness is unknown and material
+- contradictions are unresolved
+- estimates lack method or inputs
+- market size cannot be reconstructed
+- competitor absence is inferred from weak search
+- customer demand is asserted but not evidenced
+- right-to-win is aspirational
+
+## Final self-check
+
+Before delivery, verify:
+
+- every material claim has a state
+- every P0 claim has readiness status
+- no invented sources or numbers exist
+- estimates are reconstructable
+- contradictions were checked
+- uncertainty is visible in the executive layer
