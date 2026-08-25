@@ -1,160 +1,153 @@
 ---
 name: ideal-customer-profile
-description: "Identify the Ideal Customer Profile (ICP) from research data with demographics, behaviors, JTBD, and needs. Use when defining your ICP, analyzing PMF survey data, or understanding who your best customers are."
+description: "Define an evidence-backed Ideal Customer Profile using value realization, retention/expansion, buying fit, implementation fit, economics, and anti-ICP evidence. Avoids invented demographics, budgets, impact metrics, and survivorship-biased targeting."
 ---
-# Ideal Customer Profile
 
-## Overview
-Identify your Ideal Customer Profile (ICP) from research and survey data. This skill synthesizes customer research to define the customer most likely to find value, retain, and expand with your product.
+# Evidence-Backed Ideal Customer Profile
 
-## When to Use
-- Defining ICP from product-market fit survey data
-- Targeting high-value customer segments
-- Analyzing customer success and expansion patterns
-- Prioritizing sales and marketing efforts
-- Evaluating new customer opportunities for fit
-- Refining target market definition
+## Purpose
 
-## ICP Framework Components
+Define the accounts/customers for `$ARGUMENTS` that are most likely to **realize value and be economically/serviceably good customers**, not merely the companies that resemble current logos.
 
-### Demographics
-Who are they from a firmographic and personal perspective?
-- Company size (employees, revenue)
-- Industry or vertical
-- Geographic location
-- Job title and department
-- Years of experience in role
-- Education and background
-- Organizational structure and reporting
+For B2B, keep the **account ICP** separate from buyer/champion/user personas.
 
-### Behaviors
-How do they work and make decisions?
-- How they discover and evaluate solutions
-- Buying process and decision-making timeline
-- Technical literacy and product adoption speed
-- Collaboration style (solo decision vs committee)
-- Change management and adoption style
-- Tool switching frequency
-- Community involvement and peer influence
+## P0 Reliability Contract
 
-### Jobs to Be Done (JTBD)
-What are they trying to accomplish?
-- Primary job/goal they're trying to achieve
-- Secondary jobs that support the primary job
-- Emotional jobs (how they want to feel)
-- Social jobs (status and perception)
-- Jobs they avoid or want to eliminate
-- Frequency and importance of each job
-- Success metrics for completing job
+1. **Do not invent company size bands, budgets, pain severity, impact metrics, buying timelines, tech stack, authority, LTV, or expansion potential.**
+2. Existing customers alone create survivorship bias. Use losses, churn, slow implementations, poor-fit pilots, and no-decisions when available.
+3. Enthusiasm/engagement does not automatically mean economic fit.
+4. Do not force a universal ICP if evidence supports multiple distinct motions. Return separate ICP hypotheses when necessary.
+5. Do not infer population prevalence from a convenience sample.
+6. Separate `FACT`, `INFERENCE`, `ASSUMPTION`, `ESTIMATE`, `UNKNOWN`, and `STALE`.
+7. Tool/search/data failure means coverage incomplete.
 
-### Needs and Pain Points
-What problems does your product solve?
-- Specific pain points they experience
-- Current workarounds and limitations
-- Impact on productivity or outcomes
-- Cost or time burden of the problem
-- Emotional frustration levels
-- Barriers to solving the problem
-- Available budget to solve
-- Competing priorities
+## Step 1: Decision Context
 
-## How It Works
+Resolve:
 
-### Step 1: Gather Customer Data
-Collect research about actual and potential customers:
-- Product-market fit survey responses
-- Customer interview transcripts
-- Trial or freemium user behavior data
-- Customer feedback and support tickets
-- Churn analysis and customer lifecycle data
-- Win/loss analysis from sales
-- Competitor customer analysis
+- what ICP will govern: product focus, outbound targeting, qualification, pricing, expansion?
+- B2B/B2C/mixed
+- geography/vertical
+- product stage
+- current GTM motion / ACV if known
+- evidence available
 
-### Step 2: Segment by Value
-Identify customer cohorts and their value:
-- Highest LTV (lifetime value) customers
-- Fastest time-to-value customers
-- Lowest churn rate customers
-- Highest expansion/upsell customers
-- Most enthusiastic/engaged customers
-- Best reference/case study potential
-- Most aligned with product vision
+## Step 2: Define Units
 
-### Step 3: Profile Demographics
-Extract firmographic patterns:
-- Common company sizes (employee count, revenue)
-- Industry verticals and sub-verticals
-- Geographic concentrations
-- Typical department and reporting structure
-- Budget holders and budget available
-- Company stage (startup, growth, enterprise)
-- Company culture indicators
+For B2B distinguish:
 
-### Step 4: Identify Behaviors
-Map decision-making and adoption patterns:
-- How they discovered your product (channel)
-- Evaluation process and timeline
-- Key stakeholders in decision
-- Obstacles during sales process
-- Product adoption speed and breadth
-- Team involvement in onboarding
-- Frequency of feature usage
-- Support and service needs
+- **Account ICP**: organizational conditions for success
+- **Economic buyer**: controls/approves spend
+- **Champion**: mobilizes the purchase
+- **User/operator**: experiences workflow value
+- **Blockers/vetoes**: procurement, security, IT, legal, finance, operations
 
-### Step 5: Define JTBD
-Articulate what they're trying to accomplish:
-- Primary job/goal (functional job)
-- Emotional dimensions (how they want to feel)
-- Social dimensions (team and stakeholder impact)
-- Success metrics (how they measure success)
-- Context and constraints (when, where, with whom)
-- Competing jobs and priorities
-- Importance ranking of various jobs
+Do not mix person-level traits into account-level ICP without purpose.
 
-### Step 6: Document Pain Points and Needs
-Synthesize specific problem areas:
-- Before state (current situation and frustrations)
-- Desired after state (ideal future state)
-- Gap size and impact quantification
-- Emotional dimensions of the problem
-- Resource constraints preventing solutions
-- Skepticism or hesitations
-- Success criteria for solution
+## Step 3: Build Evidence Cohorts
 
-## Input Format
-Use $ARGUMENTS to pass:
-- Research data (surveys, interviews, transcripts)
-- Customer success/metrics data
-- Product usage analytics
-- Sales activity and win/loss data
-- Existing customer database
-- Competitive intelligence
+Compare, where available:
+
+- won and retained
+- expanded
+- fast time-to-value
+- high support/cost-to-serve
+- churned/contraction
+- lost competitive deals
+- no-decision
+- failed/slow pilots
+- implementation-blocked accounts
+
+For every pattern show denominator/sample and source limits.
+
+## Step 4: Find Conditions Associated With Good Fit
+
+Evaluate only evidence-backed dimensions:
+
+- severity/frequency of job
+- trigger event
+- current alternative and dissatisfaction
+- operational maturity/readiness
+- integration/data/security prerequisites
+- buying authority/process
+- implementation burden
+- time-to-value
+- value realized
+- margin/cost-to-serve
+- retention/expansion
+- strategic/reference value
+
+Firmographics are useful only when they predict one of these mechanisms.
+
+## Step 5: Anti-ICP
+
+Explicitly identify disqualifying/poor-fit conditions:
+
+- weak/no problem urgency
+- missing required data/process maturity
+- incompatible security/regulatory requirements
+- uneconomic implementation/support burden
+- wrong buying motion/budget path
+- use case outside product strength
+- high customization with low reuse
+- expected value below switching cost
+
+Do not hide anti-ICP evidence to enlarge TAM.
+
+## Step 6: Contradiction / Survivorship Pass
+
+Ask:
+
+- Are we studying only successful customers?
+- Does one large account dominate the pattern?
+- Could sales selection explain apparent fit?
+- Does account size proxy for another variable such as process maturity?
+- Are churn/loss reasons inconsistent with the proposed ICP?
+- Is a high-value segment expensive or slow enough to be strategically unattractive?
+
+## Step 7: ICP Hypothesis and Confidence
+
+For each candidate profile:
+
+| ICP condition | Evidence | State | Confidence | Why it predicts fit | Disqualifier |
+|---|---|---|---|---|---|
+
+Do not manufacture exact thresholds when data only supports directional ranges.
+
+## Step 8: Operationalize
+
+Translate into:
+
+- qualification questions
+- observable CRM fields/signals
+- target account filters where supportable
+- discovery triggers
+- anti-ICP disqualification
+- proof points needed
+- segment-specific implementation assumptions
 
 ## Output
-A comprehensive ICP definition including:
-- Firmographic profile (company size, industry, location)
-- Behavioral profile (buying patterns, adoption style)
-- Complete JTBD mapping (functional, emotional, social jobs)
-- Top 5-7 pain points and specific needs
-- Quantified impact metrics (cost of problem, value of solution)
-- Decision-making process and key stakeholders
-- Typical customer journey and timeline
-- Go-to-market implications and messaging
-- Disqualification criteria (who is NOT a good fit)
-- High-value segment within ICP (ideal-of-the-ideal)
 
-## Framework
-Based on Jobs to Be Done theory by Clayton Christensen and customer profiling methodology. Combines behavioral data with motivational insights to define actionable customer profiles.
+### ICP decision context
+### Account ICP
+[conditions, evidence, confidence]
 
-## Tips
-- Use quantitative and qualitative data together
-- Interview 10+ high-value customers for pattern identification
-- Look for non-obvious demographic patterns (outliers can be high-value)
-- Define both ideal ICP and acceptable secondary segments
-- Revisit ICP quarterly as you gather more customer data
-- Use ICP to evaluate all new sales opportunities
-- Share ICP across entire organization (marketing, sales, product)
-- Remember: ICP should drive focus, not exclude all others
+### Buyer / champion / user map
+[only known/inferred states]
+
+### Anti-ICP
+[explicit exclusions and why]
+
+### Evidence from wins + losses
+[avoid survivorship-only view]
+
+### Unknowns / validation
+[what evidence could change ICP]
+
+### Decision
+`USE ICP | USE AS TARGETING HYPOTHESIS | SPLIT INTO MULTIPLE ICPs | COLLECT MORE EVIDENCE | NOT READY`
+
+No unsupported quantified impact, budget, prevalence, or “ideal-of-the-ideal” claims.
 
 ---
 
