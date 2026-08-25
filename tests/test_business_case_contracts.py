@@ -51,7 +51,7 @@ class TestBusinessCasePluginShape(unittest.TestCase):
             "never conclude no competitors from a first pass",
             "regional players",
             "emerging startups",
-            "in-house alternatives",
+            "internal-build alternatives",
             "contradiction pass",
             "competitive coverage incomplete. absence cannot be concluded.",
             "do nothing",
