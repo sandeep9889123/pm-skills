@@ -1,119 +1,116 @@
 ---
-description: Design a product metrics dashboard with North Star metric, input metrics, health metrics, and alert thresholds
+description: Design a trustworthy product metrics system with precise definitions, instrumentation checks, baselines, guardrails, and evidence-based alert thresholds
 argument-hint: "<product or feature area>"
 ---
 
-# /setup-metrics -- Product Metrics Dashboard Design
+# /setup-metrics -- Trustworthy Product Metrics Design
 
-Design a comprehensive metrics framework for your product or feature — from selecting the right North Star to defining alert thresholds that catch problems early.
+Design metrics that can support real decisions rather than filling a dashboard template with invented targets or ambiguous KPIs.
 
-## Invocation
+## Step 1: Resolve Decision and Stage
 
-```
-/setup-metrics SaaS project management tool
-/setup-metrics New checkout flow we just launched
-/setup-metrics             # asks what you're measuring
-```
+Capture:
 
-## Workflow
+- product/feature/workflow
+- stage: pre-launch, pilot, production, scale
+- decisions the metrics should trigger
+- customer value/outcome
+- business goal
+- known risk/guardrail constraints
+- current analytics/instrumentation if available
 
-### Step 1: Understand What to Measure
+A pre-launch dashboard is a measurement design. It does not have current values or validated baselines unless evidence is provided.
 
-Ask the user:
-- What product or feature area are you setting up metrics for?
-- What stage is it in? (pre-launch, recently launched, mature)
-- What are the current business goals or OKRs?
-- Do you have existing metrics? What's missing or broken?
-- What analytics tools are you using? (helps tailor implementation advice)
+## Step 2: Apply `metrics-dashboard`
 
-### Step 2: Define the Metrics Framework
+For each metric require a reproducible contract:
 
-Apply the **metrics-dashboard** skill:
+- entity/grain
+- formula
+- numerator/denominator
+- qualifying event/state
+- time window/timezone
+- exclusions
+- segment cuts
+- verified source or `UNKNOWN`
+- owner/status
 
-**North Star Metric:**
-- Identify the single metric that best captures the value your product delivers to users
-- Validate against criteria: measures value delivery, is a leading indicator, is actionable
-- Define the metric precisely (formula, data source, time window)
+Do not treat metric names such as “active users” or “conversion” as definitions.
 
-**Input Metrics (3-5):**
-- Identify the levers that drive the North Star
-- Each input metric should be directly actionable by a team
-- Map the causal chain: Input → North Star → Business Outcome
+## Step 3: North Star / Inputs / Guardrails
 
-**Health Metrics (3-5):**
-- Metrics that should stay stable — if they degrade, something is wrong
-- Examples: error rates, latency, support ticket volume, NPS, churn rate
-- Define "healthy" ranges and degradation thresholds
+- Do not force a North Star when value delivery is unclear. `NO VALID NSM YET` is valid.
+- Input metrics are `HYPOTHESIZED DRIVERS` unless causal evidence exists.
+- Add counter-metrics/guardrails that expose gaming, quality loss, margin harm, or key-segment regression.
+- Prefer a smaller trustworthy metric set over dashboard sprawl.
 
-**Counter-Metrics (1-2):**
-- Metrics that could indicate you're optimizing the wrong way
-- Example: if North Star is "daily active users", counter-metric is "session quality" to prevent empty engagement
+## Step 4: Instrumentation Gate
 
-### Step 3: Design Alert Thresholds
+For each material metric identify:
 
-For each metric:
+- event/table/system
+- identity rules
+- deduplication
+- timezone
+- missingness/late data/backfills
+- test/internal traffic
+- refresh latency
 
-| Metric | Green | Yellow | Red | Check Frequency |
-|--------|-------|--------|-----|----------------|
-| [metric] | [healthy range] | [warning] | [critical] | [daily/weekly] |
+If measurement cannot be trusted, output `FIX DATA / INSTRUMENTATION FIRST` before target-setting.
 
-- **Yellow**: Investigate — something may be off
-- **Red**: Act immediately — page someone or escalate
+## Step 5: Baselines, Targets, Alerts
 
-### Step 4: Create Dashboard Spec
+Use explicit states:
 
-```
-## Metrics Dashboard: [Product/Feature]
+- `OBSERVED`
+- `TARGET`
+- `PROPOSAL`
+- `UNKNOWN`
 
-**North Star**: [metric name]
-**Definition**: [precise formula]
-**Current value**: [if known]
-**Target**: [goal]
+Never invent current values or thresholds.
 
-### Input Metrics
-| Metric | Definition | Owner | Target | Current |
-|--------|-----------|-------|--------|---------|
+Each target/alert needs a basis:
 
-### Health Metrics
-| Metric | Healthy Range | Yellow Threshold | Red Threshold |
-|--------|-------------|-----------------|---------------|
+- contractual/SLO
+- historical baseline
+- economic/customer harm threshold
+- pilot/experiment criterion
+- approved strategic objective
+- comparable current external benchmark
 
-### Counter-Metrics
-| Metric | Why It Matters | Watch For |
-|--------|---------------|-----------|
+For alerts define persistence/window, owner, action and recovery condition. Distinguish real product degradation from broken data pipelines.
 
-### Metrics Tree
-North Star: [metric]
-├── Input: [metric 1] → driven by [team/action]
-├── Input: [metric 2] → driven by [team/action]
-├── Input: [metric 3] → driven by [team/action]
-└── Counter: [metric] → watch for [degradation signal]
+## Step 6: Goodhart / Contradiction Pass
 
-### Implementation Notes
-- Data sources: [where each metric comes from]
-- Refresh frequency: [real-time / hourly / daily]
-- Tool recommendations: [based on user's stack]
+Ask:
 
-### Review Cadence
-- **Daily**: Glance at North Star and health metrics
-- **Weekly**: Review input metrics trends, discuss in team standup
-- **Monthly**: Deep dive — are inputs driving the North Star as expected?
-- **Quarterly**: Reassess the metrics framework itself
-```
+- How can this metric improve while customer value worsens?
+- Can an aggregate hide a harmed segment?
+- Can teams game the numerator/denominator?
+- What evidence would show the proposed driver is not causal?
 
-Save as a markdown file to the user's workspace.
+## Output
 
-### Step 5: Offer Next Steps
+### Decision Context
+[stage, decision, value outcome]
 
-- "Want me to **write SQL queries** to compute these metrics?"
-- "Should I **create OKRs** based on this metrics framework?"
-- "Want me to **build a cohort analysis** to set realistic baselines?"
-- "Should I **set up a weekly metrics review template**?"
+### Metric Contracts
+[precise definitions]
 
-## Notes
+### Instrumentation Status
+`VERIFIED | PARTIAL | GAP`
 
-- A good North Star is rare — most teams pick vanity metrics. Push for a metric that captures *user value delivered*, not just engagement
-- Input metrics should be MECE (mutually exclusive, collectively exhaustive) in explaining the North Star
-- If the product is pre-launch, define metrics now but note that baselines will need calibration after launch
-- Counter-metrics prevent Goodhart's Law — when a metric becomes a target, it ceases to be a good metric
-- Recommend starting with fewer metrics, well-instrumented, over a sprawling dashboard nobody checks
+### Baselines / Targets / Alerts
+| Metric | State | Value/threshold | Basis | Owner/action |
+|---|---|---|---|---|
+
+### Guardrails / Segment Cuts
+[anti-Goodhart controls]
+
+### Dashboard Layout
+Do not display fabricated “current values.”
+
+### Decision
+`READY TO INSTRUMENT | READY TO MONITOR | CALIBRATE BASELINES | FIX DATA FIRST | REFRAME METRICS`
+
+State what evidence would change the framework.
