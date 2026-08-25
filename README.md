@@ -8,7 +8,7 @@ This repository is a fork and extension of [phuryn/pm-skills](https://github.com
 
 The reliability loop is:
 
-`Search -> Challenge -> Expand -> Verify -> Conclude`
+`Search → Challenge → Expand → Verify → Conclude`
 
 ## Start here
 
