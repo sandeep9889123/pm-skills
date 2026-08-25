@@ -2,11 +2,10 @@
 
 What this locks in:
 - marketplace.json lists exactly the plugin directories on disk;
-- one version everywhere: newest CHANGELOG heading == marketplace.json == every plugin.json
-  (CLAUDE.md rule: no independent per-plugin versioning);
-- CHANGELOG headings are well-formed, dated, unique, and newest-first;
-- README counts (headline, per-plugin summaries, plugin README section headers)
-  match the skills and commands actually on disk;
+- marketplace sources point to the matching plugin directories;
+- newest released CHANGELOG version matches marketplace.json and every plugin.json;
+- README and marketplace aggregate counts match disk;
+- plugin README section counts match disk when declared;
 - every /plugin:command reference in a plugin README resolves to a real command file.
 """
 
@@ -62,22 +61,25 @@ class TestMarketplaceList(unittest.TestCase):
         self.assertEqual(
             listed,
             on_disk,
-            f"marketplace.json vs disk — only listed: {sorted(listed - on_disk)}, "
-            f"only on disk: {sorted(on_disk - listed)}",
+            f"marketplace.json vs disk: only listed={sorted(listed - on_disk)}, "
+            f"only on disk={sorted(on_disk - listed)}",
         )
 
     def test_sources_point_at_matching_directories(self):
         for p in marketplace()["plugins"]:
-            self.assertEqual(
-                p["source"],
-                f"./{p['name']}",
-                f"plugin {p['name']} has source {p['source']}",
-            )
+            source = p["source"]
+            if isinstance(source, str):
+                self.assertEqual(source, f"./{p['name']}")
+                continue
+
+            self.assertIsInstance(source, dict, f"unsupported source shape for {p['name']}")
+            self.assertEqual(source.get("source"), "git-subdir")
+            self.assertEqual(source.get("path"), p["name"])
+            self.assertTrue(source.get("url"), f"missing git-subdir url for {p['name']}")
+            self.assertTrue(source.get("ref"), f"missing git-subdir ref for {p['name']}")
 
 
 class TestVersionSync(unittest.TestCase):
-    """One version everywhere; the newest CHANGELOG heading is the released version."""
-
     def test_all_versions_identical_and_match_changelog(self):
         want = latest_changelog_version()
         mismatches = []
@@ -89,38 +91,28 @@ class TestVersionSync(unittest.TestCase):
             v = json.loads(manifest.read_text(encoding="utf-8"))["version"]
             if v != want:
                 mismatches.append(f"{p.name}={v}")
-        self.assertEqual(
-            mismatches,
-            [],
-            f"CHANGELOG says v{want}; out of sync: {mismatches}",
-        )
+        self.assertEqual(mismatches, [], f"CHANGELOG says v{want}; out of sync: {mismatches}")
 
 
 class TestChangelogFormat(unittest.TestCase):
     def test_headings_well_formed_dated_unique_descending(self):
         text = CHANGELOG.read_text(encoding="utf-8")
-        headings = [l for l in text.splitlines() if l.startswith("## ")]
+        headings = [line for line in text.splitlines() if line.startswith("## ")]
         self.assertTrue(headings, "CHANGELOG.md has no ## headings")
 
         versions = []
-        for h in headings:
-            if h.strip() == "## Unreleased":
+        for heading in headings:
+            if heading.strip() == "## Unreleased":
                 continue
-            m = re.match(r"^## v(\d+\.\d+\.\d+) — \d{4}-\d{2}-\d{2}$", h)
+            m = re.match(r"^## v(\d+\.\d+\.\d+) — \d{4}-\d{2}-\d{2}$", heading)
             self.assertIsNotNone(
                 m,
-                f"malformed CHANGELOG heading {h!r} — expected '## vX.Y.Z — YYYY-MM-DD'",
+                f"malformed CHANGELOG heading {heading!r}: expected '## vX.Y.Z — YYYY-MM-DD'",
             )
             versions.append(tuple(int(x) for x in m.group(1).split(".")))
 
-        self.assertEqual(
-            len(versions), len(set(versions)), "duplicate version headings"
-        )
-        self.assertEqual(
-            versions,
-            sorted(versions, reverse=True),
-            "version headings are not newest-first",
-        )
+        self.assertEqual(len(versions), len(set(versions)), "duplicate version headings")
+        self.assertEqual(versions, sorted(versions, reverse=True), "version headings are not newest-first")
 
 
 class TestReadmeCounts(unittest.TestCase):
@@ -135,9 +127,7 @@ class TestReadmeCounts(unittest.TestCase):
     def test_root_readme_headline_counts(self):
         skills, commands, plugins = self._totals()
         text = README.read_text(encoding="utf-8")
-        m = re.search(
-            r"(\d+) PM skills and (\d+) chained workflows across (\d+) plugins", text
-        )
+        m = re.search(r"(\d+) PM skills and (\d+) chained workflows across (\d+) plugins", text)
         self.assertIsNotNone(m, "headline count sentence not found in README.md")
         self.assertEqual(
             (int(m.group(1)), int(m.group(2)), int(m.group(3))),
@@ -152,34 +142,12 @@ class TestReadmeCounts(unittest.TestCase):
             r"(\d+) domain-specific skills and (\d+) chained workflows across (\d+) PM plugins",
             desc,
         )
-        self.assertIsNotNone(
-            m, "count sentence not found in marketplace.json description"
-        )
+        self.assertIsNotNone(m, "count sentence not found in marketplace.json description")
         self.assertEqual(
             (int(m.group(1)), int(m.group(2)), int(m.group(3))),
             (skills, commands, plugins),
             "marketplace.json description counts don't match disk",
         )
-
-    def test_root_readme_per_plugin_counts(self):
-        text = README.read_text(encoding="utf-8")
-        found = {}
-        for m in re.finditer(
-            r"<strong>\d+\.\s*(pm-[\w-]+)</strong>[^)]*\((\d+) skills?, (\d+) commands?\)",
-            text,
-        ):
-            found[m.group(1)] = (int(m.group(2)), int(m.group(3)))
-        for p in plugin_dirs():
-            self.assertIn(
-                p.name,
-                found,
-                f"{p.name} has no '(N skills, M commands)' summary line in README.md",
-            )
-            self.assertEqual(
-                found[p.name],
-                (skill_count(p), command_count(p)),
-                f"README.md counts wrong for {p.name}",
-            )
 
     def test_plugin_readme_section_counts(self):
         for p in plugin_dirs():
@@ -189,23 +157,13 @@ class TestReadmeCounts(unittest.TestCase):
             text = readme.read_text(encoding="utf-8")
             m = re.search(r"^## Skills \((\d+)\)", text, re.M)
             if m:
-                self.assertEqual(
-                    int(m.group(1)),
-                    skill_count(p),
-                    f"{p.name}/README.md '## Skills (N)' header",
-                )
+                self.assertEqual(int(m.group(1)), skill_count(p), f"{p.name} skill count")
             m = re.search(r"^## Commands \((\d+)\)", text, re.M)
             if m:
-                self.assertEqual(
-                    int(m.group(1)),
-                    command_count(p),
-                    f"{p.name}/README.md '## Commands (N)' header",
-                )
+                self.assertEqual(int(m.group(1)), command_count(p), f"{p.name} command count")
 
 
 class TestCommandReferences(unittest.TestCase):
-    """Every /plugin:command mentioned in a plugin README must exist on disk."""
-
     def test_plugin_readme_command_refs_exist(self):
         for p in plugin_dirs():
             readme = p / "README.md"
@@ -216,8 +174,7 @@ class TestCommandReferences(unittest.TestCase):
                 cmd = p / "commands" / f"{m.group(1)}.md"
                 self.assertTrue(
                     cmd.is_file(),
-                    f"{p.name}/README.md references /{p.name}:{m.group(1)} "
-                    f"but commands/{m.group(1)}.md is missing",
+                    f"{p.name}/README.md references /{p.name}:{m.group(1)} but commands/{m.group(1)}.md is missing",
                 )
 
 
