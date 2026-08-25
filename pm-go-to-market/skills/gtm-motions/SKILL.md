@@ -1,149 +1,159 @@
 ---
 name: gtm-motions
-description: "Identify the best GTM motions and tools across 7 motion types: Inbound, Outbound, Paid Digital, Community, Partners, ABM, and PLG. Use when selecting marketing channels, choosing between inbound and outbound strategy, or planning cross-channel campaigns."
+description: "Select and test GTM motions using ICP buying behavior, reachability, ACV/economics, sales capacity, implementation path, and channel evidence. Avoids arbitrary 1-10 scores, fixed motion stacks, stale tool lists, and generic channel assumptions."
 ---
-# GTM Motions
 
-## Overview
-Identify and evaluate the best go-to-market motions for your product. This skill analyzes seven proven GTM approaches with specific tools and tactics to help you build a balanced acquisition strategy.
+# Evidence-Backed GTM Motions
 
-## When to Use
-- Selecting marketing channels for your product
-- Choosing between inbound vs outbound strategy
-- Building your GTM toolkit and tech stack
-- Evaluating PLG vs traditional sales motion
-- Planning cross-channel marketing campaigns
+## Purpose
 
-## The 7 GTM Motions
+Choose the smallest set of GTM motions for `$ARGUMENTS` that can reach the intended customer, support the buying/implementation journey, and produce acceptable economics.
 
-### 1. Inbound Marketing
-Attract customers through valuable content and thought leadership.
-- **Tools**: LinkedIn, SEMRush, Grammarly, HubSpot, Airtable
-- **Tactics**: Blog content, webinars, whitepapers, SEO, email nurture sequences
-- **Best For**: B2B SaaS, technical products, long sales cycles
-- **Strength**: Builds brand authority and attracts high-intent prospects
-- **Challenge**: Requires consistent content creation; slower to show results
+Do not select channels because they are popular or because a generic framework lists them.
 
-### 2. Outbound Sales
-Proactively reach target prospects through direct engagement.
-- **Tools**: LinkedIn Sales Navigator, ZoomInfo, Lemlist, Apollo, Hunter
-- **Tactics**: Cold email campaigns, LinkedIn outreach, phone prospecting, personalized demos
-- **Best For**: Enterprise sales, high-value contracts, niche markets
-- **Strength**: Predictable pipeline generation; control over target selection
-- **Challenge**: Low response rates; resource-intensive; requires skilled sales team
+## P0 Reliability Contract
 
-### 3. Paid Digital Advertising
-Reach target audiences through paid channels with precision targeting.
-- **Tools**: Google Ads, Meta Ads, LinkedIn Ads, Newswire, Retargeting platforms
-- **Tactics**: Search ads, display advertising, social ads, video advertising, retargeting
-- **Best For**: Products with clear target demographics, competitive keywords
-- **Strength**: Fast results; scalable; measurable ROI; precise targeting
-- **Challenge**: Can be expensive; requires continuous optimization; competitive
+1. **Do not force scoring of all seven motions or a 2-4 motion stack.** Evaluate only relevant candidates and preserve `UNKNOWN`.
+2. **Do not invent response rates, CAC, conversion, payback, sales cycle, traffic, channel ROI, budget, or team capacity.**
+3. Do not claim PLG has low CAC, ABM has higher conversion, paid is scalable, community is cheap, etc. without context/evidence.
+4. Tool/vendor examples change quickly. Recommend capability categories first; verify current tools when concrete selection is requested.
+5. Buyer, champion, user, security, procurement, and implementation paths must be considered for enterprise GTM.
+6. A pilot/demo lead is not equivalent to production revenue or repeatable acquisition.
+7. Tool/search failure means channel/competitive evidence is incomplete.
 
-### 4. Community Marketing
-Build engaged communities where customers help each other and spread the word.
-- **Tools**: Slack, Reddit, Discord, Circle, Mighty Networks, WhatsApp
-- **Tactics**: Community forums, user groups, events, mentorship, ambassador programs
-- **Best For**: Developer products, communities of practice, loyal user bases
-- **Strength**: Builds loyalty; organic word-of-mouth; valuable feedback; low CAC
-- **Challenge**: Requires active moderation; time to build critical mass
+## Candidate Motion Types
 
-### 5. Partner Marketing
-Leverage partner networks to co-market and reach new audiences.
-- **Tools**: Miro, AWS Startups, Oracle Partners, Stripe, Shopify App Store
-- **Tactics**: Partner integrations, co-marketing agreements, channel partnerships, resellers
-- **Best For**: Complementary products, platform ecosystems, expanding market reach
-- **Strength**: Access to established customer bases; shared costs; credibility
-- **Challenge**: Partner alignment; revenue sharing; dependency on partners
+Potential motions include, but are not limited to:
 
-### 6. Account-Based Marketing (ABM)
-Treat high-value accounts as individual markets with personalized campaigns.
-- **Tools**: Pipedrive, Hunter, Clay, 6sense, Terminus, Demandbase
-- **Tactics**: Personalized messaging, account-targeted content, coordinated sales/marketing
-- **Best For**: Enterprise deals, limited target accounts, high deal values
-- **Strength**: Higher conversion rates; larger deal sizes; strong sales-marketing alignment
-- **Challenge**: Requires detailed account research; resource intensive; not scalable to SMB
+- inbound/content/search
+- outbound/sales development
+- paid demand capture/generation
+- community
+- partners/channels/marketplaces
+- account-based motion
+- product-led/self-serve
+- events/field
+- developer/ecosystem
+- customer expansion/referrals
 
-### 7. Product-Led Growth (PLG)
-Drive adoption through the product experience itself with minimal sales friction.
-- **Tools**: Hotjar, Amplitude, Sentry, PostHog, Intercom, Appcues
-- **Tactics**: Free trials, freemium models, in-app onboarding, self-serve demos, product analytics
-- **Best For**: Self-service products, SMB market, low ACV, viral potential
-- **Strength**: Low CAC; aligns product and growth; strong PMF signals; scalable
-- **Challenge**: Requires excellent product experience; lower price points; longer ROI
+Use the categories relevant to the customer journey rather than mechanically covering each one.
 
-## How It Works
+## Step 1: Decision Context
 
-### Step 1: Understand Your Product
-Define product characteristics:
-- Price point and ACV (contract value)
-- Sales cycle length
-- Buyer type and decision-making process
-- Product complexity and learning curve
-- Target market size and concentration
+Resolve:
 
-### Step 2: Evaluate Market Conditions
-Assess your market dynamics:
-- Competitive intensity of your keywords/channels
-- Target audience location and accessibility
-- Budget availability for paid channels
-- Your team size and capabilities
-- Timeline to revenue generation
+- ICP / anti-ICP
+- user/champion/buyer
+- ACV/pricing model if known
+- buying cycle
+- product trialability
+- implementation/security burden
+- account concentration
+- geography
+- team/capacity
+- existing channel evidence
+- time-to-revenue constraint
 
-### Step 3: Score Each Motion
-Rate fit for your product (1-10 scale):
-- Inbound: Content creation capability, brand building timeline
-- Outbound: Prospect list availability, sales team capacity
-- Paid: Budget flexibility, target audience clarity, conversion potential
-- Community: Existing communities, product network effects
-- Partners: Complementary products, channel availability
-- ABM: Deal size and account concentration
-- PLG: Product trial-ability, pricing flexibility
+## Step 2: Map Buying Journey to Reachability
 
-### Step 4: Design Motion Stack
-Select and prioritize 2-4 motions to execute:
-- Primary motion (highest potential for your business)
-- Secondary motions (complementary acquisition channels)
-- Motion sequencing (which to start first)
-- Resource allocation across channels
+For each stage:
 
-### Step 5: Build Execution Plan
-Create 90-day implementation roadmap:
-- Quick wins and early validation
-- Team and tool requirements
-- Success metrics for each motion
-- Optimization and scaling strategy
-- Budget and resource allocation
+`Problem awareness → discovery → evaluation → trust/proof → procurement → implementation → adoption → expansion`
 
-## Input Format
-Use $ARGUMENTS to pass:
-- Product description and positioning
-- Target customer profile and market
-- Price point and sales cycle
-- Team size and capabilities
-- Budget and timeline constraints
-- Existing channels or data
+identify who must be reached and what evidence/channel can move them.
+
+A motion that generates leads but cannot support trust/procurement/production is incomplete for an enterprise product.
+
+## Step 3: Candidate Motion Evidence
+
+For each plausible motion:
+
+| Motion | Why it may fit | Evidence | Unknowns | Capacity needed | Economic mechanism |
+|---|---|---|---|---|---|
+
+Evidence may include:
+
+- observed source of wins/high-quality pipeline
+- buyer research
+- search/demand behavior
+- community concentration
+- partner access
+- self-serve activation/conversion
+- prior campaign cohorts
+
+Do not treat competitor channel usage as proof it will work for this product.
+
+## Step 4: Economics and Operational Fit
+
+Where data exists evaluate:
+
+- cost per qualified opportunity/customer
+- conversion by stage
+- sales effort/capacity
+- cycle time
+- deal size/gross margin
+- implementation/support burden
+- payback
+- lead/account quality
+
+If economics are unavailable, state `UNKNOWN` and design a test. Do not substitute an arbitrary fit score.
+
+## Step 5: Primary / Supporting Motion Hypothesis
+
+Choose only the motions supported enough to test.
+
+State:
+
+- primary hypothesis
+- supporting motion if needed
+- what each motion uniquely does in the buying journey
+- dependencies
+- what will not be funded yet
+
+A single focused motion may be correct. Multiple motions are not automatically more resilient.
+
+## Step 6: Contradiction Pass
+
+Ask:
+
+- Could apparent channel performance be lead-quality selection?
+- Does a channel reach users but not economic buyers?
+- Does high lead volume create low conversion/support burden?
+- Is the motion dependent on founder relationships and therefore non-repeatable?
+- Is PLG blocked by security/integration/procurement?
+- Are paid/inbound leads too low-value for implementation economics?
+- Are partner incentives aligned?
+
+## Step 7: Motion Experiment
+
+For each selected motion define:
+
+- ICP/account sample
+- hypothesis
+- spend/effort cap
+- funnel stages measured
+- quality/economic guardrails
+- success/failure/inconclusive criteria
+- attribution limits
+- decision after test
+
+Do not scale from top-of-funnel metrics alone.
 
 ## Output
-A comprehensive GTM motions analysis including:
-- Scoring of all 7 motions for your product
-- Recommended motion stack (primary and secondary)
-- Tool recommendations for each motion
-- 90-day execution plan with milestones
-- Resource and budget requirements
-- Success metrics and measurement framework
-- Competitive differentiation through motion choice
 
-## Framework
-Based on Product Compass GTM motion analysis. Provides a systematic approach to balancing customer acquisition across multiple channels.
+### Buying / production journey
+### Candidate motion evidence
+### Motion economics / capacity
+### Recommended test stack
+[may be one motion]
 
-## Tips
-- Most successful products use 2-4 complementary motions
-- Start with your strongest motion; add complexity gradually
-- Paid channels fund growth while organic channels build long-term value
-- Revisit motion mix quarterly as company scales
-- Combine inbound (brand) with outbound (sales) for B2B strength
-- Use PLG to reduce CAC; use paid to accelerate proven channels
+### Motions deliberately deferred
+### 90-day experiments
+### Measurement / guardrails
+### Decision
+`TEST MOTION | SCALE EVIDENCED MOTION | KEEP CURRENT | REDESIGN MOTION | INSTRUMENT FIRST | NOT READY`
+
+State what evidence would change the recommendation.
 
 ---
 
