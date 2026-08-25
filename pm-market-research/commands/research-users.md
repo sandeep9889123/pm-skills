@@ -1,121 +1,112 @@
 ---
-description: Comprehensive user research — build personas, segment users, and map the customer journey from research data
-argument-hint: "<research data, survey results, or product description>"
+description: Evidence-first user research synthesis — personas/segments/journeys only when supported, with sampling limits and hypothesis labels
+argument-hint: "<research data, survey results, feedback, analytics, or product context>"
 ---
 
-# /research-users -- User Research Synthesis
+# /research-users -- Evidence-First User Research Synthesis
 
-Turn raw research data into actionable user personas, behavioral segments, and customer journey maps. Accepts survey data, interview notes, feedback, analytics, or a product description for exploratory research.
+Turn available research into decision-useful user understanding without converting thin or biased evidence into invented personas, segment prevalence, or lifecycle claims.
 
-## Invocation
+## Step 1: Resolve the Decision and Evidence Mode
 
-```
-/research-users [upload survey results, interview notes, or feedback data]
-/research-users B2B project management tool for agencies — help me understand our users
-/research-users [paste user feedback or support ticket data]
-```
+Capture:
 
-## Workflow
+- product / problem / geography
+- decision this research informs
+- data sources and date range
+- sample/recruitment/source mechanism
+- unit: user, buyer, account, workflow, etc.
+- known underrepresented groups
 
-### Step 1: Accept Research Inputs
+Choose a mode:
 
-Accept from any combination:
-- Survey responses (CSV, spreadsheet, pasted)
-- Interview notes or transcripts
-- Support tickets or feature requests
-- Product analytics / behavioral data
-- NPS or satisfaction data
-- Product description (for exploratory research without data)
+- `EVIDENCE MODE`: actual research/behavioral data is available
+- `HYPOTHESIS MODE`: only product/market context is available
 
-Ask:
-- What research do you have? What format?
-- What do you want to understand? (who are our users, how do they differ, where's the friction)
-- What decisions will this inform? (roadmap, positioning, pricing, onboarding)
+In hypothesis mode, never call outputs research-backed or attach invented prevalence.
 
-### Step 2: Build Personas
+## Step 2: Evidence Inventory and Limitations
 
-Apply the **user-personas** skill:
+Create:
 
-- Identify 3-4 distinct personas from the data
-- For each persona: name, role, goals (JTBD), pains, gains, behavioral patterns
-- Include unexpected insights — things that surprised you in the data
-- Note persona prevalence (what % of your base each represents, if data allows)
+| Source | Sample / population | What it supports | Bias / limitation | Freshness |
+|---|---|---|---|---|
 
-### Step 3: Segment Users
+Tool/file failure means `coverage incomplete / UNKNOWN`, not absence.
 
-Apply the **user-segmentation** and **market-segments** skills:
+## Step 3: Personas, Only if Decision-Useful
 
-- Create behavioral segments (not just demographics)
-- For each segment: size, JTBD, product fit, willingness to pay, engagement level
-- Identify the highest-value segment and the highest-growth segment
-- Map segments to personas (how they overlap)
+Apply **user-personas**.
 
-### Step 4: Map the Customer Journey
+- Do not force 3-4 personas.
+- Use only the number supported by evidence.
+- If evidence does not support distinct personas, return `DO NOT CREATE PERSONAS YET`.
+- Verify verbatim quotes; otherwise paraphrase.
+- Do not infer prevalence from a non-representative sample.
 
-Apply the **customer-journey-map** skill:
+## Step 4: Segment Users/Accounts
 
-- Map the end-to-end journey: Awareness → Consideration → Onboarding → Active Use → Expansion → Advocacy
-- For each stage: touchpoints, emotions, pain points, aha moments
-- Identify the biggest drop-off points
-- Highlight moments of delight worth amplifying
+Apply **user-segmentation** and **market-segments**.
 
-### Step 5: Generate Research Report
+- define the segmentation unit
+- distinguish observed segments from hypotheses
+- do not invent size, WTP, engagement, growth, or “highest value”
+- compare segment priority only using evidence-backed criteria
+- check whether apparent segments are actually channel, tenure, geography, plan, or sampling artifacts
 
-```
-## User Research Report: [Product]
+Return `DO NOT SEGMENT YET` if the evidence does not support a decision-useful segmentation.
 
-**Date**: [today]
-**Data sources**: [what was analyzed]
-**Sample size**: [if applicable]
+## Step 5: Journey, Only at the Right Scope
 
-### Executive Summary
-[3-5 sentences: key findings and implications]
+Apply **customer-journey-map** to the actual job/workflow.
+
+Do not force a generic Awareness → Advocacy lifecycle when the research concerns a narrower operational journey.
+
+For each stage distinguish:
+
+- `OBSERVED`
+- `INFERENCE`
+- `UNKNOWN`
+
+Do not invent emotions, drop-offs, or “aha moments” that are absent from the evidence.
+
+## Step 6: Contradiction Pass
+
+Before recommendations:
+
+- preserve minority/negative evidence
+- identify patterns that contradict the dominant narrative
+- inspect sample/source concentration
+- state which conclusions would change with a more representative sample
+
+## Output
+
+### Research Decision
+[what this analysis should change]
+
+### Evidence / Sample Profile
+[sources, coverage, limitations]
 
 ### Personas
+`SUPPORTED | HYPOTHESIS-ONLY | DO NOT CREATE YET`
 
-#### Persona 1: [Name] — "[Quote that captures them]"
-- **Who**: [role, context, experience level]
-- **Primary JTBD**: [When..., I want to..., so I can...]
-- **Key pains**: [top 3]
-- **Key gains**: [what delights them]
-- **Behavioral pattern**: [how they use the product]
-- **Prevalence**: [X% of user base]
+### Segmentation
+`SUPPORTED | HYPOTHESIS-ONLY | DO NOT SEGMENT YET`
 
-[Repeat for each persona]
+### Journey Evidence
+[scoped journey with observed/inferred/unknown states]
 
-### User Segments
-| Segment | Size | Primary JTBD | Product Fit | Value | Growth |
-|---------|------|-------------|-------------|-------|--------|
+### Findings
+| Finding | Evidence state | Support | Confidence | Decision implication |
+|---|---|---|---|---|
 
-### Customer Journey Map
-| Stage | Touchpoints | Emotion | Pain Points | Opportunities |
-|-------|------------|---------|-------------|---------------|
+### Contradictions / Minority Signals
+[what challenges the main story]
 
-### Key Insights
-1. [Insight with supporting evidence]
-2. ...
+### Unknowns / Next Research
+[cheapest decision-changing evidence]
 
-### Recommendations
-1. [Actionable recommendation tied to findings]
-2. ...
+### Decision
+`ACT ON EVIDENCE | VALIDATE HYPOTHESES | COLLECT MORE DATA | REFRAME RESEARCH`
 
-### Open Questions
-[What the data didn't answer — suggested follow-up research]
-```
-
-Save as markdown.
-
-### Step 6: Offer Next Steps
-
-- "Want me to **create interview scripts** to go deeper on a specific persona?"
-- "Should I **analyze sentiment** across these segments?"
-- "Want me to **build a value proposition** for the top persona?"
-- "Should I **prioritize the journey map pain points** as feature opportunities?"
-
-## Notes
-
-- If data is thin, be transparent about confidence levels — 5 interviews → hypotheses, not conclusions
-- Personas should be useful, not decorative — every persona should influence a product decision
-- Behavioral segments are more actionable than demographic segments for product decisions
-- The journey map should surface emotions, not just actions — where users feel frustrated vs. delighted drives prioritization
-- If no data is provided, generate research-informed hypotheses and recommend how to validate them
+Do not output unsupported percentages or universal user claims.
