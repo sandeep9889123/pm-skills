@@ -1,425 +1,324 @@
 ---
 name: competitor-analysis
-description: "Analyze direct, adjacent, substitute, in-house, and emerging competitors with evidence-backed strengths, weaknesses, positioning, and differentiation opportunities. Uses search exhaustion and contradiction passes before any negative conclusion. Use when doing competitive research, competitive intelligence, preparing a competitive brief, or finding differentiation opportunities."
+description: "Run evidence-first competitive intelligence across direct, adjacent, substitute, manual, in-house, incumbent, regional, and emerging alternatives. Use when competitor discovery must avoid false negatives, unsupported differentiation, or hallucinated market claims."
 ---
 
 # Competitor Analysis and Intelligence
 
-## Purpose
+## Operating principle
 
-Build a defensible competitive view for **$ARGUMENTS** without confusing a weak first search with an empty market.
+Build a defensible competitive view for the user's requested market, product, workflow, or capability. The job is not to fill a neat matrix. The job is to avoid false negatives, false certainty, and lazy category framing.
 
-The objective is not to force exactly five company names. The objective is to identify the **best-supported competitive set**, explain how each player competes for the same customer/job/budget, and expose what remains unknown.
+A weak first search is not evidence of an empty market. A competitor is any product, service, workflow, incumbent platform, internal build, consultant, manual process, or non-consumption pattern that competes for the same customer job, budget, attention, risk reduction, or business outcome.
 
-> **A first search result is a lead, not a conclusion.**
+## Non-negotiable reliability rules
 
-## Reliability Rules
+1. Never say there are no competitors from a first-pass search.
+2. Never treat one search wording, one directory, one geography, or one review site as exhaustive.
+3. Never accept a user-supplied competitor as fact without verification.
+4. Never reject a user-supplied competitor without explaining the evidence basis.
+5. Never invent pricing, market share, funding, customers, launch dates, integrations, capabilities, partnerships, or satisfaction levels.
+6. Never treat a product in a different category as non-competitive until the customer job and budget overlap have been tested.
+7. Never present a guessed weakness as a verified weakness.
+8. Never use stale evidence as current without labeling freshness risk.
+9. Tool failure, retrieval failure, missing search results, or unfamiliar terminology means coverage is incomplete, not market absence.
+10. If evidence is insufficient, mark the answer `LOW CONFIDENCE` or `UNKNOWN`, not polished certainty.
 
-### Rule 1: Never conclude “no competitors” from the first pass
+Preferred wording when coverage is weak:
 
-A zero-result or weak first pass triggers the **Search Exhaustion Gate** below.
+> No verified direct competitor was found within the searched scope. This is not proof that the market has no competition. Adjacent alternatives, substitutes, manual workflows, in-house solutions, incumbent platforms, regional players, or emerging entrants may still compete for the same job or budget.
 
-Do not convert:
+## Required input framing
 
-- no search result
-- no obvious category match
-- no result in one geography
-- no result on one review site
-- unfamiliar terminology
-- unavailable tool/source
+Before listing companies, define the competitive arena:
 
-into:
-
-> “There are no competitors.”
-
-Preferred wording when evidence remains limited:
-
-> **No verified direct competitor was found within the searched scope. This is not proof that the market has no competition. Adjacent alternatives, substitutes, manual workflows, in-house solutions, or regional players may still compete for the same job or budget.**
-
-### Rule 2: Classify competition by the customer job, not only the category label
-
-Search and classify:
-
-1. **Direct competitors**: similar product, buyer, and core job
-2. **Adjacent competitors**: different category but overlapping workflow/job
-3. **Substitutes**: another product or service solving the same outcome
-4. **Manual alternatives**: spreadsheets, email, consultants, agencies, internal processes
-5. **Build/in-house alternatives**: customer builds or assembles the capability internally
-6. **Non-consumption**: customer tolerates the problem instead of buying
-7. **Emerging entrants**: startups/new product lines not yet dominant in category search
-
-A competitor does not need identical features to compete.
-
-### Rule 3: User-supplied competitors are leads, not facts
-
-If the user says:
-
-> “I found X as a competitor.”
-
-verify X independently.
-
-Then classify it as:
-
-- direct
-- adjacent
-- substitute
-- not meaningfully competitive
-- insufficient evidence
-
-Do not accept or reject the user's claim without evidence.
-
-If the user challenge reveals a real missed player, explain **what search framing missed it** and update the research method, not only the list.
-
-## Input
-
-Analyze the competitive landscape for **$ARGUMENTS** within any specified:
-
+- customer or buyer
+- user
+- job-to-be-done
+- workflow being replaced or improved
 - geography
-- industry/vertical
-- customer segment
-- buyer
-- product category
-- use case / job to be done
-- time horizon
+- vertical or regulatory context
+- budget owner or system of record
+- buying trigger
+- category terms used by vendors
+- problem terms used by customers
+- adjacent categories likely to hide competitors
 
-If scope is missing and materially affects the competitive set, state the working assumption before researching.
+Write this sentence before analysis:
 
-If the user provides research, pricing sheets, competitor names, customer feedback, or internal notes, treat them as inputs to verify and synthesize.
+> In this analysis, a competitor is any product, service, internal solution, or workflow that helps [customer] achieve [job/outcome] and could plausibly consume the same budget, usage, attention, risk tolerance, or implementation priority.
 
-## Step 1: Define the Competitive Arena
+If scope is missing, state the working assumptions and label coverage risk.
 
-Before naming companies, define:
+## Competitor taxonomy
 
-- **Customer / buyer**
-- **Core job or outcome**
-- **Workflow being replaced or improved**
-- **Geography**
-- **Relevant product/category boundary**
-- **Budget or system of record being competed for**, if applicable
+Classify every candidate into one primary type and one optional secondary type:
 
-Write one sentence:
+| Type | Definition |
+|---|---|
+| Direct competitor | Similar product, buyer, workflow, and core job |
+| Adjacent competitor | Different category, overlapping workflow or buyer outcome |
+| Substitute | Different solution type that solves the same job |
+| Incumbent suite capability | Existing enterprise platform feature that can reduce need for a new product |
+| Manual workflow | Spreadsheet, email, operations team, review process, documents, or offline work |
+| Services alternative | Consultant, agency, SI, BPO, analyst, or managed service |
+| Internal build | Customer engineering, data, operations, or automation team builds capability |
+| Open-source alternative | Open-source tool, model, framework, library, or reference implementation |
+| Non-consumption | Customer tolerates the pain because priority, budget, risk, or urgency is weak |
+| Emerging entrant | New startup, product line, or niche vendor not yet obvious in category search |
 
-> “A competitor in this analysis is any product, service, internal solution, or workflow that helps [customer] achieve [job/outcome] and could plausibly consume the same budget, usage, or decision.”
+A candidate can be strategically important even if it is not a direct competitor.
 
-This prevents taxonomy from hiding real competition.
+## Search ladder
 
-## Step 2: Search Ladder
+Use multiple framings. Do not stop at the first useful result.
 
-Do not rely on one query. Progress through the following ladder as needed.
+### 1. Category search
 
-### A. Exact category search
+- `[category] competitors`
+- `[category] vendors`
+- `[category] platforms`
+- `best [category] software for [segment]`
 
-Search:
-
-- `[product category] competitors`
-- `[product category] software/platform/vendors`
-- `best [category] for [segment]`
-
-### B. Problem-language search
-
-Search how customers describe the pain rather than the category:
+### 2. Problem-language search
 
 - `[problem] software`
+- `[problem] automation`
 - `how companies solve [problem]`
-- `[problem] automation platform`
+- `[problem] compliance workflow`
 
-### C. Job/workflow search
-
-Search the workflow or desired outcome:
+### 3. JTBD and workflow search
 
 - `[workflow] platform`
-- `[job-to-be-done] software`
 - `automate [workflow]`
+- `[job-to-be-done] tools`
+- `[workflow] validation software`
 
-### D. Buyer-language search
-
-Search using buyer terminology:
+### 4. Buyer-language search
 
 - `[buyer role] tools for [job]`
 - `[industry] [workflow] vendors`
+- `[department] automation platform`
 
-### E. Technology/capability search
-
-Search the enabling capability when category terminology is fragmented:
+### 5. Technology/capability search
 
 - `[technology] for [use case]`
 - `[capability] enterprise platform`
+- `[AI capability] for [workflow]`
 
-### F. Substitute search
-
-Search:
+### 6. Alternative and substitute search
 
 - `[category] alternatives`
-- `manual process for [job]`
-- `consulting/service for [job]`
+- `manual process for [workflow]`
+- `consulting services for [job]`
 - `build vs buy [capability]`
+- `[incumbent platform] [capability]`
 
-### G. Geography / vertical search
+### 7. Geography and vertical search
 
-Search regional and industry-specific variants when relevant:
+- `[country/region] [category] vendor`
+- `[vertical] [workflow] software`
+- `[regulation/domain] [workflow] platform`
 
-- `[country/city] [category] vendor`
-- `[vertical] [workflow] platform`
+### 8. Emerging player search
 
-### H. Emerging-player search
-
-Look for:
-
-- recent launches
+- funding announcements
+- launch announcements
 - startup directories
-- funding/product announcements
-- new product lines from incumbents
-- niche vertical players
+- product changelogs
+- app marketplaces
+- GitHub/open-source repositories
+- communities and practitioner discussions
 
-### I. Review / directory cross-check
+### 9. Directory and review cross-check
 
-When available, cross-check relevant categories in independent software directories, analyst/review sources, marketplaces, communities, or domain-specific vendor lists.
+Use review sites, marketplaces, analyst/category pages, job posts, implementation partners, and customer communities as discovery aids. Directory presence is not proof of quality.
 
-Do not treat directory inclusion as proof of product quality. Use it as discovery evidence.
+## Search exhaustion gate
 
-## Step 3: Search Exhaustion Gate
+Before concluding that a direct competitor set is empty or narrow, complete all applicable checks:
 
-Before saying the direct competitive set is empty or extremely small, complete all applicable checks:
-
-- at least **3 meaningfully different query framings**
-- at least **2 source classes** when external research tools allow it
+- at least 3 meaningfully different query framings
+- at least 2 source classes when available
 - category search
-- problem/job/workflow search
-- substitute/alternative search
+- problem/JTBD/workflow search
+- substitute/manual/internal-build search
+- incumbent-suite search
 - geography or vertical check when relevant
 - emerging-player check when the market is changing quickly
+- contradiction pass
 
-If tools or sources are unavailable, state that the gate could not be completed and mark competitor coverage **UNKNOWN / incomplete**.
+If the gate cannot be completed, state:
 
-## Step 4: Build the Candidate Set Before Ranking
+`Coverage incomplete. Competitive absence cannot be concluded.`
 
-Create a candidate list broader than the final answer.
+## Candidate set before ranking
 
-For each candidate capture:
+Build a broad candidate list first. Then verify and rank.
 
-| Candidate | Competitive type | Why it may compete | Evidence | Initial confidence |
-|---|---|---|---|---|
+| Candidate | Type | Why it may compete | Evidence found | Evidence state | Include/reject decision |
+|---|---|---|---|---|---|
 
-Reject candidates only after explaining why they do not meaningfully compete for the defined customer/job/budget.
+Reject a candidate only with a reason:
 
-Do not force five direct competitors if only three are well supported. Do not invent two more to satisfy a template.
+- different buyer and no budget overlap
+- different job/outcome
+- not active/current
+- evidence unavailable
+- product does not appear to address the workflow
+- out of geography/segment scope
+- duplicate/parent company consolidation
 
-## Step 5: Verify Each Competitor
+Do not delete unresolved candidates. Move them to `Unresolved candidates`.
 
-For material claims, prefer evidence in this order where available:
+## Evidence classification
 
-1. official product/company source for capabilities, positioning, integrations, pricing
-2. current product documentation or release notes
-3. credible independent reporting / analyst / review evidence
-4. customer/community evidence for experience signals
+Every material statement must use one of:
 
-For each material claim distinguish:
+- FACT: directly supported by retrieved evidence
+- INFERENCE: reasoned interpretation from facts
+- ASSUMPTION: working assumption required to proceed
+- ESTIMATE: modelled or approximate value with inputs
+- UNKNOWN: not verified
+- STALE: may no longer be current
+- CONTRADICTED: credible conflict remains unresolved
 
-- **FACT**: directly supported
-- **INFERENCE**: reasoned interpretation
-- **ESTIMATE**: approximate/modelled
-- **UNKNOWN**: not verified
-- **STALE**: evidence may no longer be current
+Use claim-level discipline for:
 
-Never fabricate:
-
-- funding
-- market share
-- customer counts
+- capabilities
+- target segment
 - pricing
-- product capabilities
-- customer satisfaction
-- partnerships
-- launch dates
-
-If unavailable, use `UNKNOWN`.
-
-## Step 6: Contradiction Pass
-
-Before finalizing, actively try to disprove the current competitive set.
-
-Ask:
-
-1. If the user told me I missed a competitor, **what would I search next?**
-2. Which category label may be hiding an adjacent competitor?
-3. Which player solves the same JTBD but positions differently?
-4. Is there a regional/vertical specialist I excluded?
-5. Is an incumbent bundling this capability into a broader suite?
-6. Is the real competitor a manual process, consultant, internal team, or system of record?
-7. Did I accidentally define “competitor” as “looks like the same product” instead of “competes for the same outcome/budget”?
-
-If the contradiction pass finds new credible candidates, verify and update the set before concluding.
-
-## Step 7: Analyze the Verified Competitive Set
-
-For each verified competitor, cover only what evidence supports.
-
-### Competitor Profile
-
-- company/product
-- competitive type
-- target customer / segment
-- primary use cases / JTBD
-- positioning
+- GTM model
+- customer base
 - geography
-- evidence freshness
+- integrations
+- product maturity
+- funding
+- market position
+- weaknesses
+- differentiation
 
-### Product Strengths
+## Verification standards
 
+Prefer sources in this order:
+
+1. official product/company pages for claimed positioning and capabilities
+2. current docs, changelogs, pricing pages, release notes, marketplace listings
+3. credible third-party reporting, analyst/category pages, procurement sources, review sites
+4. customer/community evidence for experience signals
+5. inferred signals such as job posts, implementation partners, public demos, or docs footprints
+
+Company-authored material verifies what the company claims. It does not prove customer satisfaction, market leadership, or objective superiority.
+
+## Contradiction pass
+
+Before finalizing, attack your own landscape:
+
+1. What category label might be hiding competitors?
+2. What would the buyer already own that competes with this?
+3. Which incumbent could bundle this feature?
+4. Which service provider could solve this without software?
+5. Which open-source or internal-build path could be good enough?
+6. Which regional player would local buyers know?
+7. Which adjacent workflow owns the budget?
+8. What search would I run if the user said I missed a competitor?
+9. What evidence would make my top threat ranking wrong?
+
+If the contradiction pass finds candidates, verify and update before concluding.
+
+## Required output
+
+### 1. Competitive arena
+
+- customer/buyer
+- JTBD
+- workflow
+- geography
+- budget/system of record
+- scope assumptions
+- coverage confidence
+
+### 2. Search coverage
+
+List query framings and source classes used. State what was not covered.
+
+### 3. Competitive set
+
+| Competitor/alternative | Type | Target segment | Core job/use case | Why it competes | Evidence state | Confidence |
+|---|---|---|---|---|---|---|
+
+### 4. Competitor profiles
+
+For priority competitors only:
+
+- positioning
+- buyer/user
 - relevant capabilities
-- workflow advantages
-- ecosystem/integration advantages
-- distribution or data advantages
-- switching-cost or trust advantages
+- verified strengths
+- verified weaknesses or inferred gaps
+- pricing/business model
+- GTM/distribution
+- threat level
+- evidence and unknowns
 
-### Product Weaknesses / Gaps
-
-Separate:
-
-- verified limitation
-- customer-reported pain
-- inference from product scope
-- unknown
-
-Do not present an inference as a known weakness.
-
-### Business Model / Pricing
-
-Use public pricing when verified.
-
-If pricing is unavailable, say `UNKNOWN / sales-led pricing` rather than inventing a number.
-
-### GTM / Distribution
-
-Assess only with evidence or clearly labeled inference:
-
-- PLG
-- sales-led
-- channel/partner-led
-- marketplace/ecosystem
-- vertical specialization
-
-### Threat Level
-
-Explain **why** the competitor matters for this product:
-
-- same buyer
-- same budget
-- same workflow
-- same data/system of record
-- bundled alternative
-- lower switching cost
-- stronger distribution
-
-## Step 8: Synthesize, Do Not Just List
+### 5. Competitive pattern synthesis
 
 Answer:
 
-- What competitive pattern is emerging?
-- Where are competitors converging?
-- Where do they differ structurally?
-- Which segment/job appears crowded?
-- Which unmet needs are genuinely evidenced versus merely imagined?
-- Which competitor is most dangerous and why?
-- What would be hard to copy?
-- What should the product **not** compete on?
+- where the market is converging
+- where solutions differ structurally
+- what incumbents or substitutes make the market harder
+- what customers may prefer over a new product
+- which competitors are most dangerous and why
+- what would be hard to copy
+- what not to compete on
 
-## Output Structure
-
-### 1. Executive Competitive View
-
-- market/arena definition
-- number of verified direct competitors
-- important adjacent/substitute alternatives
-- strongest competitive threat
-- most important uncertainty
-- overall confidence: High / Medium / Low with reason
-
-### 2. Search Coverage
-
-Briefly list the search framings/source classes used.
-
-If coverage is incomplete, say so.
-
-### 3. Competitive Set
-
-| Competitor | Type | Target segment | Core job/use case | Why it competes | Evidence confidence |
-|---|---|---|---|---|---|
-
-### 4. Competitor Detail
-
-For the highest-priority competitors:
-
-- positioning
-- strengths
-- weaknesses/gaps
-- pricing/business model
-- GTM/distribution
-- threat
-- evidence / unknowns
-
-### 5. Competitive Map
-
-Map competitors using 2 dimensions that matter to customer choice. Do not use arbitrary axes solely to create a chart.
-
-### 6. Differentiation Opportunities
+### 6. Differentiation opportunities
 
 For each opportunity:
 
-- observed evidence
-- customer/JTBD relevance
-- why competitors appear weak here
+- evidence basis
+- JTBD relevance
+- competitor weakness or gap
 - confidence
 - cheapest validation step
 
-### 7. Contradiction / What Could Change This View
+### 7. Unresolved candidates and coverage limits
 
-State:
+List candidates, categories, or geographies that remain unresolved.
 
-- credible players that remain unresolved
-- categories/segments not fully searched
-- stale evidence
-- what evidence could materially change the ranking
-
-### 8. Positioning Recommendation
+### 8. Positioning recommendation
 
 Recommend:
 
-- segment/use case to emphasize
+- segment or use case to emphasize
 - competitors to position against
-- alternatives to avoid competing head-on with
+- substitutes to respect
 - differentiators to validate
 - next research action
 
-## Hard Failures
+## Hard failure conditions
 
-Do not:
+Return `NOT READY` or `LOW CONFIDENCE` when:
 
-- say “no competitors” after one search
-- accept a user-supplied competitor without verification
-- force exactly five competitors when evidence does not support five
-- equate “different category” with “not a competitor”
-- invent market share, pricing, funding, customers, or capabilities
-- use stale evidence as current without warning
-- treat a tool/search failure as market absence
-- claim a differentiation opportunity without connecting it to evidence or an explicit hypothesis
+- only one search framing was used
+- user-supplied names were not verified
+- material competitor capabilities are unknown
+- substitute/internal-build paths were not checked
+- stale evidence dominates
+- the market definition is unclear
+- the output would require invented competitors or invented facts
 
-## Final Self-Check
+## Final self-check
 
-Before delivering, answer internally:
+Before delivery, verify:
 
-- Did I search beyond the obvious category term?
-- Did I look for substitutes and in-house/manual alternatives?
-- Did I run the contradiction pass?
-- Did I verify user-supplied names independently?
-- Did I separate facts from inference and unknowns?
-- Would I still defend “no competitor found” if a domain expert challenged me?
+- I searched beyond the obvious category term.
+- I checked substitutes, manual workflows, services, and internal builds.
+- I ran a contradiction pass.
+- I verified user-supplied competitors independently.
+- I separated facts from inference and unknowns.
+- I did not force a neat number of competitors.
+- I lowered confidence where coverage is incomplete.
 
-If not, research further or lower the confidence.
-
----
-
-### Further Reading
-
-- [Market Research: Advanced Techniques](https://www.productcompass.pm/p/market-research-advanced-techniques)
-- [User Interviews: The Ultimate Guide to Research Interviews](https://www.productcompass.pm/p/interviewing-customers-the-ultimate)
+If any answer is no, fix the analysis or state the limitation explicitly.
