@@ -6,7 +6,7 @@ Guidance for AI agents, including Claude Code, Cowork, Codex, and other capable 
 
 **PM Skills: Reliability-First Enterprise AI Edition** (`sandeep9889123/pm-skills`) is a fork of `phuryn/pm-skills` with **12 independent plugins, 96 skills, and 55 commands/workflows**.
 
-The upstream project supplies the core PM framework foundation. This fork adds reliability contracts, adversarial scenarios, semantic behavior guards, enterprise transformation, reliability-first business-case automation, model-agnostic prospect discovery, and behavioral evaluation.
+The upstream project supplies the core PM framework foundation. This fork adds reliability contracts, adversarial scenarios, semantic behavior guards, enterprise transformation, reliability-first business-case automation, model-agnostic prospect discovery, behavioral evaluation, and cross-LLM packaging for Claude, Codex, ChatGPT Skills, and Agent Skills compatible runtimes.
 
 Upstream creator/maintainer: Paweł Huryn, https://github.com/phuryn/pm-skills
 
@@ -16,7 +16,7 @@ Preserve upstream MIT attribution. Do not relabel upstream skills as fork-origin
 
 ## Model-Agnostic Principle
 
-Core skills should remain portable Markdown. Provider-specific command wrappers may improve ergonomics, but correct reasoning must not depend on one provider's proprietary tool names.
+Core skills should remain portable Markdown. Provider-specific packaging or command wrappers may improve ergonomics, but correct reasoning must not depend on one provider's proprietary tool names.
 
 When a model cannot browse, read files, execute code, or use another expected tool:
 
@@ -26,6 +26,8 @@ When a model cannot browse, read files, execute code, or use another expected to
 - continue with the strongest safe partial workflow
 
 For portable workflows, prefer a provider-neutral master prompt or `SKILL.md` contract plus optional provider adapters.
+
+The underlying `skills/` folders are the capability source. `.claude-plugin/`, `.agents/plugins/`, and `.codex-plugin/` are packaging/distribution layers and must not fork the substantive PM logic.
 
 ## Fork Reliability Principle
 
@@ -41,7 +43,8 @@ For business cases, `PROPOSAL` and `DECISION_THRESHOLD` are additional explicit 
 
 ```text
 pm-skills/
-├── .claude-plugin/marketplace.json
+├── .claude-plugin/marketplace.json   <- Claude marketplace
+├── .agents/plugins/marketplace.json  <- Codex marketplace
 ├── .github/workflows/
 ├── CHANGELOG.md
 ├── CLAUDE.md
@@ -51,15 +54,18 @@ pm-skills/
 ├── validate_plugins.py
 ├── reliability/                     <- scenario catalogs + behavior contracts
 ├── evaluation/                      <- golden cases + captured-output scorer
-├── docs/                            <- standards, audit, and supporting guidance
+├── docs/                            <- LLM usage guidance + quality/reliability standards
 ├── tests/                           <- structural + semantic + eval-harness tests
 └── pm-{name}/                       <- 12 plugin directories
-    ├── .claude-plugin/plugin.json
-    ├── skills/{skill}/SKILL.md
-    ├── commands/{command}.md
-    ├── README.md
+    ├── .claude-plugin/plugin.json   <- Claude plugin metadata
+    ├── .codex-plugin/plugin.json    <- Codex plugin metadata; exposes ./skills/
+    ├── skills/{skill}/SKILL.md      <- portable capability source
+    ├── commands/{command}.md        <- Claude-oriented workflow wrappers
+    ├── README.md                    <- self-contained user onboarding
     └── optional prompts/references/templates/evaluation assets
 ```
+
+User-facing installation guidance lives in `README.md` and `docs/USING_WITH_LLMS.md`. The complete inventory lives in `docs/PLUGIN_CATALOG.md`.
 
 ### The 12 plugins
 
@@ -88,6 +94,10 @@ pm-skills/
 - **Frontmatter required:** skills need `name` + `description`; commands need `description` + `argument-hint`.
 - A skill's `name` must match its directory name.
 - Keep frontmatter lean; put detailed behavior in the body.
+- Every plugin must preserve both provider manifests: `.claude-plugin/plugin.json` and `.codex-plugin/plugin.json`.
+- Codex manifests must expose the existing `skills/` folder, not duplicate it elsewhere.
+- Every plugin README must document Claude, Codex, ChatGPT, and generic/Agent Skills usage.
+- Claude slash commands must not be described as universally available. Provide a plain-language equivalent for other runtimes.
 - High-risk behavior guards referenced by `reliability/scenario_matrix.json` must not be removed without updating the scenario/test intentionally.
 - Do not weaken a hard gate just to make an output more optimistic or concise.
 - A deterministic validator is a proof-obligation check, not a truth oracle. Do not claim it verifies external reality.
@@ -154,7 +164,8 @@ Do not weaken the validator or relabel claims merely to force a pass.
 ## Versioning and Releases
 
 - `CHANGELOG.md` is the source of truth. The newest `## vX.Y.Z` dated heading is the released version; `## Unreleased` may contain pending changes.
-- Keep every released version in sync across `marketplace.json`, every `plugin.json`, and the latest released changelog heading.
+- Keep every released version in sync across `.claude-plugin/marketplace.json`, every `.claude-plugin/plugin.json`, every `.codex-plugin/plugin.json`, and the latest released changelog heading.
+- `.agents/plugins/marketplace.json` must list exactly the same plugin directories as the Claude marketplace and disk.
 - Every user-facing change gets a changelog bullet under `## Unreleased`.
 - Semver: breaking = major; new skills/commands or changed behavior = minor; fixes/docs = patch.
 
@@ -202,22 +213,24 @@ Any workflow causing external side effects should define permissions, validation
 
 ## Operational Procedures
 
-### After any skill/command change
+### After any skill/command/packaging change
 
 1. Run `python3 validate_plugins.py` and `python3 -m unittest discover -s tests -v` where execution is available.
 2. If skills/commands were added or removed, update root README totals and relevant plugin README counts.
-3. If totals changed, update `marketplace.json` description.
-4. Add/update the plugin entry in marketplace when the plugin set changes.
-5. Update `reliability/scenario_matrix.json` for new plugins or high-risk contracts.
-6. Add or update behavioral/adversarial cases when the new failure family is decision-critical.
-7. Add a `CHANGELOG.md` bullet under `## Unreleased`.
-8. Check this file for stale counts or structure.
+3. If totals changed, update `.claude-plugin/marketplace.json` description.
+4. If the plugin set changes, update both `.claude-plugin/marketplace.json` and `.agents/plugins/marketplace.json`.
+5. For every plugin addition or released version change, keep `.claude-plugin/plugin.json` and `.codex-plugin/plugin.json` aligned.
+6. Update `reliability/scenario_matrix.json` for new plugins or high-risk contracts.
+7. Add or update behavioral/adversarial cases when the new failure family is decision-critical.
+8. Add a `CHANGELOG.md` bullet under `## Unreleased`.
+9. Check all plugin READMEs and `docs/USING_WITH_LLMS.md` if installation or invocation changes.
+10. Check this file for stale counts or structure.
 
 ## Validation
 
-`validate_plugins.py` checks manifest/frontmatter/name/README/command structure.
+`validate_plugins.py` checks Claude manifest/frontmatter/name/README/command structure.
 
-`tests/test_consistency.py` checks marketplace-vs-disk plugin list, versions, README totals, changelog format, and plugin command references.
+`tests/test_consistency.py` checks Claude/Codex marketplace parity, provider manifest versions, README totals, multi-LLM onboarding, changelog format, and command references.
 
 `tests/test_reliability_contracts.py` checks scenario coverage and protects decision-critical guard phrases.
 
@@ -237,5 +250,5 @@ The behavioral harness makes quality measurable on defined cases. It does not pr
 ## Upstream / Fork Boundary
 
 - Generic correctness/reliability fixes that cleanly benefit upstream can be proposed to `phuryn/pm-skills`.
-- Enterprise transformation, Enterprise AI PM, opinionated evidence contracts, business-case reliability, prospect-discovery reliability, and behavioral evaluation can evolve independently in this fork.
+- Enterprise transformation, Enterprise AI PM, opinionated evidence contracts, business-case reliability, prospect-discovery reliability, behavioral evaluation, and cross-LLM packaging can evolve independently in this fork.
 - Preserve neutral attribution and never imply upstream endorsement of fork-specific behavior.

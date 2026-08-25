@@ -1,166 +1,321 @@
 # PM Skills: Reliability-First Enterprise AI Edition
 
-A model-agnostic PM operating system for **repeatable, evidence-led product and enterprise solution work** across discovery, prospect discovery, strategy, execution, market research, GTM, analytics, AI shipping, enterprise transformation, and business-case formation.
+> **96 PM skills and 55 chained workflows across 12 plugins.** Built for Claude, ChatGPT, Codex, Agent Skills compatible tools, and any capable LLM that can read Markdown.
 
-This repository is a fork and extension of [`phuryn/pm-skills`](https://github.com/phuryn/pm-skills). The upstream project created the core PM skills foundation. This fork adds reliability contracts, adversarial decision gates, enterprise workflows, and portable prompt/skill patterns for higher-stakes PM work where hallucinated evidence, shallow research, and premature commitments are unacceptable.
+A model-agnostic PM operating system for repeatable, evidence-led work across discovery, prospect discovery, strategy, execution, market research, analytics, GTM, growth, AI shipping, enterprise transformation, and business-case formation.
+
+This repository is a fork and extension of [phuryn/pm-skills](https://github.com/phuryn/pm-skills). The upstream project created the core PM skills foundation. This fork adds reliability contracts, adversarial decision gates, enterprise workflows, business-case formation, prospect discovery, and portable packaging for higher-stakes PM work.
 
 The reliability loop is:
 
 `Search → Challenge → Expand → Verify → Conclude`
 
-The repository can be used with Claude plugin surfaces, Agent-Skills-compatible runtimes, Codex-style agents, or any capable LLM that can read the Markdown skill and prompt files.
+## Start here
 
-## Current inventory
-
-**96 PM skills and 55 chained workflows across 12 plugins.**
-
-| Asset type | Count |
-|---|---:|
-| Plugins | 12 |
-| Skills | 96 |
-| Commands / workflows | 55 |
-| Total skill + command assets | 151 |
-
-## What this fork adds
-
-- **Evidence-first business-case system** for migration agents, AI accelerators, enterprise solution bets, and practice capability investments.
-- **Enterprise transformation layer** for future capabilities, client-proof-to-GTM, sales transformation, tooling, and automation.
-- **Prospect Discovery Engine** for repeatable pre-RFP solution discovery, hypothesis falsification, adaptive questioning, assumption tracking, and proposal readiness.
-- **Market-research reliability guardrails** against false negative competitor searches and unsupported market conclusions.
-- **Structured red-team and decision gates** for leadership-facing proposals and investment choices.
-- **Behavioral evaluation and scenario contracts** that protect high-consequence reasoning rules from silent regression.
-- **Model-agnostic usage paths** so core capability does not depend on one LLM provider.
-
-## Plugin suite
-
-| Plugin | Purpose |
+| What you need | Start with |
 |---|---|
-| `pm-product-discovery` | Research, interviews, feature triage, assumptions, opportunity mapping, and discovery synthesis. |
-| `pm-prospect-discovery` | Enterprise pre-RFP discovery, prospect research, hypothesis validation, adaptive questions, assumption registers, session synthesis, and proposal-readiness gates. |
-| `pm-product-strategy` | Product strategy, market scan, pricing, positioning, business models, and strategic frameworks. |
-| `pm-execution` | PRDs, user stories, OKRs, roadmaps, sprint planning, stakeholder mapping, test scenarios, and red-team reviews. |
-| `pm-market-research` | Competitor analysis, user research, segmentation, market sizing, sentiment analysis, and customer journey mapping. |
-| `pm-data-analytics` | SQL, cohort analysis, A/B test analysis, and product analytics interpretation. |
-| `pm-go-to-market` | ICP, GTM motions, beachhead segments, battlecards, launch planning, and growth strategy. |
-| `pm-marketing-growth` | North-star metrics, product naming, positioning, value propositions, and marketing ideas. |
-| `pm-toolkit` | Resume review, proofreading, NDA drafting, privacy policy drafting, and PM utility workflows. |
-| `pm-ai-shipping` | AI product shipping checks, intended-vs-implemented review, documentation, security, performance, and test derivation. |
-| `pm-enterprise-transformation` | Future capability building, sales transformation, proof-to-GTM, automation governance, reusable accelerators, and tool selection. |
-| `pm-business-case` | Evidence-led business cases with market proof, JTBD proof, commercial proof, evidence ledgers, red-team risks, and decision gates. |
+| Explore a new product idea | `pm-product-discovery` |
+| Prepare a prospect discovery session before an RFP | `pm-prospect-discovery` |
+| Build product strategy or pricing | `pm-product-strategy` |
+| Write or red-team a PRD | `pm-execution` |
+| Research competitors, users, or market size | `pm-market-research` |
+| Analyze SQL, cohorts, or experiments | `pm-data-analytics` |
+| Build ICP, GTM, launch, or battlecards | `pm-go-to-market` |
+| Position, name, or define a North Star metric | `pm-marketing-growth` |
+| Review resumes, writing, NDA, or privacy drafts | `pm-toolkit` |
+| Audit an AI-built product before shipping | `pm-ai-shipping` |
+| Build reusable capabilities or sales transformation plays | `pm-enterprise-transformation` |
+| Build an evidence-first investment/business case | `pm-business-case` |
 
-## Use with any LLM
+## How the repository works
 
-Core skills live in `pm-*/skills/*/SKILL.md` as plain Markdown. Provider-specific command wrappers are optional.
+### Skills
 
-For the new prospect-discovery capability, the most portable entry point is:
-
-```text
-pm-prospect-discovery/prompts/prospect-discovery-master.md
-```
-
-Give that file plus the prospect context and source material to the LLM. If tools are unavailable, the workflow must preserve missing evidence as `UNKNOWN` rather than fabricate it.
-
-### Agent Skills compatible runtimes
-
-Load the relevant `SKILL.md` files directly. Skill frontmatter follows the repository's portable Agent Skills convention.
-
-### Other LLMs without skill loading
-
-Paste the relevant skill or the plugin master prompt into the model and provide the task context. Command files can be treated as orchestration prompts by replacing `$ARGUMENTS` with the user input.
-
-## Claude installation
-
-### Claude Cowork / Claude Desktop
-
-Use the marketplace URL:
+Skills are the reusable reasoning building blocks. Every skill lives at:
 
 ```text
-https://github.com/sandeep9889123/pm-skills
+pm-<plugin>/skills/<skill-name>/SKILL.md
 ```
+
+The skill files use the Agent Skills style: instructions, guardrails, workflow steps, and required outputs in plain Markdown. This is the most portable layer in the repository.
+
+### Commands / workflows
+
+Commands live at:
+
+```text
+pm-<plugin>/commands/<workflow-name>.md
+```
+
+Claude can expose these as slash commands. Other LLMs can run the same workflow from plain language by following the command file or the equivalent prompt shown in each plugin README.
+
+### Plugins
+
+Plugins group related skills and workflows. Installing a plugin is the safest default because workflows often depend on multiple skills.
+
+## Installation
+
+### Claude Cowork / Desktop
+
+1. Open **Customize**.
+2. Open **Browse plugins** -> **Personal** -> **+**.
+3. Choose **Add marketplace from GitHub**.
+4. Enter:
+
+```text
+sandeep9889123/pm-skills
+```
+
+5. Enable the plugins you want if your Claude surface asks you to select them.
+6. Start with a command such as `/discover`, `/write-prd`, `/competitive-analysis`, or `/build-business-case`.
 
 ### Claude Code CLI
 
+Add the marketplace once:
+
 ```bash
 claude plugin marketplace add sandeep9889123/pm-skills
-claude plugin marketplace list
 ```
 
-Install the plugin set you need, for example:
+Install the plugins you want:
 
 ```bash
+claude plugin install pm-product-discovery@pm-skills
 claude plugin install pm-prospect-discovery@pm-skills
-claude plugin install pm-business-case@pm-skills
+claude plugin install pm-product-strategy@pm-skills
+claude plugin install pm-execution@pm-skills
 claude plugin install pm-market-research@pm-skills
+claude plugin install pm-data-analytics@pm-skills
+claude plugin install pm-go-to-market@pm-skills
+claude plugin install pm-marketing-growth@pm-skills
+claude plugin install pm-toolkit@pm-skills
+claude plugin install pm-ai-shipping@pm-skills
+claude plugin install pm-enterprise-transformation@pm-skills
+claude plugin install pm-business-case@pm-skills
 ```
 
-## Recommended PM workflows
+Claude can use skills automatically when relevant. To force a specific skill, reference the skill explicitly or use the namespaced skill form supported by your Claude surface. Workflows can be invoked with their slash command.
 
-### Standardize pre-RFP prospect discovery
+### Codex CLI / Codex app
 
-Use:
+This fork includes a Codex-native marketplace at `.agents/plugins/marketplace.json` and a `.codex-plugin/plugin.json` for every plugin.
 
-- `pm-prospect-discovery`
+Add the marketplace:
 
-Expected output:
+```bash
+codex plugin marketplace add sandeep9889123/pm-skills --ref main
+```
 
-- evidence-classified account context
-- problem and alternative-root-cause hypotheses
-- ranked use-case wedges
-- red-team rejection case
-- 5-8 stage journey
-- baseline / vision-aligned / differentiated solution anchors
-- prioritized assumption register
-- adaptive MUST ASK and Level 2 questions
-- post-session synthesis
-- readiness for solutioning, architecture, estimation, business case, and proposal
+Install the plugins you want:
 
-### Build an enterprise business case
+```bash
+codex plugin add pm-product-discovery@pm-skills
+codex plugin add pm-prospect-discovery@pm-skills
+codex plugin add pm-product-strategy@pm-skills
+codex plugin add pm-execution@pm-skills
+codex plugin add pm-market-research@pm-skills
+codex plugin add pm-data-analytics@pm-skills
+codex plugin add pm-go-to-market@pm-skills
+codex plugin add pm-marketing-growth@pm-skills
+codex plugin add pm-toolkit@pm-skills
+codex plugin add pm-ai-shipping@pm-skills
+codex plugin add pm-enterprise-transformation@pm-skills
+codex plugin add pm-business-case@pm-skills
+```
 
-Use:
+Codex installs the skill bundles natively. Claude-style slash commands are not assumed to exist in Codex. Use a plain-language workflow prompt instead, for example:
 
-- `pm-business-case`
-- `pm-market-research`
-- `pm-enterprise-transformation`
-- `pm-execution`
+```text
+Use the pm-market-research skills to run a competitive analysis for [market]. Search direct, adjacent, substitute, incumbent, regional, open-source, services, manual, and internal-build alternatives. Show evidence gaps and run a contradiction pass before concluding.
+```
 
-Expected output includes evidence ledger, customer/JTBD proof, alternatives, reconstructable economics, GTM logic, rejection case, and gated investment decision.
+### ChatGPT
 
-### Convert client success into GTM
+There are two supported usage patterns.
 
-Use:
+#### Option A: upload an individual Skill
 
-- `pm-enterprise-transformation`
-- `pm-go-to-market`
-- `pm-marketing-growth`
+If Skills upload is available for your ChatGPT plan or workspace:
 
-Expected output includes proof inventory, NDA-safe case-study skeleton, segment mapping, battlecard inputs, GTM narrative, and sales-enablement actions.
+1. Download this repository with **Code -> Download ZIP**, then extract it.
+2. Choose one folder under `pm-<plugin>/skills/<skill-name>/`.
+3. Keep `SKILL.md` and any files inside that skill folder together. If your upload flow expects one file, zip that skill folder.
+4. In ChatGPT, open **Plugins -> Skills -> Create -> Upload from your computer**.
+5. Upload the skill package.
+6. Ask for the task normally. ChatGPT can use installed Skills automatically when relevant.
 
-### Harden market and competitive research
+OpenAI documents Skills as following the Agent Skills open standard. Skill availability and upload permissions depend on plan and workspace settings.
 
-Use:
+Official reference: [Skills in ChatGPT](https://help.openai.com/en/articles/20001066-skills-in-chatgpt)
 
-- `pm-market-research`
-- `pm-product-strategy`
-- `pm-business-case`
+#### Option B: connect GitHub and use the repository directly
 
-Expected output includes direct and adjacent alternatives, search-strategy coverage, evidence states, contradiction checks, and false-negative risk.
+If the GitHub app is available in your ChatGPT experience:
 
-### Ship an AI PM prototype or AI-enabled workflow
+1. Open **Settings -> Apps -> GitHub**.
+2. Connect GitHub and allow access to `sandeep9889123/pm-skills` if required.
+3. Ask ChatGPT to use the exact skill path as the governing workflow.
 
-Use:
+Example:
 
-- `pm-ai-shipping`
-- `pm-execution`
-- `pm-data-analytics`
+```text
+Read pm-business-case/skills/business-case-orchestrator/SKILL.md from sandeep9889123/pm-skills and follow it for this business case. Treat missing evidence as UNKNOWN and do not invent sources or numbers.
+```
 
-Expected output includes intended-vs-implemented review, tests, analytics events, security/performance caveats, and launch-readiness checks.
+If GitHub access or Skills upload is unavailable, attach or paste the relevant `SKILL.md` into the conversation and give the task context.
+
+Official reference: [Connecting GitHub to ChatGPT](https://help.openai.com/en/articles/11145903-connecting-github-to-chatgpt)
+
+### Gemini CLI, OpenCode, Cursor, Kiro, and other Agent Skills compatible tools
+
+Copy the skill folders you want into the tool's skills directory. The exact path can vary by product version. Common project-level conventions include:
+
+| Tool | Common project path |
+|---|---|
+| Gemini CLI | `.gemini/skills/` |
+| OpenCode | `.opencode/skills/` |
+| Cursor | `.cursor/skills/` |
+| Kiro | `.kiro/skills/` |
+
+Example on macOS/Linux:
+
+```bash
+mkdir -p .cursor/skills
+cp -R pm-market-research/skills/* .cursor/skills/
+```
+
+Example on PowerShell:
+
+```powershell
+New-Item -ItemType Directory -Force .cursor\skills | Out-Null
+Copy-Item -Recurse pm-market-research\skills\* .cursor\skills\
+```
+
+### Any other LLM
+
+No installation is required. Give the model:
+
+1. the relevant `SKILL.md`,
+2. your task context,
+3. the source material it should use,
+4. and, for a multi-skill workflow, the relevant `commands/*.md` file or a plain-language workflow request.
+
+Use this instruction when you want strict adherence:
+
+```text
+Treat the attached SKILL.md as the governing workflow. Follow its evidence rules and hard gates. Do not fill missing facts from memory. Mark unsupported information UNKNOWN and list what evidence is required next.
+```
+
+See [Using PM Skills with Claude, ChatGPT, Codex, and other LLMs](docs/USING_WITH_LLMS.md) for detailed setup, update, troubleshooting, and invocation guidance.
+
+## Compatibility matrix
+
+| Surface | Install plugin bundle | Native skills | Claude slash commands | Best usage path |
+|---|---:|---:|---:|---|
+| Claude Cowork / Desktop | Yes | Yes | Yes | Add GitHub marketplace |
+| Claude Code | Yes | Yes | Yes | `claude plugin ...` |
+| Codex | Yes | Yes | No assumption | `.agents` marketplace + plain-language workflows |
+| ChatGPT with Skills | Individual skills | Yes | No | Upload a skill package |
+| ChatGPT with GitHub app | No local install required | Read from repo | No | Ask ChatGPT to follow an exact repo path |
+| Agent Skills compatible tools | Copy skill folders | Yes | No | Copy `skills/*` into tool skills directory |
+| Generic LLM | No | Manual | No | Attach/paste `SKILL.md` and task context |
+
+## Plugin suite
+
+| Plugin | Skills | Workflows | Purpose |
+|---|---:|---:|---|
+| [`pm-product-discovery`](pm-product-discovery/) | 13 | 5 | Ideation, assumptions, experiments, interviews, feature triage, OSTs, metrics |
+| [`pm-prospect-discovery`](pm-prospect-discovery/) | 10 | 4 | Enterprise pre-RFP discovery, hypotheses, adaptive questions, readiness gates |
+| [`pm-product-strategy`](pm-product-strategy/) | 12 | 5 | Vision, strategy, business models, value propositions, pricing, strategic frameworks |
+| [`pm-execution`](pm-execution/) | 16 | 11 | PRDs, OKRs, roadmaps, sprints, stories, tests, stakeholder work, red-team |
+| [`pm-market-research`](pm-market-research/) | 7 | 3 | Competitors, personas, segmentation, journeys, market sizing, sentiment |
+| [`pm-data-analytics`](pm-data-analytics/) | 3 | 3 | SQL, cohorts, A/B test analysis |
+| [`pm-go-to-market`](pm-go-to-market/) | 6 | 3 | ICP, beachhead, GTM motions, growth loops, battlecards, launch |
+| [`pm-marketing-growth`](pm-marketing-growth/) | 5 | 2 | Positioning, value props, naming, marketing ideas, North Star metrics |
+| [`pm-toolkit`](pm-toolkit/) | 4 | 5 | Resume, writing, NDA, privacy-policy utilities |
+| [`pm-ai-shipping`](pm-ai-shipping/) | 2 | 5 | Intended-vs-implemented audits, tests, docs, security, performance, ship checks |
+| [`pm-enterprise-transformation`](pm-enterprise-transformation/) | 12 | 4 | Future capabilities, proof-to-GTM, sales transformation, tooling and automation |
+| [`pm-business-case`](pm-business-case/) | 6 | 5 | Evidence-led market/customer/economic proof and investment decisions |
+
+For every skill and workflow name, plus starter prompts, see [Full plugin and skill catalog](docs/PLUGIN_CATALOG.md).
+
+## Common workflow examples
+
+### Product discovery
+
+Claude:
+
+```text
+/discover AI-powered meeting summarizer for enterprise teams
+```
+
+Other LLMs:
+
+```text
+Use pm-product-discovery to take this idea through ideation, assumption mapping, risk prioritization, and experiment design. Pause at each decision gate.
+```
+
+### Prospect discovery
+
+Claude:
+
+```text
+/pm-prospect-discovery:discovery-prepare [prospect context]
+```
+
+Other LLMs:
+
+```text
+Use pm-prospect-discovery to prepare a pre-RFP discovery session. Research the account, test alternative root causes, rank plausible Phase 1 wedges, build the minimum sufficient question set, and state readiness blockers.
+```
+
+### Competitive research
+
+Claude:
+
+```text
+/competitive-analysis [market or product]
+```
+
+Other LLMs:
+
+```text
+Use pm-market-research competitor-analysis. Do not conclude market absence from a weak first search. Search direct, adjacent, substitute, incumbent, internal-build, services, manual, regional, and emerging alternatives.
+```
+
+### Business case
+
+Claude:
+
+```text
+/build-business-case [initiative]
+```
+
+Other LLMs:
+
+```text
+Use pm-business-case to build an investment-grade case. Create an evidence ledger first, compare BUILD/BUY/PARTNER/DO NOTHING, require reconstructable economics, define a falsifiable PoC, and produce the strongest rejection case before the recommendation.
+```
+
+### PRD and execution
+
+Claude:
+
+```text
+/write-prd [problem or feature]
+```
+
+Other LLMs:
+
+```text
+Use pm-execution to create a decision-first PRD with scope, non-goals, user journeys, failure cases, acceptance criteria, analytics, dependencies, and validation gates.
+```
 
 ## Reliability principles
 
-Every high-stakes output should distinguish, where applicable:
+For high-stakes outputs, distinguish where applicable:
 
 - `FACT`
-- source-backed evidence
 - `INFERENCE`
 - `ASSUMPTION`
 - `ESTIMATE`
@@ -171,17 +326,23 @@ Every high-stakes output should distinguish, where applicable:
 
 The model must not invent competitors, market sizes, customers, prospect systems, APIs, benchmarks, case studies, financial inputs, quotes, or stakeholder decisions. Missing evidence should produce an explicit gap and validation path.
 
-A strong-looking deliverable is not a substitute for decision readiness. `NOT READY`, `SECOND DISCOVERY REQUIRED`, `EXPERIMENT`, `HOLD`, and `KILL` are valid outcomes when evidence warrants them.
+A polished artifact is not a substitute for decision readiness. `NOT READY`, `SECOND DISCOVERY REQUIRED`, `EXPERIMENT`, `HOLD`, and `KILL` are valid outcomes when evidence warrants them.
 
-## Repository guidance for AI agents
+## Validation and contribution
 
-`CLAUDE.md` is the repository-wide source of truth for contributors and AI agents. `AGENTS.md` points non-Claude agents to the same guidance.
+Repository CI validates plugin structure, inventory consistency, reliability guard contracts, behavioral test fixtures, and cross-platform packaging.
+
+- Contributor guidance: [CLAUDE.md](CLAUDE.md) and [AGENTS.md](AGENTS.md)
+- Quality standards: [`docs/standards/`](docs/standards/)
+- Behavioral evaluation harness: [`evaluation/`](evaluation/)
+- Reliability scenarios: [`reliability/`](reliability/)
+- Contribution guide: [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ## Attribution
 
-Original PM skills foundation: [`phuryn/pm-skills`](https://github.com/phuryn/pm-skills).
+Original PM skills foundation: [phuryn/pm-skills](https://github.com/phuryn/pm-skills).
 
-This fork is maintained and extended by Sandeep Kumar M. Upstream attribution is preserved for upstream-derived skills; fork-specific enterprise, reliability, business-case, prospect-discovery, and evaluation layers evolve independently.
+This fork is maintained and extended by Sandeep Kumar M. Upstream attribution is preserved for upstream-derived skills. Fork-specific enterprise, reliability, business-case, prospect-discovery, evaluation, and multi-LLM packaging layers evolve independently.
 
 ## License
 

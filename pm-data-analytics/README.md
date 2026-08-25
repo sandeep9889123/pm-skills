@@ -2,60 +2,85 @@
 
 Product analytics workflows for SQL, cohort analysis, A/B test interpretation, and analytical reasoning for PM decisions.
 
-This plugin is part of Sandeep Kumar M's enhanced `pm-skills` fork. It is designed to help PMs reason from data without overstating causality or hiding uncertainty.
-
 ## When to use
 
-Use this plugin when you need to:
+Use this plugin when you need to write SQL, define analysis logic, analyze cohorts, interpret experiments, define metrics, separate correlation from causation, or explain analytical caveats to stakeholders.
 
-- write SQL for product analysis
-- define analysis logic before querying
-- interpret A/B test results
-- analyze cohorts
-- structure metrics for a product question
-- separate correlation from causation
-- explain data caveats to stakeholders
+## Install and use
 
-## Skills included
+Full cross-LLM guide: [Using PM Skills with LLMs](../docs/USING_WITH_LLMS.md).
+
+### Claude Code / Cowork
+
+```bash
+claude plugin marketplace add sandeep9889123/pm-skills
+claude plugin install pm-data-analytics@pm-skills
+```
+
+```text
+/pm-data-analytics:analyze-test [experiment results]
+```
+
+### Codex
+
+```bash
+codex plugin marketplace add sandeep9889123/pm-skills --ref main
+codex plugin add pm-data-analytics@pm-skills
+```
+
+```text
+Use pm-data-analytics to evaluate this experiment. Check validity, sample-ratio mismatch, power assumptions, practical significance, guardrails, and the decision rule.
+```
+
+### ChatGPT
+
+Upload `skills/ab-test-analysis/`, `skills/cohort-analysis/`, or `skills/sql-queries/` if Skills is available.
+
+With the GitHub app:
+
+```text
+Read pm-data-analytics/skills/ab-test-analysis/SKILL.md from sandeep9889123/pm-skills and follow it for these results.
+```
+
+### Other LLMs
+
+Copy or attach the relevant skill folder. If the model cannot query data, it should produce a query/measurement plan rather than invent observations.
+
+## Skills (3)
 
 - `ab-test-analysis`
 - `cohort-analysis`
 - `sql-queries`
 
-## Commands included
+## Commands (3)
 
-- `/analyze-cohorts`
-- `/analyze-test`
-- `/write-query`
+- `/pm-data-analytics:analyze-cohorts`
+- `/pm-data-analytics:analyze-test`
+- `/pm-data-analytics:write-query`
+
+## Example prompts
+
+```text
+Use cohort-analysis to define retention cohorts for this onboarding flow. Specify inclusion rules, denominator, time windows, segments, SQL logic, and decision implications.
+```
+
+```text
+Use sql-queries to generate the query only after defining the product question, grain, metric definition, joins, exclusions, and validation checks.
+```
 
 ## Operating rules
 
-1. Define the decision before defining the metric.
+1. Define the decision before the metric.
 2. Do not infer causality from descriptive metrics.
-3. Always state denominator, segment, time window, and caveats.
+3. State denominator, segment, time window, and caveats.
 4. Treat missing instrumentation as a product risk.
-5. For experiments, call out power, sample size, guardrails, and novelty effects.
-6. If data is not available, produce a measurement plan instead of pretending certainty.
-
-## Example use
-
-```text
-Use pm-data-analytics to design a cohort analysis for this onboarding flow. Define the SQL logic, metrics, segments, caveats, and decision implications.
-```
+5. For experiments, call out validity, power, sample size, guardrails, and novelty effects.
+6. If data is unavailable, produce a measurement plan instead of certainty.
 
 ## Output standard
 
-A strong output from this plugin should include:
-
-- decision question
-- metric definition
-- query logic
-- segmentation
-- interpretation
-- caveats
-- recommendation
-- follow-up analysis
+A strong output includes decision question, metric definition, query/analysis logic, segmentation, interpretation, caveats, recommendation, and follow-up analysis.
 
 ## Attribution
 
-Based on the original `phuryn/pm-skills` analytics workflows. Enhanced in this fork with stronger PM decision framing and analytical caveat discipline.
+Based on the original `phuryn/pm-skills` analytics workflows, enhanced with PM decision framing and analytical safeguards.

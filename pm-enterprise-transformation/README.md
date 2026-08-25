@@ -1,23 +1,52 @@
 # PM Enterprise Transformation
 
-Enterprise transformation workflows for building future capabilities, converting client proof into GTM, improving sales transformation, selecting tools, designing automation governance, and building reusable accelerators.
-
-This plugin is a major added layer in Sandeep Kumar M's enhanced `pm-skills` fork. It is tailored for leadership-facing PM work in services, enterprise AI, solution practices, capability building, and sales transformation.
+Enterprise transformation workflows for building future capabilities, converting client proof into GTM, improving sales execution, selecting tools, governing automation, and testing reusable accelerator theses.
 
 ## When to use
 
-Use this plugin when you need to:
+Use this plugin when you need to build a future capability thesis, turn client success into sales/GTM assets, diagnose funnel gaps, create account expansion plays, evaluate tooling/automation, test reusable IP, or prepare leadership-facing transformation decisions.
 
-- build a future capability thesis
-- convert client success stories into sales and GTM assets
-- diagnose sales funnel gaps
-- create account expansion plays
-- evaluate tools and automation opportunities
-- define reusable accelerator opportunities
-- build solution business cases
-- turn scattered proof into leadership-ready narratives
+## Install and use
 
-## Skills included
+Full cross-LLM guide: [Using PM Skills with LLMs](../docs/USING_WITH_LLMS.md).
+
+### Claude Code / Cowork
+
+```bash
+claude plugin marketplace add sandeep9889123/pm-skills
+claude plugin install pm-enterprise-transformation@pm-skills
+```
+
+```text
+/pm-enterprise-transformation:build-future-capability [opportunity]
+```
+
+### Codex
+
+```bash
+codex plugin marketplace add sandeep9889123/pm-skills --ref main
+codex plugin add pm-enterprise-transformation@pm-skills
+```
+
+```text
+Use pm-enterprise-transformation to evaluate this future capability. Separate verified demand/proof from aspiration, test reuse economics and right-to-win, define the GTM path, and recommend the next evidence-generating commitment.
+```
+
+### ChatGPT
+
+Upload a specific skill such as `skills/capability-opportunity-radar/`, `skills/client-proof-extractor/`, or `skills/tool-evaluation-selection/` when Skills is available.
+
+With the GitHub app:
+
+```text
+Read pm-enterprise-transformation/skills/capability-opportunity-radar/SKILL.md from sandeep9889123/pm-skills and follow it for this capability proposal.
+```
+
+### Other LLMs
+
+Copy or attach the required skill folders. For multi-stage transformations, provide the relevant workflow file or describe the sequence and decision gate explicitly.
+
+## Skills (12)
 
 - `account-expansion-play`
 - `automation-governance`
@@ -32,42 +61,36 @@ Use this plugin when you need to:
 - `solution-to-sales-playbook`
 - `tool-evaluation-selection`
 
-## Commands included
+## Commands (4)
 
-- `/automate-pm-workflow`
-- `/build-future-capability`
-- `/proof-to-gtm`
-- `/transform-sales`
+- `/pm-enterprise-transformation:automate-pm-workflow`
+- `/pm-enterprise-transformation:build-future-capability`
+- `/pm-enterprise-transformation:proof-to-gtm`
+- `/pm-enterprise-transformation:transform-sales`
+
+## Example prompts
+
+```text
+Use reusable-accelerator-thesis to test whether this client solution is genuinely reusable. Require common-core evidence, marginal delivery reduction, repeatable value, ownership, and a build/buy/partner alternative.
+```
+
+```text
+Use client-proof-extractor on these delivery artifacts. Separate publishable verified outcomes from confidential, target, inferred, or unsupported claims before creating GTM content.
+```
 
 ## Operating rules
 
 1. Separate proof from aspiration.
-2. Do not convert a one-off delivery success into reusable IP without evidence.
-3. Link every capability bet to customer demand, sales motion, delivery feasibility, and commercial value.
-4. Identify missing proof before recommending investment.
-5. Treat automation as a governance problem, not only a tooling problem.
-6. Make outputs useful for CEO, Sales, Delivery, Product, and Engineering stakeholders.
-
-## Example use
-
-```text
-Use pm-enterprise-transformation to build a future capability proposal for Migration Agents Phase 1. Include proof base, target segments, reusable IP thesis, GTM path, sales enablement needs, delivery feasibility, investment asks, and red-team risks.
-```
+2. Do not convert one delivery success into reusable IP without evidence.
+3. Link capability bets to demand, sales motion, delivery feasibility, and commercial value.
+4. Identify missing proof before investment.
+5. Treat automation as a governance problem, not just tooling.
+6. Make outputs useful for CEO, Sales, Delivery, Product, and Engineering.
 
 ## Output standard
 
-A strong output from this plugin should include:
-
-- capability thesis
-- evidence ledger
-- user or buyer jobs
-- proof inventory
-- GTM path
-- reusable accelerator logic
-- operating model
-- risks and disconfirming evidence
-- decision gates
+A strong output includes capability thesis, evidence ledger, buyer/user jobs, proof inventory, GTM path, reuse logic, operating model, risks, disconfirming evidence, and decision gates.
 
 ## Attribution
 
-This plugin is an added enterprise transformation layer in Sandeep Kumar M's fork, built on the broader `phuryn/pm-skills` foundation. It reflects added focus on future capability building, client-proof-to-GTM, sales transformation, tooling, and automation.
+This plugin is an added enterprise transformation layer in Sandeep Kumar M's fork, built on the broader `phuryn/pm-skills` foundation.
