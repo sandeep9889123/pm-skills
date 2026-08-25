@@ -2,6 +2,20 @@
 
 ## Unreleased
 
+### Prospect Discovery Engine
+
+- Added **`pm-prospect-discovery`** with 10 local skills and 4 workflows for repeatable enterprise pre-RFP discovery, from sparse prospect context through evidence, hypotheses, journey decomposition, adaptive questioning, synthesis, and proposal-readiness gates.
+- Added a provider-neutral `prompts/prospect-discovery-master.md` so the capability can run in any capable LLM without requiring a Claude plugin runtime.
+- Added fail-closed controls for unsupported prospect systems, APIs, data quality, volumes, budgets, stakeholder authority, buying intent, and operational facts. Tool/search failure now remains `coverage incomplete / UNKNOWN`.
+- Added explicit anti-confirmation behavior so a Sales or user-proposed use case is treated as a hypothesis, red-teamed against alternative root causes, existing-system/configuration options, vendor substitutes, lighter interventions, and `DO NOTHING`.
+- Added a reusable 16-dimension enterprise discovery taxonomy with decision-linked MUST ASK questions, conditional Level 2 branches, and guidance to prefer roughly 15-25 high-yield questions for a 60-90 minute session instead of questionnaire bloat.
+- Added an assumption register with P0/P1/P2 prioritization and `UNTESTED | CONFIRMED | DENIED | PARTIAL | UNKNOWN` states.
+- Added separate readiness gates for solutioning, architecture, estimation, business case, and proposal. Discovery-confidence scores cannot override unresolved P0 blockers.
+- Added an enterprise prospect-discovery SOP, evidence standard, readiness scoring guide, model-agnostic usage guide, reusable brief/summary/proposal-handoff templates, and a portable HTML session shell.
+- Added the JFLL Quote-to-Booking discovery artifact as a generalized reference pattern rather than a freight-specific questionnaire.
+- Added eight prospect-discovery adversarial scenarios and `tests/test_prospect_discovery_contracts.py` covering preferred-solution confirmation bias, unknown API assumptions, enthusiasm-as-demand, questionnaire bloat, low-volume automation, user-buyer mismatch, missing data quality, and second-discovery requirements.
+- Updated root README, marketplace registration, agent guidance, and consistency tests for 12 plugins, 96 skills, 55 workflows, model-agnostic usage, and the current `git-subdir` marketplace source shape.
+
 ### Business Case Reliability Wave 4
 
 - Added **`pm-business-case`** with 6 local skills and 5 workflows for generalized evidence-first business-case formation, evidence refresh, investment red-teaming, and gated BUILD / BUY / PARTNER / EXPERIMENT / DEFER / KILL / NOT READY decisions.

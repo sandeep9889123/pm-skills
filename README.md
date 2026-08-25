@@ -1,41 +1,44 @@
-# PM Skills, Evidence-First PM Operating System for Claude
+# PM Skills: Reliability-First Enterprise AI Edition
 
-A Claude plugin marketplace for product managers who want **repeatable, evidence-led PM execution** across discovery, strategy, execution, market research, GTM, analytics, AI shipping, enterprise transformation, and business-case formation.
+A model-agnostic PM operating system for **repeatable, evidence-led product and enterprise solution work** across discovery, prospect discovery, strategy, execution, market research, GTM, analytics, AI shipping, enterprise transformation, and business-case formation.
 
-This repository is a fork and extension of [`phuryn/pm-skills`](https://github.com/phuryn/pm-skills). The original framework created a strong PM skills foundation. This fork adds a reliability-first operating layer for higher-stakes PM work, especially where weak research, hallucinated competitors, shallow business cases, and generic PM outputs are unacceptable.
+This repository is a fork and extension of [`phuryn/pm-skills`](https://github.com/phuryn/pm-skills). The upstream project created the core PM skills foundation. This fork adds reliability contracts, adversarial decision gates, enterprise workflows, and portable prompt/skill patterns for higher-stakes PM work where hallucinated evidence, shallow research, and premature commitments are unacceptable.
 
-## What changed in this fork
+The reliability loop is:
 
-This fork is no longer positioned as a simple copy of the upstream PM skills library. It is organized as a **PM operating system for Claude Cowork and Claude Code**.
+`Search → Challenge → Expand → Verify → Conclude`
 
-Key additions and hardening areas:
+The repository can be used with Claude plugin surfaces, Agent-Skills-compatible runtimes, Codex-style agents, or any capable LLM that can read the Markdown skill and prompt files.
 
-- **Evidence-first business-case system** for migration agents, AI accelerators, enterprise solution bets, and practice capability investments.
-- **Enterprise transformation layer** for building future capabilities, converting client proof into GTM, sales transformation, tooling, and automation.
-- **Market-research reliability guardrails** designed to avoid the common failure mode where the model says “no competitors found” too early.
-- **Structured red-team and decision gates** for leadership-facing proposals.
-- **Cowork-oriented marketplace manifest** with explicit GitHub-backed plugin sources.
-- **Reliability contracts, scenario catalogs, and evaluation harnesses** to reduce hallucination and force evidence separation.
-- **README and plugin documentation refresh** so each plugin is clearly positioned for practical PM workflows, not generic prompt use.
+## Current inventory
 
-## Repository inventory
-
-Current marketplace inventory:
+**96 PM skills and 55 chained workflows across 12 plugins.**
 
 | Asset type | Count |
 |---|---:|
-| Plugins | 11 |
-| Skills | 86 |
-| Commands | 51 |
-| Total skill + command assets | 137 |
+| Plugins | 12 |
+| Skills | 96 |
+| Commands / workflows | 55 |
+| Total skill + command assets | 151 |
+
+## What this fork adds
+
+- **Evidence-first business-case system** for migration agents, AI accelerators, enterprise solution bets, and practice capability investments.
+- **Enterprise transformation layer** for future capabilities, client-proof-to-GTM, sales transformation, tooling, and automation.
+- **Prospect Discovery Engine** for repeatable pre-RFP solution discovery, hypothesis falsification, adaptive questioning, assumption tracking, and proposal readiness.
+- **Market-research reliability guardrails** against false negative competitor searches and unsupported market conclusions.
+- **Structured red-team and decision gates** for leadership-facing proposals and investment choices.
+- **Behavioral evaluation and scenario contracts** that protect high-consequence reasoning rules from silent regression.
+- **Model-agnostic usage paths** so core capability does not depend on one LLM provider.
 
 ## Plugin suite
 
 | Plugin | Purpose |
 |---|---|
 | `pm-product-discovery` | Research, interviews, feature triage, assumptions, opportunity mapping, and discovery synthesis. |
+| `pm-prospect-discovery` | Enterprise pre-RFP discovery, prospect research, hypothesis validation, adaptive questions, assumption registers, session synthesis, and proposal-readiness gates. |
 | `pm-product-strategy` | Product strategy, market scan, pricing, positioning, business models, and strategic frameworks. |
-| `pm-execution` | PRDs, user stories, OKRs, roadmap transformation, sprint planning, stakeholder mapping, test scenarios, and red-team reviews. |
+| `pm-execution` | PRDs, user stories, OKRs, roadmaps, sprint planning, stakeholder mapping, test scenarios, and red-team reviews. |
 | `pm-market-research` | Competitor analysis, user research, segmentation, market sizing, sentiment analysis, and customer journey mapping. |
 | `pm-data-analytics` | SQL, cohort analysis, A/B test analysis, and product analytics interpretation. |
 | `pm-go-to-market` | ICP, GTM motions, beachhead segments, battlecards, launch planning, and growth strategy. |
@@ -45,7 +48,27 @@ Current marketplace inventory:
 | `pm-enterprise-transformation` | Future capability building, sales transformation, proof-to-GTM, automation governance, reusable accelerators, and tool selection. |
 | `pm-business-case` | Evidence-led business cases with market proof, JTBD proof, commercial proof, evidence ledgers, red-team risks, and decision gates. |
 
-## Installation
+## Use with any LLM
+
+Core skills live in `pm-*/skills/*/SKILL.md` as plain Markdown. Provider-specific command wrappers are optional.
+
+For the new prospect-discovery capability, the most portable entry point is:
+
+```text
+pm-prospect-discovery/prompts/prospect-discovery-master.md
+```
+
+Give that file plus the prospect context and source material to the LLM. If tools are unavailable, the workflow must preserve missing evidence as `UNKNOWN` rather than fabricate it.
+
+### Agent Skills compatible runtimes
+
+Load the relevant `SKILL.md` files directly. Skill frontmatter follows the repository's portable Agent Skills convention.
+
+### Other LLMs without skill loading
+
+Paste the relevant skill or the plugin master prompt into the model and provide the task context. Command files can be treated as orchestration prompts by replacing `$ARGUMENTS` with the user input.
+
+## Claude installation
 
 ### Claude Cowork / Claude Desktop
 
@@ -55,14 +78,6 @@ Use the marketplace URL:
 https://github.com/sandeep9889123/pm-skills
 ```
 
-Recommended settings:
-
-```text
-Sync automatically = OFF
-```
-
-After installing, open Cowork and type `/` to search available skills and workflows.
-
 ### Claude Code CLI
 
 ```bash
@@ -70,15 +85,34 @@ claude plugin marketplace add sandeep9889123/pm-skills
 claude plugin marketplace list
 ```
 
-Then install the plugin set you need, for example:
+Install the plugin set you need, for example:
 
 ```bash
+claude plugin install pm-prospect-discovery@pm-skills
 claude plugin install pm-business-case@pm-skills
 claude plugin install pm-market-research@pm-skills
-claude plugin install pm-enterprise-transformation@pm-skills
 ```
 
 ## Recommended PM workflows
+
+### Standardize pre-RFP prospect discovery
+
+Use:
+
+- `pm-prospect-discovery`
+
+Expected output:
+
+- evidence-classified account context
+- problem and alternative-root-cause hypotheses
+- ranked use-case wedges
+- red-team rejection case
+- 5-8 stage journey
+- baseline / vision-aligned / differentiated solution anchors
+- prioritized assumption register
+- adaptive MUST ASK and Level 2 questions
+- post-session synthesis
+- readiness for solutioning, architecture, estimation, business case, and proposal
 
 ### Build an enterprise business case
 
@@ -89,18 +123,9 @@ Use:
 - `pm-enterprise-transformation`
 - `pm-execution`
 
-Expected output:
+Expected output includes evidence ledger, customer/JTBD proof, alternatives, reconstructable economics, GTM logic, rejection case, and gated investment decision.
 
-- evidence ledger
-- assumptions register
-- market proof
-- JTBD proof
-- commercial model
-- competitive scan
-- decision gates
-- red-team rejection risks
-
-### Convert client success stories into GTM assets
+### Convert client success into GTM
 
 Use:
 
@@ -108,16 +133,9 @@ Use:
 - `pm-go-to-market`
 - `pm-marketing-growth`
 
-Expected output:
+Expected output includes proof inventory, NDA-safe case-study skeleton, segment mapping, battlecard inputs, GTM narrative, and sales-enablement actions.
 
-- proof inventory
-- anonymized case-study skeleton
-- target segment mapping
-- battlecard inputs
-- GTM narrative
-- sales enablement checklist
-
-### Harden market research
+### Harden market and competitive research
 
 Use:
 
@@ -125,14 +143,7 @@ Use:
 - `pm-product-strategy`
 - `pm-business-case`
 
-Expected output:
-
-- named competitor set
-- adjacent alternatives
-- indirect substitutes
-- search strategy log
-- evidence strength labels
-- gaps and false-negative risks
+Expected output includes direct and adjacent alternatives, search-strategy coverage, evidence states, contradiction checks, and false-negative risk.
 
 ### Ship an AI PM prototype or AI-enabled workflow
 
@@ -142,36 +153,35 @@ Use:
 - `pm-execution`
 - `pm-data-analytics`
 
-Expected output:
-
-- intended-vs-implemented review
-- test scenarios
-- analytics events
-- security/performance caveats
-- launch-readiness checklist
+Expected output includes intended-vs-implemented review, tests, analytics events, security/performance caveats, and launch-readiness checks.
 
 ## Reliability principles
 
-This fork is optimized for **low-hallucination PM work**.
+Every high-stakes output should distinguish, where applicable:
 
-Every high-stakes output should separate:
-
-- verified facts
+- `FACT`
 - source-backed evidence
-- weak signals
-- assumptions
-- model judgment
-- open questions
+- `INFERENCE`
+- `ASSUMPTION`
+- `ESTIMATE`
+- `UNKNOWN`
+- `STALE`
 - disconfirming evidence
 - decision risks
 
-The model should not invent competitors, market sizes, customers, benchmarks, case studies, financials, or stakeholder decisions. Where evidence is missing, the expected behavior is to say so and produce a validation plan.
+The model must not invent competitors, market sizes, customers, prospect systems, APIs, benchmarks, case studies, financial inputs, quotes, or stakeholder decisions. Missing evidence should produce an explicit gap and validation path.
+
+A strong-looking deliverable is not a substitute for decision readiness. `NOT READY`, `SECOND DISCOVERY REQUIRED`, `EXPERIMENT`, `HOLD`, and `KILL` are valid outcomes when evidence warrants them.
+
+## Repository guidance for AI agents
+
+`CLAUDE.md` is the repository-wide source of truth for contributors and AI agents. `AGENTS.md` points non-Claude agents to the same guidance.
 
 ## Attribution
 
 Original PM skills foundation: [`phuryn/pm-skills`](https://github.com/phuryn/pm-skills).
 
-This fork: maintained and extended by Sandeep Kumar M with added reliability-first business-case, enterprise-transformation, market-research, GTM, and automation layers.
+This fork is maintained and extended by Sandeep Kumar M. Upstream attribution is preserved for upstream-derived skills; fork-specific enterprise, reliability, business-case, prospect-discovery, and evaluation layers evolve independently.
 
 ## License
 

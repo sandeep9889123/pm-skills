@@ -104,15 +104,15 @@ class TestHighRiskBehaviorGuards(unittest.TestCase):
             / "SKILL.md"
         ).read_text(encoding="utf-8").lower()
 
-        self.assertIn("never conclude", text)
-        self.assertIn("first pass", text)
+        self.assertIn("never say there are no competitors", text)
+        self.assertIn("first-pass search", text)
         self.assertIn("search exhaustion gate", text)
         self.assertIn("contradiction pass", text)
         self.assertIn("substitutes", text)
         self.assertIn("in-house", text)
         self.assertIn("regional", text)
         self.assertIn("emerging", text)
-        self.assertIn("user-supplied competitors are leads, not facts", text)
+        self.assertIn("never accept a user-supplied competitor as fact without verification", text)
 
     def test_interview_quotes_require_verification(self):
         text = (
