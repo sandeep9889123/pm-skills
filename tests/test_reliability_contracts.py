@@ -112,7 +112,7 @@ class TestHighRiskBehaviorGuards(unittest.TestCase):
         self.assertIn("in-house", text)
         self.assertIn("regional", text)
         self.assertIn("emerging", text)
-        self.assertIn("a user-supplied competitor is a lead", text)
+        self.assertIn("never accept a user-supplied competitor as fact without verification", text)
 
     def test_interview_quotes_require_verification(self):
         text = (
