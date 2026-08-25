@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/sandeep9889123/pm-skills/reliability/kernel/context_frame.schema.json",
+  "title": "PM Decision Context Frame",
+  "description": "Portable context contract for high-consequence PM skills and workflows. Models may keep this internal unless material assumptions or unknowns should be surfaced.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["decision", "stage", "evidence", "material_unknowns"],
+  "properties": {
+    "decision": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The decision, analysis, or artifact this work must support."
+    },
+    "audience_or_actor": {
+      "type": ["string", "null"],
+      "description": "Primary decision-maker, user, buyer, operator, reviewer, or stakeholder."
+    },
+    "geography_or_market": {
+      "type": ["string", "null"],
+      "description": "Geographic, regulatory, vertical, or market scope when material."
+    },
+    "stage": {
+      "type": "string",
+      "enum": ["idea", "discovery", "pre-rfp", "poc", "pilot", "production", "scale", "renewal", "transformation", "unknown"]
+    },
+    "time_horizon": {
+      "type": ["string", "null"]
+    },
+    "constraints": {
+      "type": "array",
+      "items": {"type": "string"},
+      "uniqueItems": true
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["source_class", "summary"],
+        "properties": {
+          "source_class": {
+            "type": "string",
+            "enum": ["user-source-of-truth", "connected-internal", "primary-external", "independent-credible", "secondary", "stale", "model-prior-knowledge"]
+          },
+          "summary": {"type": "string", "minLength": 1},
+          "date": {"type": ["string", "null"]},
+          "authority": {"type": ["string", "null"]},
+          "freshness_material": {"type": "boolean", "default": false}
+        }
+      }
+    },
+    "material_unknowns": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["unknown", "decision_impact"],
+        "properties": {
+          "unknown": {"type": "string", "minLength": 1},
+          "decision_impact": {"type": "string", "minLength": 1},
+          "owner": {"type": ["string", "null"]},
+          "cheapest_validation": {"type": ["string", "null"]}
+        }
+      }
+    },
+    "working_assumptions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["assumption", "material"],
+        "properties": {
+          "assumption": {"type": "string"},
+          "material": {"type": "boolean"},
+          "what_changes_if_wrong": {"type": ["string", "null"]}
+        }
+      }
+    }
+  }
+}
