@@ -1,84 +1,93 @@
 ---
-description: Generate SQL queries from natural language — supports BigQuery, PostgreSQL, MySQL, and more
+description: Generate defensible SQL from natural language with verified schema mapping, metric definitions, join/cardinality checks, and validation queries
 argument-hint: "<what you want to know, in plain English>"
 ---
 
-# /write-query -- SQL Query Generator
+# /write-query -- Defensible SQL Query Generator
 
-Describe what data you need in plain English and get an optimized SQL query. Supports multiple dialects and can read your schema from uploaded files.
+Translate a business question into SQL without inventing schema or hiding business-logic assumptions.
 
-## Invocation
+## Step 1: Define the Decision and Metric
 
-```
-/write-query Show me daily active users for the last 30 days, broken down by plan tier
-/write-query Find users who signed up last month but never completed onboarding
-/write-query [upload a schema diagram] What's the conversion rate from trial to paid by cohort?
-```
+Resolve:
 
-## Workflow
+- what decision/question the result supports
+- output grain
+- metric definition(s)
+- time range / timezone
+- filters / segments
+- SQL dialect
 
-### Step 1: Understand the Question
+Ambiguous terms such as `active`, `conversion`, `churn`, `revenue`, `customer`, or `session` must be defined before decision-critical SQL is treated as final.
 
-Parse the user's natural language request to identify:
-- What data is being requested (metrics, dimensions, filters)
-- Time range and granularity
-- Grouping and ordering preferences
-- Output expectations (raw data, aggregated, ranked)
+## Step 2: Verify Schema
 
-### Step 2: Determine Schema
+If schema/DDL/docs are available:
 
-If a schema is available (uploaded diagram, DDL, or description):
-- Map the request to specific tables and columns
-- Identify necessary joins
+- map concepts to verified tables/columns
+- identify keys/relationships
+- note data types where relevant
 
-If no schema is provided:
-- Ask for the database type (BigQuery, PostgreSQL, MySQL, etc.)
-- Infer a reasonable schema from the question and ask the user to confirm
-- Use common SaaS data model conventions as defaults
+If schema is missing:
 
-### Step 3: Generate Query
+- **do not infer plausible SaaS tables and present them as real**
+- return `STATUS: TEMPLATE - SCHEMA NOT VERIFIED`
+- use explicit placeholders such as `<users_table>`
+- list the schema mappings required before execution
 
-Apply the **sql-queries** skill:
+## Step 3: Generate SQL
 
-- Write the SQL query in the correct dialect
-- Optimize for readability and performance
-- Include comments explaining key logic
-- Add CTEs for complex queries to improve readability
-- Handle edge cases (NULLs, timezone considerations, duplicate handling)
+Apply **sql-queries**.
 
-### Step 4: Present and Iterate
+Required safeguards:
 
-```
-## SQL Query: [What It Does]
+- correct dialect or portable syntax if dialect unknown
+- readable CTEs
+- NULL/timezone handling
+- duplicate/deduplication logic where needed
+- join cardinality check
+- explicit business assumptions
+- read-only `SELECT` by default
 
-**Dialect**: [BigQuery / PostgreSQL / MySQL / etc.]
-**Tables used**: [list]
+Do not call the query production-ready unless schema and metric definitions were verified.
 
-### Query
-[SQL code block with comments]
+## Step 4: Validation
 
-### What This Returns
-[Description of the output: columns, rows, expected result shape]
+Provide one or more checks appropriate to the risk:
 
-### Assumptions
-- [Schema assumptions made]
-- [Business logic assumptions]
+- row counts before/after joins
+- duplicate-key check
+- distinct entity count
+- denominator reconciliation
+- known-record spot check
+- boundary-date/timezone check
+- comparison against a trusted source
+- dry-run / query plan where supported
 
-### Notes
-- [Performance considerations for large datasets]
-- [Edge cases handled or flagged]
-```
+Never fabricate execution results.
 
-Offer:
-- "Want me to **modify this** — add filters, change grouping, extend the time range?"
-- "Should I **create a companion query** for a related metric?"
-- "Want me to **build a dashboard** around this query?"
-- "Need a **cohort analysis** version of this?"
+## Output
 
-## Notes
+### Status
+`VERIFIED SCHEMA | PARTIALLY VERIFIED | TEMPLATE - SCHEMA NOT VERIFIED | BLOCKED`
 
-- Always include comments in the SQL — PMs share queries with analysts who need to understand intent
-- Default to readable over clever — CTEs over nested subqueries
-- Flag queries that might be slow on large datasets and suggest optimization
-- If the request is ambiguous (e.g., "active users"), ask the user to define the metric precisely
-- Offer to generate the query in multiple dialects if the user is unsure which database they're using
+### Business / Metric Contract
+[what the query actually means]
+
+### Schema Mapping
+| Concept | Table.Column | Status |
+|---|---|---|
+
+### SQL
+[verified query or clearly labeled template]
+
+### Validation Checks
+[queries/checks]
+
+### Assumptions / Unknowns
+[what could make result wrong]
+
+### Safety / Performance Notes
+[only verified or explicitly proposed]
+
+If a schema assumption remains material, do not hide it in a comment and present the query as final.

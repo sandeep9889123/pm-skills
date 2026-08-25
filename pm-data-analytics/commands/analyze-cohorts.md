@@ -1,99 +1,114 @@
 ---
-description: Perform cohort analysis on user data — retention curves, feature adoption, and engagement trends
+description: Defensible cohort analysis — explicit event definitions, eligible denominators, maturity/censoring checks, segment-mix controls, and causal limits
 argument-hint: "<data file or description of what to analyze>"
 ---
 
-# /analyze-cohorts -- Cohort Analysis
+# /analyze-cohorts -- Defensible Cohort Analysis
 
-Analyze user retention and engagement patterns by cohort. Upload your data or describe what you need, and get retention curves, feature adoption trends, and actionable insights.
+Analyze retention, adoption, churn, or longitudinal engagement without letting immature cohorts, denominator errors, or descriptive patterns become false causal claims.
 
-## Invocation
+## Step 1: Define the Analysis Contract
 
-```
-/analyze-cohorts [upload a CSV of user activity data]
-/analyze-cohorts Monthly retention for users who signed up in Jan-Jun, grouped by acquisition channel
-/analyze-cohorts Help me set up a cohort analysis for our onboarding redesign
-```
+Before calculating, define:
 
-## Workflow
+- decision being supported
+- entity/grain: user, account, workspace, subscription, etc.
+- cohort entry event
+- retention/adoption/churn event
+- granularity and observation window
+- timezone
+- exclusions
+- segment cuts
 
-### Step 1: Accept Data or Define Analysis
+If the user asks “why did cohort X underperform?”, treat `why` as a hypothesis question. Cohort analysis alone usually establishes **what differed**, not causality.
 
-Two paths:
-- **With data**: User uploads a CSV/spreadsheet with user-level data (user_id, signup_date, activity_date, event_type, etc.)
-- **Without data**: User describes the analysis they need → generate the SQL query and analysis framework
+## Step 2: Data / Schema Gate
 
-### Step 2: Define Cohorts
+### With data
 
-Ask:
-- What defines a cohort? (signup week/month, acquisition channel, plan tier, first feature used)
-- What is the retention event? (login, core action, any activity, purchase)
-- What time granularity? (daily, weekly, monthly)
-- What time range?
+Validate:
 
-### Step 3: Analyze
+- entity IDs and duplicates
+- event/cohort timestamps
+- cohort sizes
+- missingness
+- test/internal entities
+- late-arriving/backfilled data
+- maturity/right-censoring
 
-Apply the **cohort-analysis** skill:
+### Without data
 
-**If data is provided:**
-- Process the data using Python (pandas) to create cohort tables
-- Calculate retention rates per cohort per period
-- Generate retention curves
-- Identify patterns: improving/declining cohorts, seasonal effects, anomalies
-- Compare feature adoption across cohorts
+Create an analysis plan and, if useful, a SQL **template**. Do not invent real table/column names. Use the `sql-queries` reliability rules.
 
-**If describing an analysis:**
-- Design the cohort analysis framework
-- Generate SQL queries to extract the data
-- Create a template spreadsheet for the analysis
-- Define the metrics and visualization approach
+## Step 3: Analyze
 
-### Step 4: Generate Report
+Apply **cohort-analysis**.
 
-```
-## Cohort Analysis: [Description]
+Required behaviors:
 
-**Date**: [today]
-**Cohort definition**: [e.g., signup month]
-**Retention event**: [e.g., completed a project]
-**Granularity**: [weekly/monthly]
+- use eligible denominators
+- mark future/unobservable cells `NOT YET OBSERVABLE`, not zero
+- compare cohorts at the same age
+- distinguish eligible vs exposed populations for feature adoption
+- show sample/cohort size
+- inspect acquisition/plan/geography/product-version mix when material
 
-### Retention Table
-| Cohort | Size | Week 1 | Week 2 | Week 3 | ... | Week 12 |
-|--------|------|--------|--------|--------|-----|---------|
+## Step 4: Interpretation Gate
 
-### Key Findings
-1. **[Finding]** — [supporting data]
-2. ...
+Label findings:
 
-### Cohort Comparison
-- **Best-performing cohort**: [which, why]
-- **Worst-performing cohort**: [which, why]
-- **Trend**: [improving/declining/stable over time]
+- `OBSERVED`
+- `INFERENCE`
+- `ASSUMPTION`
+- `UNKNOWN`
 
-### Retention Benchmarks
-| Period | Your Rate | Industry Benchmark | Gap |
-|--------|----------|-------------------|-----|
+Do not write:
 
-### Recommendations
-1. [What to investigate or change based on findings]
-2. ...
+> “Cohort X is worse because of Y”
 
-### Follow-Up Queries
-[SQL queries for deeper investigation]
-```
+unless the available design/evidence supports that causal conclusion.
 
-If data was provided, save analysis as both markdown report and CSV/spreadsheet.
+Prefer:
 
-### Step 5: Offer Next Steps
+> “Cohort X has lower week-4 retention. Y is one plausible explanation; the following evidence would test it.”
 
-- "Want me to **segment this further** by another dimension?"
-- "Should I **set up metrics alerts** based on these retention thresholds?"
-- "Want me to **design experiments** to improve retention for the weakest cohort?"
+## Step 5: Benchmark Guard
 
-## Notes
+Do not add “industry benchmarks” unless a current source with a matching metric definition/population is actually available. Otherwise mark benchmark comparison `NOT AVAILABLE / NOT COMPARABLE`.
 
-- Cohort analysis is only as good as the retention event definition — push for a meaningful action, not just "logged in"
-- Early cohorts often look different due to founding user bias — note this when comparing
-- If retention is calculated using a Python script, save the script so the user can re-run with new data
-- Seasonal effects can masquerade as trends — flag if cohort differences might be calendar-driven
+## Step 6: Sensitivity / Contradiction Pass
+
+Check:
+
+- same-age comparison
+- segment-mix reversal
+- seasonality
+- product/instrumentation changes
+- outlier cohorts
+- alternate retention definitions when reasonable
+
+## Output
+
+### Analysis Contract
+[entity, cohort, event, denominator, period, timezone]
+
+### Data Quality / Observability
+[checks, failures, unknowns]
+
+### Cohort Results
+[table/curves with observable status]
+
+### Findings
+| Finding | State | Evidence | Confidence | Implication |
+|---|---|---|---|---|
+
+### Alternative Explanations
+[what else could explain the pattern]
+
+### Follow-Up Evidence
+[queries, interviews, funnel checks, instrumentation audit, experiment]
+
+### Decision
+`ACT | INVESTIGATE | RUN EXPERIMENT | FIX DATA/INSTRUMENTATION | INCONCLUSIVE`
+
+If code is used, preserve the analysis script and assumptions so the result is reproducible.

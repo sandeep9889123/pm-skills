@@ -1,73 +1,189 @@
 ---
 name: market-segments
-description: "Identify 3-5 potential customer segments with demographics, JTBD, and product fit analysis. Use when exploring market segments, identifying target audiences, evaluating new markets, or learning how to segment a market."
+description: "Identify evidence-supported customer or market segments using JTBD, behavior, firmographics, buying context, and product fit. Avoids forced segment counts, invented market sizes, and unsupported prioritization. Use when exploring target segments, evaluating markets, or deciding where to focus."
 ---
 
 # Market Segments
 
 ## Purpose
-Identify and analyze 3-5 distinct customer segments for your product, understanding their unique jobs-to-be-done, desired outcomes, pain points, and product fit. Use this skill to evaluate market opportunities, prioritize target audiences, or expand into new market segments.
 
-## Instructions
+Identify the **smallest defensible set of materially different customer groups** for `$ARGUMENTS` and show what evidence supports each segment.
 
-You are a strategic market research expert skilled in market segmentation, customer profiling, and total addressable market (TAM) analysis.
+Do not create segments merely because a template expects them.
 
-### Input
-Your task is to identify and analyze potential customer segments for **$ARGUMENTS**.
+## P0 Reliability Contract
 
-If research data, market studies, customer databases, or existing segmentation documents are provided, read and analyze them directly. Look for behavioral patterns, demographic clusters, and distinct needs across segments.
+Before segmenting, resolve the decision context where material:
 
-### Analysis Steps (Think Step by Step)
+- What decision will the segmentation support: discovery, product strategy, pricing, GTM, sales coverage, or expansion?
+- B2B, B2C, B2B2C, marketplace, or mixed?
+- Geography / industry / product scope?
+- Current stage: hypothesis, discovery, pilot, production, scale?
+- What evidence is actually available?
 
-1. **Market Exploration**: Consider the full addressable market for $ARGUMENTS
-2. **Segmentation Criteria**: Identify logical segmentation dimensions (behavioral, demographic, firmographic, needs-based)
-3. **Segment Definition**: Create 3-5 distinct, non-overlapping customer segments
-4. **Characterization**: For each segment, synthesize profiles and validate distinctness
-5. **Opportunity Assessment**: Evaluate market size, growth potential, and competitive intensity per segment
+Use these evidence states where needed: `FACT`, `INFERENCE`, `ASSUMPTION`, `ESTIMATE`, `UNKNOWN`, `STALE`.
 
-### Output Structure
+### Hard rules
 
-For each of the 3-5 segments, provide:
+1. **Do not force 3-5 segments.** Return the number supported by evidence. One, two, six, or `DO NOT SEGMENT YET` are valid.
+2. **No invented segment sizes, growth rates, WTP, demographics, or market shares.** If unsupported, mark `UNKNOWN` or provide an explicitly modeled `ESTIMATE` with method/inputs.
+3. **Do not treat a persona as a market segment.** A segment must be useful for a materially different product, buying, servicing, or GTM decision.
+4. **Do not infer prevalence from source frequency when the sample is not representative.** Ten interview mentions do not equal 10% of the market.
+5. **Do not force mutually exclusive groups if real buying/usage modes overlap.** State the segmentation unit and overlap rules.
+6. **Tool/search failure is coverage incomplete, not evidence that a segment does not exist.**
+7. **User-supplied segments are hypotheses to test, not facts to preserve.**
 
-**Segment Name & Overview**
-- Clear, memorable segment identifier
-- Size estimate (% of total market or absolute numbers if data available)
-- Growth trajectory and market dynamics
+## Step 1: Define the Segmentation Unit
 
-**Key Demographics & Firmographics**
-- Core characteristics (age, role, company size, industry, geography, etc.)
-- Decision-maker profiles if B2B
+State what is being segmented:
 
-**Jobs-to-be-Done**
-- Primary job and desired outcome for this segment
-- Frequency, context, and stakes of the job
-- Success criteria and desired outcomes
+- individual users
+- buyer roles
+- accounts/companies
+- use cases / jobs
+- transactions
+- operating environments
+- another explicit unit
 
-**Key Pain Points & Obstacles**
-- Barriers to job completion specific to this segment
-- Consequences of not solving the problem
+Mixing units creates false segments. If both account and user segmentation matter, keep them as separate layers.
 
-**Desired Gains & Success Factors**
-- What outcomes matter most to this segment
-- Preferred solution characteristics
-- Cost and time constraints
+## Step 2: Inventory Evidence
 
-**Product Fit Analysis**
-- How well $ARGUMENTS serves this segment's needs
-- Unique value proposition for this segment
-- Potential adoption barriers or resistance
+For each source, note:
 
-**Competitive Landscape**
-- Existing solutions or workarounds this segment uses
-- Alternative approaches or competitors
+| Source | Population / scope | What it can support | Bias / limitation | Freshness |
+|---|---|---|---|---|
 
-## Best Practices
+Possible inputs:
 
-- Ensure segments are measurable, accessible, and distinct
-- Prioritize segments with clear jobs-to-be-done and pain points
-- Validate segment assumptions with available data
-- Consider both greenfield opportunities and underserved segments
-- Flag segments requiring additional market research
+- interviews / research notes
+- product usage / transaction data
+- CRM / sales data
+- support tickets
+- market research
+- public market evidence
+- product description only
+
+If only a product description is available, produce **segment hypotheses**, not research-backed segments.
+
+## Step 3: Generate Candidate Segmentation Dimensions
+
+Consider only dimensions that could change a decision:
+
+- JTBD / desired outcome
+- workflow and frequency
+- pain severity / consequence
+- current alternative
+- sophistication / readiness
+- buying trigger
+- buyer / champion / user relationship
+- company size / industry where behavior actually differs
+- regulatory / operational environment
+- willingness-to-pay evidence, if available
+- implementation/integration burden
+
+Demographics/firmographics are descriptors, not automatically causal segment definitions.
+
+## Step 4: Build Candidate Segments
+
+For each candidate:
+
+| Segment | Defining rule | Evidence | Distinct job/behavior | Different decision implied? | Confidence |
+|---|---|---|---|---|---|
+
+Reject segments that are merely labels with no different job, behavior, buying motion, economics, or product implication.
+
+## Step 5: Validate Segment Quality
+
+A useful segment should be sufficiently:
+
+- **distinct**: materially different from other segments
+- **observable/measurable**: membership can be identified
+- **actionable**: changes a product/GTM decision
+- **reachable**: a realistic channel or route exists when GTM is relevant
+- **economically coherent**: value/cost-to-serve can eventually be assessed
+- **stable enough**: not an artifact of one temporary event unless event-based segmentation is intended
+
+### Contradiction pass
+
+Before finalizing, ask:
+
+- Could these differences be explained by geography, acquisition channel, customer tenure, plan, or another confounder?
+- Does the segmentation disappear under another plausible grouping?
+- Are minority/high-value groups being hidden by aggregate volume?
+- What evidence would show these are not real decision-useful segments?
+
+## Step 6: Characterize Only What Evidence Supports
+
+For each retained segment provide:
+
+### Segment definition
+- membership rule
+- unit of segmentation
+- evidence status and confidence
+
+### Job / context
+- core JTBD or desired outcome
+- workflow / trigger / stakes
+- current alternative
+
+### Needs and friction
+- supported pain points
+- desired gains
+- constraints
+
+### Product / buying implications
+- product fit
+- adoption or implementation barriers
+- buyer/champion/user differences where relevant
+- likely GTM implication as hypothesis if not validated
+
+### Size / growth
+Use only if evidence supports it:
+
+- `FACT`: sourced population/size
+- `ESTIMATE`: method + formula + assumptions + range
+- `UNKNOWN`: insufficient evidence
+
+Never manufacture precision to fill this section.
+
+## Step 7: Prioritize for the Actual Decision
+
+Do not declare a universal “best segment.” Score or compare only against criteria relevant to the user's decision, such as:
+
+- problem intensity
+- strategic fit / right-to-win
+- reachability
+- evidence of demand / WTP
+- implementation burden
+- competitive intensity
+- unit economics / cost-to-serve
+- learning value
+
+Show sensitivity when uncertain assumptions could reorder the ranking.
+
+## Output
+
+### Decision context
+[scope, unit, decision, evidence limits]
+
+### Evidence-backed segments
+[return only supported number]
+
+### Segment comparison
+| Segment | Evidence state | JTBD / trigger | Product fit | GTM/economic implication | Confidence |
+|---|---|---|---|---|---|
+
+### Rejected / unresolved candidates
+[why not retained]
+
+### Unknowns and next evidence
+[cheapest evidence that could change segmentation]
+
+### Decision
+`USE SEGMENTATION | USE AS HYPOTHESES | COLLECT MORE DATA | DO NOT SEGMENT YET`
+
+State what would change the decision.
 
 ---
 

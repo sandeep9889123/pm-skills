@@ -1,109 +1,164 @@
 ---
 name: cohort-analysis
-description: "Perform cohort analysis on user engagement data — retention curves, feature adoption trends, and segment-level insights. Use when analyzing user retention by cohort, studying feature adoption over time, investigating churn patterns, or identifying engagement trends."
+description: "Perform defensible cohort and retention analysis with explicit cohort/event definitions, eligible denominators, censoring/maturity checks, segment-mix controls, and descriptive-vs-causal separation. Use for retention, adoption, churn, or longitudinal engagement decisions."
 ---
 
 # Cohort Analysis & Retention Explorer
 
 ## Purpose
-Analyze user engagement and retention patterns by cohort to identify trends in user behavior, feature adoption, and long-term engagement. Combine quantitative insights with qualitative research recommendations.
 
-## How It Works
+Analyze longitudinal behavior for `$ARGUMENTS` without producing misleading retention curves from ambiguous event definitions, immature cohorts, denominator errors, or causal overreach.
 
-### Step 1: Read and Validate Your Data
-- Accept CSV, Excel, or JSON data files with user cohort information
-- Verify data structure: cohort identifier, time periods, engagement metrics
-- Check for missing values and data quality issues
-- Summarize key statistics (cohort sizes, date ranges, metrics available)
+## P0 Reliability Contract
 
-### Step 2: Generate Quantitative Analysis
-- Calculate cohort retention rates and engagement trends
-- Identify retention curves, drop-off patterns, and anomalies
-- Compute feature adoption rates across cohorts
-- Calculate month-over-month or period-over-period changes
-- Generate Python analysis scripts using pandas and numpy if requested
+### Hard rules
 
-### Step 3: Create Visualizations
-- Generate retention heatmaps (cohorts vs. time periods)
-- Create line charts showing cohort progression
-- Build comparison charts for feature adoption
-- Visualize drop-off points and engagement trends
-- Output as interactive charts or static images
+1. **Define cohort membership and outcome event before calculating.** “Active,” “retained,” “adopted,” and “churned” are not self-defining.
+2. **Use eligible denominators.** A cohort cannot be evaluated at period N if members have not had enough calendar time to reach period N.
+3. **Do not compare immature and mature cohorts as if observation windows are equal.** Mark right-censored cells `NOT YET OBSERVABLE` rather than zero.
+4. **Descriptive difference ≠ causal explanation.** Cohort analysis can show what changed; it usually cannot prove why without additional design/evidence.
+5. **Do not invent industry benchmarks.** Use only current sourced benchmarks with matching metric definitions/populations, otherwise omit them or mark `UNKNOWN`.
+6. **Do not infer user-level retention from aggregate data that cannot support it.** State the available unit of analysis.
+7. **Tool/code/data failure means analysis incomplete, not “no effect.”**
 
-### Step 4: Identify Insights & Patterns
-- Spot one or more significant patterns:
-  - Early churn in specific cohorts
-  - Late-stage engagement changes
-  - Feature adoption clusters
-  - Seasonal or temporal trends
-- Highlight surprising findings and deviations
-- Compare cohort performance to establish baselines
+## Step 1: Decision and Data Contract
 
-### Step 5: Suggest Follow-Up Research
-- Recommend qualitative research methods:
-  - Targeted user interviews with churning users
-  - Feature usage surveys with engaged cohorts
-  - Session replays of key interaction patterns
-  - Win/loss analysis for high vs. low retention cohorts
-- Design follow-up quantitative studies
-- Suggest A/B tests or feature experiments
+Resolve:
 
-## Usage Examples
+- decision the analysis supports
+- entity: user, account, workspace, subscription, order, etc.
+- cohort entry event and timestamp
+- retention/adoption/churn event
+- period granularity
+- observation window
+- timezone
+- exclusion rules
+- segment dimensions
+- known product/marketing/pricing changes
 
-**Example 1: Upload CSV Data**
-```
-Upload cohort_engagement.csv with columns: cohort_month, weeks_active,
-user_id, feature_x_usage, engagement_score
+Create a metric contract:
 
-Request: "Analyze retention patterns and identify why Q4 2025 cohorts
-underperform compared to Q3"
-```
+`Retention(N) = entities from cohort eligible for period N that perform qualifying event in period N / entities from cohort eligible for period N`
 
-**Example 2: Describe Data Format**
-```
-"I have monthly user cohorts from Jan-Dec 2025. Each row shows:
-cohort date, user ID, purchase frequency, and support tickets.
-Analyze which cohorts show best long-term retention."
-```
+If using rolling/unbounded retention, survival, revenue retention, or another definition, state it explicitly instead.
 
-**Example 3: Feature Adoption Analysis**
-```
-Upload feature_usage.xlsx with cohort adoption data.
+## Step 2: Data Quality and Eligibility Gate
 
-Request: "Compare adoption curves for our new feature across cohorts.
-Which cohorts adopted fastest? Any patterns?"
-```
+Check where possible:
 
-## Key Capabilities
+- unique entity key integrity
+- duplicate events
+- missing cohort/event timestamps
+- backfilled or late-arriving events
+- timezone/calendar boundaries
+- deleted/test/internal accounts
+- multiple accounts per person where relevant
+- acquisition/channel mix changes
+- cohort size and extreme imbalance
+- incomplete observation periods
 
-- **Data Reading**: Import CSV, Excel, JSON, SQL query results
-- **Retention Analysis**: Calculate and visualize retention rates over time
-- **Cohort Comparison**: Compare metrics across cohort groups
-- **Anomaly Detection**: Flag unusual patterns or drop-offs
-- **Python Scripts**: Generate reusable analysis code for ongoing analysis
-- **Visualizations**: Create heatmaps, charts, and interactive dashboards
-- **Research Design**: Suggest targeted follow-up studies and interview approaches
-- **Statistical Summary**: Provide quantitative metrics and correlation analysis
+Report what cannot be checked.
 
-## Tips for Best Results
+## Step 3: Calculate With Observable Denominators
 
-1. **Include time dimension**: Provide data across multiple time periods
-2. **Define cohort clearly**: Make cohort grouping explicit (signup month, feature launch date, etc.)
-3. **Provide context**: Explain product changes, launches, or events during the period
-4. **Multiple metrics**: Include retention, engagement, feature usage, revenue, etc.
-5. **Sufficient data**: At least 3-4 cohorts for meaningful pattern identification
-6. **Request specific output**: Ask for visualizations, Python scripts, or research recommendations
+For each cohort/period capture:
 
-## Output Format
+| Cohort | Original size | Eligible at period | Retained/adopted | Rate | Observable? |
+|---|---:|---:|---:|---:|---|
 
-You'll receive:
-- **Data Summary**: Cohort overview and data quality assessment
-- **Quantitative Findings**: Key metrics, retention rates, and trend analysis
-- **Visualizations**: Charts showing retention curves, adoption patterns
-- **Pattern Identification**: 2-3 significant insights from the data
-- **Research Recommendations**: Specific qualitative and quantitative follow-ups
-- **Analysis Scripts** (if requested): Python code for reproducible analysis
-- **Next Steps**: Prioritized actions based on findings
+Never populate future cells with 0 solely because time has not elapsed.
+
+For feature adoption distinguish:
+
+- eligible population
+- exposed population
+- attempted use
+- successful use
+- repeated/retained use
+
+Do not call lack of adoption a preference signal when users may not have been exposed to the feature.
+
+## Step 4: Compare Cohorts Carefully
+
+Inspect:
+
+- cohort size
+- maturity / same-age comparison
+- acquisition source
+- plan / geography / customer type
+- seasonality
+- product version / launch date
+- pricing or packaging changes
+- instrumentation changes
+
+Where sample size is small, show direction and uncertainty instead of declaring a stable trend.
+
+## Step 5: Pattern vs Explanation
+
+Label findings:
+
+- `OBSERVED`: directly calculated pattern
+- `INFERENCE`: plausible explanation supported indirectly
+- `ASSUMPTION`: unverified explanation
+- `UNKNOWN`: insufficient evidence
+
+Example:
+
+> `OBSERVED`: March cohort week-4 retention is 8pp below January on the same definition.
+>
+> `INFERENCE`: acquisition-mix change may contribute because March contains more paid-social users.
+>
+> Not allowed: “The onboarding redesign caused retention to fall” without a design that supports causality.
+
+## Step 6: Contradiction / Sensitivity Pass
+
+Before recommending action:
+
+- compare same-age cohorts
+- test major segment splits where justified
+- inspect whether the conclusion reverses after controlling for acquisition/plan/geography
+- test with/without outlier cohorts
+- verify metric-definition or instrumentation changes
+- distinguish calendar effect from product effect
+
+If conclusions are highly sensitive, say so.
+
+## Step 7: Follow-Up Design
+
+Choose the cheapest evidence that can test the leading explanation:
+
+- event-level diagnostic
+- segment drill-down
+- funnel analysis
+- qualitative interviews
+- instrumentation audit
+- controlled experiment
+- quasi-experimental analysis when appropriate
+
+Do not jump from a retention pattern directly to a feature roadmap.
+
+## Output
+
+### Analysis contract
+[entity, cohort event, outcome event, period, denominator, exclusions, observation window]
+
+### Data-quality status
+[known checks, failures, unknowns]
+
+### Cohort table / curves
+[with unobservable cells separated from zeros]
+
+### Findings
+| Finding | State | Evidence | Confidence | Decision implication |
+|---|---|---|---|---|
+
+### Alternative explanations / contradictions
+[segment mix, seasonality, maturity, instrumentation, product changes]
+
+### Decision
+`ACT | INVESTIGATE | RUN EXPERIMENT | FIX DATA/INSTRUMENTATION | INCONCLUSIVE`
+
+State what evidence would change the decision.
 
 ---
 

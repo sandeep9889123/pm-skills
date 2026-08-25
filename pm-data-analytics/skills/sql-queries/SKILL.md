@@ -1,83 +1,171 @@
 ---
 name: sql-queries
-description: "Generate SQL queries from natural language descriptions. Supports BigQuery, PostgreSQL, MySQL, and other dialects. Reads database schemas from uploaded diagrams or documentation. Use when writing SQL, building data reports, exploring databases, or translating business questions into queries."
+description: "Generate SQL from natural-language questions with schema verification, metric-definition checks, join/cardinality safeguards, dialect awareness, and validation queries. Never invents tables/columns as if they exist. Use for product analytics, reports, database exploration, or translating business questions into SQL."
 ---
 
 # SQL Query Generator
 
 ## Purpose
-Transform natural language requirements into optimized SQL queries across multiple database platforms. This skill helps product managers, analysts, and engineers generate accurate queries without manual syntax work.
 
-## How It Works
+Translate a business/data question into SQL for `$ARGUMENTS` while keeping **schema facts, business-logic assumptions, and executable certainty separate**.
 
-### Step 1: Understand Your Database Schema
-- If you provide a schema file (SQL, documentation, or diagram description), I will read and analyze it
-- Extract table names, column definitions, data types, and relationships
-- Identify primary keys, foreign keys, and indexing strategies
+A syntactically valid query can still answer the wrong business question. Correctness therefore requires both SQL logic and metric/data-contract validation.
 
-### Step 2: Process Your Request
-- Clarify the exact data you need to retrieve or analyze
-- Confirm the SQL dialect (BigQuery, PostgreSQL, MySQL, Snowflake, etc.)
-- Ask for any additional requirements (filters, aggregations, sorting)
+## P0 Reliability Contract
 
-### Step 3: Generate Optimized Query
-- Write efficient SQL that leverages your database structure
-- Include comments explaining complex logic
-- Add performance considerations for large datasets
-- Provide alternative approaches if applicable
+### Hard rules
 
-### Step 4: Explain and Test
-- Explain the query logic in plain English
-- Suggest how to test or validate results
-- Offer tips for performance optimization
-- If you want, generate a test script or sample data
+1. **Never invent a table, column, relationship, enum value, event name, or data type and present it as verified schema.**
+2. If schema is missing, either request it when required or provide a clearly labeled **TEMPLATE / PSEUDOSCHEMA QUERY** with placeholders to replace.
+3. **Do not call a query production-ready unless the relevant schema and business definitions were verified.**
+4. Ambiguous metrics such as `active user`, `conversion`, `churn`, `revenue`, `customer`, or `session` require an explicit definition before a decision-critical query.
+5. **Join cardinality must be considered.** Many-to-many or one-to-many joins can silently multiply rows and corrupt counts/sums.
+6. Default to read-only `SELECT` analysis. Do not generate destructive or mutating SQL (`DELETE`, `UPDATE`, `DROP`, broad `INSERT`, permission changes) unless the user explicitly requests it and the impact/scope is clear.
+7. Tool/database execution failure means `NOT VALIDATED`, not success.
+8. Never fabricate query results.
 
-## Usage Examples
+## Step 1: Resolve Decision and SQL Dialect
 
-**Example 1: Query from Schema File**
-```
-Upload your database_schema.sql file and say:
-"Generate a query to find users who signed up in the last 30 days
-and had at least 5 active sessions"
-```
+Capture:
 
-**Example 2: Query from Diagram Description**
-```
-"Here's my database: Users table (id, email, created_at), Sessions table
-(id, user_id, timestamp, duration). Generate a query for average session
-duration per user in January 2026."
-```
+- business question / decision
+- SQL dialect/version if material
+- desired output grain
+- time range / timezone
+- filters / segment definitions
+- metric definitions
+- expected result shape
 
-**Example 3: Complex Analysis Query**
-```
-"Create a BigQuery query to analyze our revenue by region and customer tier,
-including year-over-year growth rates."
-```
+If dialect is unknown, avoid dialect-specific syntax or label alternatives.
 
-## Key Capabilities
+## Step 2: Schema Evidence Gate
 
-- **Multi-Dialect Support**: Works with BigQuery, PostgreSQL, MySQL, Snowflake, SQL Server
-- **File Reading**: Reads schema files, SQL dumps, and data documentation
-- **Query Optimization**: Suggests indexes, partitioning, and performance improvements
-- **Explanation**: Breaks down queries for learning and documentation
-- **Testing**: Can generate test queries and sample data scripts
-- **Script Execution**: Create executable SQL scripts for your database
+Use only verified schema from:
 
-## Tips for Best Results
+- DDL / schema docs
+- database metadata
+- user-provided table/column descriptions
+- connected data catalog
 
-1. **Provide context**: Share your database schema or structure
-2. **Be specific**: Clearly describe what data you need and any filters
-3. **Mention database**: Specify which SQL dialect you're using
-4. **Include constraints**: Mention data volume, time ranges, and performance needs
-5. **Request format**: Ask for the query result format if you need specific output
+Create a mapping:
 
-## Output Format
+| Business concept | Verified table.column | Evidence | Unknown / assumption |
+|---|---|---|---|
 
-You'll receive:
-- **SQL Query**: Production-ready SQL code with comments
-- **Explanation**: What the query does and how it works
-- **Performance Notes**: Optimization tips and considerations
-- **Test Script** (if requested): Sample data and validation queries
+If a required mapping is unknown, do **not** hallucinate it.
+
+### No-schema mode
+
+Return:
+
+`STATUS: TEMPLATE - SCHEMA NOT VERIFIED`
+
+Use obvious placeholders such as:
+
+- `<users_table>`
+- `<user_id_column>`
+- `<signup_timestamp>`
+
+and list exactly what must be mapped before execution.
+
+## Step 3: Define Metric Logic Before SQL
+
+For every decision-critical metric specify:
+
+- entity / grain
+- numerator
+- denominator
+- inclusion/exclusion
+- time window
+- timezone
+- deduplication rule
+- status/refund/cancellation handling if relevant
+
+Examples:
+
+`DAU = distinct eligible user_id with qualifying core event during local calendar day`
+
+not merely:
+
+`COUNT(DISTINCT user_id)`
+
+when “qualifying event” is undefined.
+
+## Step 4: Join and Grain Check
+
+Before writing the final aggregation, identify:
+
+- base grain of each table
+- join key(s)
+- expected relationship: 1:1, 1:N, N:1, N:N
+- duplicate risk
+- whether aggregation must occur before joining
+
+For high-risk sums/counts, include a validation query or sanity check for row multiplication.
+
+## Step 5: Generate SQL
+
+Prefer:
+
+- readable CTEs
+- explicit columns over `SELECT *` for stable analytical outputs
+- safe date/time handling
+- explicit NULL semantics
+- explicit deduplication when required
+- parameterization/placeholders for reusable filters
+- comments for business logic, not obvious syntax
+
+Do not suggest indexes/partition strategies as verified facts without schema/engine evidence. Label optimization ideas as proposals.
+
+## Step 6: Validation Plan
+
+Provide checks appropriate to the query:
+
+- row count before/after joins
+- distinct entity count
+- duplicate-key check
+- null-rate check
+- denominator reconciliation
+- known-account/user spot check
+- boundary-date/timezone check
+- comparison with trusted dashboard/source if available
+- dry run / explain plan where supported
+
+For financial or externally reported metrics, require stronger reconciliation before trusting output.
+
+## Step 7: Data Safety and Privacy
+
+When the query handles sensitive fields:
+
+- return only columns needed for the decision
+- avoid exposing raw PII when aggregation/anonymization suffices
+- preserve access-control constraints
+- do not infer permission to query restricted datasets
+
+## Output
+
+### Status
+`VERIFIED SCHEMA | PARTIALLY VERIFIED | TEMPLATE - SCHEMA NOT VERIFIED | BLOCKED`
+
+### Business / metric contract
+[definitions and assumptions]
+
+### Schema mapping
+[verified vs unknown]
+
+### SQL
+[query or clearly labeled template]
+
+### Validation queries / checks
+[how to prove the output is plausible]
+
+### Assumptions and unknowns
+[what could change the answer]
+
+### Performance / safety notes
+[only evidence-supported or explicitly proposed]
+
+Never imply successful execution unless the query was actually executed and results were observed.
 
 ---
 

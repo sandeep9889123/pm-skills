@@ -1,79 +1,173 @@
 ---
 name: sentiment-analysis
-description: "Analyze user feedback data to identify segments with sentiment scores, JTBD, and product satisfaction insights. Use when analyzing user feedback at scale, running sentiment analysis on reviews or surveys, or identifying satisfaction patterns."
+description: "Analyze feedback with evidence-backed sentiment, themes, segment differences, and uncertainty. Requires a declared scoring method, representative-sample caveats, quote verification, and separation of observed feedback from inferred root causes. Use for reviews, surveys, support tickets, NPS comments, or qualitative feedback analysis."
 ---
 
-# Sentiment Analysis
+# Feedback Sentiment & Theme Analysis
 
 ## Purpose
-Analyze large-scale user feedback data to identify market segments, measure satisfaction, and uncover product improvement opportunities. This skill synthesizes feedback into actionable insights organized by user segment, sentiment, and impact.
 
-## Instructions
+Analyze feedback for `$ARGUMENTS` without converting qualitative text into unsupported precision or population-level claims.
 
-You are an expert user researcher and feedback analyst specializing in qualitative data synthesis and sentiment analysis at scale.
+The output should answer:
 
-### Input
-Your task is to analyze user feedback data for **$ARGUMENTS** and identify market segments with associated sentiment insights.
+1. What was actually observed in the provided feedback?
+2. How representative is the dataset?
+3. Which themes/sentiment patterns are robust enough to act on?
+4. What remains hypothesis or `UNKNOWN`?
 
-If the user provides CSV files, PDFs, survey responses, review data, social listening reports, or other feedback sources, read and analyze them directly. Extract patterns, themes, and sentiment signals from the data.
+## P0 Reliability Contract
 
-### Analysis Steps (Think Step by Step)
+### Hard rules
 
-1. **Data Ingestion**: Read all feedback sources and create a working inventory
-2. **Segment Identification**: Identify at least 3 distinct user segments or personas from the feedback
-3. **Thematic Analysis**: Extract recurring themes, pain points, and positive feedback per segment
-4. **Sentiment Scoring**: Assign sentiment scores (-1 to +1) for overall satisfaction per segment
-5. **Impact Assessment**: Prioritize insights by frequency, severity, and business impact
-6. **Synthesis**: Create segment profiles with consolidated insights
+1. **Do not invent a numeric sentiment score.** A -1..+1 or 0..10 score is allowed only if a scoring/classification method is explicitly defined and applied consistently.
+2. **Do not create an NPS proxy from text sentiment.** NPS is based on the 0-10 recommendation question; text sentiment is not a substitute.
+3. **Do not force a minimum number of segments or themes.** Return what the data supports.
+4. **Do not infer population prevalence from a convenience sample.** App reviews, support tickets, escalations, and opt-in survey responses are selection-biased unless proven otherwise.
+5. **Verify verbatim quotes against source text.** Otherwise paraphrase and label it as a paraphrase.
+6. **Observed complaint ≠ root cause.** Label causal explanations `INFERENCE` until corroborated by behavior, diagnostics, interviews, or other evidence.
+7. **Frequency ≠ importance.** High-severity low-frequency problems and high-value-account issues may matter more than common minor complaints.
+8. **Tool/file/translation failure means coverage incomplete / UNKNOWN.** Do not silently drop inaccessible feedback.
 
-### Output Structure
+## Step 1: Define the Decision and Corpus
 
-For each identified segment:
+Resolve:
 
-**Segment Profile**
-- Name/identifier and common characteristics
-- User count or proportion in feedback dataset
-- Primary use case or context
+- What decision will this analysis inform?
+- Feedback source(s)
+- Date range
+- Product/version/geography/language scope
+- Unit of analysis: message, respondent, ticket, review, account, conversation?
+- Available metadata: rating, plan, segment, date, revenue/account value, channel?
 
-**Jobs-to-be-Done**
-- Core job this segment is trying to accomplish
-- Associated desired outcomes
+Create a source inventory:
 
-**Sentiment Score & Satisfaction Level**
-- Overall sentiment score (-1 to +1)
-- Key satisfaction drivers and detractors
-- Net Promoter Score (NPS) proxy if applicable
+| Source | Records | Period | Population | Selection mechanism | Known bias / missingness |
+|---|---:|---|---|---|---|
 
-**Top Positive Feedback Themes**
-- What this segment loves about $ARGUMENTS
-- Key strengths from user perspective
-- Examples of successful use cases
+If these are unknown, state them as `UNKNOWN`.
 
-**Top Pain Points & Criticism**
-- Most frequent complaints or frustrations
-- Unmet needs or missing features
-- Friction points in user journey
-- Direct quotes from feedback when available
+## Step 2: Data Quality Gate
 
-**Product-Segment Fit Assessment**
-- How well $ARGUMENTS serves this segment's needs
-- Potential to improve fit through product changes
-- Risk of churn or dissatisfaction
+Check where possible:
 
-**Actionable Recommendations**
-- 2-3 highest-impact improvements per segment
-- Quick wins vs. strategic initiatives
-- Segments to prioritize or de-prioritize
+- duplicates / repeated conversations
+- bot/spam/templated responses
+- missing text or metadata
+- language coverage / translation uncertainty
+- one user/account contributing many records
+- channel mix changes over time
+- ratings not aligned with text
+- very small segment samples
 
-## Best Practices
+Do not compare segments or periods when definitions/data collection changed materially without flagging the break.
 
-- Ground all findings in actual user feedback; cite sources
-- Identify both majority and minority perspectives within segments
-- Distinguish between feature requests and fundamental pain points
-- Consider context and constraints users face
-- Flag segments with small sample sizes or uncertain sentiment
-- Look for cross-segment patterns and universal pain points
-- Provide balanced view of product strengths and weaknesses
+## Step 3: Define Sentiment Method Before Scoring
+
+Choose one method and document it.
+
+### Preferred interpretable method
+
+Classify each record:
+
+`POSITIVE | MIXED | NEUTRAL/UNCLEAR | NEGATIVE`
+
+Optionally add **intensity** separately:
+
+`LOW | MEDIUM | HIGH`
+
+### Numeric score
+
+Use only if needed and define the mapping explicitly, for example:
+
+`negative=-1, neutral/unclear=0, positive=+1`
+
+If `MIXED` exists, define how it is handled. Report counts/distributions alongside any mean; never imply the numeric mapping is a validated psychological scale.
+
+## Step 4: Theme Extraction
+
+For each theme capture:
+
+| Theme | Evidence | Record/account count | Sentiment mix | Severity | Segments | Confidence |
+|---|---|---:|---|---|---|---|
+
+Keep separate:
+
+- observed need/problem
+- requested feature/solution
+- inferred root cause
+- business/product consequence
+
+Do not turn a requested solution into the underlying need without analysis.
+
+## Step 5: Segment Analysis
+
+Use existing metadata when available. If segments are inferred from the text, label them as `HYPOTHESIS` and avoid invented prevalence.
+
+For comparisons show:
+
+- denominator / sample size
+- source/channel mix
+- absolute counts and rates when appropriate
+- uncertainty for small samples
+
+Look for Simpson's-paradox-style reversals: overall sentiment may worsen because the mix of segments/channels changed even when each segment was stable.
+
+## Step 6: Contradiction and Minority Pass
+
+Before concluding:
+
+- identify evidence contradicting the dominant theme
+- inspect minority/high-severity feedback
+- check whether one account/user is dominating mentions
+- compare positive and negative evidence for the same feature/workflow
+- distinguish new issue vs longstanding issue when dates exist
+
+Do not erase disagreement to create a cleaner narrative.
+
+## Step 7: Root Cause Discipline
+
+Use states:
+
+- `OBSERVED`: directly present in feedback/data
+- `INFERENCE`: plausible interpretation
+- `ASSUMPTION`: unverified explanation used to proceed
+- `UNKNOWN`: insufficient evidence
+
+A root-cause claim needs more than sentiment text unless the respondent directly explains the cause and the claim is scoped to that respondent.
+
+## Output
+
+### Analysis context
+- decision
+- corpus and period
+- sample/selection limitations
+- sentiment method
+
+### Sentiment distribution
+Use counts/percentages only when denominators are known and meaningful.
+
+### Evidence-backed themes
+| Theme | Observed evidence | Volume | Sentiment | Severity | Confidence | Implication |
+|---|---|---:|---|---|---|---|
+
+### Segment / time differences
+[with denominators and caveats]
+
+### Verified quotes
+Only source-verifiable verbatim quotes. Otherwise use paraphrases.
+
+### Contradictions / minority signals
+[what does not fit the dominant story]
+
+### Root-cause hypotheses
+| Hypothesis | Supporting evidence | Contradicting evidence | Next validation |
+|---|---|---|---|
+
+### Decision
+`ACT NOW | INVESTIGATE | MONITOR | INSUFFICIENT EVIDENCE`
+
+Prioritize actions by severity, frequency, strategic/customer impact, confidence, and reversibility. State what evidence would change the recommendation.
 
 ---
 

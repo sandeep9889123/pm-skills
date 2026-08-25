@@ -1,101 +1,181 @@
 ---
 name: interview-script
-description: "Create a structured customer interview script with JTBD probing questions, warm-up, core exploration, and wrap-up sections. Follows The Mom Test principles — no leading questions, no pitching, focus on past behavior. Use when preparing for user interviews, creating interview guides, or planning discovery research."
+description: "Create decision-linked customer interview guides that minimize leading questions, confirmation bias, hypothetical demand, and overgeneralization. Uses past behavior, disconfirming probes, sampling context, and explicit evidence limits. Use for discovery interviews, JTBD research, or testing risky assumptions qualitatively."
 ---
 
-## Customer Interview Script
+# Customer Interview Script
 
-Create a structured interview script that surfaces real insights, not just opinions. Follows "The Mom Test" principles — ask about their life, not your idea.
+## Purpose
 
-### Domain Context
+Design an interview for `$ARGUMENTS` that can **change a product decision**, not merely collect supportive quotes or positive reactions.
 
-Customer interviews are one source in **Stage 1 (Explore)** of continuous discovery. Other sources: stakeholder interviews, usage analytics, data analytics, surveys, market trends, SEO/SEM analysis. The PM needs direct access to users, stakeholders, engineers, and designers — "without proxies." The **Product Trio** (PM + Designer + Engineer — Teresa Torres) should work together on discovery, not just the PM alone.
+Customer interviews produce qualitative evidence. They can reveal mechanisms, language, workflows, alternatives, and hypotheses. A small interview sample does not by itself prove market prevalence, willingness to pay, or causal impact.
 
-### Context
+## P0 Reliability Contract
 
-You are preparing a customer interview script for research on **$ARGUMENTS**.
+### Hard rules
 
-If the user provides files (personas, hypothesis lists, product briefs, or previous interview notes), read them first.
+1. **Start from the decision and uncertainty, not the preferred solution.**
+2. **Do not ask leading or confirmation-seeking questions.** Include at least one credible disconfirming probe for each load-bearing hypothesis.
+3. Prefer **specific past behavior and real recent examples** over hypothetical future intent.
+4. “Would you use/buy/pay for this?” is weak evidence. Prefer current spend, search behavior, procurement actions, switching attempts, commitments, and trade-offs.
+5. **Do not turn one participant's statement into population evidence.** Capture sampling limits.
+6. **Do not fabricate participant context, quotes, budgets, tools, workflows, or decision authority.**
+7. If the research objective cannot be answered credibly by interviews alone, say so and recommend complementary evidence.
+8. Respect recording/privacy/consent requirements and avoid collecting sensitive information that is not needed for the research decision.
 
-### Instructions
+## Step 1: Research Decision Frame
 
-1. **Clarify research objectives**:
-   - What specific questions does the team need answered?
-   - What decisions will this research inform?
-   - What assumptions need validation?
+Define:
 
-2. **Create the interview script** with these sections:
+- decision this interview will inform
+- target participant / recruitment criteria
+- why this participant can provide relevant evidence
+- stage: exploratory discovery vs concept/usability validation vs commercial discovery
+- top 1-3 uncertainties
+- what evidence would change the current belief
+- time available
 
-   ### Opening (2-3 min)
-   - Introduce yourself and the purpose (learning, not selling)
-   - Set expectations: "There are no right or wrong answers. We're here to learn from your experience."
-   - Ask permission to record (if applicable)
-   - Confirm time available
+If the user provides a preferred feature/use case, rewrite it as a neutral hypothesis.
 
-   ### Warm-Up: Context & Background (5 min)
-   - "Tell me about your role and what a typical day/week looks like."
-   - "How long have you been doing [activity related to the product area]?"
-   - Goal: Build rapport and understand their context
+Example:
 
-   ### Core Exploration: Jobs to Be Done (15-20 min)
+> Preferred framing: “Validate that AI recommendations would solve onboarding.”
+>
+> Neutral research question: “Understand where onboarding fails, how users currently recover, and whether recommendation quality is a material constraint relative to other causes.”
 
-   **Current situation and behavior** (past tense, specific instances):
-   - "Walk me through the last time you [did the thing we're exploring]. What happened?"
-   - "What tools or methods did you use?"
-   - "How long did it take? Who else was involved?"
+## Step 2: Hypothesis / Disconfirmation Map
 
-   **Pain points and frustrations** (observe, don't lead):
-   - "What was the hardest part about that?"
-   - "If you could wave a magic wand, what would change?"
-   - "What have you tried to solve this? What happened?"
+For each material hypothesis:
 
-   **Desired outcomes** (their words, not yours):
-   - "What does 'good' look like for you in this area?"
-   - "How would you know if this was working well?"
+| Hypothesis | Why it matters | Supporting evidence to seek | Disconfirming evidence to seek | Decision if false |
+|---|---|---|---|---|
 
-   **Willingness to pay / priority** (skin in the game):
-   - "How much time/money do you currently spend on this?"
-   - "Have you looked for a better solution? What did you find?"
-   - "What would you give up to have this solved?"
+Do not ask the participant to validate the hypothesis directly.
 
-   ### Probing Techniques
-   Use these when you hit an interesting thread:
-   - **"Tell me more about that"** — opens up any topic
-   - **"Why?"** (asked gently, 2-3 times) — gets to root causes
-   - **"Can you give me a specific example?"** — moves from opinions to facts
-   - **"What happened next?"** — follows the story
-   - **"How did that make you feel?"** — captures emotional intensity
+## Step 3: Build the Interview Guide
 
-   ### The Mom Test Rules
-   - Ask about **their life**, not your idea
-   - Ask about **the past**, not the future ("Would you use X?" is useless)
-   - **Talk less, listen more** — aim for 80/20 split
-   - **Never pitch** during the interview
-   - Look for **strong emotions** — they signal real pain or delight
-   - **Compliments are noise** — "That sounds cool!" tells you nothing
+### Opening
 
-   ### Wrap-Up (3-5 min)
-   - "Is there anything I didn't ask that you think is important?"
-   - "Who else should I talk to about this?"
-   - Thank them for their time
-   - Share next steps (if any)
+- explain learning purpose without pitching
+- confirm role/context only as needed
+- request recording permission where applicable
+- state confidentiality/usage expectations where relevant
 
-3. **Customize the script**: Adapt questions to the specific product area, persona, and research objectives. Add or remove sections based on the interview length available.
+### Context and recent behavior
 
-4. **Include a note-taking template**:
-   ```
-   Participant: [Name / ID]
-   Date: [Date]
-   Key Jobs: [What they're trying to accomplish]
-   Current Solution: [What they use today]
-   Biggest Pain: [Their #1 frustration]
-   Desired Outcome: [What success looks like]
-   Willingness to Pay: [How much they invest / would invest]
-   Surprise Finding: [Something unexpected]
-   Follow-up: [Next steps]
-   ```
+Use specific-event prompts:
 
-Save as markdown. Include both the script and the note-taking template.
+- “Tell me about the last time you…”
+- “What triggered that?”
+- “Walk me through what happened next.”
+- “Who else was involved?”
+- “What tool/process did you use?”
+- “What did it cost in time, money, risk, or delay?”
+
+### Problem / friction
+
+- “What was difficult about that?”
+- “What did you try?”
+- “What happened?”
+- “How often has this happened recently?”
+- “When does this *not* cause a problem?”
+
+That last question is a useful contradiction probe.
+
+### Alternatives and switching behavior
+
+- current workaround/product/service/internal process
+- why they chose it
+- switching attempts
+- what prevented change
+- procurement/security/integration constraints for enterprise settings
+
+### Priority / economic signal
+
+Prefer observed commitment:
+
+- current spend/cost if the participant knows it
+- time/resources already allocated
+- active search/evaluation behavior
+- approved initiative/budget when directly known
+- consequences of leaving the problem unsolved
+
+Do not pressure participants to disclose confidential budget information they are not authorized to share.
+
+### Disconfirming probes
+
+Examples:
+
+- “What is working well enough today that you would not change?”
+- “When would solving this not be worth the effort?”
+- “What problem would you solve before this one?”
+- “What would make a new solution impossible to adopt?”
+- “Who might disagree that this is important?”
+
+### Concept discussion, only when appropriate
+
+If the research stage requires showing a concept:
+
+- separate pre-concept behavior evidence from post-concept reaction
+- ask comprehension and trade-off questions
+- avoid treating compliments as demand
+- capture objections and reasons not to adopt
+
+## Step 4: Fit the Timebox
+
+Do not create a bloated questionnaire. Prioritize questions that can change a material decision.
+
+Classify questions:
+
+- `MUST ASK`: decision-changing
+- `FOLLOW-UP`: triggered by an answer
+- `OPTIONAL`: useful only if time permits
+
+## Step 5: Sampling and Evidence Limits
+
+Add a research note:
+
+- participant/recruitment criteria
+- known sampling bias
+- current interview count if known
+- underrepresented roles/segments
+- what can be inferred from this interview
+- what **cannot** be inferred
+
+Repeated qualitative patterns are signals; prevalence requires appropriate quantitative/representative evidence.
+
+## Output
+
+### Research decision
+[what this interview should change]
+
+### Hypothesis / disconfirmation map
+[table]
+
+### Interview guide
+[ordered MUST ASK questions + conditional probes]
+
+### Questions to avoid
+[leading/hypothetical/pitching questions relevant to this case]
+
+### Note-taking template
+- participant ID / role / context
+- source type: transcript vs notes
+- recent behavior / workflow
+- alternatives
+- pain / consequence
+- observed commitment
+- contradictions
+- direct quotes with source/timestamp when available
+- interpretations separately labeled
+- follow-up evidence needed
+
+### Evidence limit
+State what a successful interview would and would not prove.
+
+### Decision follow-up
+`CONTINUE EXPLORATION | UPDATE HYPOTHESIS | QUANTIFY | TEST CONCEPT | COMMERCIAL VALIDATION | STOP/REFRAME`
 
 ---
 
