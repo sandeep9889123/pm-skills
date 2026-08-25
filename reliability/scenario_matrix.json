@@ -17,97 +17,18 @@
     "G14_UNJUSTIFIED_CERTAINTY"
   ],
   "plugin_scenarios": {
-    "pm-product-discovery": [
-      "D1_QUOTE_HALLUCINATION",
-      "D2_SMALL_N_DISCOVERY",
-      "D3_SOLUTION_LOADED_INTERVIEW",
-      "D4_FEATURE_REQUEST_POPULARITY_TRAP",
-      "D5_NON_FALSIFIABLE_EXPERIMENT"
-    ],
-    "pm-product-strategy": [
-      "S1_NO_TRADEOFF_STRATEGY",
-      "S2_MOAT_BY_ASSERTION",
-      "S3_MARKET_SIZE_VS_RIGHT_TO_WIN",
-      "S4_PRICING_WITHOUT_WTP",
-      "S5_STALE_MARKET_STRUCTURE"
-    ],
-    "pm-execution": [
-      "E1_UNVALIDATED_SOLUTION_PRD",
-      "E2_P0_SCOPE_INFLATION",
-      "E3_MISSING_FAILURE_ACCEPTANCE_CRITERIA",
-      "E4_ROADMAP_CERTAINTY_THEATRE",
-      "E5_RED_TEAM_MANUFACTURES_RISK"
-    ],
-    "pm-market-research": [
-      "MR1_NO_COMPETITORS_FIRST_PASS",
-      "MR2_USER_INVENTS_COMPETITOR",
-      "MR3_ADJACENT_TAXONOMY_BLIND_SPOT",
-      "MR4_REGIONAL_BLIND_SPOT",
-      "MR5_MARKET_SIZE_SOURCE_DISAGREEMENT",
-      "MR6_FALSE_PRECISION_SOM",
-      "MR7_PERSONA_INVENTION"
-    ],
-    "pm-data-analytics": [
-      "A1_UNDERPOWERED_TEST",
-      "A2_INCORRECT_POWER_CALCULATION",
-      "A3_OPTIONAL_STOPPING",
-      "A4_SAMPLE_RATIO_MISMATCH",
-      "A5_SIGNIFICANT_BUT_TRIVIAL",
-      "A6_SEGMENT_REVERSAL"
-    ],
-    "pm-go-to-market": [
-      "GTM1_USER_BUYER_MISMATCH",
-      "GTM2_CHANNEL_POPULARITY_TRAP",
-      "GTM3_PILOT_WITHOUT_PRODUCTION_PATH",
-      "GTM4_MISSING_GTM_ECONOMICS",
-      "GTM5_BATTLECARD_UNVERIFIED_WEAKNESS"
-    ],
-    "pm-marketing-growth": [
-      "M1_FEATURE_ONLY_POSITIONING",
-      "M2_VANITY_NORTH_STAR",
-      "M3_NAMING_COLLISION",
-      "M4_TACTICS_WITHOUT_GROWTH_MECHANISM",
-      "M5_NORTH_STAR_GOODHART_FAILURE"
-    ],
-    "pm-toolkit": [
-      "T1_LEGAL_TEMPLATE_OVERCONFIDENCE",
-      "T2_RESUME_METRIC_INFLATION",
-      "T3_EDIT_CHANGES_MEANING",
-      "T4_PRIVACY_POLICY_WITHOUT_DATA_FLOW"
-    ],
-    "pm-ai-shipping": [
-      "AI1_DOCS_SECURE_CODE_DISAGREES",
-      "AI2_CODE_ENFORCED_DOCS_SILENT",
-      "AI3_HIGH_AVERAGE_HIDES_CATASTROPHIC_PATH",
-      "AI4_LINT_PASS_PRODUCT_INTENT_FAIL",
-      "AI5_INCOMPLETE_AUDIT_COVERAGE"
-    ],
-    "pm-enterprise-transformation": [
-      "ET1_SINGLE_CLIENT_DEMAND_MASQUERADES_AS_MARKET",
-      "ET2_BESPOKE_CODE_MASQUERADES_AS_REUSABLE_IP",
-      "ET3_TARGET_METRIC_BECOMES_SUCCESS_CLAIM",
-      "ET4_CLIENT_PROOF_LEAKS_CONFIDENTIALITY",
-      "ET5_SALES_CONVERSION_GAIN_FROM_QUALITY_DROP",
-      "ET6_PILOT_SUCCESS_PRODUCTION_FAILURE",
-      "ET7_SALES_TO_DELIVERY_PROMISE_DRIFT",
-      "ET8_AUTOMATION_REVIEW_COST_ERASES_ROI",
-      "ET9_AUTOMATION_SIDE_EFFECT_WITHOUT_ROLLBACK",
-      "ET10_VENDOR_DEMO_HAPPY_PATH_BIAS"
-    ],
-    "pm-business-case": [
-      "BC1_ZERO_COMPETITOR_FIRST_PASS",
-      "BC2_USER_INVENTS_COMPETITOR",
-      "BC3_EXECUTIVE_URGENCY",
-      "BC4_CONFLICTING_MARKET_SIZES",
-      "BC5_ROI_WITH_MISSING_INPUTS",
-      "BC8_NO_WTP_EVIDENCE",
-      "BC9_BUILD_BIAS",
-      "BC10_DEMO_AS_POC",
-      "BC11_PREMATURE_PLATFORM",
-      "BC12_TOOL_FAILURE",
-      "BC18_AI_LABEL_WITHOUT_MECHANISM",
-      "BC19_TECHNICAL_SUCCESS_COMMERCIAL_FAILURE"
-    ]
+    "pm-product-discovery": ["D1_QUOTE_HALLUCINATION", "D2_SMALL_N_DISCOVERY", "D3_SOLUTION_LOADED_INTERVIEW", "D4_FEATURE_REQUEST_POPULARITY_TRAP", "D5_NON_FALSIFIABLE_EXPERIMENT"],
+    "pm-product-strategy": ["S1_NO_TRADEOFF_STRATEGY", "S2_MOAT_BY_ASSERTION", "S3_MARKET_SIZE_VS_RIGHT_TO_WIN", "S4_PRICING_WITHOUT_WTP", "S5_STALE_MARKET_STRUCTURE"],
+    "pm-execution": ["E1_UNVALIDATED_SOLUTION_PRD", "E2_P0_SCOPE_INFLATION", "E3_MISSING_FAILURE_ACCEPTANCE_CRITERIA", "E4_ROADMAP_CERTAINTY_THEATRE", "E5_RED_TEAM_MANUFACTURES_RISK"],
+    "pm-market-research": ["MR1_NO_COMPETITORS_FIRST_PASS", "MR2_USER_INVENTS_COMPETITOR", "MR3_ADJACENT_TAXONOMY_BLIND_SPOT", "MR4_REGIONAL_BLIND_SPOT", "MR5_MARKET_SIZE_SOURCE_DISAGREEMENT", "MR6_FALSE_PRECISION_SOM", "MR7_PERSONA_INVENTION"],
+    "pm-data-analytics": ["A1_UNDERPOWERED_TEST", "A2_INCORRECT_POWER_CALCULATION", "A3_OPTIONAL_STOPPING", "A4_SAMPLE_RATIO_MISMATCH", "A5_SIGNIFICANT_BUT_TRIVIAL", "A6_SEGMENT_REVERSAL"],
+    "pm-go-to-market": ["GTM1_USER_BUYER_MISMATCH", "GTM2_CHANNEL_POPULARITY_TRAP", "GTM3_PILOT_WITHOUT_PRODUCTION_PATH", "GTM4_MISSING_GTM_ECONOMICS", "GTM5_BATTLECARD_UNVERIFIED_WEAKNESS"],
+    "pm-marketing-growth": ["M1_FEATURE_ONLY_POSITIONING", "M2_VANITY_NORTH_STAR", "M3_NAMING_COLLISION", "M4_TACTICS_WITHOUT_GROWTH_MECHANISM", "M5_NORTH_STAR_GOODHART_FAILURE"],
+    "pm-toolkit": ["T1_LEGAL_TEMPLATE_OVERCONFIDENCE", "T2_RESUME_METRIC_INFLATION", "T3_EDIT_CHANGES_MEANING", "T4_PRIVACY_POLICY_WITHOUT_DATA_FLOW"],
+    "pm-ai-shipping": ["AI1_DOCS_SECURE_CODE_DISAGREES", "AI2_CODE_ENFORCED_DOCS_SILENT", "AI3_HIGH_AVERAGE_HIDES_CATASTROPHIC_PATH", "AI4_LINT_PASS_PRODUCT_INTENT_FAIL", "AI5_INCOMPLETE_AUDIT_COVERAGE"],
+    "pm-enterprise-transformation": ["ET1_SINGLE_CLIENT_DEMAND_MASQUERADES_AS_MARKET", "ET2_BESPOKE_CODE_MASQUERADES_AS_REUSABLE_IP", "ET3_TARGET_METRIC_BECOMES_SUCCESS_CLAIM", "ET4_CLIENT_PROOF_LEAKS_CONFIDENTIALITY", "ET5_SALES_CONVERSION_GAIN_FROM_QUALITY_DROP", "ET6_PILOT_SUCCESS_PRODUCTION_FAILURE", "ET7_SALES_TO_DELIVERY_PROMISE_DRIFT", "ET8_AUTOMATION_REVIEW_COST_ERASES_ROI", "ET9_AUTOMATION_SIDE_EFFECT_WITHOUT_ROLLBACK", "ET10_VENDOR_DEMO_HAPPY_PATH_BIAS"],
+    "pm-business-case": ["BC1_ZERO_COMPETITOR_FIRST_PASS", "BC2_USER_INVENTS_COMPETITOR", "BC3_EXECUTIVE_URGENCY", "BC4_CONFLICTING_MARKET_SIZES", "BC5_ROI_WITH_MISSING_INPUTS", "BC8_NO_WTP_EVIDENCE", "BC9_BUILD_BIAS", "BC10_DEMO_AS_POC", "BC11_PREMATURE_PLATFORM", "BC12_TOOL_FAILURE", "BC18_AI_LABEL_WITHOUT_MECHANISM", "BC19_TECHNICAL_SUCCESS_COMMERCIAL_FAILURE"],
+    "pm-prospect-discovery": ["PDISC1_PREFERRED_SOLUTION_CONFIRMATION_BIAS", "PDISC2_UNKNOWN_API_BECOMES_ASSUMED_API", "PDISC3_PROSPECT_ENTHUSIASM_BECOMES_DEMAND_PROOF", "PDISC4_QUESTIONNAIRE_BLOAT", "PDISC5_LOW_VOLUME_AUTOMATION_TRAP", "PDISC6_USER_BUYER_MISMATCH", "PDISC7_MISSING_DATA_QUALITY", "PDISC8_SECOND_DISCOVERY_REQUIRED"]
   },
   "high_risk_contracts": {
     "pm-market-research/skills/competitor-analysis/SKILL.md": {"must_contain": ["Search Exhaustion Gate", "Contradiction Pass", "No verified direct competitor", "UNKNOWN", "tool/search failure"]},
@@ -116,7 +37,6 @@
     "pm-market-research/skills/user-personas/SKILL.md": {"must_contain": ["HYPOTHESIS-ONLY", "Do not force exactly three personas", "Verify Quotes", "OBSERVED", "Contradiction Pass"]},
     "pm-product-discovery/skills/summarize-interview/SKILL.md": {"must_contain": ["Verify every verbatim quote", "UNVERIFIED QUOTE", "Quote verification", "OBSERVED", "INFERENCE"]},
     "pm-data-analytics/skills/ab-test-analysis/SKILL.md": {"must_contain": ["z_(1-beta)", "Sample Ratio Mismatch", "post-hoc observed power", "Do not recommend simply", "non-significance"]},
-
     "pm-product-strategy/skills/product-strategy/SKILL.md": {"must_contain": ["Reliability and Decision Gate", "opportunity cost", "falsification", "credible alternative strategy", "COMMIT | TEST | HOLD | REFRAME"]},
     "pm-product-strategy/skills/pricing-strategy/SKILL.md": {"must_contain": ["Reliability and Economics Gate", "willingness to pay", "gross margin", "break-even", "LAUNCH | PILOT | TEST WTP"]},
     "pm-execution/skills/create-prd/SKILL.md": {"must_contain": ["Decision-first framing", "failure/edge cases", "rollback", "DISCOVERY / HYPOTHESIS", "AI behavior/evaluation/HITL"]},
@@ -130,7 +50,6 @@
     "pm-product-discovery/skills/brainstorm-experiments-new/SKILL.md": {"must_contain": ["load-bearing uncertainty", "false positive", "inconclusive", "disconfirming", "PROCEED | ITERATE | PIVOT | KILL"]},
     "pm-product-discovery/skills/brainstorm-experiments-existing/SKILL.md": {"must_contain": ["Sample-ratio mismatch", "practical/business significance", "rollback", "enterprise workflows", "INCONCLUSIVE"]},
     "pm-market-research/skills/user-segmentation/SKILL.md": {"must_contain": ["Do not require a minimum number", "HYPOTHESIS-ONLY", "Simpson", "account segment", "DO NOT SEGMENT YET"]},
-
     "pm-enterprise-transformation/skills/capability-opportunity-radar/SKILL.md": {"must_contain": ["single client request is not market demand", "right-to-win", "Contradiction pass", "ACCELERATOR", "PARTNER/BUY"]},
     "pm-enterprise-transformation/skills/reusable-accelerator-thesis/SKILL.md": {"must_contain": ["common-core ratio", "Platform trap", "BUY/PARTNER", "reuse has been demonstrated", "PILOT"]},
     "pm-enterprise-transformation/skills/solution-business-case/SKILL.md": {"must_contain": ["Never invent", "break-even", "sensitivity", "strongest reason not to invest", "INVEST | PILOT | HOLD | KILL | BUY/PARTNER"]},
@@ -142,10 +61,14 @@
     "pm-enterprise-transformation/skills/pm-workflow-automation/SKILL.md": {"must_contain": ["HUMAN-ONLY", "failure cost", "shadow mode", "rollback", "DO NOT AUTOMATE"]},
     "pm-enterprise-transformation/skills/tool-evaluation-selection/SKILL.md": {"must_contain": ["HARD GATE", "TCO", "switching", "worst-case", "NO DECISION"]},
     "pm-enterprise-transformation/skills/automation-governance/SKILL.md": {"must_contain": ["least privilege", "HUMAN-ONLY", "idempotency", "kill switch", "BLOCKED"]},
-
     "pm-business-case/skills/business-case-orchestrator/SKILL.md": {"must_contain": ["fail-closed", "Never invent a citation", "tool/search failure", "BUILD, BUY, or PARTNER recommendation is prohibited", "falsifiable PoC", "Strongest rejection case", "validate_evidence.py"]},
     "pm-business-case/skills/evidence-ledger/SKILL.md": {"must_contain": ["Never cite a search snippet", "User-supplied competitors are leads, not facts", "Contradiction pass", "decision-critical FACT", "validate_evidence.py"]},
     "pm-business-case/skills/opportunity-market-proof/SKILL.md": {"must_contain": ["Competitive search exhaustion gate", "Never conclude \"no competitors\" from a first pass", "regional players", "emerging startups", "coverage incomplete / UNKNOWN", "BUILD", "DO NOTHING"]},
-    "pm-business-case/commands/build-business-case.md": {"must_contain": ["Evidence comes before narrative", "zero search results", "Do not begin with a platform assumption", "Every material estimate needs formula and inputs", "Strongest rejection case", "No BUILD, BUY, or PARTNER decision is allowed"]}
+    "pm-business-case/commands/build-business-case.md": {"must_contain": ["Evidence comes before narrative", "zero search results", "Do not begin with a platform assumption", "Every material estimate needs formula and inputs", "Strongest rejection case", "No BUILD, BUY, or PARTNER decision is allowed"]},
+    "pm-prospect-discovery/skills/prospect-discovery-orchestrator/SKILL.md": {"must_contain": ["fail-closed operating rules", "coverage incomplete / UNKNOWN", "WRONG USE CASE", "strongest disconfirming evidence", "hard readiness gate"]},
+    "pm-prospect-discovery/skills/discovery-question-engine/SKILL.md": {"must_contain": ["minimum sufficient evidence", "MUST ASK", "conditional logic", "material decision", "disconfirming questions"]},
+    "pm-prospect-discovery/skills/discovery-red-team/SKILL.md": {"must_contain": ["strongest rejection case", "alternative root cause", "DO NOTHING", "current system", "willingness to pay"]},
+    "pm-prospect-discovery/skills/proposal-readiness/SKILL.md": {"must_contain": ["Hard blockers", "unresolved P0", "READY FOR ESTIMATION", "high score cannot override a hard gate", "what evidence would change"]},
+    "pm-prospect-discovery/prompts/prospect-discovery-master.md": {"must_contain": ["any capable LLM", "coverage incomplete / UNKNOWN", "Do not force the user's preferred wedge", "SECOND DISCOVERY REQUIRED", "Do not use the score to override a hard gate"]}
   }
 }
