@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Prospect Discovery Session</title>
+<style>
+body{font-family:system-ui,-apple-system,sans-serif;max-width:1000px;margin:0 auto;padding:32px;color:#17202a;background:#f7f8fa}
+section{background:white;border:1px solid #e2e5e9;border-radius:12px;padding:24px;margin:16px 0}
+h1,h2{margin-top:0}.meta,.hint{color:#667085}.state{font-family:ui-monospace,monospace;font-size:12px}
+textarea{width:100%;min-height:72px;margin-top:8px;padding:10px}
+table{width:100%;border-collapse:collapse}th,td{text-align:left;border-bottom:1px solid #eee;padding:8px}
+</style>
+</head>
+<body>
+<header>
+<h1>{{PROSPECT}} Discovery Session</h1>
+<p class="meta">{{DECISION_TO_ENABLE}} | {{DATE}} | {{DURATION}}</p>
+<p><strong>Working hypothesis:</strong> {{PROBLEM_AND_USE_CASE_HYPOTHESIS}}</p>
+<p class="hint">This is a hypothesis to test, not a committed solution.</p>
+</header>
+
+<section>
+<h2>Evidence and assumptions</h2>
+{{EVIDENCE_AND_ASSUMPTION_REGISTER}}
+</section>
+
+<section>
+<h2>Journey</h2>
+{{JOURNEY_STAGES}}
+</section>
+
+<section>
+<h2>Solution directions</h2>
+{{SOLUTION_OPTIONS}}
+</section>
+
+<section>
+<h2>Must-ask questions</h2>
+{{MUST_ASK_QUESTIONS}}
+</section>
+
+<section>
+<h2>Conditional / Level 2</h2>
+{{CONDITIONAL_QUESTIONS}}
+</section>
+
+<section>
+<h2>Decisions captured</h2>
+<textarea placeholder="Scope, ownership, dependencies, direction changes, blockers..."></textarea>
+</section>
+
+<section>
+<h2>Open questions and follow-ups</h2>
+<textarea placeholder="Question, owner, evidence needed, decision unlocked..."></textarea>
+</section>
+</body>
+</html>
