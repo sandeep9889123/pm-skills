@@ -4,17 +4,17 @@
     "displayName": "PM Skills: Reliability-First Enterprise AI Edition"
   },
   "plugins": [
-    {"name":"pm-product-discovery","source":{"source":"local","path":"./pm-product-discovery"},"policy":{"installation":"AVAILABLE","authentication":"ON_INSTALL"},"category":"Productivity"},
-    {"name":"pm-prospect-discovery","source":{"source":"local","path":"./pm-prospect-discovery"},"policy":{"installation":"AVAILABLE","authentication":"ON_INSTALL"},"category":"Business & Operations"},
-    {"name":"pm-product-strategy","source":{"source":"local","path":"./pm-product-strategy"},"policy":{"installation":"AVAILABLE","authentication":"ON_INSTALL"},"category":"Productivity"},
-    {"name":"pm-execution","source":{"source":"local","path":"./pm-execution"},"policy":{"installation":"AVAILABLE","authentication":"ON_INSTALL"},"category":"Productivity"},
-    {"name":"pm-market-research","source":{"source":"local","path":"./pm-market-research"},"policy":{"installation":"AVAILABLE","authentication":"ON_INSTALL"},"category":"Business & Operations"},
-    {"name":"pm-data-analytics","source":{"source":"local","path":"./pm-data-analytics"},"policy":{"installation":"AVAILABLE","authentication":"ON_INSTALL"},"category":"Data & Analytics"},
-    {"name":"pm-go-to-market","source":{"source":"local","path":"./pm-go-to-market"},"policy":{"installation":"AVAILABLE","authentication":"ON_INSTALL"},"category":"Business & Operations"},
-    {"name":"pm-marketing-growth","source":{"source":"local","path":"./pm-marketing-growth"},"policy":{"installation":"AVAILABLE","authentication":"ON_INSTALL"},"category":"Productivity"},
-    {"name":"pm-toolkit","source":{"source":"local","path":"./pm-toolkit"},"policy":{"installation":"AVAILABLE","authentication":"ON_INSTALL"},"category":"Productivity"},
-    {"name":"pm-ai-shipping","source":{"source":"local","path":"./pm-ai-shipping"},"policy":{"installation":"AVAILABLE","authentication":"ON_INSTALL"},"category":"Developer Tools"},
-    {"name":"pm-enterprise-transformation","source":{"source":"local","path":"./pm-enterprise-transformation"},"policy":{"installation":"AVAILABLE","authentication":"ON_INSTALL"},"category":"Business & Operations"},
-    {"name":"pm-business-case","source":{"source":"local","path":"./pm-business-case"},"policy":{"installation":"AVAILABLE","authentication":"ON_INSTALL"},"category":"Business & Operations"}
+    {"name":"pm-product-discovery","source":{"source":"git-subdir","url":"https://github.com/sandeep9889123/pm-skills.git","path":"pm-product-discovery","ref":"main"},"policy":{"installation":"AVAILABLE","authentication":"ON_INSTALL"},"category":"Productivity"},
+    {"name":"pm-prospect-discovery","source":{"source":"git-subdir","url":"https://github.com/sandeep9889123/pm-skills.git","path":"pm-prospect-discovery","ref":"main"},"policy":{"installation":"AVAILABLE","authentication":"ON_INSTALL"},"category":"Business & Operations"},
+    {"name":"pm-product-strategy","source":{"source":"git-subdir","url":"https://github.com/sandeep9889123/pm-skills.git","path":"pm-product-strategy","ref":"main"},"policy":{"installation":"AVAILABLE","authentication":"ON_INSTALL"},"category":"Productivity"},
+    {"name":"pm-execution","source":{"source":"git-subdir","url":"https://github.com/sandeep9889123/pm-skills.git","path":"pm-execution","ref":"main"},"policy":{"installation":"AVAILABLE","authentication":"ON_INSTALL"},"category":"Productivity"},
+    {"name":"pm-market-research","source":{"source":"git-subdir","url":"https://github.com/sandeep9889123/pm-skills.git","path":"pm-market-research","ref":"main"},"policy":{"installation":"AVAILABLE","authentication":"ON_INSTALL"},"category":"Business & Operations"},
+    {"name":"pm-data-analytics","source":{"source":"git-subdir","url":"https://github.com/sandeep9889123/pm-skills.git","path":"pm-data-analytics","ref":"main"},"policy":{"installation":"AVAILABLE","authentication":"ON_INSTALL"},"category":"Data & Analytics"},
+    {"name":"pm-go-to-market","source":{"source":"git-subdir","url":"https://github.com/sandeep9889123/pm-skills.git","path":"pm-go-to-market","ref":"main"},"policy":{"installation":"AVAILABLE","authentication":"ON_INSTALL"},"category":"Business & Operations"},
+    {"name":"pm-marketing-growth","source":{"source":"git-subdir","url":"https://github.com/sandeep9889123/pm-skills.git","path":"pm-marketing-growth","ref":"main"},"policy":{"installation":"AVAILABLE","authentication":"ON_INSTALL"},"category":"Productivity"},
+    {"name":"pm-toolkit","source":{"source":"git-subdir","url":"https://github.com/sandeep9889123/pm-skills.git","path":"pm-toolkit","ref":"main"},"policy":{"installation":"AVAILABLE","authentication":"ON_INSTALL"},"category":"Productivity"},
+    {"name":"pm-ai-shipping","source":{"source":"git-subdir","url":"https://github.com/sandeep9889123/pm-skills.git","path":"pm-ai-shipping","ref":"main"},"policy":{"installation":"AVAILABLE","authentication":"ON_INSTALL"},"category":"Developer Tools"},
+    {"name":"pm-enterprise-transformation","source":{"source":"git-subdir","url":"https://github.com/sandeep9889123/pm-skills.git","path":"pm-enterprise-transformation","ref":"main"},"policy":{"installation":"AVAILABLE","authentication":"ON_INSTALL"},"category":"Business & Operations"},
+    {"name":"pm-business-case","source":{"source":"git-subdir","url":"https://github.com/sandeep9889123/pm-skills.git","path":"pm-business-case","ref":"main"},"policy":{"installation":"AVAILABLE","authentication":"ON_INSTALL"},"category":"Business & Operations"}
   ]
 }
