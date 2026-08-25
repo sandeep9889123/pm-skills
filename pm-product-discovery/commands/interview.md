@@ -1,169 +1,127 @@
 ---
-description: Prepare a customer interview script or summarize an interview transcript into structured insights
+description: Prepare bias-resistant customer interviews or summarize transcripts with quote verification, evidence limits, and observation-vs-inference separation
 argument-hint: "[prep|summarize] <topic or transcript>"
 ---
 
-# /interview -- Customer Interview Prep & Summary
+# /interview -- Reliable Customer Interview Prep & Synthesis
 
-Two modes: **prep** creates a structured interview script before you talk to customers, **summarize** extracts insights after you've done the interview.
+Two modes:
 
-## Invocation
+- `prep`: create a decision-linked, disconfirming interview guide
+- `summarize`: extract source-grounded evidence from an interview without upgrading one participant into market truth
 
-```
-/interview prep Onboarding experience for enterprise users
-/interview summarize [paste transcript or upload file]
-/interview                    # asks which mode you need
-```
+## Prep Mode
 
-## Modes
+### Step 1: Frame the Decision
 
----
+Capture:
 
-### Prep Mode
+- research decision/question
+- participant/recruiting criteria
+- product/research stage
+- interview duration
+- top load-bearing hypotheses
+- what evidence would change the current belief
 
-Create a structured interview script tailored to your research question.
+Treat the team's preferred solution as a hypothesis, not something to validate.
 
-#### Workflow
+### Step 2: Apply `interview-script`
 
-**Step 1: Understand the Research Goal**
+Required behaviors:
 
-Ask the user:
-- What are you trying to learn? (specific research question)
-- Who are you interviewing? (segment, role, relationship to product)
-- How much time do you have? (15 min, 30 min, 60 min)
-- What decisions will this research inform?
+- past behavior and recent specific examples
+- current alternatives/workarounds
+- consequences and observed commitments
+- disconfirming questions
+- enterprise buyer/champion/user constraints when relevant
+- `MUST ASK | FOLLOW-UP | OPTIONAL` timeboxing
 
-**Step 2: Generate Interview Script**
+Do not ask leading “would you use/buy/pay?” questions as primary evidence.
 
-Apply the **interview-script** skill:
+### Step 3: Evidence Limits
 
-- Follow "The Mom Test" principles — ask about their life, not your idea
-- No leading questions, no pitching, focus on past behavior and real situations
-- Structure the script in sections:
+Include:
 
-```
-## Interview Script: [Research Topic]
+- what this participant/sample can illuminate
+- what it cannot prove
+- sampling/recruitment bias
+- complementary evidence needed for prevalence, WTP, or causal claims
 
-**Research Question**: [what we're trying to learn]
-**Target Participant**: [who]
-**Duration**: [X] minutes
+## Summarize Mode
 
-### Warm-up (3-5 min)
-[Rapport-building questions, role/context understanding]
+### Step 1: Source Status
 
-### Core Exploration (15-40 min)
-[JTBD probing, past behavior, current workflow, pain points]
-- For each question: the question + why you're asking it + follow-up prompts
+Classify input:
 
-### Specific Topics (5-10 min)
-[Targeted questions about specific features or concepts — if needed]
+- full transcript
+- partial transcript
+- interviewer notes
+- second-hand/audio summary
 
-### Wrap-up (3-5 min)
-[Open-ended closing, referral ask, next steps]
+Evidence strength differs by source. If text is incomplete, say so.
 
-### Note-Taking Template
-[Pre-formatted template to capture insights during the interview]
+### Step 2: Apply `summarize-interview`
 
-### Red Flags to Watch For
-[Signs the conversation is going off-track or the participant is being polite rather than honest]
-```
+Required behaviors:
 
-**Step 3: Customize and Review**
+- verify every verbatim quote against source text
+- if exact wording cannot be verified, paraphrase or label `UNVERIFIED QUOTE`
+- separate `OBSERVED` participant statements/behaviors from `INFERENCE`
+- preserve contradictions
+- do not infer demographics, budget, tools, authority, or workflow facts not present in source
 
-- Adjust question count to fit the time slot
-- Add probing questions for specific hypotheses the user wants to test
-- Flag questions that might lead the witness
-- Offer a printable version (markdown file saved to workspace)
+### Step 3: Hypothesis Status, Not Universal Validation
 
----
+Use:
 
-### Summarize Mode
+`SUPPORTED BY THIS INTERVIEW | CONTRADICTED BY THIS INTERVIEW | MIXED | NOT DISCUSSED`
 
-Transform an interview transcript into structured, actionable insights.
+Do **not** write `VALIDATED` as a population-level conclusion from one interview.
 
-#### Workflow
+If multiple interviews are supplied, show sample counts and contrary cases rather than implying representativeness.
 
-**Step 1: Accept the Transcript**
+### Competitive Mentions
 
-Accept in any format:
-- **Pasted text**: Raw transcript or notes
-- **Uploaded file**: Document, text file, or meeting notes export
-- **Audio summary**: If the user describes what was said (not a full transcript)
+A participant mentioning competitor X is evidence that **this participant knows/uses/considered X** if the source supports it. It is not proof of competitor market share, capabilities, pricing, or category status. Verify those separately before using them as competitive facts.
 
-If the input is rough notes rather than a full transcript, work with what's available and note the limitations.
+## Output: Prep
 
-**Step 2: Extract and Structure**
+- research decision
+- hypothesis/disconfirmation map
+- timeboxed interview guide
+- questions to avoid
+- note template
+- sampling/evidence limits
+- expected decision follow-up
 
-Apply the **summarize-interview** skill:
+## Output: Summarize
 
-Parse the transcript to identify:
-- **Participant profile**: Role, experience level, segment, context
-- **Jobs to Be Done**: What the participant is trying to accomplish
-- **Current workflow**: How they solve the problem today
-- **Pain points**: Frustrations, workarounds, time sinks
-- **Satisfaction signals**: What works well, moments of delight
-- **Quotes**: Verbatim quotes that capture key insights (with timestamps if available)
-- **Surprises**: Anything unexpected or that contradicts assumptions
-- **Feature reactions**: If specific features/concepts were discussed, capture reactions
+### Source / participant context
+[only known attributes]
 
-**Step 3: Generate Interview Summary**
+### Observed evidence
+| Evidence | Type | Source/quote | Decision implication |
+|---|---|---|---|
 
-```
-## Interview Summary
+### JTBD / current workflow / alternatives
+[source-grounded]
 
-**Participant**: [anonymized profile — role, segment, experience]
-**Date**: [if known]
-**Duration**: [if known]
-**Interviewer**: [if known]
+### Pain / consequence / commitment signals
+[source-grounded]
 
-### Key Insights
-1. **[Insight]** — [supporting evidence/quote]
-2. **[Insight]** — [supporting evidence/quote]
-3. ...
+### Verified quotes
+[exact only]
 
-### Jobs to Be Done
-- **Primary JTBD**: [When I..., I want to..., so I can...]
-- **Related JTBDs**: [additional jobs]
+### Contradictions / surprises
+[preserve them]
 
-### Current Workflow
-[How the participant currently solves the problem, step by step]
+### Hypothesis status
+[scoped to this evidence]
 
-### Pain Points
-| Pain Point | Severity | Quote |
-|-----------|----------|-------|
+### Interpretations
+[clearly marked `INFERENCE`]
 
-### Satisfaction Signals
-| What Works | Why | Quote |
-|-----------|-----|-------|
+### Next evidence
+[what should be tested or quantified next]
 
-### Notable Quotes
-> "[quote]" — on [topic]
-
-### Assumptions Validated / Invalidated
-| Assumption | Status | Evidence |
-|-----------|--------|----------|
-
-### Action Items
-- [ ] [Follow-up action from this interview]
-- [ ] [Research question to explore further]
-
-### Raw Notes
-[If helpful, include annotated key sections]
-```
-
-Save the summary as a markdown file.
-
-**Step 4: Connect to Broader Research**
-
-Offer:
-- "Want me to **compare this with other interview summaries** you've done?"
-- "Should I **update assumptions** based on what this participant said?"
-- "Want me to **extract personas** from multiple interviews?"
-
-## Notes
-
-- In prep mode, always include "why you're asking" annotations — they help the interviewer stay on track
-- In summarize mode, distinguish between what the participant *said* vs. what they *did* (behavioral > stated)
-- Flag contradictions within the same interview (says one thing, describes doing another)
-- If the transcript mentions competitor products, capture competitive intelligence
-- For summarize mode, if multiple transcripts are provided, synthesize across them with cross-participant patterns
+Never convert participant enthusiasm into demand proof.
