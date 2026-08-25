@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+### Cross-LLM onboarding and repository cleanup
+
+- Reworked the root README into a user-first installation and usage guide for Claude Cowork/Desktop, Claude Code, Codex, ChatGPT, Agent Skills compatible tools, and generic LLMs.
+- Added `docs/USING_WITH_LLMS.md` with exact install, invocation, update, fallback, and troubleshooting paths, including the distinction between portable skills and Claude-oriented slash-command workflows.
+- Added `docs/PLUGIN_CATALOG.md` as the complete browseable catalog for all 12 plugins, 96 skills, 55 workflows, and starter prompts.
+- Standardized all 12 plugin READMEs so a user landing directly on any plugin can install it, invoke a skill, run the equivalent workflow, and understand model-specific limitations without reading repository internals first.
+- Added a Codex-native marketplace at `.agents/plugins/marketplace.json` plus `.codex-plugin/plugin.json` manifests for all 12 plugins, while keeping the existing Claude marketplace and the underlying `SKILL.md` files as the single capability source.
+- Extended consistency tests to enforce Claude/Codex marketplace parity, Codex manifest/version correctness, multi-LLM onboarding sections, and valid namespaced command references.
+- Removed five unreferenced legacy media assets under `.docs/images/` and two stale internal audit/backlog documents under `docs/audit/`; runtime skills, commands, standards, reliability assets, evaluation harnesses, and CI were preserved.
+
 ### Prospect Discovery Engine
 
 - Added **`pm-prospect-discovery`** with 10 local skills and 4 workflows for repeatable enterprise pre-RFP discovery, from sparse prospect context through evidence, hypotheses, journey decomposition, adaptive questioning, synthesis, and proposal-readiness gates.
