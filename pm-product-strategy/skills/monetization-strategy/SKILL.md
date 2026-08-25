@@ -1,147 +1,145 @@
 ---
 name: monetization-strategy
-description: "Brainstorm 3-5 monetization strategies with audience fit, risks, and validation experiments. Use when exploring revenue models, evaluating pricing strategies, or deciding how to monetize a product."
+description: "Design and test monetization options using payer/value-metric fit, willingness-to-pay evidence, delivery economics, competitive context, and falsifiable experiments. Avoids forced option counts and invented CAC/LTV/margins. Use when choosing revenue models, packaging, or monetization direction."
 ---
-# Monetization Strategy
 
-## Metadata
-- **Name**: monetization-strategy
-- **Description**: Brainstorm 3-5 monetization strategies with audience fit, risks, and validation experiments. Use when exploring revenue models, pricing strategies, or business model options.
-- **Triggers**: monetization strategy, revenue model, pricing strategy, how to monetize, make money
+# Evidence-First Monetization Strategy
 
-## Instructions
+## Purpose
 
-You are an experienced business model strategist brainstorming monetization strategies for $ARGUMENTS.
+Identify monetization options for `$ARGUMENTS` that fit the value delivered, buyer/payer behavior, cost structure, and company strategy.
 
-Your task is to develop 3-5 distinct monetization approaches that could work for the product or feature, evaluate fit with the target market, and outline low-effort validation experiments.
+Do not generate a fixed number of revenue models merely to fill a template.
 
-## Input Requirements
-- Product or feature description
-- Target market segment(s) and customer profile
-- Current willingness to pay or budget constraints
-- Competitive monetization approaches
-- Company priorities (revenue growth, user growth, profitability)
+## P0 Reliability Contract
 
-## Monetization Framework
+1. **Do not force 3-5 monetization strategies.** Return only materially plausible alternatives.
+2. **Do not invent WTP, budget, CAC, LTV, gross margin, conversion, churn, deal size, or payback.**
+3. Competitor pricing is evidence of market behavior, not proof of this customer's willingness to pay.
+4. Interviews that ask “would you pay?” are weak evidence. Prefer current spend, approved budget, paid pilots, price tests, procurement actions, or observed trade-offs.
+5. Do not quote generic conversion ranges as if they apply to the user's product.
+6. Preserve `FACT`, `INFERENCE`, `ASSUMPTION`, `ESTIMATE`, `UNKNOWN`, `TARGET`, and `PROPOSAL` states.
+7. Tool/search failure means evidence coverage is incomplete.
 
-For each strategy, include:
+## Step 1: Monetization Context
 
-### 1. Strategy Name & Description
-- What is the monetization model?
-- How does it work for this product?
-- Who pays and what do they get?
+Resolve:
 
-### 2. How It Works
-- Revenue model and pricing mechanics
-- Value exchange between company and customer
-- Payment frequency and transaction size
-- Lifecycle and retention mechanisms
+- user, buyer and payer
+- core job/outcome and value mechanism
+- current alternative and spend where known
+- product/delivery cost driver
+- business stage
+- enterprise procurement or self-serve path
+- strategic objective: adoption, revenue, margin, expansion, ecosystem, etc.
 
-### 3. Audience Fit
-- Why does this resonate with your target customer?
-- How does it align with customer needs and preferences?
-- What problems does it solve for the customer?
-- Addressable market size and revenue potential
+## Step 2: Evidence Inventory
 
-### 4. Unit Economics
-- Estimated customer acquisition cost (CAC)
-- Estimated customer lifetime value (LTV)
-- Break-even timeline
-- Target gross margin
+| Evidence | What it supports | State | Limitation |
+|---|---|---|---|
 
-### 5. Risks & Challenges
-- Market adoption risk
-- Pricing or feature sensitivity
-- Competitive vulnerability
-- Customer churn or resistance
-- Implementation complexity
+Useful evidence:
 
-### 6. Competitive Position
-- How do competitors monetize?
-- What makes your approach differentiated?
-- Barriers to customer switching
-- Defense against competitive pricing
+- actual contracts/prices/discounts
+- WTP research
+- lost/won deal reasons
+- usage and cost-to-serve
+- competitive pricing with source/date
+- current workaround spend
+- expansion/churn behavior
 
-### 7. Validation Experiment
-- Low-cost test to validate customer willingness to pay
-- Method: survey, landing page, pilot, freemium, waitlist
-- Success metric and decision criteria
-- Timeline and resources required
+## Step 3: Generate Plausible Models
 
-## Example Monetization Strategies
+Consider only relevant mechanisms:
 
-### 1. Freemium (Free Base + Paid Premium)
-- **How**: Free core features, premium advanced features behind paywall
-- **Fit**: Best for high-volume, low-touch products (design tools, productivity, communication)
-- **Risks**: Low conversion rates (typically 1-5%), features must be clear to justify upgrade
-- **Experiment**: Launch freemium version, track conversion rate, gather upgrade feedback
+- subscription
+- per-seat / per-account
+- usage / consumption
+- transaction / take rate
+- project / service
+- outcome/value-based
+- license
+- freemium/trial
+- platform/marketplace
+- partner/channel revenue
+- hybrid
 
-### 2. Subscription (Recurring Monthly/Annual)
-- **How**: Recurring charge for ongoing access and updates
-- **Fit**: Best for products with continuous value (software, platforms, services)
-- **Risks**: Customer churn, cannibalization from annual vs. monthly
-- **Experiment**: Offer subscription to beta customers, measure churn rate and NPS
+For each option define:
 
-### 3. Usage-Based (Pay Per Use)
-- **How**: Customers pay based on usage volume (API calls, storage, transactions)
-- **Fit**: Best for B2B platforms, APIs, services with variable customer needs
-- **Risks**: Unpredictable revenue, customer cost anxiety, usage optimization by customers
-- **Experiment**: Implement usage tracking, pilot with 5-10 beta customers, model revenue
+| Model | Who pays | Value metric | Why fit | Evidence | Key risk |
+|---|---|---|---|---|---|
 
-### 4. Enterprise/Seat-Based (Per User/Seat)
-- **How**: Price per user, department, or seat using the product
-- **Fit**: Best for B2B SaaS with team/organization adoption
-- **Risks**: Sales complexity, contract length, implementation overhead
-- **Experiment**: Conduct 5-10 customer interviews, validate pricing per seat, define support model
+Do not recommend a value metric simply because it is easy to meter. It should correlate with value while remaining predictable and hard to game.
 
-### 5. One-Time Purchase (Buy Once)
-- **How**: Single upfront purchase for permanent or one-time license
-- **Fit**: Best for niche products, tools, or templates (not ongoing services)
-- **Risks**: Revenue concentration in launch period, no recurring revenue, updates/support questions
-- **Experiment**: Launch limited offering, track conversion and customer satisfaction
+## Step 4: Economics
 
-### 6. Marketplace/Transaction Fee
-- **How**: Take a percentage or fixed fee from transactions between buyers and sellers
-- **Fit**: Best for platforms connecting supply and demand
-- **Risks**: Market liquidity chicken-and-egg problem, trust and safety, competitive pressure
-- **Experiment**: MVP with limited sellers, offer free period to drive initial supply, model unit economics
+Where evidence exists, model the actual economics:
 
-### 7. Advertising/Sponsorship
-- **How**: Generate revenue from ads, sponsored content, or brand partnerships
-- **Fit**: Best for high-traffic, consumer-facing products
-- **Risks**: Brand damage from intrusive ads, user experience degradation, advertiser concentration
-- **Experiment**: Test ads with small user segment, measure engagement and revenue impact
+- price / usage assumptions
+- variable delivery/inference/cloud/support cost
+- implementation/onboarding burden
+- sales/acquisition cost when known
+- gross/contribution margin
+- payback / cash timing
+- expansion/contraction behavior
 
-## Output Process
-1. Brainstorm 3-5 distinct monetization strategies (avoid repeating similar models)
-2. For each strategy:
-   - Describe how it works specifically for this product
-   - Assess fit with target customer and willingness to pay
-   - Outline key risks and challenges
-   - Estimate unit economics (CAC, LTV, timeline)
-   - Compare against competitive approaches
-3. For each strategy, design a low-effort validation experiment
-4. Prioritize by:
-   - Strategic fit (revenue, growth, profitability goals)
-   - Ease of implementation
-   - Market validation potential
-   - Competitive advantage
-5. Recommend 1-2 strategies to test first
-6. Create testing roadmap and success criteria
+For `ESTIMATE`, show formula, inputs, units, range and sensitivity.
 
-## Strategic Considerations
-- **Revenue Goals**: How much revenue is needed? By when?
-- **Growth Goals**: Does monetization need to support user growth?
-- **Market Dynamics**: Are customers ready to pay? For what?
-- **Competitive Pressure**: How will competitors respond?
-- **Unit Economics**: What gross margin is required for viability?
+If inputs are unavailable, output `ECONOMICS UNKNOWN` and specify required evidence rather than fabricating CAC/LTV.
 
-## Notes
-- Best monetization strategies align with customer value and willingness to pay
-- Test early and often; don't wait for perfect product to validate pricing
-- Most products use hybrid models (e.g., freemium + upgrade, subscription + marketplace fees)
-- Pricing can be changed; customer relationships are harder to rebuild
-- Monitor competitors but don't race to the bottom on price
+## Step 5: Buyer and Adoption Reality
+
+For B2B/enterprise, assess:
+
+- budget owner
+- procurement preference
+- predictability requirements
+- security/legal/finance friction
+- PO/contract thresholds
+- chargeback/accounting needs
+- implementation and renewal path
+
+A technically elegant usage model can fail because buyers require predictable budgets.
+
+## Step 6: Contradiction / Cannibalization Pass
+
+Ask:
+
+- Could pricing suppress the behavior that creates value?
+- Could the value metric create cost anxiety or gaming?
+- Does freemium attract non-ICP users and raise cost-to-serve?
+- Could enterprise discounts erase economics?
+- Could a new model cannibalize existing revenue?
+- Does a competitor model work because their cost/channel structure differs?
+- What is the strongest case for keeping the current model?
+
+## Step 7: Falsifiable Monetization Tests
+
+Use the cheapest credible evidence:
+
+- paid pilot / offer test
+- founder/sales price conversations tied to actual buying process
+- packaging/price experiment where ethical and statistically appropriate
+- quote/proposal conversion
+- willingness-to-switch behavior
+- usage/cost simulation
+- procurement feedback
+
+Define success, failure and inconclusive states before the test.
+
+## Output
+
+### Monetization decision context
+### Evidence ledger
+### Plausible options
+### Economics / sensitivity
+### Buyer/procurement fit
+### Cannibalization / downside
+### Validation plan
+### Decision
+`TEST | PILOT | KEEP CURRENT | CHANGE MODEL | HOLD | NOT READY`
+
+State what evidence would reverse the recommendation.
 
 ---
 
