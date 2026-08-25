@@ -1,70 +1,193 @@
 ---
 name: reusable-accelerator-thesis
-description: "Decide whether repeated delivery work should remain bespoke, become a reusable accelerator, become a productized solution, or evolve into a platform capability. Use when evaluating reusable IP, internal accelerators, solution factories, or platformization opportunities."
+description: "Decide whether repeated delivery work should remain bespoke, become a method, reusable accelerator, productized solution, or platform capability. Use when evaluating reusable IP, solution factories, internal accelerators, and platformization opportunities without over-claiming reuse."
 ---
 
 # Reusable Accelerator Thesis
 
-## Purpose
+## Operating principle
 
-Turn repeated delivery work into a falsifiable reuse thesis. The goal is not to label existing code as IP. The goal is to prove that reuse lowers delivery time, cost, risk, or improves sales conversion across multiple contexts.
+Turn repeated delivery work into a falsifiable reuse thesis.
 
-## Required evidence
+The goal is not to label existing code, prompts, templates, or delivery know-how as IP. The goal is to prove that reuse reduces time, cost, risk, defects, presales effort, implementation effort, or improves sales conversion across multiple contexts.
 
-Inventory:
-- repeated use cases and their variation
+Never claim reusable IP until reuse has been demonstrated beyond the originating project.
+
+## Non-negotiable rules
+
+1. One project does not prove accelerator potential.
+2. A reusable code asset is not automatically a reusable business capability.
+3. Reuse must reduce marginal effort, risk, cycle time, or improve commercial conversion.
+4. Client-specific variation must be measured, not hand-waved.
+5. Maintenance cost must be included.
+6. Internal adoption must be tested.
+7. Buyer value must be separated from delivery convenience.
+8. Open-source, vendor, incumbent, and services alternatives must be considered.
+9. Platformization is blocked until repeatable reuse patterns are evidenced.
+10. Use `UNKNOWN` rather than claiming commonality without proof.
+
+## Required evidence inventory
+
+Capture:
+
+- repeated use cases
+- independent customers/accounts/projects
+- variation across customers
 - common versus client-specific components
 - delivery effort by stage
-- recurring defects/rework
-- integration/data dependencies
+- presales effort by stage
+- recurring defects and rework
+- implementation dependencies
+- data and integration dependencies
 - security/compliance variation
-- existing code/assets and maintainability
-- buyer value and willingness-to-pay signals
-- alternative products/platforms
+- ownership and maintenance model
+- documentation/test coverage
+- existing code/assets/prompts/templates
+- buyer value evidence
+- sales proof evidence
+- willingness-to-pay or packaging signal
+- vendor/open-source/incumbent alternatives
 
-Mark evidence as `FACT`, `INFERENCE`, `ASSUMPTION`, `ESTIMATE`, `UNKNOWN`, or `STALE`.
+Mark every claim as FACT, INFERENCE, ASSUMPTION, ESTIMATE, UNKNOWN, STALE, PROPOSAL, or DECISION_THRESHOLD.
 
-## Decision tests
+## Decision taxonomy
+
+Classify the opportunity into one of:
+
+| Level | Meaning | Evidence required |
+|---|---|---|
+| BESPOKE | Remains client/project-specific | variation dominates, reuse weak |
+| METHOD | Repeatable delivery approach, not software/IP | playbook improves delivery quality |
+| COMPONENT | Reusable module/template/script | common technical unit is reused |
+| ACCELERATOR | Configurable package reduces delivery effort | repeatable use, measurable savings |
+| PRODUCTIZED SOLUTION | Repeatable offer with sales/implementation motion | buyer value and GTM proof |
+| PLATFORM | Shared foundation supporting multiple solution lines | multi-use-case reuse, governance, operating model |
+| BUY/PARTNER | External option is cheaper, safer, or faster | alternatives outperform internal build |
+
+Do not jump levels for storytelling convenience.
+
+## Reuse tests
 
 Evaluate:
 
-1. **Repeatability**: does the same job recur across independent customers?
-2. **Common-core ratio**: how much of the solution is genuinely reusable?
-3. **Configuration boundary**: can differences be configuration/rules rather than forks?
-4. **Economics**: does reuse improve margin, cycle time, quality, or pre-sales effort enough to justify maintenance?
-5. **Adoption**: will delivery/sales teams actually use the accelerator?
-6. **Differentiation**: does it create a meaningful advantage or merely recreate commodity functionality?
-7. **Lifecycle cost**: versioning, support, security, documentation, testing, compatibility, ownership.
-8. **Platform trap**: are we prematurely building abstractions before three or more validated reuse patterns exist?
+1. **Repeatability**: does the same job recur across independent customers or internal contexts?
+2. **Common-core ratio**: what percentage of workflow, code, logic, prompts, data model, integrations, tests, and operating process is reusable?
+3. **Configuration boundary**: can variation be handled through configuration, rules, templates, connectors, or policy, rather than forks?
+4. **Economic lift**: does reuse improve delivery time, cost, margin, quality, presales speed, or support load?
+5. **Adoption**: will sales, delivery, engineering, and solution teams actually use it?
+6. **Differentiation**: does it create advantage or recreate commodity capability?
+7. **Lifecycle cost**: who owns versioning, testing, security, docs, compatibility, support, and roadmap?
+8. **GTM value**: does it help sell, prove, price, or expand an offering?
+9. **Platform trap**: are abstractions being built before 3 or more validated reuse patterns exist?
+
+## Measurement model
+
+Where possible, create before/after or baseline/target metrics:
+
+- discovery time
+- solution design time
+- build effort
+- integration effort
+- QA/regression effort
+- implementation cycle time
+- defect/rework rate
+- presales/demo effort
+- delivery margin
+- support effort
+- win-rate or conversion signal
+- time to first value
+
+For each metric, capture baseline, sample, period, owner, and confidence.
 
 ## Contradiction pass
 
 Actively look for evidence that:
-- client-specific variation dominates;
-- open-source/vendor options are cheaper or safer;
-- reuse shifts cost from delivery to maintenance without net value;
-- buyers do not value the reusable layer;
-- the asset depends on one client’s data/process;
-- internal teams will bypass it.
 
-## Output
+- client-specific variation dominates
+- integration differences destroy reuse
+- compliance or security requirements fragment the core
+- open-source/vendor options are cheaper or safer
+- reuse shifts cost from delivery to maintenance without net value
+- buyers do not value the reusable layer
+- the asset depends on one client process or dataset
+- internal teams will bypass it
+- a narrower method captures most value with less cost
+- the platform ambition is premature
 
-### Reuse map
+## Required output
+
+### 1. Reuse decision
+
+Decision: BESPOKE / METHOD / COMPONENT / ACCELERATOR / PRODUCTIZED SOLUTION / PLATFORM / BUY-PARTNER / NOT READY
+
+Include confidence and reason.
+
+### 2. Reuse map
+
 | Component/workflow | Common | Variable | Reuse evidence | Maintenance cost | Recommended boundary |
 |---|---|---|---|---|---|
 
-### Options
-Compare `BESPOKE`, `METHOD`, `ACCELERATOR`, `PRODUCTIZED SOLUTION`, `PLATFORM`, `BUY/PARTNER`.
+### 3. Evidence coverage
 
-### Thesis
-Write one falsifiable statement:
+| Area | Evidence state | Blocking unknowns |
+|---|---|---|
+| Repeatability | | |
+| Common core | | |
+| Configuration boundary | | |
+| Economic lift | | |
+| Adoption | | |
+| Differentiation | | |
+| Lifecycle ownership | | |
+| GTM value | | |
+
+### 4. Options comparison
+
+Compare BESPOKE, METHOD, ACCELERATOR, PRODUCTIZED SOLUTION, PLATFORM, BUY/PARTNER.
+
+### 5. Falsifiable thesis
+
+Use this form:
 
 > If we standardize [common core] and configure [variation], then across [target contexts] we expect [measurable improvement] without exceeding [maintenance/customization limit].
 
-### Pilot gates
-Define baseline, target, test accounts/use cases, owner, duration, and stop conditions.
+### 6. Pilot gates
 
-### Decision
-`INVEST | PILOT | KEEP BESPOKE | BUY/PARTNER | HOLD`
+Define:
 
-Never claim reusable IP until reuse has been demonstrated beyond the originating project.
+- baseline
+- target
+- sample projects/accounts/use cases
+- owner
+- duration
+- success threshold
+- kill threshold
+- what cannot be proved yet
+
+### 7. Red-team rejection
+
+State the strongest reason not to invest in reuse now.
+
+## Hard stop conditions
+
+Return `NOT READY`, `KEEP BESPOKE`, or `METHOD ONLY` when:
+
+- only one project proves the asset
+- common-core ratio is unknown
+- variation is not measured
+- maintenance owner is absent
+- adoption is assumed
+- buyer value is unproven
+- vendor/open-source alternatives were not assessed
+- economics do not include lifecycle cost
+- platform claim lacks multiple reuse patterns
+
+## Final self-check
+
+Before delivery, verify:
+
+- I did not label delivery residue as IP.
+- I measured reuse, not just described it.
+- I separated method, component, accelerator, solution, and platform.
+- I included maintenance and adoption costs.
+- I compared alternatives.
+- I stated what would kill the reuse thesis.
