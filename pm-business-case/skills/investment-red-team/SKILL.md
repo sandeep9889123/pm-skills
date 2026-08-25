@@ -1,45 +1,61 @@
 ---
 name: investment-red-team
-description: "Attack a business case as a skeptical investment committee and produce the strongest rejection case, kill criteria, evidence gaps, and staged decision. Use before leadership review, capital allocation, platform investment, or a build recommendation."
+description: "Attack a business case as a skeptical investment committee. Use before leadership review, capital allocation, platform investment, productization, or any BUILD/BUY/PARTNER recommendation that must survive CEO, CTO, CFO, Sales, Delivery, Customer, and competitor objections."
 ---
+
 # Investment Red Team
 
-## Objective
+## Operating principle
 
 Try to reject the business case before leadership does.
 
-The purpose is not to make the case sound balanced. The purpose is to find the smallest number of reasons that could make the investment wrong.
+The purpose is not to sound balanced. The purpose is to find the smallest number of reasons that could make the investment wrong, expensive, distracting, unscalable, unsellable, or premature.
 
-Follow `pm-business-case/references/EVIDENCE_CONTRACT.md`.
+Follow `pm-business-case/references/EVIDENCE_CONTRACT.md` when available.
 
-Do not manufacture risks merely to fill a template. Every factual criticism must itself be evidence-backed or clearly labeled INFERENCE, ASSUMPTION, or UNKNOWN.
+Do not manufacture risks merely to fill a template. Every criticism must be evidence-backed or clearly labeled INFERENCE, ASSUMPTION, UNKNOWN, STALE, or CONTRADICTED.
+
+## Non-negotiable rules
+
+1. Reconstruct the thesis before attacking it.
+2. Attack the strongest version of the case, not a strawman.
+3. Separate evidence gaps from actual negative evidence.
+4. Treat unsupported P0 claims as blockers.
+5. Do not accept technical success as commercial proof.
+6. Do not accept one project as reusable-platform proof.
+7. Do not protect sunk effort.
+8. Always compare BUILD, BUY, PARTNER, and DO NOTHING.
+9. Always produce the strongest rejection case, even when final recommendation is positive.
+10. Prefer staged evidence investment over full roadmap approval when uncertainty is material.
 
 ## Step 1: Reconstruct the thesis
 
-State the business case in five lines:
+State in five lines:
 
-1. customer or internal user
+1. target customer or internal user
 2. problem or job
 3. proposed investment
 4. mechanism of value creation
 5. expected business outcome
 
-Then state the critical assumptions that connect each line.
+Then list the critical assumptions that connect the lines.
 
-If the thesis cannot be reconstructed cleanly, mark `NOT READY` before deeper review.
+If the thesis cannot be reconstructed cleanly, mark:
+
+`NOT READY: thesis unclear`
 
 ## Step 2: Evidence attack
 
-For every P0 claim ask:
+For each P0 claim ask:
 
 - What source establishes this?
-- Is the source primary or independent?
+- Is the source primary, independent, internal, or user-asserted?
 - Is it current enough?
-- Does it actually support the exact claim?
-- Is the claim broader than the evidence?
+- Does it support the exact claim or only a weaker claim?
 - Is there contradictory evidence?
-- Is a model estimate being presented as an observed fact?
+- Is an estimate being presented as an observed fact?
 - Is a user assertion being treated as verification?
+- Would this claim survive audit by the decision owner?
 
 Any unsupported P0 claim becomes a blocker.
 
@@ -51,37 +67,40 @@ Ask:
 - Why this problem?
 - What happens if we do nothing?
 - What strategic objective does this advance?
-- What is the opportunity cost of funding this instead of the best alternative?
+- What is the opportunity cost?
 - What would make this a distraction?
-- Is this a project, capability, accelerator, or product, and what evidence supports that level of ambition?
+- Is this a project, reusable asset, accelerator, productized solution, or platform?
+- What evidence supports that ambition level?
 
 ## Step 4: CTO and architecture attack
 
 Ask:
 
-- Is custom build actually required?
-- Could an incumbent, hyperscaler, vendor, open-source tool, or integration solve enough of the problem?
+- Is custom build required?
+- Could a vendor, hyperscaler, incumbent suite, open-source tool, integration, or workflow automation solve enough?
 - What is technically unique versus commodity?
-- What data, security, observability, evaluation, and operating burden is hidden?
-- What happens when models, APIs, dependencies, or schemas change?
-- Does the proposed platform architecture precede proof of reuse?
+- What hidden operating burden exists?
+- What data, security, observability, evaluation, and governance risks exist?
+- What happens when models, APIs, dependencies, schemas, or client environments change?
+- Does the architecture assume reuse before reuse is proven?
 
-Do not reject on technical complexity alone. Tie complexity to cost, risk, time, or strategic value.
+Tie technical complexity to cost, risk, time, scalability, or strategic value.
 
 ## Step 5: CFO attack
 
 Ask:
 
-- Which benefits are measured versus modeled?
+- Which benefits are measured versus modelled?
 - Which inputs dominate ROI?
-- What happens in the bear case?
+- What happens in bear case?
 - Are recurring costs included?
-- Are support, human review, integration, presales, and implementation costs included?
-- Does the business case confuse TAM with revenue?
-- Is payback sensitive to arbitrary adoption or WTP assumptions?
-- Is downside bounded?
+- Are presales, implementation, support, maintenance, integration, QA, governance, and human review included?
+- Does the case confuse TAM with revenue?
+- Is payback sensitive to arbitrary adoption, pricing, or WTP assumptions?
+- Is downside exposure bounded?
+- Is there a cheaper experiment?
 
-Recompute key economics where possible.
+Recompute or sanity-check economics when possible.
 
 ## Step 6: Sales and GTM attack
 
@@ -91,12 +110,13 @@ Ask:
 - What budget does this compete for?
 - What trigger creates urgency?
 - What proof will sales use?
+- What objections will buyers raise?
 - Is there a production path after the pilot?
 - Is the sales cycle compatible with the model?
-- Is the offering a standalone product, feature, bundled capability, or services accelerator?
-- What existing account or channel advantage is actually verified?
+- Is the offering a product, feature, bundle, accelerator, or services wrapper?
+- What existing account, channel, or credibility advantage is verified?
 
-If the case relies on "we can sell this to existing clients", demand evidence of fit, buyer access, and demand.
+If the case says `we can sell this to existing clients`, require evidence of fit, buyer access, problem urgency, and demand.
 
 ## Step 7: Delivery and operations attack
 
@@ -109,6 +129,7 @@ Ask:
 - What breaks at scale?
 - What happens on exceptions and edge cases?
 - Does the operating model require scarce experts?
+- Does the implementation burden destroy margin?
 
 A reusable code asset is not automatically a scalable delivery model.
 
@@ -116,22 +137,22 @@ A reusable code asset is not automatically a scalable delivery model.
 
 Steelman the customer saying no:
 
-- current process is good enough;
-- budget is elsewhere;
-- switching risk is too high;
-- integration effort exceeds benefit;
-- another vendor is already approved;
-- problem is infrequent;
-- value accrues to another team;
-- security or governance blocks adoption;
-- services are preferred over a platform;
-- no appetite exists for another tool.
+- current process is good enough
+- budget is elsewhere
+- switching risk is too high
+- integration effort exceeds benefit
+- an approved vendor already exists
+- problem is infrequent
+- value accrues to another team
+- security/governance blocks adoption
+- services are preferred over a tool
+- buyer does not want another system
 
 Identify evidence required to rebut each serious objection.
 
-## Step 9: Competitor attack
+## Step 9: Competitor and substitute attack
 
-Assume competitors respond.
+Assume alternatives respond.
 
 Ask:
 
@@ -139,21 +160,25 @@ Ask:
 - Can a hyperscaler commoditize it?
 - Can a services competitor replicate it?
 - Can the buyer build internally?
-- Is the supposed moat merely implementation know-how?
+- Can open source be good enough?
+- Is the moat merely implementation know-how?
 - Does proprietary data really exist and remain exclusive?
 - Are switching costs real or imagined?
 
 Moat by assertion is a defect.
 
-## Step 10: Build vs buy vs partner vs do nothing
+## Step 10: Strategic alternatives attack
 
-Re-score all strategic alternatives after the attacks.
+Re-score:
 
-A BUILD case must survive the strongest credible BUY, PARTNER, and DO NOTHING alternatives.
+- BUILD
+- BUY
+- PARTNER
+- DO NOTHING
+- SERVICES-led solution
+- OPEN SOURCE or internal toolkit where relevant
 
-If another option wins, recommend it.
-
-Do not protect sunk effort.
+A BUILD case must survive the strongest credible alternative. If another option wins, recommend it.
 
 ## Step 11: PoC falsification review
 
@@ -161,70 +186,89 @@ A valid PoC must contain:
 
 - falsifiable hypothesis
 - credible baseline
-- representative dataset or sample
+- representative sample
 - primary metric
 - guardrails
 - decision threshold
 - kill criterion
 - failure cases
-- explicit statement of what the PoC cannot prove
+- what the PoC cannot prove
 
-Reject demos presented as validation.
-
-Reject technical success presented as commercial validation.
+Reject demos presented as validation. Reject technical success presented as commercial proof.
 
 ## Step 12: Platform and accelerator challenge
 
-For any platform or reusable accelerator claim ask:
+For platform or reusable accelerator claims ask:
 
-- How many distinct use cases have actually reused the common core?
+- How many distinct use cases reused the common core?
 - What percentage of delivery effort is reusable?
 - Has marginal implementation effort declined?
 - Is there repeatable customer value?
-- Is there commercial pull?
-- Who owns the platform operating model?
-- Would a narrower shared service create most of the value with less cost?
+- Is there sales or strategic pull?
+- Who owns the operating model?
+- What maintenance burden is created?
+- Would a narrower method, shared component, or service create most value with less risk?
 
-If reuse is not evidenced, downgrade the recommendation to a narrower capability or experiment.
+If reuse is not evidenced, downgrade to a narrower pilot, method, reusable asset, or experiment.
 
 ## Step 13: Kill criteria
 
-Define observable conditions that should stop or materially redesign the initiative.
+Define observable stop or redesign conditions.
 
-Examples, only when relevant:
+Examples when relevant:
 
-- no measurable improvement over baseline;
-- no credible buyer or budget;
-- implementation effort exceeds threshold;
-- recurring cost destroys margin;
-- false-positive or error rate exceeds threshold;
-- reuse fails to reduce delivery effort;
-- incumbent alternative closes the differentiation gap;
-- WTP remains below viable economics;
-- governance or security constraints make deployment impractical.
+- no measurable improvement over baseline
+- no credible buyer or budget
+- implementation effort exceeds threshold
+- recurring cost destroys margin
+- error rate exceeds threshold
+- reuse fails to reduce delivery effort
+- incumbent alternative closes gap
+- willingness to pay remains below viable economics
+- governance/security blocks deployment
 
-Never create arbitrary thresholds. Thresholds must be DECISION_THRESHOLD claims with rationale.
+Thresholds must be DECISION_THRESHOLD claims with rationale. Do not invent arbitrary thresholds.
 
-## Step 14: Strongest rejection case
+## Required output
 
-Produce the best concise case for saying no now.
+### 1. Thesis reconstruction
 
-Structure:
+Five-line thesis and critical assumptions.
 
-### Reject because
-1. [highest-leverage reason]
-2. [second reason]
-3. [third reason]
+### 2. Evidence attack summary
 
-### Evidence supporting rejection
-Claim IDs only.
+| Claim | Evidence state | Attack | Blocking? | Evidence needed |
+|---|---|---|---|---|
 
-### What would reverse the rejection
+### 3. Stakeholder attacks
+
+CEO, CTO, CFO, Sales/GTM, Delivery/Ops, Customer, Competitor.
+
+### 4. Strongest rejection case
+
+#### Reject because
+
+1. highest-leverage reason
+2. second reason
+3. third reason
+
+#### Evidence supporting rejection
+
+Use claim IDs or clearly labeled UNKNOWNs.
+
+#### What would reverse the rejection
+
 Specific evidence or experiment results.
 
-This section is mandatory even when the final recommendation is BUILD.
+### 5. Alternatives after red-team
 
-## Step 15: Final recommendation
+Re-score build, buy, partner, do nothing, and other relevant alternatives.
+
+### 6. Kill criteria
+
+Observable thresholds and triggers.
+
+### 7. Final recommendation
 
 Allowed decisions:
 
@@ -236,27 +280,27 @@ Allowed decisions:
 - KILL
 - NOT READY
 
-Use staged commitment where possible.
-
-Prefer:
-
-`approve the next evidence-generating investment`
-
-over
-`approve the full platform roadmap`
-
-when uncertainty is still material.
+Use staged commitment when uncertainty remains.
 
 ## Hard stop conditions
 
-Return NOT READY or a narrower EXPERIMENT when:
+Return NOT READY or EXPERIMENT when:
 
-- P0 evidence is missing or stale;
-- contradictions are unresolved;
-- the business case depends on fabricated or unverified citations;
-- customer demand is inferred only from market size;
-- right-to-win is asserted rather than evidenced;
-- the PoC cannot fail;
-- ROI cannot be reconstructed;
-- platform reuse is assumed from one project;
-- the case has not compared build, buy, partner, and do nothing.
+- P0 evidence is missing or stale
+- contradictions are unresolved
+- customer demand is inferred only from market size
+- right-to-win is asserted rather than evidenced
+- PoC cannot fail
+- ROI cannot be reconstructed
+- platform reuse is assumed from one project
+- build/buy/partner/do-nothing was not compared
+
+## Final self-check
+
+Before delivery, verify:
+
+- I created the strongest rejection case.
+- I did not manufacture generic risk.
+- I attacked evidence, economics, GTM, delivery, customer, and alternatives.
+- I exposed blockers rather than smoothing them.
+- I recommended the next evidence-generating decision where full investment is premature.
