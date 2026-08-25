@@ -1,24 +1,52 @@
 # PM Market Research
 
-Market research workflows for competitor discovery, segmentation, market sizing, user research, feedback analysis, and customer journey mapping.
-
-This plugin is part of Sandeep Kumar M's enhanced `pm-skills` fork. It is hardened against a specific high-risk failure mode: stopping too early and claiming there are no competitors, no alternatives, or no market signal when the research path was incomplete.
+Reliability-first market research for competitor discovery, segmentation, market sizing, user research, qualitative analysis, and customer journeys.
 
 ## When to use
 
-Use this plugin when you need to:
+Use this plugin when you need to identify competitors, synthesize user feedback, research personas or segments, estimate market size, map journeys, analyze sentiment, or prepare leadership-facing market evidence.
 
-- identify direct, adjacent, and indirect competitors
-- run competitor analysis
-- synthesize user feedback
-- research users and personas
-- estimate market size
-- segment markets or users
-- map customer journeys
-- analyze sentiment or qualitative signals
-- prepare leadership-facing market evidence
+## Install and use
 
-## Skills included
+Full cross-LLM guide: [Using PM Skills with LLMs](../docs/USING_WITH_LLMS.md).
+
+### Claude Code / Cowork
+
+```bash
+claude plugin marketplace add sandeep9889123/pm-skills
+claude plugin install pm-market-research@pm-skills
+```
+
+```text
+/pm-market-research:competitive-analysis enterprise AI document validation
+```
+
+### Codex
+
+```bash
+codex plugin marketplace add sandeep9889123/pm-skills --ref main
+codex plugin add pm-market-research@pm-skills
+```
+
+```text
+Use pm-market-research competitor-analysis for this market. Search direct, adjacent, substitute, incumbent, services, manual, open-source, internal-build, regional, and emerging alternatives before concluding.
+```
+
+### ChatGPT
+
+Upload `skills/competitor-analysis/`, `skills/market-sizing/`, or another specific skill if Skills is available.
+
+With the GitHub app:
+
+```text
+Read pm-market-research/skills/competitor-analysis/SKILL.md from sandeep9889123/pm-skills and follow it. Show search coverage and unresolved candidates.
+```
+
+### Other LLMs
+
+Copy the required `skills/*` folders into your Agent Skills directory or attach the relevant `SKILL.md`. The reliability guards remain applicable even if the model has no search tools. Tool failure means incomplete coverage, not market absence.
+
+## Skills (7)
 
 - `competitor-analysis`
 - `customer-journey-map`
@@ -28,40 +56,35 @@ Use this plugin when you need to:
 - `user-personas`
 - `user-segmentation`
 
-## Commands included
+## Commands (3)
 
-- `/analyze-feedback`
-- `/competitive-analysis`
-- `/research-users`
+- `/pm-market-research:analyze-feedback`
+- `/pm-market-research:competitive-analysis`
+- `/pm-market-research:research-users`
+
+## Example prompts
+
+```text
+Use competitor-analysis to identify direct competitors, adjacent players, substitutes, internal builds, services, open source, incumbents, regional players, and emerging entrants. Verify user-supplied names independently.
+```
+
+```text
+Use market-sizing to build transparent top-down and bottom-up ranges. Do not average incompatible reports or derive SOM from an arbitrary TAM percentage.
+```
 
 ## Operating rules
 
-1. Never conclude “no competitors” without searching direct competitors, adjacent players, substitutes, internal build alternatives, service firms, open-source options, and workflow workarounds.
-2. Always list the search strategy and evidence gaps.
-3. Separate competitors from alternatives and substitutes.
-4. Do not invent market size numbers.
-5. Use confidence labels for every major finding.
+1. Never conclude no competitors from a weak first pass.
+2. Show search strategy and evidence gaps.
+3. Separate competitors, alternatives, and substitutes.
+4. Do not invent market-size numbers.
+5. Use evidence states and confidence for material findings.
 6. Include disconfirming evidence and false-negative risk.
-
-## Example use
-
-```text
-Use pm-market-research to identify competitors for this enterprise AI validation solution. Include direct competitors, adjacent platforms, substitutes, open-source alternatives, service providers, evidence strength, and research gaps.
-```
 
 ## Output standard
 
-A strong output from this plugin should include:
-
-- category definition
-- user segments
-- competitor map
-- alternatives and substitutes
-- evidence table
-- market signals
-- gaps and unknowns
-- implications for product and GTM
+A strong output includes category definition, segments, competitor/alternative map, evidence table, market signals, gaps/unknowns, and implications for product and GTM.
 
 ## Attribution
 
-Based on the original `phuryn/pm-skills` market research workflows. Enhanced in this fork with stronger anti-hallucination, competitor false-negative prevention, and evidence-led research discipline.
+Based on the original `phuryn/pm-skills` market research workflows, enhanced with anti-hallucination and false-negative prevention.

@@ -1,22 +1,52 @@
 # PM Marketing Growth
 
-Marketing and growth workflows for north-star metrics, positioning, product naming, value propositions, and marketing idea generation.
-
-This plugin is part of Sandeep Kumar M's enhanced `pm-skills` fork. It is meant to help PMs produce sharper market-facing narratives without drifting into generic marketing copy.
+Marketing and growth workflows for North Star metrics, positioning, product naming, value propositions, and marketing idea generation.
 
 ## When to use
 
-Use this plugin when you need to:
+Use this plugin when you need to define a North Star metric, name a product, create positioning/value propositions, brainstorm channel-aware marketing ideas, or sharpen external-facing PM narratives.
 
-- define a north-star metric
-- name a product or brand concept
-- write value proposition statements
-- generate positioning ideas
-- brainstorm marketing angles
-- connect product outcomes to growth loops
-- sharpen external-facing PM narratives
+## Install and use
 
-## Skills included
+Full cross-LLM guide: [Using PM Skills with LLMs](../docs/USING_WITH_LLMS.md).
+
+### Claude Code / Cowork
+
+```bash
+claude plugin marketplace add sandeep9889123/pm-skills
+claude plugin install pm-marketing-growth@pm-skills
+```
+
+```text
+/pm-marketing-growth:market-product [product context]
+```
+
+### Codex
+
+```bash
+codex plugin marketplace add sandeep9889123/pm-skills --ref main
+codex plugin add pm-marketing-growth@pm-skills
+```
+
+```text
+Use pm-marketing-growth to create positioning and value propositions for this target segment. Include pain, promise, proof, alternatives, objections, and channel implications.
+```
+
+### ChatGPT
+
+Upload a skill such as `skills/positioning-ideas/` or `skills/north-star-metric/` when Skills is available.
+
+With the GitHub app:
+
+```text
+Read pm-marketing-growth/skills/positioning-ideas/SKILL.md from sandeep9889123/pm-skills and follow it for this product.
+```
+
+### Other LLMs
+
+Copy or attach the relevant skill folder. Use a plain-language workflow request where command syntax is unavailable.
+
+## Skills (5)
 
 - `marketing-ideas`
 - `north-star-metric`
@@ -24,39 +54,34 @@ Use this plugin when you need to:
 - `product-name`
 - `value-prop-statements`
 
-## Commands included
+## Commands (2)
 
-- `/market-product`
-- `/north-star`
+- `/pm-marketing-growth:market-product`
+- `/pm-marketing-growth:north-star`
+
+## Example prompts
+
+```text
+Use north-star-metric to define one value-linked North Star and a small set of guardrails. Reject vanity metrics and explain the failure modes of the chosen metric.
+```
+
+```text
+Use product-name to generate naming territories for this brand. Check distinctiveness, pronunciation, category fit, negative meanings, and validation steps before recommending a winner.
+```
 
 ## Operating rules
 
-1. Do not write vague “AI-powered” positioning unless the AI value is specific.
-2. Name the target segment before writing messaging.
-3. Link every value proposition to a real user pain or measurable business outcome.
-4. A north-star metric must reflect delivered value, not vanity activity.
+1. Do not use vague AI-powered positioning unless the AI value is specific.
+2. Name the target segment before messaging.
+3. Link value propositions to real pain or measurable outcomes.
+4. A North Star must reflect delivered value, not activity.
 5. Positioning should say what the product is not for.
-6. Marketing ideas should be tied to distribution channels and proof points.
-
-## Example use
-
-```text
-Use pm-marketing-growth to create positioning and value propositions for this product. Include target segment, pain, promise, proof, objection handling, and north-star metric.
-```
+6. Marketing ideas should connect to distribution and proof.
 
 ## Output standard
 
-A strong output from this plugin should include:
-
-- target audience
-- problem insight
-- positioning options
-- value propositions
-- proof points
-- north-star metric
-- channel ideas
-- risks and messaging caveats
+A strong output includes target audience, problem insight, positioning options, value propositions, proof points, North Star, channel ideas, and messaging risks.
 
 ## Attribution
 
-Based on the original `phuryn/pm-skills` marketing growth workflows. Enhanced in this fork with sharper positioning discipline and proof-backed messaging expectations.
+Based on the original `phuryn/pm-skills` marketing-growth workflows, enhanced with sharper positioning and proof-backed messaging expectations.

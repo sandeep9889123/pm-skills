@@ -2,8 +2,6 @@
 
 Product discovery workflows for moving from vague product questions to structured evidence, risks, assumptions, opportunities, and testable next steps.
 
-This plugin is part of Sandeep Kumar M's enhanced `pm-skills` fork. It builds on the upstream PM skills foundation and adds a stronger operating expectation: do not produce generic discovery theater. Separate what is known, what is assumed, what needs validation, and what can be decided now.
-
 ## When to use
 
 Use this plugin when you need to:
@@ -17,7 +15,61 @@ Use this plugin when you need to:
 - define early metrics for a problem area
 - convert scattered qualitative inputs into PM-ready evidence
 
-## Skills included
+## Install and use
+
+Full cross-LLM guide: [Using PM Skills with LLMs](../docs/USING_WITH_LLMS.md).
+
+### Claude Code / Cowork
+
+Add the marketplace once, then install this plugin:
+
+```bash
+claude plugin marketplace add sandeep9889123/pm-skills
+claude plugin install pm-product-discovery@pm-skills
+```
+
+Run a workflow:
+
+```text
+/pm-product-discovery:discover AI-assisted meeting notes for enterprise teams
+```
+
+Or name one skill directly:
+
+```text
+Use the prioritize-assumptions skill to rank these product assumptions by impact and evidence risk.
+```
+
+### Codex
+
+```bash
+codex plugin marketplace add sandeep9889123/pm-skills --ref main
+codex plugin add pm-product-discovery@pm-skills
+```
+
+Then use plain language:
+
+```text
+Use pm-product-discovery to run ideation, assumption mapping, risk prioritization, and experiment design for this product idea. Pause at each decision gate.
+```
+
+### ChatGPT
+
+If Skills upload is available, upload any folder under `skills/`, for example `skills/prioritize-assumptions/`.
+
+If using the GitHub app, prompt:
+
+```text
+Read pm-product-discovery/skills/prioritize-assumptions/SKILL.md from sandeep9889123/pm-skills and follow it for the assumptions below.
+```
+
+Claude slash commands are not assumed in ChatGPT. Use the equivalent natural-language workflow prompt.
+
+### Other LLMs
+
+Copy the required `skills/*` folders into your tool's Agent Skills directory, or attach the relevant `SKILL.md` and tell the model to follow it as the governing workflow.
+
+## Skills (13)
 
 - `analyze-feature-requests`
 - `brainstorm-experiments-existing`
@@ -33,13 +85,23 @@ Use this plugin when you need to:
 - `prioritize-features`
 - `summarize-interview`
 
-## Commands included
+## Commands (5)
 
-- `/brainstorm`
-- `/discover`
-- `/interview`
-- `/setup-metrics`
-- `/triage-requests`
+- `/pm-product-discovery:brainstorm`
+- `/pm-product-discovery:discover`
+- `/pm-product-discovery:interview`
+- `/pm-product-discovery:setup-metrics`
+- `/pm-product-discovery:triage-requests`
+
+## Example prompts
+
+```text
+Use pm-product-discovery to analyze these customer requests. Group them by user job, pain severity, evidence strength, and discovery risk. Then propose the cheapest validation experiments.
+```
+
+```text
+Use the opportunity-solution-tree skill to map our target outcome, opportunities, candidate solutions, assumptions, and experiments. Do not force a solution where evidence is weak.
+```
 
 ## Operating rules
 
@@ -47,28 +109,13 @@ Use this plugin when you need to:
 2. Separate evidence from opinion.
 3. Do not assume demand from stakeholder urgency alone.
 4. Treat feature requests as signals, not requirements.
-5. Always expose risky assumptions before recommending experiments.
+5. Expose risky assumptions before recommending experiments.
 6. Make next steps measurable, small, and decision-oriented.
-
-## Example use
-
-```text
-Use pm-product-discovery to analyze these customer requests. Group them by user job, pain severity, evidence strength, and discovery risk. Then propose the top validation experiments.
-```
 
 ## Output standard
 
-A strong output from this plugin should include:
-
-- problem framing
-- user segments or jobs
-- evidence summary
-- assumption map
-- opportunity areas
-- prioritization rationale
-- experiment plan
-- open questions
+A strong output should include problem framing, user jobs, evidence summary, assumption map, opportunity areas, prioritization rationale, experiment plan, and open questions.
 
 ## Attribution
 
-Based on the original `phuryn/pm-skills` product discovery work. Enhanced in this fork with clearer evidence separation and decision-focused discovery outputs.
+Based on the original `phuryn/pm-skills` product discovery work. Enhanced in this fork with evidence separation and decision-focused discovery outputs.

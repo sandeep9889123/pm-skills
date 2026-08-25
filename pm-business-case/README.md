@@ -2,22 +2,51 @@
 
 Evidence-first business-case workflows for evaluating investment bets, AI solution opportunities, migration agents, enterprise accelerators, and product capability proposals.
 
-This plugin is a major added layer in Sandeep Kumar M's enhanced `pm-skills` fork. It exists because generic business-case prompts often produce confident narratives with weak evidence, invented market logic, shallow competitor scans, and no decision discipline.
-
 ## When to use
 
-Use this plugin when you need to:
+Use this plugin when you need to build a leadership-ready business case, validate market/customer proof, model economics, create an evidence ledger, run an investment red-team, or decide whether to BUILD, BUY, PARTNER, EXPERIMENT, DEFER, KILL, or return NOT READY.
 
-- build a leadership-ready business case
-- validate market proof
-- map customer and JTBD proof
-- estimate economics and commercial proof
-- create an evidence ledger
-- run investment red-team reviews
-- decide whether to proceed, pause, narrow, or reject a solution bet
-- prevent hallucinated claims in high-stakes PM documents
+## Install and use
 
-## Skills included
+Full cross-LLM guide: [Using PM Skills with LLMs](../docs/USING_WITH_LLMS.md).
+
+### Claude Code / Cowork
+
+```bash
+claude plugin marketplace add sandeep9889123/pm-skills
+claude plugin install pm-business-case@pm-skills
+```
+
+```text
+/pm-business-case:build-business-case [initiative]
+```
+
+### Codex
+
+```bash
+codex plugin marketplace add sandeep9889123/pm-skills --ref main
+codex plugin add pm-business-case@pm-skills
+```
+
+```text
+Use pm-business-case to evaluate this initiative. Build the evidence ledger before the narrative, compare BUILD/BUY/PARTNER/DO NOTHING, require reconstructable economics, define a falsifiable PoC, and produce the strongest rejection case.
+```
+
+### ChatGPT
+
+Upload a specific skill such as `skills/business-case-orchestrator/` or `skills/evidence-ledger/` if Skills is available.
+
+With the GitHub app:
+
+```text
+Read pm-business-case/skills/business-case-orchestrator/SKILL.md from sandeep9889123/pm-skills and follow it. Treat missing P0 evidence as a blocker and do not invent citations or numbers.
+```
+
+### Other LLMs
+
+Copy or attach the relevant skill folders. The core evidence contract is model-agnostic. Tool failure must become `coverage incomplete / UNKNOWN`, not fabricated proof.
+
+## Skills (6)
 
 - `business-case-orchestrator`
 - `customer-jtbd-proof`
@@ -26,45 +55,37 @@ Use this plugin when you need to:
 - `investment-red-team`
 - `opportunity-market-proof`
 
-## Commands included
+## Commands (5)
 
-- `/build-business-case`
-- `/business-case-decision`
-- `/business-case-evidence`
-- `/business-case-red-team`
-- `/business-case-refresh`
+- `/pm-business-case:build-business-case`
+- `/pm-business-case:business-case-decision`
+- `/pm-business-case:business-case-evidence`
+- `/pm-business-case:business-case-red-team`
+- `/pm-business-case:business-case-refresh`
+
+## Example prompts
+
+```text
+Use evidence-ledger to classify every material claim as FACT, INFERENCE, ASSUMPTION, ESTIMATE, UNKNOWN, STALE, PROPOSAL, or DECISION_THRESHOLD. Show provenance, freshness, contradiction state, and blocking P0 claims.
+```
+
+```text
+Use investment-red-team to attack this case from CEO, CTO, CFO, Sales, Delivery, Customer, and Competitor perspectives. Produce the strongest rejection case and what evidence would reverse it.
+```
 
 ## Operating rules
 
-1. Do not invent market size, competitors, client proof, revenue numbers, cost savings, or stakeholder approval.
-2. Every major claim must be tagged as fact, source-backed evidence, weak signal, assumption, or judgment.
-3. If evidence is missing, say it is missing and produce a validation plan.
-4. Always include alternatives and substitutes.
-5. Always include rejection risks and disconfirming evidence.
-6. The final output must support a decision, not only a persuasive story.
-
-## Example use
-
-```text
-Use pm-business-case to build an evidence-first business case for Migration Agents Phase 1. Separate facts, assumptions, missing evidence, red-team risks, commercial proof, competitive proof, JTBD proof, and investment decision gates.
-```
+1. Do not invent market size, competitors, client proof, revenue, savings, or approvals.
+2. Every material claim must have an evidence state.
+3. Missing evidence must remain missing with a validation plan.
+4. Always compare credible alternatives and substitutes.
+5. Always expose rejection risks and disconfirming evidence.
+6. The output must support a staged decision, not merely a persuasive story.
 
 ## Output standard
 
-A strong output from this plugin should include:
-
-- executive summary
-- decision ask
-- evidence ledger
-- market proof
-- customer/JTBD proof
-- economics and commercial proof
-- competitor and alternatives scan
-- red-team rejection risks
-- assumptions register
-- validation plan
-- decision gates
+A strong output includes executive decision, evidence ledger, market proof, customer/JTBD proof, alternatives, right-to-win, economics, commercialization, falsifiable PoC, red-team rejection case, assumptions, validation plan, and decision gates.
 
 ## Attribution
 
-This plugin is an added business-case formation layer in Sandeep Kumar M's fork, built on the broader `phuryn/pm-skills` foundation. It reflects added focus on evidence-led business cases, migration-agent opportunities, enterprise capability bets, and low-hallucination PM outputs.
+This plugin is an added business-case formation layer in Sandeep Kumar M's fork, built on the broader `phuryn/pm-skills` foundation.
