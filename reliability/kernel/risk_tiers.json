@@ -1,0 +1,171 @@
+{
+  "schema_version": "1.0",
+  "inventory": {
+    "plugins": 12,
+    "skills": 96,
+    "workflows": 55
+  },
+  "tier_policy": {
+    "P0": {
+      "label": "decision-critical",
+      "description": "Failure can materially distort a factual, financial, customer, enterprise, legal/privacy, production, quantitative, or external-action decision.",
+      "required_controls": [
+        "context_resolution",
+        "evidence_states",
+        "source_precedence",
+        "freshness_check",
+        "contradiction_pass",
+        "tool_failure_fail_closed",
+        "negative_conclusion_gate_when_applicable",
+        "cross_skill_lineage",
+        "decision_gate",
+        "behavioral_evaluation_plan"
+      ]
+    },
+    "P1": {
+      "label": "context-sensitive",
+      "description": "Failure is more likely to create generic, mis-scoped, or under-evidenced PM reasoning than an immediate high-consequence action.",
+      "required_controls": [
+        "context_resolution",
+        "anti_invention",
+        "material_assumptions",
+        "evidence_vs_hypothesis",
+        "contradiction_when_material",
+        "intent_preservation"
+      ]
+    },
+    "P2": {
+      "label": "low-risk-transformation",
+      "description": "Primarily editorial or representational transformation where the dominant risks are changing meaning or inventing content.",
+      "required_controls": [
+        "anti_invention",
+        "intent_preservation",
+        "ambiguity_flag"
+      ]
+    }
+  },
+  "skills": {
+    "pm-product-discovery": {
+      "P0": ["brainstorm-experiments-existing", "brainstorm-experiments-new", "interview-script", "metrics-dashboard", "prioritize-features", "summarize-interview"],
+      "P1": ["analyze-feature-requests", "brainstorm-ideas-existing", "brainstorm-ideas-new", "identify-assumptions-existing", "identify-assumptions-new", "opportunity-solution-tree", "prioritize-assumptions"],
+      "P2": []
+    },
+    "pm-prospect-discovery": {
+      "P0": ["assumption-register", "discovery-question-engine", "discovery-red-team", "discovery-synthesis", "journey-decomposition", "problem-use-case-hypothesis", "proposal-readiness", "prospect-discovery-orchestrator", "prospect-research", "solution-option-framing"],
+      "P1": [],
+      "P2": []
+    },
+    "pm-product-strategy": {
+      "P0": ["business-model", "monetization-strategy", "porters-five-forces", "pricing-strategy", "product-strategy"],
+      "P1": ["ansoff-matrix", "lean-canvas", "pestle-analysis", "product-vision", "startup-canvas", "swot-analysis", "value-proposition"],
+      "P2": []
+    },
+    "pm-execution": {
+      "P0": ["create-prd", "outcome-roadmap", "pre-mortem", "stakeholder-map", "strategy-red-team", "summarize-meeting", "test-scenarios"],
+      "P1": ["brainstorm-okrs", "dummy-dataset", "prioritization-frameworks", "retro", "sprint-plan", "user-stories", "wwas"],
+      "P2": ["job-stories", "release-notes"]
+    },
+    "pm-market-research": {
+      "P0": ["competitor-analysis", "market-segments", "market-sizing", "sentiment-analysis", "user-personas", "user-segmentation"],
+      "P1": ["customer-journey-map"],
+      "P2": []
+    },
+    "pm-data-analytics": {
+      "P0": ["ab-test-analysis", "cohort-analysis", "sql-queries"],
+      "P1": [],
+      "P2": []
+    },
+    "pm-go-to-market": {
+      "P0": ["beachhead-segment", "competitive-battlecard", "gtm-motions", "gtm-strategy", "ideal-customer-profile"],
+      "P1": ["growth-loops"],
+      "P2": []
+    },
+    "pm-marketing-growth": {
+      "P0": ["north-star-metric"],
+      "P1": ["marketing-ideas", "positioning-ideas", "product-name", "value-prop-statements"],
+      "P2": []
+    },
+    "pm-toolkit": {
+      "P0": ["draft-nda", "privacy-policy"],
+      "P1": ["review-resume"],
+      "P2": ["grammar-check"]
+    },
+    "pm-ai-shipping": {
+      "P0": ["intended-vs-implemented", "shipping-artifacts"],
+      "P1": [],
+      "P2": []
+    },
+    "pm-enterprise-transformation": {
+      "P0": ["account-expansion-play", "automation-governance", "capability-opportunity-radar", "case-study-to-gtm", "client-proof-extractor", "pipeline-conversion-experiment", "pm-workflow-automation", "reusable-accelerator-thesis", "sales-funnel-diagnostic", "solution-business-case", "solution-to-sales-playbook", "tool-evaluation-selection"],
+      "P1": [],
+      "P2": []
+    },
+    "pm-business-case": {
+      "P0": ["business-case-orchestrator", "customer-jtbd-proof", "economics-commercial-proof", "evidence-ledger", "investment-red-team", "opportunity-market-proof"],
+      "P1": [],
+      "P2": []
+    }
+  },
+  "workflows": {
+    "pm-product-discovery": {
+      "P0": ["discover", "interview", "setup-metrics", "triage-requests"],
+      "P1": ["brainstorm"],
+      "P2": []
+    },
+    "pm-prospect-discovery": {
+      "P0": ["prospect-discovery", "discovery-prepare", "discovery-synthesize", "discovery-readiness"],
+      "P1": [],
+      "P2": []
+    },
+    "pm-product-strategy": {
+      "P0": ["business-model", "market-scan", "pricing", "strategy"],
+      "P1": ["value-proposition"],
+      "P2": []
+    },
+    "pm-execution": {
+      "P0": ["meeting-notes", "pre-mortem", "red-team-prd", "stakeholder-map", "test-scenarios", "transform-roadmap", "write-prd"],
+      "P1": ["generate-data", "plan-okrs", "sprint", "write-stories"],
+      "P2": []
+    },
+    "pm-market-research": {
+      "P0": ["analyze-feedback", "competitive-analysis", "research-users"],
+      "P1": [],
+      "P2": []
+    },
+    "pm-data-analytics": {
+      "P0": ["analyze-cohorts", "analyze-test", "write-query"],
+      "P1": [],
+      "P2": []
+    },
+    "pm-go-to-market": {
+      "P0": ["battlecard", "growth-strategy", "plan-launch"],
+      "P1": [],
+      "P2": []
+    },
+    "pm-marketing-growth": {
+      "P0": ["north-star"],
+      "P1": ["market-product"],
+      "P2": []
+    },
+    "pm-toolkit": {
+      "P0": ["draft-nda", "privacy-policy"],
+      "P1": ["review-resume", "tailor-resume"],
+      "P2": ["proofread"]
+    },
+    "pm-ai-shipping": {
+      "P0": ["derive-tests", "document-app", "performance-audit-static", "security-audit-static", "ship-check"],
+      "P1": [],
+      "P2": []
+    },
+    "pm-enterprise-transformation": {
+      "P0": ["automate-pm-workflow", "build-future-capability", "proof-to-gtm", "transform-sales"],
+      "P1": [],
+      "P2": []
+    },
+    "pm-business-case": {
+      "P0": ["build-business-case", "business-case-decision", "business-case-evidence", "business-case-red-team", "business-case-refresh"],
+      "P1": [],
+      "P2": []
+    }
+  }
+}
