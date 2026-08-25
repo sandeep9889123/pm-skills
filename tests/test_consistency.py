@@ -99,8 +99,12 @@ class TestCodexMarketplace(unittest.TestCase):
     def test_codex_sources_point_at_matching_directories(self):
         for p in codex_marketplace()["plugins"]:
             source = p.get("source", {})
-            self.assertEqual(source.get("source"), "local", p["name"])
-            self.assertEqual(source.get("path"), f"./{p['name']}", p["name"])
+            self.assertEqual(source.get("source"), "git-subdir", p["name"])
+            self.assertEqual(source.get("path"), p["name"], p["name"])
+            self.assertTrue(source.get("url"), f"missing Codex git-subdir url for {p['name']}")
+            self.assertTrue(source.get("ref"), f"missing Codex git-subdir ref for {p['name']}")
+            self.assertIn("policy", p, p["name"])
+            self.assertIn("category", p, p["name"])
 
     def test_every_plugin_has_codex_manifest(self):
         for p in plugin_dirs():
