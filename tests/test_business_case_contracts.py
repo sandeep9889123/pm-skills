@@ -34,9 +34,9 @@ class TestBusinessCasePluginShape(unittest.TestCase):
         text = (PLUGIN / "skills" / "business-case-orchestrator" / "SKILL.md").read_text(encoding="utf-8").lower()
         required = [
             "fail-closed",
-            "never invent a citation",
-            "tool/search failure",
-            "build, buy, or partner recommendation is prohibited",
+            "never invent citations",
+            "search failure, retrieval failure, or tool unavailability",
+            "build, buy, or partner recommendations are blocked",
             "falsifiable poc",
             "strongest rejection case",
             "validate_evidence.py",
@@ -48,12 +48,12 @@ class TestBusinessCasePluginShape(unittest.TestCase):
     def test_market_proof_blocks_first_pass_absence(self):
         text = (PLUGIN / "skills" / "opportunity-market-proof" / "SKILL.md").read_text(encoding="utf-8").lower()
         required = [
-            "never conclude \"no competitors\" from a first pass",
+            "never conclude no competitors from a first pass",
             "regional players",
             "emerging startups",
             "in-house alternatives",
             "contradiction pass",
-            "coverage incomplete / unknown",
+            "competitive coverage incomplete. absence cannot be concluded.",
             "do nothing",
         ]
         for phrase in required:
@@ -89,9 +89,9 @@ class TestBusinessCasePluginShape(unittest.TestCase):
         text = (PLUGIN / "skills" / "investment-red-team" / "SKILL.md").read_text(encoding="utf-8").lower()
         required = [
             "strongest rejection case",
-            "build vs buy vs partner vs do nothing",
+            "always compare build, buy, partner, and do nothing",
             "kill criteria",
-            "technical success presented as commercial validation",
+            "reject technical success presented as commercial proof",
             "platform or reusable accelerator",
         ]
         for phrase in required:
