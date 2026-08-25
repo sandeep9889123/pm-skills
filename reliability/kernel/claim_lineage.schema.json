@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/sandeep9889123/pm-skills/reliability/kernel/claim_lineage.schema.json",
+  "title": "PM Claim Lineage Record",
+  "description": "Portable claim record that prevents downstream skills from silently upgrading evidence strength.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["claim_id", "claim", "state", "source_class", "scope", "downstream_policy"],
+  "properties": {
+    "claim_id": {"type": "string", "minLength": 1},
+    "claim": {"type": "string", "minLength": 1},
+    "state": {
+      "type": "string",
+      "enum": ["FACT", "INFERENCE", "ASSUMPTION", "ESTIMATE", "UNKNOWN", "STALE", "TARGET", "PROPOSAL", "DECISION_THRESHOLD"]
+    },
+    "source_class": {
+      "type": "string",
+      "enum": ["user-source-of-truth", "connected-internal", "primary-external", "independent-credible", "secondary", "stale", "model-prior-knowledge", "derived", "none"]
+    },
+    "source_refs": {
+      "type": "array",
+      "items": {"type": "string"},
+      "uniqueItems": true
+    },
+    "source_date": {"type": ["string", "null"]},
+    "freshness": {
+      "type": "string",
+      "enum": ["CURRENT", "STALE", "UNKNOWN", "NOT_APPLICABLE"]
+    },
+    "confidence": {
+      "type": ["string", "null"],
+      "enum": ["HIGH", "MEDIUM", "LOW", null]
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "geography": {"type": ["string", "null"]},
+        "segment": {"type": ["string", "null"]},
+        "population": {"type": ["string", "null"]},
+        "time_period": {"type": ["string", "null"]},
+        "product_or_workflow": {"type": ["string", "null"]}
+      }
+    },
+    "estimate_method": {
+      "type": ["object", "null"],
+      "properties": {
+        "formula": {"type": ["string", "null"]},
+        "inputs": {"type": "array", "items": {"type": "string"}},
+        "units": {"type": ["string", "null"]},
+        "range_or_sensitivity": {"type": ["string", "null"]}
+      }
+    },
+    "contradictions": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "caveats": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "attribution": {
+      "type": ["string", "null"]
+    },
+    "publishability": {
+      "type": "string",
+      "enum": ["PUBLIC", "INTERNAL_ONLY", "CLIENT_CONFIDENTIAL", "REQUIRES_CLEARANCE", "NOT_APPLICABLE"]
+    },
+    "downstream_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["may_restate", "may_promote_without_new_evidence"],
+      "properties": {
+        "may_restate": {"type": "boolean"},
+        "may_promote_without_new_evidence": {"const": false},
+        "allowed_uses": {"type": "array", "items": {"type": "string"}},
+        "prohibited_uses": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "promotion_history": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["from", "to", "new_evidence"],
+        "properties": {
+          "from": {"type": "string"},
+          "to": {"type": "string"},
+          "new_evidence": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+          "reason": {"type": ["string", "null"]}
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"state": {"const": "ESTIMATE"}}},
+      "then": {"required": ["estimate_method"]}
+    },
+    {
+      "if": {"properties": {"publishability": {"const": "PUBLIC"}}},
+      "then": {"properties": {"state": {"not": {"enum": ["UNKNOWN"]}}}}
+    }
+  ]
+}
