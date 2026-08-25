@@ -98,6 +98,11 @@ CONTRACTS = {
 }
 
 
+def normalize_markdown(text: str) -> str:
+    """Ignore lightweight emphasis/code formatting while preserving semantics."""
+    return text.lower().replace("*", "").replace("`", "")
+
+
 class TestWave5AGuards(unittest.TestCase):
     def test_all_required_runtime_guards_exist(self):
         failures = []
@@ -106,37 +111,37 @@ class TestWave5AGuards(unittest.TestCase):
             if not path.is_file():
                 failures.append(f"missing file: {rel_path}")
                 continue
-            text = path.read_text(encoding="utf-8").lower()
+            text = normalize_markdown(path.read_text(encoding="utf-8"))
             for phrase in phrases:
-                if phrase.lower() not in text:
+                if normalize_markdown(phrase) not in text:
                     failures.append(f"{rel_path}: missing {phrase!r}")
         self.assertEqual(failures, [], "\n".join(failures))
 
     def test_forced_completion_regressions_are_absent(self):
-        market_segments = (ROOT / "pm-market-research/skills/market-segments/SKILL.md").read_text(encoding="utf-8").lower()
-        sentiment = (ROOT / "pm-market-research/skills/sentiment-analysis/SKILL.md").read_text(encoding="utf-8").lower()
-        research_users = (ROOT / "pm-market-research/commands/research-users.md").read_text(encoding="utf-8").lower()
+        market_segments = normalize_markdown((ROOT / "pm-market-research/skills/market-segments/SKILL.md").read_text(encoding="utf-8"))
+        sentiment = normalize_markdown((ROOT / "pm-market-research/skills/sentiment-analysis/SKILL.md").read_text(encoding="utf-8"))
+        research_users = normalize_markdown((ROOT / "pm-market-research/commands/research-users.md").read_text(encoding="utf-8"))
 
         self.assertNotIn("create 3-5 distinct", market_segments)
         self.assertNotIn("identify at least 3 distinct", sentiment)
         self.assertNotIn("identify 3-4 distinct personas", research_users)
 
     def test_sql_no_schema_mode_is_explicitly_non_final(self):
-        skill = (ROOT / "pm-data-analytics/skills/sql-queries/SKILL.md").read_text(encoding="utf-8").lower()
-        command = (ROOT / "pm-data-analytics/commands/write-query.md").read_text(encoding="utf-8").lower()
+        skill = normalize_markdown((ROOT / "pm-data-analytics/skills/sql-queries/SKILL.md").read_text(encoding="utf-8"))
+        command = normalize_markdown((ROOT / "pm-data-analytics/commands/write-query.md").read_text(encoding="utf-8"))
         for text in (skill, command):
             self.assertIn("template - schema not verified", text)
             self.assertIn("do not", text)
             self.assertIn("invent", text)
 
     def test_feedback_does_not_use_text_as_nps(self):
-        skill = (ROOT / "pm-market-research/skills/sentiment-analysis/SKILL.md").read_text(encoding="utf-8").lower()
-        command = (ROOT / "pm-market-research/commands/analyze-feedback.md").read_text(encoding="utf-8").lower()
+        skill = normalize_markdown((ROOT / "pm-market-research/skills/sentiment-analysis/SKILL.md").read_text(encoding="utf-8"))
+        command = normalize_markdown((ROOT / "pm-market-research/commands/analyze-feedback.md").read_text(encoding="utf-8"))
         self.assertIn("do not create an nps proxy", skill)
         self.assertIn("do not derive an nps proxy", command)
 
     def test_cohort_maturity_and_causality_are_both_guarded(self):
-        skill = (ROOT / "pm-data-analytics/skills/cohort-analysis/SKILL.md").read_text(encoding="utf-8").lower()
+        skill = normalize_markdown((ROOT / "pm-data-analytics/skills/cohort-analysis/SKILL.md").read_text(encoding="utf-8"))
         self.assertIn("not yet observable", skill)
         self.assertIn("causal", skill)
         self.assertIn("same-age", skill)
