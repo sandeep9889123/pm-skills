@@ -1,103 +1,93 @@
 ---
-description: Analyze user feedback at scale — sentiment analysis, theme extraction, and segment-level insights
+description: Evidence-first feedback analysis — sentiment and themes with explicit method, sample bias, quote verification, and observed-vs-inferred separation
 argument-hint: "<feedback data as CSV, text, or file>"
 ---
 
-# /analyze-feedback -- User Feedback Analysis
+# /analyze-feedback -- Evidence-First Feedback Analysis
 
-Process large volumes of user feedback (reviews, surveys, support tickets, NPS responses) into structured insights with sentiment analysis and segment-level patterns.
+Analyze reviews, surveys, tickets, NPS comments, or other feedback without turning a biased corpus into false population precision.
 
-## Invocation
+## Step 1: Define Corpus and Decision
 
-```
-/analyze-feedback [upload a CSV of NPS responses]
-/analyze-feedback [paste app store reviews or survey responses]
-/analyze-feedback [upload support ticket export]
-```
+Capture:
 
-## Workflow
+- decision this analysis informs
+- feedback source/channel
+- period and product/version scope
+- unit of analysis
+- record/respondent/account count if known
+- metadata available
+- selection mechanism and likely bias
 
-### Step 1: Accept Feedback Data
+If files/sources are inaccessible, mark coverage `UNKNOWN / incomplete`.
 
-Accept in any format:
-- CSV/Excel with feedback text (and optional metadata: date, segment, rating)
-- Pasted text (reviews, survey responses, Slack messages)
-- Uploaded documents or exports from feedback tools
+## Step 2: Apply Sentiment Analysis Reliability Rules
 
-Ask:
-- What kind of feedback is this? (NPS, reviews, support tickets, survey, etc.)
-- Any segments to analyze separately? (user tier, plan, geography)
-- What are you looking for? (general themes, specific issues, trends over time)
+Use **sentiment-analysis**.
 
-### Step 2: Analyze
+- Define the classification/scoring method before scoring.
+- Do not generate an arbitrary average sentiment score.
+- Do not derive an NPS proxy from free text. Use actual NPS rating data only when present.
+- Do not force segments/themes.
+- Verify direct quotes against source text.
+- Keep `OBSERVED` feedback separate from `INFERENCE` about root cause or business impact.
 
-Apply the **sentiment-analysis** skill:
+## Step 3: Data Quality and Bias Checks
 
-- **Sentiment scoring**: Classify each piece of feedback (positive, neutral, negative)
-- **Theme extraction**: Identify recurring topics and cluster related feedback
-- **Frequency analysis**: Count how often each theme appears
-- **Segment analysis**: Break down sentiment and themes by user segment (if data available)
-- **Trend detection**: If dates are available, identify sentiment shifts over time
+Check where possible:
 
-### Step 3: Generate Analysis Report
+- duplicates / repeat reporters
+- source/channel concentration
+- missingness
+- language/translation uncertainty
+- one large account/user dominating volume
+- sample size per segment
+- collection-method changes over time
 
-```
-## Feedback Analysis Report
+Do not infer prevalence in the full customer base unless the sample supports it.
 
-**Date**: [today]
-**Feedback analyzed**: [count] responses
-**Source**: [NPS survey / app reviews / support tickets / etc.]
-**Period**: [date range if available]
+## Step 4: Themes and Segment Differences
 
-### Overall Sentiment
-- Positive: [X%] | Neutral: [Y%] | Negative: [Z%]
-- Average sentiment score: [X/10]
-- Trend: [improving / stable / declining]
+For each theme report:
 
-### Top Themes
-| # | Theme | Mentions | Sentiment | Segments Most Affected |
-|---|-------|----------|-----------|----------------------|
+| Theme | Evidence | Record/account count | Sentiment mix | Severity | Segment/source | Confidence |
+|---|---|---:|---|---|---|---|
 
-### Theme Deep-Dive
+For segment/time comparisons show denominators and flag small-N results.
 
-#### Theme 1: [Name] — [X] mentions, [sentiment]
-- **What users are saying**: [summary with representative quotes]
-- **Root cause**: [what's driving this feedback]
-- **Impact**: [how this affects retention, satisfaction, or revenue]
-- **Recommendation**: [what to do about it]
+## Step 5: Contradiction and Root-Cause Pass
 
-[Repeat for top 5-8 themes]
+- preserve minority signals
+- find feedback contradicting the dominant theme
+- distinguish requested features from underlying needs
+- treat root cause as hypothesis unless independently supported
+- check whether a trend is really a change in channel/customer mix
 
-### Segment Analysis
-| Segment | Volume | Avg Sentiment | Top Theme | Key Difference |
-|---------|--------|-------------|-----------|---------------|
+## Output
 
-### Notable Quotes
-> "[quote]" — [segment, sentiment]
+### Corpus / Method
+[source, period, sample, bias, sentiment method]
 
-### Trends Over Time
-[If date data available: chart-ready data showing sentiment shifts]
+### Sentiment Distribution
+[counts/rates only where denominator supports them]
 
-### Actionable Insights
-1. [Insight + recommended action]
-2. ...
+### Themes
+[evidence-backed table]
 
-### Gaps
-[What this feedback doesn't tell you — suggested follow-up research]
-```
+### Segment / Time Differences
+[with sample sizes and caveats]
 
-Save as markdown. If input was structured data (CSV), also save enriched data with sentiment scores as CSV.
+### Verified Quotes
+[verbatim only when source-verifiable]
 
-### Step 4: Offer Next Steps
+### Root-Cause Hypotheses
+| Hypothesis | Evidence for | Evidence against | Validation |
+|---|---|---|---|
 
-- "Want me to **create user personas** from these feedback patterns?"
-- "Should I **triage the top themes as feature requests**?"
-- "Want me to **design an interview script** to go deeper on a specific theme?"
+### Action Priority
+Prioritize by severity, frequency, strategic/customer impact, confidence, and reversibility.
 
-## Notes
+### Decision
+`ACT NOW | INVESTIGATE | MONITOR | INSUFFICIENT EVIDENCE`
 
-- Sentiment analysis is approximate — flag edge cases (sarcasm, mixed sentiment, non-English text)
-- Theme extraction should look for needs behind requests, not just surface-level topics
-- If sample sizes are small per segment, note limited confidence
-- For NPS data specifically, analyze Detractors (0-6), Passives (7-8), and Promoters (9-10) separately
-- Output enriched CSV when input is structured, so the user can use it in their own tools
+If structured input is enriched with labels, preserve the original raw text and state the classification method so results are auditable.
