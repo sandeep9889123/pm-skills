@@ -1,166 +1,184 @@
 ---
 name: opportunity-market-proof
-description: "Validate why-now signals, market structure, competitors, substitutes, market size, strategic alternatives, and right-to-win for a business case. Use when proving whether an opportunity exists before recommending build or investment."
+description: "Validate why-now signals, customer problem, market structure, competitors, substitutes, market size, strategic alternatives, and right-to-win before a business case recommends investment. Use when market proof must be evidence-backed and false-negative resistant."
 ---
+
 # Opportunity and Market Proof
 
-## Objective
+## Operating principle
 
-Prove that an opportunity exists and that the proposing organization has a credible reason to pursue it.
+Prove whether an opportunity exists, whether it is worth pursuing, and whether the proposing organization has a credible right to pursue it.
 
-Do not treat market size, AI hype, analyst enthusiasm, or technology novelty as sufficient evidence.
+Do not treat AI hype, market-size theatre, analyst enthusiasm, stakeholder excitement, or technology novelty as opportunity proof.
 
-Follow `pm-business-case/references/EVIDENCE_CONTRACT.md`.
+Follow `pm-business-case/references/EVIDENCE_CONTRACT.md` when available.
 
-## Step 1: Define the market from the problem
+## Non-negotiable rules
 
-Start with the customer problem and workflow, not a vendor category label.
+1. Start from the customer problem and workflow, not the vendor category label.
+2. Never conclude no competitors from a first pass.
+3. Never confuse TAM with reachable opportunity.
+4. Never treat market growth as proof of buyer urgency.
+5. Never assert right-to-win without current, relevant, differentiated evidence.
+6. Never recommend BUILD before BUY, PARTNER, DO NOTHING, services, incumbent, and internal-build alternatives are assessed.
+7. Use `UNKNOWN` instead of invented numbers, companies, capabilities, or demand signals.
+8. If source coverage is incomplete, lower decision readiness.
+
+## Step 1: Define the opportunity from the problem
 
 Capture:
 
-- target job or workflow
-- user and buyer language
-- trigger event
-- current process
+- target customer and buyer
+- user/operator
+- job-to-be-done
+- current workflow
 - desired outcome
-- industry or regulatory context
+- trigger event
 - geography
+- vertical/regulatory context
 - adjacent workflows
+- budget or system of record
+- current alternatives
 
-Generate a search taxonomy before concluding anything about competition or demand.
+Write the opportunity in one sentence:
 
-## Step 2: Why now
+> [Customer] needs to [job/outcome] because [trigger/problem], but current alternatives create [cost/risk/friction].
 
-Search for and classify evidence of:
+If this sentence cannot be written without assumptions, label the opportunity `NOT READY` or `HYPOTHESIS`.
 
-- regulatory change
-- technology cost or capability shift
-- buyer behavior change
-- labor or operating cost pressure
-- platform/ecosystem change
-- new data availability
-- competitor movement
-- procurement pattern changes
-- internal strategic trigger
+## Step 2: Why-now proof
 
-Separate:
+Classify why-now signals as:
 
 - structural signal
-- cyclical signal
+- regulatory signal
+- cost or labor pressure
+- technology capability/cost shift
+- buyer behavior change
+- ecosystem/platform change
+- data availability change
+- competitor movement
+- procurement or budget shift
+- internal strategic trigger
 - vendor hype
-- one-off anecdote
+- anecdote
 
-If "why now" is mostly marketing language, label it weak evidence.
+For each signal, capture evidence, source, freshness, and relevance to the target buyer.
 
-## Step 3: Competitive search exhaustion gate
+A strong why-now case needs more than one marketing narrative.
 
-Never conclude "no competitors" from a first pass.
+## Step 3: Competitive and alternative search exhaustion
 
-Search all applicable framings:
+Search these framings before concluding the market is sparse:
 
 1. direct category terms
 2. problem language
 3. JTBD language
 4. workflow language
 5. buyer language
-6. technology language
+6. technology/capability language
 7. substitutes
 8. manual workflows
-9. build-in-house alternatives
-10. incumbent enterprise suites
-11. open-source options
-12. regional players
-13. niche entrants
-14. emerging startups
-15. adjacent categories
-16. acronyms, synonyms, spelling variants, and legacy terminology
+9. services and consulting alternatives
+10. internal build alternatives
+11. incumbent enterprise suites
+12. open-source tools or frameworks
+13. regional players
+14. niche vertical entrants
+15. emerging startups
+16. synonyms, acronyms, legacy terminology, and spelling variants
 
-For each candidate, verify that the company or product exists and that its relevant capability is supported by an accessible source.
+For every candidate, verify existence and relevant capability. User-supplied competitors are leads, not facts.
 
-User-supplied competitors are leads, not facts.
+### Exhaustion gate
 
-### Contradiction pass
+Before saying the verified direct competitor set is empty or small, document:
 
-After the first landscape is built, explicitly try to disprove it:
+- at least 3 distinct query framings
+- at least 2 source classes where available
+- substitute/manual/internal-build search
+- incumbent-suite search
+- geography/vertical search when relevant
+- contradiction pass
 
-- "Who competes without using this category name?"
-- "What would an enterprise already own that reduces the need to buy this?"
-- "What would a services firm, hyperscaler, incumbent suite, or internal engineering team use instead?"
-- "Which regional or niche players would a local buyer encounter?"
-- "What new entrants appeared recently?"
+If not complete, state:
 
-Only then may you say:
-
-`No verified direct competitor was found after the documented search set. Adjacent alternatives and substitutes still exist. Coverage limitations: ...`
-
-If retrieval or search fails, say `coverage incomplete / UNKNOWN`.
-
-Never say "there are no competitors" unless the claim itself can be proved, which is rarely possible.
+`Competitive coverage incomplete. Absence cannot be concluded.`
 
 ## Step 4: Competitor and alternative matrix
 
-Classify each verified alternative as:
+Classify each verified alternative:
+
+| Alternative | Type | Buyer/job overlap | Evidence | Unknowns | Threat level |
+|---|---|---|---|---|---|
+
+Types:
 
 - direct competitor
 - adjacent competitor
 - substitute
 - incumbent suite capability
 - open source
+- services option
 - internal build
 - manual workflow
 - partner option
+- do nothing/non-consumption
 
-Capture only verified attributes.
+Do not fill blanks with guesses. Use `UNKNOWN`.
 
-Do not populate blank cells with guessed pricing, capabilities, customer counts, funding, market share, integrations, or geography.
+## Step 5: Market sizing discipline
 
-Use `UNKNOWN` for unverified fields.
-
-## Step 5: Market sizing
-
-Use multiple methods where decision importance justifies it.
+Use multiple methods when the decision is material.
 
 ### Top-down
 
-Use reputable market sources, but inspect category definitions and methodology.
+Use reputable sources, but inspect:
+
+- category definition
+- geography
+- included segments
+- base year
+- forecast year
+- methodology
+- commercial incentive
 
 ### Bottom-up
 
-Prefer a transparent model such as:
+Prefer a transparent model:
 
-`reachable accounts x relevant units per account x annual value per unit`
+`reachable accounts x relevant units/workflows per account x annual value per unit`
 
-or another model appropriate to the business.
+or another business-specific formula.
 
-### SAM
+### SAM constraints
 
 Constrain by:
 
 - geography
 - segment
-- product capability
 - deployment model
+- capability boundary
 - regulation
+- buyer eligibility
 - sales coverage
 - integration requirements
-- buyer eligibility
+- implementation capacity
 
-### SOM
+### SOM constraints
 
-Derive from reachability, not an arbitrary percentage of TAM.
-
-Consider:
+Derive from reachability, not arbitrary TAM percentages. Consider:
 
 - target account count
 - seller capacity
 - sales cycle
-- win rate hypothesis
+- win-rate hypothesis
 - implementation capacity
 - pricing
 - adoption ramp
 - time horizon
 
-Every number is FACT or ESTIMATE with explicit inputs.
+Every number must be FACT or ESTIMATE with explicit inputs.
 
 ## Step 6: Reconcile conflicting market evidence
 
@@ -169,40 +187,40 @@ Do not average incompatible reports.
 Compare:
 
 - definitions
-- base years
-- forecast years
+- source lineage
+- base years and forecast years
 - included segments
 - geography
 - methodology
-- source lineage
-- commercial incentives
+- incentives
 
-If reconciliation remains impossible, present a range and explain why.
+If reconciliation is impossible, present a range and explain why.
 
-## Step 7: Right-to-win
+## Step 7: Right-to-win proof
 
-Assess the proposing organization against the opportunity.
+Assess whether the proposing organization has a reason to win.
 
 Evidence may include:
 
-- existing customers
+- existing customer access
 - domain expertise
-- proprietary data
+- proprietary data or workflow knowledge
 - reusable technical assets
-- distribution
 - implementation capability
+- distribution
 - ecosystem relationships
-- switching leverage
 - regulatory credibility
-- operational advantage
+- cost or speed advantage
+- operating knowledge
 
 For each claimed advantage ask:
 
-- Is it real today?
+- Is it true today?
 - Is it differentiated?
 - Is it relevant to buyer choice?
 - Can competitors copy it?
-- Does it reduce time, cost, or risk?
+- Does it reduce time, cost, risk, or adoption friction?
+- Is it proven beyond one project?
 
 Label aspirational capabilities as PROPOSAL, not FACT.
 
@@ -214,16 +232,16 @@ Compare:
 - BUY or consume
 - PARTNER or integrate
 - DO NOTHING or continue current state
+- SERVICES-led delivery
+- OPEN SOURCE or internal toolkit where relevant
+- INCUMBENT platform extension where relevant
 
-Add open source and incumbent platform options when relevant.
-
-Score only evidence-backed dimensions:
+Assess with evidence-backed dimensions:
 
 - time to value
 - total cost
 - strategic control
 - differentiation
-- switching cost
 - vendor dependency
 - maintenance
 - security/data implications
@@ -231,40 +249,81 @@ Score only evidence-backed dimensions:
 - reversibility
 - opportunity cost
 
-Avoid fake precision. If a score is subjective, label it as a judgment and explain the basis.
+Avoid fake precision. If scoring is judgment-based, label it as such.
 
-## Step 9: Output
+## Step 9: Opportunity readiness decision
 
-Produce:
+Allowed outcomes:
 
-### Opportunity thesis
-A short evidence-backed statement of problem, buyer, why now, and opportunity.
+- PROCEED TO BUSINESS CASE
+- RUN EXPERIMENT
+- HOLD
+- KILL
+- NOT READY
 
-### Market evidence ledger
-Claim IDs for key market facts and estimates.
+Proceed only when problem, market, competition, right-to-win, and alternatives are sufficiently understood for the next decision.
 
-### Competitive landscape
+## Required output
+
+### 1. Opportunity thesis
+
+Short evidence-backed statement of problem, buyer, why now, and opportunity.
+
+### 2. Evidence coverage
+
+| Area | Evidence state | Confidence | Blocking unknowns |
+|---|---|---|---|
+| Problem/JTBD | | | |
+| Why now | | | |
+| Competition | | | |
+| Market size | | | |
+| Alternatives | | | |
+| Right-to-win | | | |
+
+### 3. Competitive and alternative landscape
+
 Verified alternatives with UNKNOWN fields preserved.
 
-### Market sizing
-Top-down and bottom-up where possible, with formulae and sensitivity.
+### 4. Market sizing
 
-### Right-to-win
-Current evidence versus capabilities that still need to be built.
+Top-down, bottom-up, range, assumptions, and sensitivity.
 
-### Strategic alternatives
-Build vs buy vs partner vs do nothing.
+### 5. Right-to-win assessment
 
-### Blocking unknowns
-What evidence would materially change the recommendation.
+Current evidence vs aspirational capabilities.
+
+### 6. Strategic alternatives
+
+Build vs buy vs partner vs do nothing, plus relevant services/open-source/incumbent paths.
+
+### 7. Blocking unknowns
+
+What evidence could materially change the recommendation.
+
+### 8. Decision
+
+State readiness, confidence, and next evidence action.
 
 ## Hard stop conditions
 
-Do not recommend BUILD when:
+Do not recommend BUILD or PROCEED when:
 
-- competition coverage is incomplete and material;
-- market size depends on unsupported numbers;
-- there is no clear customer problem;
-- right-to-win is merely asserted;
-- an existing alternative appears materially better and has not been rebutted;
-- the proposed market exists only because the technology label was chosen first.
+- problem is not clearly evidenced
+- why-now is mostly hype
+- competition coverage is incomplete and material
+- market sizing depends on unsupported numbers
+- right-to-win is asserted rather than evidenced
+- build/buy/partner/do-nothing was not compared
+- an existing alternative appears stronger and has not been rebutted
+- the market exists only because the technology category was chosen first
+
+## Final self-check
+
+Before delivery, verify:
+
+- I started from the problem, not category hype.
+- I checked competitors, substitutes, manual workflows, services, incumbents, and internal builds.
+- I reconciled or flagged conflicting market evidence.
+- I distinguished TAM, SAM, and reachable opportunity.
+- I tested right-to-win, not just market attractiveness.
+- I stated what could change the recommendation.
