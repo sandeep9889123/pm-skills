@@ -1,129 +1,136 @@
 ---
 name: business-model
-description: "Generate a Business Model Canvas with all 9 building blocks. Use when creating a business model, documenting how a business creates value, or analyzing an existing business model."
+description: "Build or analyze a Business Model Canvas as an evidence-backed hypothesis system. Separates verified operating facts from assumptions, reconstructs revenue/cost logic, compares alternatives, and avoids generic unit-economics rules. Use for business-model design, review, or investment decisions."
 ---
-# Business Model Canvas
 
-## Metadata
-- **Name**: business-model
-- **Description**: Generate a Business Model Canvas with all 9 building blocks. Use when creating a business model, documenting how a business creates value, or analyzing an existing business model.
-- **Triggers**: business model canvas, BMC, business model, how we make money
+# Evidence-Backed Business Model
 
-## Instructions
+## Purpose
 
-You are a business model strategist designing a Business Model Canvas for $ARGUMENTS.
+Use the Business Model Canvas for `$ARGUMENTS` as a **decision model**, not a template-completion exercise.
 
-Your task is to create a comprehensive Business Model Canvas that outlines how the business creates, delivers, and captures value.
+A complete nine-box canvas is not evidence that the business works.
 
-## Input Requirements
-- Product or service description
-- Target customer(s) and market
-- Current business operations or assumptions
-- Competitive context or industry dynamics
+## P0 Reliability Contract
 
-## Business Model Canvas Template
+1. **Do not invent customers, partners, channels, costs, revenue, CAC, LTV, margins, conversion, pricing, or market size.**
+2. Label each material statement `FACT`, `INFERENCE`, `ASSUMPTION`, `ESTIMATE`, `UNKNOWN`, or `STALE`.
+3. An `ESTIMATE` needs method, inputs, units, and sensitivity/range when material.
+4. Do not apply universal rules such as `LTV > 3x CAC` as a pass/fail truth. Unit-economic thresholds depend on gross margin, payback, retention, capital constraints, sales cycle, risk, and business model.
+5. Distinguish **user, buyer, payer, champion, beneficiary, and partner** where they differ.
+6. Compare at least one credible alternative model or `DO NOTHING/current model` before recommending a material change.
+7. Tool/search failure means coverage `UNKNOWN / incomplete`.
 
-### Left Side: Creating Value
+## Step 1: Decision Context
 
-**1. Key Partners**
-- Who are the key strategic partners and suppliers?
-- What partnerships enable our business model?
-- Which activities do partners handle?
-- Are there joint ventures or co-creation opportunities?
+Resolve:
 
-**2. Key Activities**
-- What key activities does the business perform?
-- What processes are critical to delivering value?
-- Are these activities in-house or outsourced?
-- Production, problem-solving, platform/network activities?
+- existing vs proposed business
+- decision: document, diagnose, launch, pivot, invest, price, partner?
+- product/market/geography/stage
+- current evidence and operating data
+- constraints: delivery, channel, regulation, capital, sales capacity, platform dependencies
 
-**3. Key Resources**
-- What resources are necessary to create value?
-- Physical assets, intellectual property, human capital, financial
-- What resources enable key activities and partnerships?
-- What's the minimum viable resource set?
+## Step 2: Evidence Ledger by Canvas Block
 
-### Center: The Value Proposition
+For each block capture:
 
-**4. Value Propositions**
-- What value do we deliver to customers?
-- Which customer problems do we solve?
-- What needs are satisfied?
-- What products/services address each segment?
-- Quantitative (price, speed, quality) vs. qualitative (design, status)
+| Block | Claim | Evidence state | Source / method | Confidence | Critical unknown |
+|---|---|---|---|---|---|
 
-### Right Side: Delivering Value
+Do not fill a block with plausible generic content when it is unknown.
 
-**5. Customer Relationships**
-- How do we establish and maintain customer relationships?
-- Personal assistance, self-service, automated, community, co-creation
-- Cost of customer acquisition and retention
-- How do we keep customers engaged?
+## Step 3: Nine-Block Canvas
 
-**6. Channels**
-- How do customers discover and access the value?
-- Awareness: How do customers learn about us?
-- Purchase: How do they buy?
-- Delivery: How is value delivered?
-- After-sales: How do we support customers?
-- Direct vs. indirect, owned vs. partner channels
+### Customer Segments
+- who experiences value?
+- who buys/pays?
+- what segment rule is actually supported?
+- anti-segment / poor-fit customer if known
 
-**7. Customer Segments**
-- Who are the key customer segments?
-- Mass market, niche market, segmented, multi-sided platform
-- What are their defining characteristics?
-- Distinct needs, channels, relationships, or profitability
+### Value Proposition
+- job/outcome
+- current alternative
+- evidence of pain/value
+- differentiated mechanism
 
-### Bottom: Financial Viability
+### Channels
+- discovery/evaluation/purchase/delivery/support path
+- observed vs proposed channel
+- acquisition and implementation constraints
 
-**8. Cost Structure**
-- What are the most important costs?
-- Fixed vs. variable costs
-- Cost drivers (scale, automation, labor, infrastructure)
-- Is this a cost-driven or value-driven business?
+### Customer Relationships
+- self-serve, assisted, implementation-heavy, managed service, partner-led, etc.
+- service/support burden and retention implications
 
-**9. Revenue Streams**
-- How does the business make money?
-- Per customer, per transaction, subscription, licensing, rents
-- Pricing mechanisms (fixed, dynamic, value-based)
-- Customer lifetime value and unit economics
+### Revenue Streams
+- payer
+- value metric
+- price/mechanism status: observed, target, proposal, unknown
+- recurring/usage/project/transaction/etc.
 
-## Output Process
-1. Identify and profile customer segments
-2. Define the core value proposition(s)
-3. Map customer relationships and channels
-4. List key activities and resources
-5. Identify key partners
-6. Outline cost structure
-7. Define revenue streams
-8. Ensure all 9 blocks align and support each other
-9. Test economic viability (LTV > 3x CAC)
-10. Identify key assumptions and risks
+### Key Activities
+- activities required to create/deliver/capture value
+- what is genuinely differentiating vs commodity work
 
-### Domain Context
+### Key Resources
+- people/data/IP/distribution/infrastructure/capital required
+- scarcity/dependency and ownership
 
-**Business Model Canvas vs Lean Canvas vs Startup Canvas**:
+### Key Partners
+- dependency, incentive alignment, concentration, switching/lock-in risk
+- build/buy/partner alternative where relevant
 
-Business Model Canvas (Strategyzer, Alexander Osterwalder) is the most widely used canvas framework. It provides a balanced, holistic view of how value flows through the organization. However, it has known limitations for product strategy:
+### Cost Structure
+- fixed/variable/semi-variable costs
+- implementation/support/inference/cloud/vendor/sales costs where relevant
+- cost drivers and scaling behavior
 
-- **No vision**: Why should your team wake up every day? BMC doesn't address motivation or aspiration.
-- **No Can't/Won't test**: What stops competitors from copying you? BMC lacks a defensibility section that goes beyond listing resources.
-- **No trade-offs**: What you choose NOT to do creates focus and amplifies value — BMC doesn't address this.
-- **No key metrics**: How do you know the strategy is working? BMC has no metrics section.
-- **Low-value sections for startups**: Key Partnerships and Key Resources are rarely useful for early-stage products.
+## Step 4: Reconstruct Economics
 
-**When to use BMC**: Established businesses, corporate strategy, investor materials where you need to articulate how all operational pieces connect.
+Where data exists, model:
 
-**Alternatives**:
-- **Lean Canvas** (Ash Maurya): Startup-focused, faster, replaces Partners/Activities/Resources with Problem/Solution/Unfair Advantage. Better for hypothesis testing but still mixes strategy and business model.
-- **Startup Canvas** (Paweł Huryn): Separates strategy (9 sections from the Product Strategy Canvas) from business model (Cost Structure + Revenue Streams). Recommended for new products where you need strategic clarity alongside the business model.
+`Revenue = paying units × price/value metric × usage/frequency`
 
-## Notes
-- The Business Model Canvas provides a holistic view of how value flows through the organization
-- Each block should reinforce and support the others
-- Strong business models have clear, defensible value propositions
-- Financial sustainability requires revenue to exceed costs at scale
-- Use this to identify opportunities for innovation and optimization
+`Contribution = Revenue - variable delivery/service costs`
+
+`Payback = acquisition/implementation investment ÷ contribution generated per period`
+
+Use formulas appropriate to the actual business. Do not force SaaS CAC/LTV onto services, marketplaces, usage-based AI, transaction businesses, or internal platforms.
+
+Run sensitivity on load-bearing uncertain inputs.
+
+## Step 5: Coherence / Contradiction Pass
+
+Test:
+
+- Does target segment actually have the buyer/payer/budget path?
+- Does channel fit ACV, sales cycle and team capacity?
+- Does pricing align with value and cost driver?
+- Does the service/implementation burden erase margin?
+- Does partner dependence undermine differentiation?
+- Is retention/expansion assumed rather than evidenced?
+- Could an alternative model capture value with less risk?
+
+## Step 6: Hypotheses and Tests
+
+Rank the assumptions whose failure would break the model.
+
+| Hypothesis | Evidence now | Cheapest credible test | Pass/fail threshold | Decision if false |
+|---|---|---|---|---|
+
+## Output
+
+### Decision context
+### Evidence-backed canvas
+### Economics and sensitivity
+### Alternative business model(s)
+### Critical contradictions
+### Top assumptions / experiments
+### Decision
+`OPERATE | TEST | MODIFY MODEL | HOLD | REFRAME | NOT READY`
+
+State what evidence would change the recommendation.
 
 ---
 
