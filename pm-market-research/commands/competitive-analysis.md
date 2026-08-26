@@ -1,11 +1,26 @@
 ---
-description: Research the competitive landscape with search exhaustion, contradiction checks, evidence confidence, and direct/adjacent/substitute competitor classification
+description: Research the competitive landscape with search exhaustion, contradiction checks, evidence confidence, and lineage-preserving handoff to downstream decisions
 argument-hint: "<your product, market, or competitive question>"
 ---
 
 # /competitive-analysis -- Reliability-First Competitive Intelligence
 
 Research the competitive landscape without treating a weak first search as proof that the market is empty.
+
+## Cross-Skill Lineage Contract
+
+When this output may feed strategy, business case, positioning, battlecards, roadmap, or GTM:
+
+- assign stable claim IDs to material market/competitor claims;
+- preserve `FACT | INFERENCE | ASSUMPTION | ESTIMATE | UNKNOWN | STALE | TARGET | PROPOSAL`;
+- preserve geography, segment, time period, and workflow scope;
+- preserve source/freshness/confidence and contradictions;
+- preserve publishability or confidentiality restrictions;
+- never treat synthesis/repetition as stronger evidence;
+- emit unresolved P0 evidence gaps separately from recommendations;
+- state prohibited interpretations, especially where evidence does not support market absence, market share, customer adoption, private pricing, or competitor weakness.
+
+A downstream artifact must not turn an `ESTIMATE` into an unlabeled number, `UNKNOWN` into a filled template field, or a scoped claim into a market-wide fact without new evidence.
 
 ## Invocation
 
@@ -20,7 +35,6 @@ Research the competitive landscape without treating a weak first search as proof
 ### Step 1: Define the Competitive Arena
 
 Establish:
-
 - product / problem being solved
 - target user and economic buyer
 - geography / vertical
@@ -34,7 +48,6 @@ Define competitor broadly enough to include products, services, in-house solutio
 Apply the **competitor-analysis** skill.
 
 Build a candidate set across:
-
 - direct competitors
 - adjacent competitors
 - substitutes
@@ -47,22 +60,20 @@ Do not force exactly five direct competitors. Use the number supported by eviden
 ### Step 3: Search Exhaustion and Contradiction Pass
 
 Before accepting a small or empty competitive set:
-
 - reformulate the search using category, problem, workflow, buyer, and technology language
 - search substitutes and alternatives
 - check relevant geography/vertical variants
 - check emerging/new entrants
 - diversify source classes when tools allow
-- explicitly ask: **“If the user told me I missed a competitor, what would I search next?”**
+- explicitly ask: **"If the user told me I missed a competitor, what would I search next?"**
 
 If the user supplies a competitor name, verify it independently before classification.
 
-If coverage remains weak, report **coverage incomplete / UNKNOWN** rather than “no competitors.”
+If coverage remains weak, report **coverage incomplete / UNKNOWN** rather than "no competitors."
 
 ### Step 4: Verify and Classify
 
 For every material competitor, capture:
-
 - competitive type
 - why it competes for the same job/budget
 - target segment
@@ -71,19 +82,18 @@ For every material competitor, capture:
 - confidence
 
 Separate:
-
-- FACT
-- INFERENCE
-- ESTIMATE
-- UNKNOWN
-- STALE
+- `FACT`
+- `INFERENCE`
+- `ASSUMPTION`
+- `ESTIMATE`
+- `UNKNOWN`
+- `STALE`
 
 Do not invent private pricing, market share, customer counts, funding, product capabilities, or traction.
 
 ### Step 5: Analyze the Highest-Priority Competitors
 
 For each verified player:
-
 - positioning
 - target customer / buyer
 - JTBD and workflow
@@ -99,7 +109,6 @@ For each verified player:
 Do not stop at a feature matrix.
 
 Answer:
-
 - Where is the market converging?
 - Which competitors are structurally different?
 - Which alternatives are most likely to win the same customer budget?
@@ -108,9 +117,11 @@ Answer:
 - Which competitor is most strategically dangerous?
 - What remains unresolved?
 
+Derived market-pattern claims should receive new claim IDs with parent claim IDs rather than inheriting `FACT` merely because multiple observations were summarized.
+
 ### Step 7: Generate the Competitive Intelligence Brief
 
-```markdown
+```text
 ## Competitive Intelligence: [Product / Market]
 
 ### Executive View
@@ -126,17 +137,15 @@ Answer:
 
 ### Competitive Set
 | Competitor | Type | Target | Core job | Why it competes | Confidence |
-|---|---|---|---|---|---|
 
 ### Detailed Competitor Analysis
-[Evidence-backed profiles for highest-priority players]
+[Evidence-backed profiles]
 
 ### Competitive Pattern
-[Where the market is converging/diverging]
+[Derived synthesis with parent evidence]
 
 ### Differentiation Opportunities
 | Opportunity | Evidence | Why competitors appear weak | Confidence | Cheapest validation |
-|---|---|---|---|---|
 
 ### Threats
 [Threat, mechanism, evidence, recommended response]
@@ -149,20 +158,32 @@ Answer:
 - Close gap on:
 - Avoid competing on:
 - Next evidence to obtain:
+
+## Reliability Handoff
+Coverage: COMPLETE FOR DECLARED SCOPE | PARTIAL | BLOCKED
+
+### Material Claims
+| Claim ID | Claim | State | Scope | Source/Evidence | Freshness | Publishability | Downstream Restrictions |
+
+### Derived Claims
+| Claim ID | Parent IDs | Derivation | State | Caveats |
+
+### Unresolved P0
+[Claim IDs + evidence needed]
+
+### Decision Status
+[research readiness + inherited blockers]
+
+### Prohibited Interpretations
+[what downstream strategy/GTM must not infer]
 ```
-
-### Step 8: Offer Next Steps
-
-- create a battlecard for a verified competitor
-- develop positioning against the highest-priority alternatives
-- identify product gaps only after validating whether they matter to the target segment
-- schedule a refresh when the market is changing quickly
 
 ## Hard Rules
 
-- Never say “no competitors” because one search returned little.
+- Never say "no competitors" because one search returned little.
 - Never accept a user-supplied competitor as fact without verification.
 - Never force a fixed number of competitors by inventing weak matches.
 - Never confuse a different category label with a different customer job.
 - Never hide unknown evidence behind polished prose.
 - Never treat tool failure as market absence.
+- Never upgrade a claim's evidence state merely because a downstream artifact needs a recommendation.
