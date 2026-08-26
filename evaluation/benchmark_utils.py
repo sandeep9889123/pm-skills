@@ -41,13 +41,43 @@ def canonical_case_stimulus(case: dict[str, Any]) -> dict[str, Any]:
 
 
 def case_fingerprint(case: dict[str, Any]) -> str:
+    """Bind a run to the complete case definition, not only its prompt."""
     payload = json.dumps(
-        canonical_case_stimulus(case),
+        case,
         sort_keys=True,
         separators=(",", ":"),
         ensure_ascii=False,
     ).encode("utf-8")
     return hashlib.sha256(payload).hexdigest()
+
+
+def suite_fingerprint(suite: dict[str, Any]) -> str:
+    """Bind a run to the rubric and every case in the frozen suite."""
+    payload = json.dumps(
+        suite,
+        sort_keys=True,
+        separators=(",", ":"),
+        ensure_ascii=False,
+    ).encode("utf-8")
+    return hashlib.sha256(payload).hexdigest()
+
+
+def subject_fingerprint(repo_root: Path, paths: list[str]) -> str:
+    """Hash the exact workflow files supplied for a benchmark observation."""
+    digest = hashlib.sha256()
+    for value in sorted(paths):
+        path = (repo_root / value).resolve()
+        try:
+            path.relative_to(repo_root.resolve())
+        except ValueError as exc:
+            raise BenchmarkDefinitionError(f"subject path escapes repository: {value}") from exc
+        if not path.is_file():
+            raise BenchmarkDefinitionError(f"subject path does not exist: {value}")
+        digest.update(value.encode("utf-8"))
+        digest.update(b"\0")
+        digest.update(path.read_bytes())
+        digest.update(b"\0")
+    return digest.hexdigest()
 
 
 def get_case(suite: dict[str, Any], case_id: str) -> dict[str, Any]:
@@ -80,6 +110,7 @@ def validate_suite(
     *,
     required_families: list[str] | None = None,
     require_variants: bool = False,
+    require_fixtures: bool = False,
     minimum_cases: int = 1,
 ) -> list[str]:
     errors: list[str] = []
@@ -152,6 +183,21 @@ def validate_suite(
             if not hard.get("required_patterns") and not hard.get("forbidden_patterns"):
                 errors.append(f"{where}.hard_gates: at least one deterministic gate required")
 
+        fixtures = case.get("hard_gate_fixtures")
+        if require_fixtures and not isinstance(fixtures, dict):
+            errors.append(f"{where}.hard_gate_fixtures: object required")
+        elif isinstance(fixtures, dict):
+            for outcome in ("pass", "fail"):
+                samples = fixtures.get(outcome)
+                if not isinstance(samples, list) or len(samples) < 2:
+                    errors.append(
+                        f"{where}.hard_gate_fixtures.{outcome}: at least 2 strings required"
+                    )
+                elif not all(_nonempty_string(item) for item in samples):
+                    errors.append(
+                        f"{where}.hard_gate_fixtures.{outcome}: all entries must be non-empty strings"
+                    )
+
         case_threshold = case.get("pass_threshold")
         if case_threshold is not None and (
             not isinstance(case_threshold, (int, float)) or not 0 <= case_threshold <= 100
@@ -218,6 +264,18 @@ def validate_manifest(manifest: dict[str, Any]) -> list[str]:
     if not isinstance(families, list) or not families or not all(_nonempty_string(x) for x in families):
         errors.append("manifest.required_families: non-empty string array required")
 
+    subjects = manifest.get("workflow_subjects")
+    if not isinstance(subjects, dict) or not subjects:
+        errors.append("manifest.workflow_subjects: non-empty object required")
+    else:
+        for workflow, paths in subjects.items():
+            if not _nonempty_string(workflow):
+                errors.append("manifest.workflow_subjects: workflow keys must be non-empty")
+            if not isinstance(paths, list) or not paths or not all(_nonempty_string(x) for x in paths):
+                errors.append(
+                    f"manifest.workflow_subjects.{workflow}: non-empty string array required"
+                )
+
     gate = manifest.get("release_gate", {})
     if not isinstance(gate, dict):
         errors.append("manifest.release_gate: object required")
@@ -225,11 +283,23 @@ def validate_manifest(manifest: dict[str, Any]) -> list[str]:
         hard = gate.get("maximum_hard_gate_failure_rate")
         pass_rate = gate.get("minimum_case_pass_rate")
         mean = gate.get("minimum_mean_weighted_score")
+        family = gate.get("minimum_family_pass_rate")
+        unstable = gate.get("maximum_unstable_cases")
         if not isinstance(hard, (int, float)) or not 0 <= hard <= 1:
             errors.append("manifest.release_gate.maximum_hard_gate_failure_rate: 0..1 required")
         if not isinstance(pass_rate, (int, float)) or not 0 <= pass_rate <= 1:
             errors.append("manifest.release_gate.minimum_case_pass_rate: 0..1 required")
         if not isinstance(mean, (int, float)) or not 0 <= mean <= 100:
             errors.append("manifest.release_gate.minimum_mean_weighted_score: 0..100 required")
+        if not isinstance(family, (int, float)) or not 0 <= family <= 1:
+            errors.append("manifest.release_gate.minimum_family_pass_rate: 0..1 required")
+        if not isinstance(unstable, int) or unstable < 0:
+            errors.append("manifest.release_gate.maximum_unstable_cases: integer >= 0 required")
+
+    mutation_policy = manifest.get("mutation_policy")
+    if mutation_policy not in {"controlled_pairs", "unpaired_family_challenges"}:
+        errors.append(
+            "manifest.mutation_policy: controlled_pairs or unpaired_family_challenges required"
+        )
 
     return errors

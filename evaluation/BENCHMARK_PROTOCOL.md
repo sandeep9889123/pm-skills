@@ -14,7 +14,7 @@ This benchmark is evidence about a frozen case distribution. It is not proof tha
 
 Wave 7 uses two suites:
 
-- `evaluation/wave7_cases.json`: representative P0 benchmark, 24 paired family cases plus 2 systemic cross-skill lineage cases.
+- `evaluation/wave7_cases.json`: representative P0 benchmark, 24 family cases plus 2 systemic cross-skill lineage cases.
 - `evaluation/cases.json`: legacy regression suite covering earlier observed reliability failures.
 
 The primary release benchmark is the Wave 7 representative suite. The legacy suite remains a regression source and should be re-run when changes materially affect those workflows.
@@ -30,7 +30,7 @@ A valid primary benchmark run must:
 5. use no corrective follow-up before capture;
 6. record model provider, model name/version, configuration, and tool profile;
 7. record whether tools were available and what profile was used;
-8. hash the case stimulus and raw output;
+8. hash the complete case, complete suite, exact workflow subject files, and raw output;
 9. apply deterministic hard gates;
 10. receive a full 100-point judgement for a complete benchmark run.
 
@@ -47,20 +47,15 @@ Why repeat:
 - one bad answer can overstate a rare failure;
 - reliability is better represented by failure rate and score range than a single score.
 
-For 26 primary cases, a complete model benchmark therefore requires at least 78 valid first-run observations.
+For 26 primary cases, the default complete model benchmark requires 78 valid first-run observations. This is a qualification smoke threshold, not statistical proof of a low production failure probability.
+
+The run count must be declared before results are visible. Exact slots `1..N` are required, and later indexes cannot replace missing planned slots. Use a separately declared larger run plan for higher-risk reliability claims.
 
 Do not combine runs from materially different model versions, configurations, or tool profiles into one result.
 
 ## Frozen stimulus and fingerprints
 
-`evaluation/benchmark_utils.py` computes a SHA-256 fingerprint from:
-
-- case ID;
-- workflow;
-- frozen prompt;
-- frozen context.
-
-Each run record stores that fingerprint. If the case prompt/context changes later, old runs become stale for the new case definition rather than silently being reused.
+`evaluation/benchmark_utils.py` computes SHA-256 fingerprints for the complete case definition, complete suite including rubric and gates, and exact workflow files mapped in the manifest. Each run also records the repository commit. If the stimulus, scoring contract, suite, or tested workflow changes later, old runs become stale rather than silently being reused.
 
 The raw response is also SHA-256 hashed. Edited outputs fail integrity validation.
 
@@ -112,7 +107,7 @@ Any hard-gate failure means that run fails, regardless of soft score.
 
 ### Layer B: 100-point rubric
 
-A blinded human reviewer or independent evaluator model scores each dimension from 0 to 5 with evidence-based rationale.
+An independent human reviewer or evaluator model scores each dimension from 0 to 5 with evidence-based rationale and at least one output evidence reference. The judgement is bound to the raw-output SHA-256 and records evaluator identity, type, version, independence, and blinding state.
 
 Weights total 100. The default per-run threshold is 90.
 
@@ -157,6 +152,8 @@ The default Wave 7 release gate is defined in `benchmark_manifest.json`:
 - zero catastrophic hard-gate failures;
 - at least 90% case pass rate;
 - mean weighted score at least 90/100.
+- 100% case pass rate within every required family;
+- zero unstable cases.
 
 These thresholds are benchmark governance choices, not universal scientific constants. Changes to the gate must be documented and should not be made after seeing a model's results merely to force a pass.
 
@@ -194,6 +191,8 @@ When a real-world failure appears:
 3. freeze the new stimulus;
 4. retain old results against the old fingerprint;
 5. rerun affected comparisons under the new suite revision.
+
+Wave 7 v1 uses `MUTATION` for additional family-level adversarial challenges, not guaranteed controlled metamorphic pairs. BASE and MUTATION rates are descriptive strata. Do not interpret their difference as a causal robustness delta. A future controlled-pair suite must declare the invariant and changed variable for every pair.
 
 ## What CI can and cannot prove
 

@@ -20,7 +20,7 @@ The objective is to make model failures observable and comparable without claimi
 
 `wave7_cases.json` is the primary representative benchmark:
 
-- 24 cases covering 12 decision-critical PM families, each with at least one BASE and one MUTATION case;
+- 24 cases covering 12 decision-critical PM families, each with at least one BASE and one MUTATION challenge;
 - 2 additional systemic cross-skill lineage stress cases;
 - 26 primary cases total.
 
@@ -41,6 +41,8 @@ Representative families:
 
 The two systemic cases test claim inflation across handoffs rather than one plugin in isolation.
 
+`MUTATION` means an additional adversarial challenge in the same family. Wave 7 v1 does not claim that every BASE/MUTATION relationship is a controlled metamorphic pair, so the two strata are reported descriptively and not as a causal robustness delta.
+
 ## Benchmark governance
 
 `benchmark_manifest.json` freezes the benchmark rules:
@@ -59,6 +61,8 @@ Default Wave 7 gate:
 - zero catastrophic hard-gate failures;
 - at least 90% case pass rate;
 - mean weighted score at least 90/100.
+- 100% case pass rate inside every required family;
+- zero unstable cases.
 
 These are benchmark governance thresholds, not universal scientific constants. Do not change them after seeing results merely to force a pass.
 
@@ -80,9 +84,11 @@ These are benchmark governance thresholds, not universal scientific constants. D
 
 A hard-gate failure fails the run regardless of weighted score.
 
+Every primary case includes at least two known-PASS and two known-FAIL hard-gate fixtures. CI executes all 104 fixture observations, including contradictory outputs that contain a safe keyword while still making a prohibited conclusion. Regex gates remain narrow tripwires, not semantic truth judges.
+
 ### Layer B: 100-point decision-quality rubric
 
-A blinded human reviewer or independent evaluator model scores each dimension from 0 to 5 with rationale:
+An independent human reviewer or evaluator model scores each dimension from 0 to 5 with rationale and output evidence:
 
 - evidence integrity: 15;
 - analysis sufficiency: 10;
@@ -127,7 +133,14 @@ evaluation/runs/openai-gpt-x/W7_MR_ZERO_RESULT_BASE/run-1.md
 
 ### 3. Create a weighted judgement
 
-Use the case's full rubric dimensions and include rationale for every score.
+Use the case's full rubric dimensions and include rationale plus at least one output evidence reference for every score. The judgement must include:
+
+- the case ID and rubric revision;
+- the raw-output SHA-256 it evaluated;
+- evaluator ID, type, version, independence, and blinding state;
+- all rubric dimensions with score, rationale, and evidence.
+
+See `judgement.schema.json` for the machine-readable contract.
 
 ### 4. Record the run with hashes
 
@@ -139,7 +152,9 @@ python evaluation/record_run.py \
   --provider OpenAI \
   --model GPT-X \
   --version 2026-08-26 \
+  --configuration default \
   --run-index 1 \
+  --planned-runs 3 \
   --fresh-session \
   --tools-enabled true \
   --tool-profile normal-tools \
@@ -149,6 +164,8 @@ python evaluation/record_run.py \
 The record stores:
 
 - frozen-case SHA-256 fingerprint;
+- full-suite and exact workflow-subject fingerprints;
+- repository commit SHA;
 - raw-output SHA-256;
 - optional judgement SHA-256;
 - exact model/version/configuration;
@@ -156,7 +173,7 @@ The record stores:
 - fresh-session flag;
 - whether corrective follow-up or extra context was used.
 
-Edited outputs or changed case prompts fail integrity validation.
+Edited outputs, changed scoring rules, changed cases, or changed workflow files fail integrity validation.
 
 ## Score one output directly
 
@@ -191,13 +208,15 @@ The aggregate report includes:
 - case pass rate;
 - mean/min/max weighted score;
 - family performance;
-- BASE vs MUTATION pass rate;
+- descriptive BASE vs MUTATION challenge pass rate;
 - unstable cases with mixed outcomes or wide score ranges;
-- release status per exact model/configuration/tool profile.
+- per-case and per-run status, scores, ranges, hard failures, and missing slots;
+- evaluator provenance, suite fingerprint, and repository commit;
+- release status per exact model/configuration/tool profile/repository commit.
 
 ## Repetition and case-pass rule
 
-The primary suite requires at least 3 fresh-session observations per case per model/configuration/tool profile.
+The primary suite requires a predeclared three-slot run plan per case per model/configuration/tool profile. Only exact slots `1..N` satisfy coverage. Later indexes cannot substitute for missing planned slots.
 
 A case passes only when:
 
@@ -208,7 +227,7 @@ A case passes only when:
 
 A catastrophic or scored failure cannot be hidden by averaging it with stronger runs.
 
-For 26 cases, a complete model cell therefore requires at least **78 first-run observations**.
+For 26 cases, the default complete model cell requires **78 first-run observations**. Three runs are a qualification smoke threshold, not statistical proof of a low production failure rate. Higher-risk claims require a separately predeclared larger run plan.
 
 ## Comparison discipline
 

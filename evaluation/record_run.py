@@ -12,10 +12,20 @@ import argparse
 import hashlib
 import json
 import re
+import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
 
-from benchmark_utils import case_fingerprint, get_case, load_json, validate_manifest, validate_suite
+from benchmark_utils import (
+    case_fingerprint,
+    get_case,
+    load_json,
+    subject_fingerprint,
+    suite_fingerprint,
+    validate_manifest,
+    validate_suite,
+)
+from score_output import validate_judgement
 
 EVAL_DIR = Path(__file__).resolve().parent
 REPO_ROOT = EVAL_DIR.parent
@@ -51,16 +61,17 @@ def main() -> int:
     parser.add_argument("--provider", required=True)
     parser.add_argument("--model", required=True)
     parser.add_argument("--version", required=True)
-    parser.add_argument("--configuration")
+    parser.add_argument("--configuration", default="default")
     parser.add_argument("--run-index", required=True, type=int)
+    parser.add_argument("--planned-runs", type=int)
     parser.add_argument("--fresh-session", action="store_true")
-    parser.add_argument("--tools-enabled", choices=["true", "false", "unknown"], default="unknown")
-    parser.add_argument("--tool-profile")
+    parser.add_argument("--tools-enabled", choices=["true", "false"], required=True)
+    parser.add_argument("--tool-profile", required=True)
     parser.add_argument("--tool-notes")
     parser.add_argument("--workflow-invoked")
     parser.add_argument("--corrective-followup", action="store_true")
     parser.add_argument("--additional-context", action="store_true")
-    parser.add_argument("--evaluator-blinded", choices=["true", "false", "unknown"], default="unknown")
+    parser.add_argument("--evaluator-blinded", choices=["true", "false"], required=True)
     parser.add_argument("--manifest", type=Path, default=DEFAULT_MANIFEST)
     parser.add_argument("--record", type=Path, help="Destination .run.json")
     parser.add_argument("--notes")
@@ -86,6 +97,7 @@ def main() -> int:
         suite,
         required_families=manifest.get("required_families", []),
         require_variants=True,
+        require_fixtures=True,
         minimum_cases=24,
     )
     if suite_errors:
@@ -99,11 +111,44 @@ def main() -> int:
         print(str(exc))
         return 2
 
-    tools_enabled = {"true": True, "false": False, "unknown": None}[args.tools_enabled]
-    blinded = {"true": True, "false": False, "unknown": None}[args.evaluator_blinded]
+    planned_runs = args.planned_runs or int(manifest["minimum_runs_per_case"])
+    if planned_runs < int(manifest["minimum_runs_per_case"]):
+        parser.error("--planned-runs cannot be below the manifest minimum")
+    if args.run_index > planned_runs:
+        parser.error("--run-index cannot exceed --planned-runs")
+
+    subject_paths = manifest["workflow_subjects"].get(case["workflow"])
+    if not subject_paths:
+        parser.error(f"no workflow subject mapping for {case['workflow']}")
+    try:
+        repository_commit = subprocess.run(
+            ["git", "rev-parse", "HEAD"],
+            cwd=REPO_ROOT,
+            check=True,
+            capture_output=True,
+            text=True,
+        ).stdout.strip()
+    except (OSError, subprocess.CalledProcessError) as exc:
+        parser.error(f"cannot resolve repository commit: {exc}")
+
+    tools_enabled = {"true": True, "false": False}[args.tools_enabled]
+    blinded = {"true": True, "false": False}[args.evaluator_blinded]
 
     raw_output_path = repo_relative(args.output)
     judgement_path = repo_relative(args.judgement) if args.judgement else None
+    raw_output_digest = sha256_file(args.output)
+    if args.judgement:
+        judgement = load_json(args.judgement)
+        _, judgement_errors = validate_judgement(
+            suite, case, judgement, raw_output_digest
+        )
+        if judgement_errors:
+            for error in judgement_errors:
+                print(f"INVALID JUDGEMENT: {error}")
+            return 2
+        if judgement["evaluator"]["blinded"] != blinded:
+            print("INVALID JUDGEMENT: evaluator blinding does not match --evaluator-blinded")
+            return 2
     model_key = f"{args.provider}-{args.model}-{args.version}"
     record_id = f"{slug(model_key)}:{args.case_id}:run-{args.run_index}"
 
@@ -113,6 +158,10 @@ def main() -> int:
         "suite_path": manifest["primary_suite"],
         "case_id": args.case_id,
         "case_fingerprint": case_fingerprint(case),
+        "suite_fingerprint": suite_fingerprint(suite),
+        "subject_paths": subject_paths,
+        "subject_fingerprint": subject_fingerprint(REPO_ROOT, subject_paths),
+        "repository_commit": repository_commit,
         "model": {
             "provider": args.provider,
             "name": args.model,
@@ -120,10 +169,11 @@ def main() -> int:
             "configuration": args.configuration,
         },
         "run_index": args.run_index,
+        "planned_runs": planned_runs,
         "captured_at": datetime.now(timezone.utc).isoformat(),
         "fresh_session": args.fresh_session,
         "raw_output_path": raw_output_path,
-        "raw_output_sha256": sha256_file(args.output),
+        "raw_output_sha256": raw_output_digest,
         "judgement_path": judgement_path,
         "judgement_sha256": sha256_file(args.judgement) if args.judgement else None,
         "evaluator_blinded": blinded,

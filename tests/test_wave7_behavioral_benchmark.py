@@ -11,6 +11,7 @@ import copy
 import hashlib
 import importlib.util
 import json
+import subprocess
 import tempfile
 import unittest
 from pathlib import Path
@@ -47,6 +48,7 @@ class TestWave7Definitions(unittest.TestCase):
             self.suite,
             required_families=self.manifest["required_families"],
             require_variants=True,
+            require_fixtures=True,
             minimum_cases=24,
         )
         self.assertEqual(errors, [], "\n".join(errors))
@@ -75,6 +77,17 @@ class TestWave7Definitions(unittest.TestCase):
         for fingerprint in fingerprints:
             self.assertRegex(fingerprint, r"^[a-f0-9]{64}$")
 
+    def test_fingerprints_bind_gates_and_rubric(self):
+        case = copy.deepcopy(self.suite["cases"][0])
+        original_case_hash = utils.case_fingerprint(case)
+        case["hard_gates"]["required_patterns"].append("new-proof-obligation")
+        self.assertNotEqual(original_case_hash, utils.case_fingerprint(case))
+
+        changed_suite = copy.deepcopy(self.suite)
+        original_suite_hash = utils.suite_fingerprint(self.suite)
+        changed_suite["rubric"]["evidence_integrity"]["description"] += " Changed."
+        self.assertNotEqual(original_suite_hash, utils.suite_fingerprint(changed_suite))
+
     def test_rubric_weights_total_100(self):
         self.assertEqual(sum(x["weight"] for x in self.suite["rubric"].values()), 100)
 
@@ -93,6 +106,15 @@ class TestWave7HardGateFixtures(unittest.TestCase):
         case = utils.get_case(self.suite, case_id)
         result = score_output.evaluate_hard_gates(case, output)
         self.assertTrue(result["passed"], result)
+
+    def test_every_case_fixture_matches_declared_outcome(self):
+        for case in self.suite["cases"]:
+            with self.subTest(case=case["id"], outcome="pass"):
+                for output in case["hard_gate_fixtures"]["pass"]:
+                    self.assertHardPass(case["id"], output)
+            with self.subTest(case=case["id"], outcome="fail"):
+                for output in case["hard_gate_fixtures"]["fail"]:
+                    self.assertHardFail(case["id"], output)
 
     def test_market_absence_known_bad_and_good(self):
         self.assertHardFail(
@@ -152,12 +174,24 @@ class TestWave7RunIntegrity(unittest.TestCase):
         cls.suite = utils.load_json(EVAL / "wave7_cases.json")
         cls.case = utils.get_case(cls.suite, "W7_MR_ZERO_RESULT_BASE")
 
-    def make_judgement(self) -> dict:
+    def make_judgement(self, output_path: Path) -> dict:
         return {
             "case_id": self.case["id"],
-            "evaluator": "blinded-test-reviewer",
+            "rubric_version": self.suite["rubric_version"],
+            "raw_output_sha256": run_benchmark.sha256_file(output_path),
+            "evaluator": {
+                "id": "blinded-test-reviewer",
+                "type": "human",
+                "version": "1",
+                "independent": True,
+                "blinded": True,
+            },
             "dimensions": {
-                name: {"score": 5, "rationale": "Synthetic unit-test rationale."}
+                name: {
+                    "score": 5,
+                    "rationale": "Synthetic unit-test rationale.",
+                    "evidence": ["Synthetic output evidence."],
+                }
                 for name in self.suite["rubric"]
             },
         }
@@ -169,6 +203,18 @@ class TestWave7RunIntegrity(unittest.TestCase):
             "suite_path": self.manifest["primary_suite"],
             "case_id": self.case["id"],
             "case_fingerprint": utils.case_fingerprint(self.case),
+            "suite_fingerprint": utils.suite_fingerprint(self.suite),
+            "subject_paths": self.manifest["workflow_subjects"][self.case["workflow"]],
+            "subject_fingerprint": utils.subject_fingerprint(
+                ROOT, self.manifest["workflow_subjects"][self.case["workflow"]]
+            ),
+            "repository_commit": subprocess.run(
+                ["git", "rev-parse", "HEAD"],
+                cwd=ROOT,
+                check=True,
+                capture_output=True,
+                text=True,
+            ).stdout.strip(),
             "model": {
                 "provider": "test-provider",
                 "name": "test-model",
@@ -176,6 +222,7 @@ class TestWave7RunIntegrity(unittest.TestCase):
                 "configuration": "default",
             },
             "run_index": 1,
+            "planned_runs": self.manifest["minimum_runs_per_case"],
             "captured_at": "2026-08-26T00:00:00+00:00",
             "fresh_session": True,
             "raw_output_path": output_path.relative_to(ROOT).as_posix(),
@@ -201,7 +248,7 @@ class TestWave7RunIntegrity(unittest.TestCase):
                 "Coverage is incomplete; broaden search to adjacent products and substitutes.",
                 encoding="utf-8",
             )
-            judgement.write_text(json.dumps(self.make_judgement()), encoding="utf-8")
+            judgement.write_text(json.dumps(self.make_judgement(output)), encoding="utf-8")
             record = self.make_record(output, judgement)
             errors, case, payload = run_benchmark.validate_run_record(
                 record,
@@ -212,6 +259,14 @@ class TestWave7RunIntegrity(unittest.TestCase):
             self.assertEqual(errors, [], "\n".join(errors))
             self.assertEqual(case["id"], self.case["id"])
             self.assertIsNotNone(payload["raw_output"])
+            score = score_output.score_case(
+                self.suite,
+                case,
+                payload["raw_output"],
+                payload["judgement"],
+                record["raw_output_sha256"],
+            )
+            self.assertEqual(score["status"], "PASS", score)
 
     def test_tampered_output_is_rejected(self):
         with tempfile.TemporaryDirectory(dir=ROOT) as temp:
@@ -219,7 +274,7 @@ class TestWave7RunIntegrity(unittest.TestCase):
             output = directory / "output.md"
             judgement = directory / "judgement.json"
             output.write_text("Coverage is incomplete; check substitutes.", encoding="utf-8")
-            judgement.write_text(json.dumps(self.make_judgement()), encoding="utf-8")
+            judgement.write_text(json.dumps(self.make_judgement(output)), encoding="utf-8")
             record = self.make_record(output, judgement)
             output.write_text("Edited after capture.", encoding="utf-8")
             errors, _, _ = run_benchmark.validate_run_record(
@@ -236,7 +291,7 @@ class TestWave7RunIntegrity(unittest.TestCase):
             output = directory / "output.md"
             judgement = directory / "judgement.json"
             output.write_text("Coverage is incomplete; check substitutes.", encoding="utf-8")
-            judgement.write_text(json.dumps(self.make_judgement()), encoding="utf-8")
+            judgement.write_text(json.dumps(self.make_judgement(output)), encoding="utf-8")
             record = self.make_record(output, judgement)
             record["case_fingerprint"] = "0" * 64
             errors, _, _ = run_benchmark.validate_run_record(
@@ -253,7 +308,7 @@ class TestWave7RunIntegrity(unittest.TestCase):
             output = directory / "output.md"
             judgement = directory / "judgement.json"
             output.write_text("Coverage is incomplete; check substitutes.", encoding="utf-8")
-            judgement.write_text(json.dumps(self.make_judgement()), encoding="utf-8")
+            judgement.write_text(json.dumps(self.make_judgement(output)), encoding="utf-8")
             record = self.make_record(output, judgement)
             record["fresh_session"] = False
             record["prompt_delivery"]["corrective_followup_used"] = True
@@ -266,6 +321,18 @@ class TestWave7RunIntegrity(unittest.TestCase):
             text = "\n".join(errors).lower()
             self.assertIn("fresh_session", text)
             self.assertIn("corrective follow-up", text)
+
+    def test_judgement_must_bind_output_and_independent_evaluator(self):
+        output = "Coverage is incomplete; broaden search to substitutes."
+        judgement = self.make_judgement(Path(__file__))
+        judgement["raw_output_sha256"] = "0" * 64
+        judgement["evaluator"]["independent"] = False
+        judgement["dimensions"]["evidence_integrity"]["evidence"] = []
+        result = score_output.score_case(self.suite, self.case, output, judgement)
+        errors = "\n".join(result["judgement_errors"])
+        self.assertIn("raw_output_sha256", errors)
+        self.assertIn("independent", errors)
+        self.assertIn("output evidence", errors)
 
 
 class TestWave7Aggregation(unittest.TestCase):
@@ -289,7 +356,7 @@ class TestWave7Aggregation(unittest.TestCase):
             for run_index in range(1, runs_per_case + 1):
                 records.append(
                     {
-                        "record": {"run_index": run_index},
+                        "record": {"run_index": run_index, "planned_runs": runs_per_case},
                         "case": case,
                         "score": self.score(),
                         "path": f"{case['id']}-{run_index}",
@@ -347,6 +414,41 @@ class TestWave7Aggregation(unittest.TestCase):
             manifest=self.manifest,
         )
         self.assertIn(case_id, summary["unstable_case_ids"])
+
+    def test_later_run_indices_cannot_substitute_for_planned_slots(self):
+        records = self.make_records()
+        first_case = records[0]["case"]["id"]
+        for item in records:
+            if item["case"]["id"] == first_case:
+                item["record"]["run_index"] += 3
+        summary = run_benchmark.aggregate_model(
+            "test/model@1", records, suite=self.suite, manifest=self.manifest
+        )
+        case = next(x for x in summary["cases"] if x["case_id"] == first_case)
+        self.assertFalse(summary["coverage_complete"])
+        self.assertEqual(summary["release_status"], "INCOMPLETE")
+        self.assertEqual(case["missing_run_indices"], [1, 2, 3])
+        self.assertEqual(case["unexpected_run_indices"], [4, 5, 6])
+
+    def test_family_floor_blocks_aggregate_pass(self):
+        records = self.make_records()
+        records[0]["score"] = self.score(status="FAIL_SCORE", hard=True, weighted=89.0)
+        summary = run_benchmark.aggregate_model(
+            "test/model@1", records, suite=self.suite, manifest=self.manifest
+        )
+        self.assertGreater(summary["case_pass_rate"], 0.9)
+        self.assertEqual(summary["release_status"], "FAIL")
+        self.assertIn(records[0]["case"]["family"], summary["family_floor_failures"])
+
+    def test_inconsistent_predeclared_run_plans_make_coverage_incomplete(self):
+        records = self.make_records()
+        records[0]["record"]["planned_runs"] = 5
+        summary = run_benchmark.aggregate_model(
+            "test/model@1", records, suite=self.suite, manifest=self.manifest
+        )
+        self.assertFalse(summary["run_plan_consistent"])
+        self.assertFalse(summary["coverage_complete"])
+        self.assertEqual(summary["release_status"], "INCOMPLETE")
 
 
 if __name__ == "__main__":

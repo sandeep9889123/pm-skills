@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### Representative First-Run Behavioral Benchmark Wave 7
+
+- Added a frozen 26-case, 12-family first-run behavioral benchmark with BASE and unpaired MUTATION challenge strata, three predeclared fresh-session observations per case, and two systemic claim-lineage cases.
+- Added 104 executable hard-gate fixture observations, full case/suite/workflow fingerprints, repository-commit binding, raw-output integrity checks, and independent evidence-backed judgement provenance.
+- Added hierarchical release gates for complete exact-slot coverage, zero catastrophic failures, overall score, per-family pass floors, and run-to-run stability, plus per-case and per-run reporting.
+- Added explicit CI validation for the benchmark definition. A green CI run validates the machinery only, not live-model quality or universal reliability.
+
 ### Cross-Skill Claim Lineage Wave 6
 
 - Added a repository-wide cross-skill handoff protocol so downstream P0 workflows preserve stable claim IDs, evidence state, source provenance, material scope, freshness, contradictions/caveats, confidentiality, downstream-use restrictions, coverage gaps, and unresolved P0 blockers.

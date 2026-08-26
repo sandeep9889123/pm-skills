@@ -10,12 +10,20 @@
     "suite_path",
     "case_id",
     "case_fingerprint",
+    "suite_fingerprint",
+    "subject_paths",
+    "subject_fingerprint",
+    "repository_commit",
     "model",
     "run_index",
+    "planned_runs",
     "captured_at",
     "fresh_session",
     "raw_output_path",
-    "raw_output_sha256"
+    "raw_output_sha256",
+    "evaluator_blinded",
+    "tool_profile",
+    "prompt_delivery"
   ],
   "properties": {
     "record_id": {"type": "string", "minLength": 1},
@@ -23,37 +31,44 @@
     "suite_path": {"type": "string", "minLength": 1},
     "case_id": {"type": "string", "minLength": 1},
     "case_fingerprint": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "suite_fingerprint": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "subject_paths": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "subject_fingerprint": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "repository_commit": {"type": "string", "pattern": "^[a-f0-9]{40}$"},
     "model": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["provider", "name", "version"],
+      "required": ["provider", "name", "version", "configuration"],
       "properties": {
         "provider": {"type": "string", "minLength": 1},
         "name": {"type": "string", "minLength": 1},
         "version": {"type": "string", "minLength": 1},
-        "configuration": {"type": ["string", "null"]}
+        "configuration": {"type": "string", "minLength": 1}
       }
     },
     "run_index": {"type": "integer", "minimum": 1},
+    "planned_runs": {"type": "integer", "minimum": 1},
     "captured_at": {"type": "string", "minLength": 1},
     "fresh_session": {"type": "boolean"},
     "raw_output_path": {"type": "string", "minLength": 1},
     "raw_output_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
     "judgement_path": {"type": ["string", "null"]},
     "judgement_sha256": {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"},
-    "evaluator_blinded": {"type": ["boolean", "null"]},
+    "evaluator_blinded": {"type": "boolean"},
     "tool_profile": {
       "type": "object",
       "additionalProperties": false,
+      "required": ["tools_enabled", "profile"],
       "properties": {
-        "tools_enabled": {"type": ["boolean", "null"]},
-        "profile": {"type": ["string", "null"]},
+        "tools_enabled": {"type": "boolean"},
+        "profile": {"type": "string", "minLength": 1},
         "notes": {"type": ["string", "null"]}
       }
     },
     "prompt_delivery": {
       "type": "object",
       "additionalProperties": false,
+      "required": ["workflow_invoked", "corrective_followup_used", "additional_context_given"],
       "properties": {
         "workflow_invoked": {"type": ["string", "null"]},
         "corrective_followup_used": {"type": ["boolean", "null"]},

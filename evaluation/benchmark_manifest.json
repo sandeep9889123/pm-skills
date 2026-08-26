@@ -4,6 +4,7 @@
   "primary_suite": "evaluation/wave7_cases.json",
   "regression_suite": "evaluation/cases.json",
   "minimum_runs_per_case": 3,
+  "mutation_policy": "unpaired_family_challenges",
   "require_fresh_session": true,
   "require_raw_output_unchanged": true,
   "require_judgement_for_full_benchmark": true,
@@ -21,6 +22,29 @@
     "roadmap_prioritization",
     "legal_privacy"
   ],
+  "workflow_subjects": {
+    "pm-market-research:competitive-analysis": ["pm-market-research/commands/competitive-analysis.md"],
+    "pm-product-discovery:interview-script": ["pm-product-discovery/skills/interview-script/SKILL.md"],
+    "pm-product-discovery:summarize-interview": ["pm-product-discovery/skills/summarize-interview/SKILL.md"],
+    "pm-product-strategy:market-scan": ["pm-product-strategy/commands/market-scan.md"],
+    "pm-product-strategy:strategy": ["pm-product-strategy/commands/strategy.md"],
+    "pm-business-case:build-business-case": ["pm-business-case/commands/build-business-case.md"],
+    "pm-data-analytics:cohort-analysis": ["pm-data-analytics/skills/cohort-analysis/SKILL.md"],
+    "pm-data-analytics:ab-test-analysis": ["pm-data-analytics/skills/ab-test-analysis/SKILL.md"],
+    "pm-execution:create-prd": ["pm-execution/skills/create-prd/SKILL.md"],
+    "pm-execution:meeting-notes": ["pm-execution/skills/summarize-meeting/SKILL.md"],
+    "pm-product-strategy:pricing": ["pm-product-strategy/commands/pricing.md"],
+    "pm-go-to-market:plan-launch": ["pm-go-to-market/commands/plan-launch.md"],
+    "pm-enterprise-transformation:case-study-to-gtm": ["pm-enterprise-transformation/skills/case-study-to-gtm/SKILL.md"],
+    "pm-enterprise-transformation:proof-to-gtm": ["pm-enterprise-transformation/commands/proof-to-gtm.md"],
+    "pm-enterprise-transformation:automate-pm-workflow": ["pm-enterprise-transformation/commands/automate-pm-workflow.md"],
+    "pm-ai-shipping:ship-check": ["pm-ai-shipping/commands/ship-check.md"],
+    "pm-execution:outcome-roadmap": ["pm-execution/skills/outcome-roadmap/SKILL.md"],
+    "pm-product-discovery:prioritize-features": ["pm-product-discovery/skills/prioritize-features/SKILL.md"],
+    "pm-toolkit:privacy-policy": ["pm-toolkit/skills/privacy-policy/SKILL.md"],
+    "cross-skill:market-research-to-strategy": ["reliability/kernel/RELIABILITY_KERNEL.md", "pm-market-research/commands/competitive-analysis.md", "pm-product-strategy/commands/strategy.md"],
+    "cross-skill:client-proof-to-gtm": ["reliability/kernel/RELIABILITY_KERNEL.md", "pm-enterprise-transformation/commands/proof-to-gtm.md"]
+  },
   "systemic_case_ids": [
     "W7_LIN_ESTIMATE_PROMOTION_BASE",
     "W7_LIN_CLIENT_SCOPE_MUT"
@@ -48,6 +72,8 @@
     "maximum_hard_gate_failure_rate": 0.0,
     "minimum_case_pass_rate": 0.9,
     "minimum_mean_weighted_score": 90.0,
+    "minimum_family_pass_rate": 1.0,
+    "maximum_unstable_cases": 0,
     "minimum_runs_per_case": 3,
     "requires_complete_coverage": true
   }

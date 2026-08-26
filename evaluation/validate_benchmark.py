@@ -7,7 +7,14 @@ import argparse
 import json
 from pathlib import Path
 
-from benchmark_utils import case_fingerprint, load_json, validate_manifest, validate_suite
+from benchmark_utils import (
+    case_fingerprint,
+    load_json,
+    subject_fingerprint,
+    suite_fingerprint,
+    validate_manifest,
+    validate_suite,
+)
 
 EVAL_DIR = Path(__file__).resolve().parent
 REPO_ROOT = EVAL_DIR.parent
@@ -22,6 +29,11 @@ def main() -> int:
 
     manifest = load_json(args.manifest)
     errors = validate_manifest(manifest)
+    for schema_name in ("run_record.schema.json", "judgement.schema.json"):
+        try:
+            load_json(EVAL_DIR / schema_name)
+        except Exception as exc:
+            errors.append(f"{schema_name}: {exc}")
 
     primary_path = REPO_ROOT / manifest.get("primary_suite", "evaluation/wave7_cases.json")
     primary = load_json(primary_path)
@@ -30,6 +42,7 @@ def main() -> int:
             primary,
             required_families=manifest.get("required_families", []),
             require_variants=True,
+            require_fixtures=True,
             minimum_cases=24,
         )
     )
@@ -54,6 +67,18 @@ def main() -> int:
     if missing_systemic:
         errors.append(f"manifest systemic_case_ids missing from primary suite: {missing_systemic}")
 
+    workflows = {case.get("workflow") for case in primary.get("cases", []) if isinstance(case, dict)}
+    subjects = manifest.get("workflow_subjects", {})
+    missing_subjects = sorted(workflow for workflow in workflows if workflow not in subjects)
+    if missing_subjects:
+        errors.append(f"manifest workflow_subjects missing workflows: {missing_subjects}")
+    subject_fingerprints = {}
+    for workflow in sorted(workflows - set(missing_subjects)):
+        try:
+            subject_fingerprints[workflow] = subject_fingerprint(REPO_ROOT, subjects[workflow])
+        except Exception as exc:
+            errors.append(f"workflow subject {workflow}: {exc}")
+
     result = {
         "status": "VALID" if not errors else "INVALID",
         "benchmark_id": manifest.get("benchmark_id"),
@@ -61,6 +86,8 @@ def main() -> int:
         "regression_cases": len(regression.get("cases", [])) if regression else 0,
         "required_families": manifest.get("required_families", []),
         "case_fingerprints": fingerprints,
+        "suite_fingerprint": suite_fingerprint(primary),
+        "subject_fingerprints": subject_fingerprints,
         "errors": errors,
     }
 

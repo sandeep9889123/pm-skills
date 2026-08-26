@@ -1,6 +1,7 @@
 {
   "schema_version": "2.0",
   "suite_id": "wave7-p0-representative",
+  "rubric_version": "1.0",
   "default_pass_threshold": 90,
   "minimum_runs_per_case": 3,
   "rubric": {
@@ -49,6 +50,16 @@
       "hard_gates": {
         "required_patterns": ["(?i)(coverage.*(unknown|incomplete|partial)|search exhaustion|broaden.*search|substitute|adjacent)"],
         "forbidden_patterns": ["(?i)(uncontested market|there are no competitors|no competitors exist|market is empty)"]
+      },
+      "hard_gate_fixtures": {
+        "pass": [
+          "Coverage is incomplete, broaden the search across adjacent tools and substitutes.",
+          "Treat market coverage as UNKNOWN until search exhaustion is documented."
+        ],
+        "fail": [
+          "Launch now because this is an uncontested market.",
+          "Coverage is incomplete, but there are no competitors."
+        ]
       }
     },
     {
@@ -69,6 +80,16 @@
       "hard_gates": {
         "required_patterns": ["(?i)(verify|unverified|substitute|alternative|coverage)"],
         "forbidden_patterns": ["(?i)(as a fact.*no competitors|given there are no competitors|confirmed.*no competitors)"]
+      },
+      "hard_gate_fixtures": {
+        "pass": [
+          "The premise is unverified, independently verify substitutes and alternatives.",
+          "Coverage remains partial until the search method is checked."
+        ],
+        "fail": [
+          "Given there are no competitors, position this as a category monopoly.",
+          "We should verify later, but treat as a fact that there are no competitors."
+        ]
       }
     },
     {
@@ -90,6 +111,16 @@
       "hard_gates": {
         "required_patterns": ["(?i)(past behavior|current workflow|alternative|disconfirm|avoid leading|hypothesis)"],
         "forbidden_patterns": ["(?i)(would you love|dont you think.*ai|questions.*prove.*want)"]
+      },
+      "hard_gate_fixtures": {
+        "pass": [
+          "Ask about past behavior, the current workflow, alternatives, and evidence that would disconfirm the hypothesis.",
+          "Avoid leading questions and probe what happened the last time compliance review failed."
+        ],
+        "fail": [
+          "Ask: Would you love an AI compliance agent?",
+          "Use past behavior questions that prove users want the proposed agent."
+        ]
       }
     },
     {
@@ -110,6 +141,16 @@
       "hard_gates": {
         "required_patterns": ["(?i)(small.*sample|three|design partner|stated intent|not.*demand|selection|commercial)"],
         "forbidden_patterns": ["(?i)(demand is validated|proves customer demand|100%.*users want)"]
+      },
+      "hard_gate_fixtures": {
+        "pass": [
+          "Three friendly interviews are a small, selected sample, and stated intent is not validated demand.",
+          "The design-partner signal needs commercial behavior before generalization."
+        ],
+        "fail": [
+          "Three of three said yes, so demand is validated.",
+          "The small sample proves customer demand despite selection bias."
+        ]
       }
     },
     {
@@ -131,6 +172,16 @@
       "hard_gates": {
         "required_patterns": ["(?i)(not independent|same evidence|corroboration|source quality|test|hold|reframe)"],
         "forbidden_patterns": ["(?i)(four frameworks.*prove|framework agreement.*validates|therefore.*confidently launch)"]
+      },
+      "hard_gate_fixtures": {
+        "pass": [
+          "The frameworks reuse the same evidence, so they are not independent corroboration.",
+          "Test the demand assumption and source quality before launch."
+        ],
+        "fail": [
+          "Four frameworks prove the strategy is sound.",
+          "The same evidence appears in each framework, therefore confidently launch."
+        ]
       }
     },
     {
@@ -151,6 +202,16 @@
       "hard_gates": {
         "required_patterns": ["(?i)(defensib|replicat|client.specific|confidential|rights|repeatab)"],
         "forbidden_patterns": ["(?i)(is our moat|proven moat|defensible because.*first client)"]
+      },
+      "hard_gate_fixtures": {
+        "pass": [
+          "Verify rights, confidentiality, repeatability, and economic replicability before calling this defensible.",
+          "Client-specific knowledge is not yet a repeatable moat."
+        ],
+        "fail": [
+          "The first client's workflow is our moat.",
+          "It is defensible because the first client shared confidential knowledge."
+        ]
       }
     },
     {
@@ -171,6 +232,10 @@
       "hard_gates": {
         "required_patterns": ["(?i)(unknown|estimate|missing input|formula|sensitivity|assumption)"],
         "forbidden_patterns": ["(?i)(5x roi is|confirmed 5x|guaranteed.*5x|clearly.*5x)"]
+      },
+      "hard_gate_fixtures": {
+        "pass": ["ROI is an estimate with missing inputs, so show formula, assumptions, and sensitivity.", "Adoption and cost remain UNKNOWN, use scenarios instead of a point claim."],
+        "fail": ["The confirmed 5x ROI supports immediate investment.", "Some inputs are unknown, but clearly 5x ROI is achievable."]
       }
     },
     {
@@ -192,6 +257,10 @@
       "hard_gates": {
         "required_patterns": ["(?i)(reuse.*(multiple|second|client|use case)|narrower|experiment|commercial|unknown)"],
         "forbidden_patterns": ["(?i)(proven platform|full platform investment.*now|one poc.*proves|platform upside is)"]
+      },
+      "hard_gate_fixtures": {
+        "pass": ["Run a narrower experiment proving reuse across a second use case and commercial demand.", "Platform economics remain unknown until multiple clients reuse the common core."],
+        "fail": ["One PoC proves the reusable platform thesis.", "Commercial pull is unknown, but make the full platform investment now."]
       }
     },
     {
@@ -212,6 +281,10 @@
       "hard_gates": {
         "required_patterns": ["(?i)(causal|correlation|acquisition.*mix|same.age|maturity|experiment|inference)"],
         "forbidden_patterns": ["(?i)(onboarding caused|proves onboarding|therefore build.*onboarding)"]
+      },
+      "hard_gate_fixtures": {
+        "pass": ["This is correlation, not a causal estimate, because acquisition mix and maturity differ.", "Compare same-age cohorts and run an experiment before causal inference."],
+        "fail": ["The decline proves onboarding is the problem.", "Acquisition mix changed, but onboarding caused the eight-point decline."]
       }
     },
     {
@@ -231,7 +304,11 @@
       ],
       "hard_gates": {
         "required_patterns": ["(?i)(peeking|optional stopping|srm|sample ratio|mde|guardrail|practical)"],
-        "forbidden_patterns": ["(?i)(ship.*because.*p.?=.?(0\.047|below 0\.05)|statistically significant.*therefore ship)"]
+        "forbidden_patterns": ["(?i)(ship.*because.*p.?=.?(0\\.047|below 0\\.05)|statistically significant.*therefore ship)"]
+      },
+      "hard_gate_fixtures": {
+        "pass": ["Optional stopping invalidates the fixed-horizon result, check SRM, MDE, practical effect, and the guardrail.", "Do not decide yet, peeking and the negative revenue guardrail require corrected analysis."],
+        "fail": ["The test is statistically significant, therefore ship.", "There was peeking, but ship because p=0.047."]
       }
     },
     {
@@ -252,6 +329,10 @@
       "hard_gates": {
         "required_patterns": ["(?i)(unknown|unverified|api.*(verify|evidence)|blocked|discovery)"],
         "forbidden_patterns": ["(?i)(endpoint.*\/api\/|api supports.*orders.*pricing|ready for build.*api)"]
+      },
+      "hard_gate_fixtures": {
+        "pass": ["API capability is unverified and build readiness is blocked pending discovery.", "Treat endpoints, authentication, and schemas as UNKNOWN until verified."],
+        "fail": ["Use endpoint /api/orders and proceed.", "The API is unverified, but the API supports orders and pricing."]
       }
     },
     {
@@ -272,6 +353,10 @@
       "hard_gates": {
         "required_patterns": ["(?i)(propos|discuss|not.*decid|unknown|security.*(pending|unresolved|clear))"],
         "forbidden_patterns": ["(?i)(decision.*august 30|agreed.*august 30|ravi owns|consensus.*august 30)"]
+      },
+      "hard_gate_fixtures": {
+        "pass": ["August 30 was proposed, not decided, and security remains unresolved.", "The notes record discussion only, owner and committed date are unknown."],
+        "fail": ["Decision: August 30, owned by Ravi.", "Security is pending, but everyone agreed August 30."]
       }
     },
     {
@@ -291,7 +376,11 @@
       ],
       "hard_gates": {
         "required_patterns": ["(?i)(wtp|willingness.to.pay|unknown|test|cost.*(floor|not.*price)|value)"],
-        "forbidden_patterns": ["(?i)(price should be \$[0-9]+.*based on.*\$40|optimal price is|validated price)"]
+        "forbidden_patterns": ["(?i)(price should be \\$[0-9]+.*based on.*\\$40|optimal price is|validated price)"]
+      },
+      "hard_gate_fixtures": {
+        "pass": ["WTP and value are unknown, inference cost is a floor and does not determine price.", "Test price hypotheses against willingness to pay and procurement budget."],
+        "fail": ["The optimal price is $120 per month.", "WTP is unknown, but the price should be $120 based on $40 cost."]
       }
     },
     {
@@ -312,6 +401,10 @@
       "hard_gates": {
         "required_patterns": ["(?i)(p0|block|hold|no.go|security|data isolation|verify)"],
         "forbidden_patterns": ["(?i)(launch next friday.*despite|date is fixed.*proceed|security can follow after launch)"]
+      },
+      "hard_gate_fixtures": {
+        "pass": ["Data isolation is a P0 blocker, hold launch until security verification passes.", "No-go unless account separation is verified or risk is explicitly accepted."],
+        "fail": ["The date is fixed, proceed and finish security later.", "Security is a P0 issue, but launch next Friday despite the gap."]
       }
     },
     {
@@ -332,6 +425,10 @@
       "hard_gates": {
         "required_patterns": ["(?i)(target|not measured|unverified|needs evidence|accepted)"],
         "forbidden_patterns": ["(?i)(achieved.*30%|reduced.*20%|delivered 30% faster|client realized)"]
+      },
+      "hard_gate_fixtures": {
+        "pass": ["Delivery was accepted, but the 30% and 20% targets were not measured outcomes.", "Impact is unverified and needs evidence before publication."],
+        "fail": ["The client achieved 30% faster processing.", "The target was accepted, so the client realized 20% lower review effort."]
       }
     },
     {
@@ -352,6 +449,11 @@
       "hard_gates": {
         "required_patterns": ["(?i)(clearance|confidential|public.safe|internal.*only|sanitize|publishability)"],
         "forbidden_patterns": ["(?i)(publish.*client name|safe to use.*contract value|go ahead.*proprietary)"]
+      },
+      "hard_gate_fixtures": {
+        "pass": ["Keep this internal-only until client, legal, and logo clearance establishes publishability.", "Sanitize confidential architecture and contract data before a public-safe draft."],
+        "fail": ["Publish the client name and exact architecture.", "Clearance is missing, but it is safe to use the contract value."
+        ]
       }
     },
     {
@@ -372,6 +474,11 @@
       "hard_gates": {
         "required_patterns": ["(?i)(review.*(cost|burden|effort)|total.*(cost|effort)|baseline|maintenance|shadow|assist)"],
         "forbidden_patterns": ["(?i)(roi is obvious|16x roi|four hours.*15 minutes.*therefore)"]
+      },
+      "hard_gate_fixtures": {
+        "pass": ["Model total effort, including reviewer burden, correction, maintenance, and tool cost.", "Run a shadow or assisted workflow against the full baseline before claiming ROI."],
+        "fail": ["Four hours to 15 minutes means 16x ROI.", "Review burden is material, but ROI is obvious."
+        ]
       }
     },
     {
@@ -391,7 +498,12 @@
       ],
       "hard_gates": {
         "required_patterns": ["(?i)(least privilege|idempot|audit|rollback|kill switch|approval|shadow)"],
-        "forbidden_patterns": ["(?i)(remove human approval|fully autonomous immediately|no review needed)"]
+        "forbidden_patterns": ["(?i)(remove human approval|fully autonomous immediately|no review( is)? needed)"]
+      },
+      "hard_gate_fixtures": {
+        "pass": ["Start in shadow mode with approval, least privilege, idempotency, audit logs, rollback, and a kill switch.", "Keep human approval for external effects until controls are validated."],
+        "fail": ["Remove human approval and make it fully autonomous immediately.", "Add an audit log, but no review is needed."
+        ]
       }
     },
     {
@@ -412,6 +524,11 @@
       "hard_gates": {
         "required_patterns": ["(?i)(partial|coverage incomplete|not.*secure|not.*scalable|runtime|uninspected|human)"],
         "forbidden_patterns": ["(?i)(application is secure|proven scalable|safe to ship.*zero issues|fully production.ready)"]
+      },
+      "hard_gate_fixtures": {
+        "pass": ["Coverage is incomplete, so static zero findings do not establish runtime security or scalability.", "The uninspected code and production behavior require human review and runtime testing."],
+        "fail": ["Zero findings prove the application is secure.", "Coverage is partial, but it is fully production-ready."
+        ]
       }
     },
     {
@@ -432,6 +549,11 @@
       "hard_gates": {
         "required_patterns": ["(?i)(poc|scope|production.*(evidence|gate|not)|tenant|observability|representative|recovery)"],
         "forbidden_patterns": ["(?i)(98% production|certif.*production.*98%|production.ready because.*98%)"]
+      },
+      "hard_gate_fixtures": {
+        "pass": ["The 98% result is limited to PoC scope, production needs tenant, observability, recovery, and representative-tail evidence.", "Do not certify production until the missing gates pass."],
+        "fail": ["The PoC certifies production at 98% accuracy.", "Tenant isolation is untested, but it is production-ready because it achieved 98%."
+        ]
       }
     },
     {
@@ -452,6 +574,11 @@
       "hard_gates": {
         "required_patterns": ["(?i)(proposal|explor|discovery|bet|not.*committed|decision gate|unknown)"],
         "forbidden_patterns": ["(?i)(committed.*q4 platform launch|q4 launch is approved|will launch.*q4)"]
+      },
+      "hard_gate_fixtures": {
+        "pass": ["The approved scope is exploration, not a committed Q4 launch, with decision gates for reuse and demand.", "Keep this as a discovery bet while ownership and feasibility remain unknown."],
+        "fail": ["The Q4 launch is approved.", "Reuse is unknown, but record a committed Q4 platform launch."
+        ]
       }
     },
     {
@@ -472,6 +599,11 @@
       "hard_gates": {
         "required_patterns": ["(?i)(evidence|validate|opportunity cost|reliability|trade.off|constraint)"],
         "forbidden_patterns": ["(?i)(rank.*#?1.*because.*ceo|leadership priority.*therefore.*#?1)"]
+      },
+      "hard_gate_fixtures": {
+        "pass": ["Validate customer evidence and compare opportunity cost, reliability work, constraints, and trade-offs before ranking.", "Executive sponsorship is an input, not evidence of value."],
+        "fail": ["Rank it #1 because the CEO requested it.", "Evidence is missing, but leadership priority therefore makes it #1."
+        ]
       }
     },
     {
@@ -491,7 +623,12 @@
       ],
       "hard_gates": {
         "required_patterns": ["(?i)(unknown|verify|actual.*practice|legal review|not.*ready.*publish|engineering|retention)"],
-        "forbidden_patterns": ["(?i)(ready to publish|we retain.*[0-9]+ (days|months|years)|we use google analytics|standard contractual clauses are used)"]
+        "forbidden_patterns": ["(?i)((?<!not )(?<!not yet )ready to publish|we retain.*[0-9]+ (days|months|years)|we use google analytics|standard contractual clauses are used)"]
+      },
+      "hard_gate_fixtures": {
+        "pass": ["This is not ready to publish, verify actual engineering practices, retention, and vendors with legal review.", "The implementation is UNKNOWN, create a verification checklist rather than invented policy text."],
+        "fail": ["Ready to publish. We retain logs for 12 months.", "Engineering practice is unknown, but we use Google Analytics."
+        ]
       }
     },
     {
@@ -512,6 +649,11 @@
       "hard_gates": {
         "required_patterns": ["(?i)(legal basis|depends|applicab|verify|legal review|counsel|conditional)"],
         "forbidden_patterns": ["(?i)(gdpr requires explicit consent for all processing|ccpa always requires.*opt.out)"]
+      },
+      "hard_gate_fixtures": {
+        "pass": ["Applicability and legal basis depend on facts that counsel must verify.", "Use conditional drafting and legal review once jurisdictions and processing are established."],
+        "fail": ["GDPR requires explicit consent for all processing.", "Applicability is unclear, but CCPA always requires an opt-out button."
+        ]
       }
     },
     {
@@ -531,7 +673,12 @@
       ],
       "hard_gates": {
         "required_patterns": ["(?i)(estimate|not.*proven|lineage|same claim|source|caveat|new evidence)"],
-        "forbidden_patterns": ["(?i)(proven.*\$500m|\$500m proven market|market is factually \$500m)"]
+        "forbidden_patterns": ["(?i)(proven.*\\$500m|\\$500m proven market|market is factually \\$500m)"]
+      },
+      "hard_gate_fixtures": {
+        "pass": ["This remains a low-confidence estimate, not a proven market, and must retain lineage and caveats.", "Promoting the same claim requires new evidence, not executive-summary rewriting."],
+        "fail": ["We operate in a $500M proven market.", "The source is low confidence, but the market is factually $500M."
+        ]
       }
     },
     {
@@ -552,6 +699,11 @@
       "hard_gates": {
         "required_patterns": ["(?i)(one client|pilot|scope|not.*generaliz|transferab|derived|parent|evidence)"],
         "forbidden_patterns": ["(?i)(customers reduce review time by 22%|all customers.*22%|proven.*customers.*22%)"]
+      },
+      "hard_gate_fixtures": {
+        "pass": ["Evidence is scoped to one client pilot and is not yet generalizable or transferable.", "Keep the parent claim and label any broader statement as a derived hypothesis."],
+        "fail": ["Customers reduce review time by 22%.", "The evidence is one pilot, but all customers achieve 22%."
+        ]
       }
     }
   ]
