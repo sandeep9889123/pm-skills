@@ -1,6 +1,6 @@
 ---
 name: ab-test-analysis
-description: "Analyze A/B tests with setup validation, power/MDE checks, sample-ratio mismatch detection, confidence intervals, practical significance, guardrails, and calibrated ship/extend/stop recommendations. Use when evaluating experiment results, checking significance, interpreting split-test data, or deciding whether to ship a variant."
+description: "Analyze A/B tests with setup validation, power/MDE checks, sample-ratio mismatch detection, confidence intervals, practical significance, guardrails, calibrated decisions, and claim-lineage preservation for downstream prioritization/launch."
 ---
 
 # A/B Test Analysis
@@ -15,10 +15,27 @@ You are analyzing A/B test results for **$ARGUMENTS**.
 
 If the user provides raw data or exports, calculate from those inputs where possible. If required fields are missing, state what cannot be validated rather than inventing assumptions silently.
 
+## Claim-Lineage Producer Contract
+
+For every decision-relevant experiment claim:
+
+- assign a stable `claim_id`;
+- preserve experiment population, period, randomization unit, metric definition, variant, and analysis method;
+- distinguish the measured treatment-effect result from the product/causal interpretation;
+- preserve validity caveats: SRM, exposure/randomization, peeking/stopping, multiple comparisons, data quality, maturity, and guardrail status;
+- preserve confidence intervals and practical-significance context where material;
+- an experiment decision such as `SHIP` is a decision, not promotion of every analytical claim to universal `FACT`;
+- downstream prioritization/launch may restate measured claims only at the tested scope;
+- new cross-segment, long-term, production, or causal conclusions require new claim IDs linked to the experiment claims.
+
+Example:
+- `AB-021 FACT`: treatment increased conversion by 1.2pp in the tested population/period, CI [...], assuming experiment integrity checks pass.
+- `AB-022 INFERENCE`, parent `[AB-021]`: the change may improve paid conversion in a broader rollout.
+- Not allowed: reuse `AB-021` as “the feature improves conversion by 1.2pp for all users.”
+
 ## Step 1: Reconstruct the Experiment Contract
 
-Before interpreting results, identify:
-
+Identify:
 - hypothesis
 - control and treatment
 - randomization unit
@@ -31,53 +48,44 @@ Before interpreting results, identify:
 - planned sample size
 - planned duration
 - intended traffic split
-- whether the test was stopped/extended based on interim results
+- stopping/extension behavior
 - number of primary/secondary comparisons
 
-If these were not defined before the experiment, label the analysis as partly **post hoc**.
+If these were not defined before the experiment, label the analysis partly **post hoc** and preserve that limitation downstream.
 
 ## Step 2: Validate Experiment Integrity Before Outcome Significance
 
-### A. Sample Ratio Mismatch (SRM)
+### A. Sample Ratio Mismatch
 
-Compare observed allocation against intended allocation.
+Check **Sample Ratio Mismatch (SRM)** against intended allocation. If unexplained SRM is material, investigate instrumentation/randomization before trusting the treatment effect.
 
-If allocation is materially inconsistent with the planned split, investigate instrumentation/randomization before trusting treatment-effect estimates.
-
-### B. Exposure and randomization
+### B. Exposure and Randomization
 
 Check when possible:
-
 - users were not exposed to both variants unintentionally
 - assignment unit matches analysis unit
 - bot/internal traffic is handled consistently
 - logging differs neither by variant nor platform
 
-### C. Duration and business cycles
+### C. Duration and Business Cycles
 
-Do not use a blanket “1-2 weeks” rule.
+Do not use a blanket “1-2 weeks” rule. Cover relevant product cycles and note event/holiday distortion.
 
-The test should cover relevant cycles for the product and avoid obvious event/holiday distortions unless those are part of normal usage.
+### D. Peeking and Optional Stopping
 
-### D. Peeking and optional stopping
+If a fixed-horizon p-value was repeatedly checked and the test stopped when it crossed 0.05, flag inflated false-positive risk.
 
-If the team repeatedly checked a fixed-horizon p-value and stopped when it crossed 0.05, flag inflated false-positive risk.
+**Do not recommend simply** “extend until significant.” If sequential monitoring was planned, use the appropriate method/boundaries.
 
-Do not recommend simply “extend until significant.”
+### E. Novelty / Learning Effects
 
-If sequential monitoring was planned, use the appropriate sequential method/boundaries rather than ordinary fixed-horizon interpretation.
-
-### E. Novelty / learning effects
-
-If behavior plausibly changes after users learn the variant, inspect performance over time rather than relying only on the aggregate.
+If behavior plausibly changes after users learn the variant, inspect performance over time rather than aggregate only.
 
 ## Step 3: Validate Power and Sample Size Correctly
 
-### Important correction
-
 A formula that uses only the alpha critical value cannot establish 80% power.
 
-For a two-arm test of proportions with equal-sized groups, a common planning approximation is:
+For a two-arm proportions test with equal groups, a common planning approximation is:
 
 ```text
 n_per_arm ≈ [
@@ -86,197 +94,101 @@ n_per_arm ≈ [
 ]^2 / (p2 - p1)^2
 ```
 
-where:
+`z_(1-beta)` is required to claim a target power such as 80%.
 
-- `p1` = baseline conversion
-- `p2` = baseline + target absolute effect
-- `p_bar` = `(p1 + p2) / 2`
-- `alpha` = false-positive rate
-- `1-beta` = desired power
-- `z_(1-beta)` is therefore required to claim a target power such as 80%
+For means, ratios, clustered randomization, repeated measures, variance reduction, or non-standard metrics, use a method appropriate to the design.
 
-For means, ratios, clustered randomization, repeated measures, variance reduction, or non-standard metrics, use a method appropriate to the metric and design.
+### Post-hoc observed power
 
-### Post-hoc “observed power”
-
-Do not use post-hoc observed power as a substitute for confidence intervals or pre-test power planning. It is generally redundant with the observed p-value and can mislead interpretation.
-
-Prefer:
-
-- pre-test MDE/power planning
-- confidence interval around the treatment effect
-- whether the interval rules out effects that matter to the business
+Do not use **post-hoc observed power** as a substitute for confidence intervals or pre-test power planning. Prefer the pre-test MDE/power contract and the treatment-effect confidence interval.
 
 ## Step 4: Calculate the Treatment Effect
 
-For the primary metric, report as applicable:
-
+For the primary metric report as applicable:
 - control value
 - treatment value
 - absolute difference
 - relative lift
 - confidence interval
-- p-value / test statistic
-- practical threshold or MDE
-
-For proportions, a two-proportion z-test may be appropriate for large samples. Use exact or alternative methods when assumptions are not met.
+- p-value/test statistic
+- practical threshold/MDE
 
 Do not apply a statistical test merely because it is familiar.
 
 ## Step 5: Separate Statistical From Practical Significance
 
-Ask two different questions:
+Ask separately:
+- Statistical: is the result inconsistent with the null under the chosen analysis?
+- Practical: is the plausible effect large enough to matter?
 
-### Statistical
-
-Is the observed difference inconsistent with the null under the chosen design/test?
-
-### Practical
-
-Is the plausible effect large enough to matter to customers or the business?
-
-A tiny effect can be statistically significant with a huge sample and still not justify launch complexity.
+A tiny statistically significant effect may not justify complexity. **Non-significance** is not proof of equality or no effect.
 
 ## Step 6: Inspect Guardrails and Segments
 
-### Guardrails
+Check material harms such as revenue/margin, retention, latency, errors, support burden, cancellations, and trust/safety.
 
-Check material harms such as:
+A primary win does not override a hard guardrail breach.
 
-- revenue / margin
-- retention
-- latency/performance
-- errors
-- support burden
-- cancellations
-- trust/safety
-
-A primary win does not automatically override a guardrail breach.
-
-### Segments
-
-Inspect segments when there is a pre-existing reason to expect heterogeneity, such as:
-
-- platform
-- geography
-- new vs existing user
-- enterprise vs self-serve
-- traffic source
-
-Do not data-mine dozens of segments and then present the most favorable one as causal proof.
-
-If aggregate and important segment effects reverse, investigate possible Simpson's paradox / mix effects.
+Inspect segments only with a pre-existing reason or clearly label exploratory analysis. Do not mine many segments and publish the most favorable result as causal proof. Investigate aggregate/segment reversal and Simpson's paradox where relevant.
 
 ## Step 7: Handle Multiple Comparisons
 
-If many primary-like metrics, variants, or repeated subgroup tests are being interpreted, surface inflated false-positive risk.
-
-Use an appropriate correction or clearly distinguish:
-
-- confirmatory metrics
-- secondary/exploratory metrics
+If many metrics, variants, or subgroup tests are interpreted, surface inflated false-positive risk and distinguish confirmatory from secondary/exploratory metrics.
 
 ## Step 8: Calibrate the Decision
 
-Do not use a simplistic rule that every p < 0.05 winner should ship.
-
-Use this decision logic:
+Do not use a simplistic p < 0.05 ship rule.
 
 ### SHIP / ROLL OUT
-
-Only when:
-
-- experiment integrity is acceptable
-- primary result is supported by the planned analysis
-- effect is practically meaningful or strategically justified
-- guardrails are acceptable
-- no hard-risk gate is breached
+Only when integrity is acceptable, planned primary analysis supports the result, effect is practically meaningful/strategically justified, guardrails are acceptable, and no hard-risk gate is breached.
 
 ### LIMITED ROLLOUT / FOLLOW-UP
-
-Use when:
-
-- evidence is promising but important uncertainty remains
-- effect varies by segment for plausible reasons
-- operational risk warrants staged rollout
+Use when evidence is promising but uncertainty or operational risk remains.
 
 ### CONTINUE / EXTEND ONLY WITH A VALID PLAN
-
-Use when:
-
-- the original plan allows more sample/time or a sequential method supports continuation
-- additional data can meaningfully narrow the decision-relevant confidence interval
-
-Do **not** extend only because the current result is not significant.
+Use only when the analysis plan/sequential method supports continuation and more data can narrow the decision-relevant interval. Do not extend only to chase significance.
 
 ### STOP / NO EVIDENCE OF MEANINGFUL IMPROVEMENT
-
-Use when the data are sufficiently informative to rule out effects worth pursuing or when economics/guardrails make continuation unattractive.
-
-Do not translate `p >= alpha` into “the variants are the same.”
+Use when data rule out effects worth pursuing or economics/guardrails make continuation unattractive. Do not translate `p >= alpha` into “the variants are the same.”
 
 ### INVALID / INVESTIGATE
-
-Use when:
-
-- SRM is unexplained
-- randomization/exposure is broken
-- instrumentation differs by variant
-- stopping rule invalidates ordinary inference
-- critical data quality issues exist
+Use for unexplained SRM, broken randomization/exposure, inconsistent instrumentation, invalid stopping, or critical data-quality issues.
 
 ## Step 9: Contradiction Pass
 
-Before finalizing, ask:
-
-- Could a logging/randomization issue explain the result?
-- Does the confidence interval include material harm or material upside?
-- Am I calling “no effect” only because p >= 0.05?
-- Am I calling “ship” only because p < 0.05?
-- Did one important segment move in the opposite direction?
-- Did a guardrail breach get hidden by the headline metric?
+Ask:
+- Could logging/randomization explain the result?
+- Does the CI include material harm/upside?
+- Am I calling no effect only because p >= 0.05?
+- Am I calling ship only because p < 0.05?
+- Did an important segment reverse direction?
+- Did guardrail harm get hidden?
 - Was the test stopped after peeking?
-- Are multiple comparisons making the result look stronger than it is?
+- Are multiple comparisons making evidence look stronger?
 
 ## Output
 
-```markdown
+```text
 ## A/B Test Decision: [Test Name]
 
 ### Verdict
-**Recommendation:** SHIP / LIMITED ROLLOUT / CONTINUE WITH VALID PLAN / STOP / INVALID-INVESTIGATE
-**Confidence:** High / Medium / Low
+Recommendation: SHIP | LIMITED ROLLOUT | CONTINUE WITH VALID PLAN | STOP | INVALID-INVESTIGATE
+Confidence: High | Medium | Low
 
 ### Experiment Contract
-- Hypothesis:
-- Randomization unit:
-- Primary metric:
-- Guardrails:
-- Alpha:
-- Target power:
-- MDE:
-- Planned sample / duration:
-- Stopping rule:
+[hypothesis, randomization unit, metrics, alpha, power, MDE, sample/duration, stopping]
 
 ### Integrity Checks
 | Check | Status | Evidence / Concern |
-|---|---|---|
-| Sample ratio | Pass / Fail / Unknown | |
-| Randomization | Pass / Fail / Unknown | |
-| Exposure | Pass / Fail / Unknown | |
-| Duration/cycles | Pass / Concern / Unknown | |
-| Peeking/stopping | Pass / Concern / Unknown | |
-| Data quality | Pass / Concern / Unknown | |
 
 ### Results
-| Metric | Control | Treatment | Absolute diff | Relative lift | 95% CI | p-value | Practical threshold |
-|---|---|---|---|---|---|---|---|
+| Claim ID | Metric | Population/Period | Control | Treatment | Absolute diff | Relative lift | CI | p-value | Practical threshold | State |
 
 ### Guardrails
-[Material changes and hard gates]
+[claims + states + hard gates]
 
-### Segment / Sensitivity Checks
-[Only decision-relevant checks]
+### Derived Product Claims
+| Claim ID | Parent IDs | Interpretation | State | Scope | Caveats |
 
 ### Interpretation
 - What the data support
@@ -284,16 +196,27 @@ Before finalizing, ask:
 - Important unknowns
 
 ### What Would Change the Decision
-[Specific additional evidence or threshold]
+[specific evidence]
 
 ### Next Action
-[Concrete action]
+[concrete action]
+
+## Reliability Handoff
+Coverage: COMPLETE FOR DECLARED SCOPE | PARTIAL | BLOCKED
+
+### Material Claims
+| Claim ID | Claim | State | Experiment Scope | Evidence | Validity Caveat | Downstream Restriction |
+
+### Unresolved P0
+[SRM/data/guardrail/maturity/analysis blockers]
+
+### Prohibited Interpretations
+[p-value != launch proof; measured scope != universal effect; exploratory subgroup != confirmatory result]
 ```
 
 ## Hard Failures
 
 Do not:
-
 - claim 80% power from a formula that omits `beta` / `z_(1-beta)`
 - treat non-significance as proof of no difference
 - recommend extending a fixed-horizon test simply to chase significance
@@ -302,6 +225,7 @@ Do not:
 - hide guardrail harm behind a positive primary metric
 - present exploratory subgroup wins as confirmatory without warning
 - use post-hoc observed power as the primary interpretation tool
+- allow a downstream artifact to broaden the tested scope under the same claim ID
 
 ---
 
