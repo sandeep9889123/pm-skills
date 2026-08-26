@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### Tamper-Evident Live Capture Wave 8
+
+- Added a predeclared OpenAI Responses and Anthropic Messages API capture runner that isolates every case/run in a stateless request, performs no automatic retries, and preserves the exact prompt bundle, credential-free request, provider response, raw output, request ID, response-reported model, and hashes.
+- Added a manual, least-privilege GitHub Actions baseline workflow with explicit full-suite cost acknowledgement and 90-day artifact retention. It never runs on pushes or pull requests.
+- Corrected unjudged authentic runs from `INVALID` to hard-gate-scored `INCOMPLETE`; evaluator blinding now remains null until a judgement actually exists.
+- Added capture-completeness reporting and lifecycle tests. No skill or command content changed.
+
 ### Representative First-Run Behavioral Benchmark Wave 7
 
 - Added a frozen 26-case, 12-family first-run behavioral benchmark with BASE and unpaired MUTATION challenge strata, three predeclared fresh-session observations per case, and two systemic claim-lineage cases.

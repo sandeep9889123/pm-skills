@@ -117,6 +117,48 @@ CI can run this safely because it validates the benchmark definition, not live m
 
 ## Capture a real run
 
+### Automated no-tools API capture
+
+`capture_baseline.py` supports the OpenAI Responses API and Anthropic Messages API. It creates a predeclared run plan before the first request, sends one stateless request per case/run slot, performs no automatic retries, and preserves:
+
+- the exact model-visible prompt bundle;
+- the exact JSON request without credentials;
+- the complete provider response;
+- the unchanged assistant text;
+- provider request ID and response-reported model;
+- hashes for every capture artifact.
+
+Example for one three-run OpenAI case:
+
+```bash
+export OPENAI_API_KEY=...
+python evaluation/capture_baseline.py \
+  --adapter openai-responses \
+  --model <exact-provider-model-id> \
+  --case-ids W7_MR_ZERO_RESULT_BASE \
+  --planned-runs 3 \
+  --reasoning-effort low
+```
+
+Example for Anthropic:
+
+```bash
+export ANTHROPIC_API_KEY=...
+python evaluation/capture_baseline.py \
+  --adapter anthropic-messages \
+  --model <exact-provider-model-id> \
+  --case-ids W7_MR_ZERO_RESULT_BASE \
+  --planned-runs 3
+```
+
+Use `--case-ids all --allow-all` for the full 78-observation minimum cell. This runner deliberately supplies no external tools, so it creates a `no-external-tools-api` comparison cell. Do not compare it to a tool-enabled cell as if only the model changed.
+
+The manual GitHub Actions workflow `Capture behavioral baseline` exposes the same controls and uploads capture artifacts for 90 days. It never runs on pushes or pull requests and requires the selected repository secret, `OPENAI_API_KEY` or `ANTHROPIC_API_KEY`. Full-suite dispatch also requires an explicit cost acknowledgement.
+
+Automated capture proves provenance and first-response isolation. It does not create the independent weighted judgements required for complete Wave 7 status.
+
+### Manual capture
+
 ### 1. Run the frozen case
 
 Use the case prompt/context in a **fresh model session** with the intended skill/workflow and tool profile.
@@ -261,7 +303,7 @@ CI can prove that:
 - fresh-session/corrective-follow-up rules are enforced;
 - aggregate PASS/FAIL/INCOMPLETE logic behaves as designed.
 
-CI **cannot** create genuine fresh-session Claude, Codex, Gemini, or other model evidence unless an authorized model runner is explicitly connected.
+Ordinary test CI does not create genuine model evidence. The manual `Capture behavioral baseline` workflow can create stateless OpenAI or Anthropic no-tools observations only when the corresponding repository API credential is configured.
 
 Therefore a green repository test suite means:
 

@@ -54,7 +54,7 @@
     "raw_output_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
     "judgement_path": {"type": ["string", "null"]},
     "judgement_sha256": {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"},
-    "evaluator_blinded": {"type": "boolean"},
+    "evaluator_blinded": {"type": ["boolean", "null"]},
     "tool_profile": {
       "type": "object",
       "additionalProperties": false,
@@ -73,6 +73,38 @@
         "workflow_invoked": {"type": ["string", "null"]},
         "corrective_followup_used": {"type": ["boolean", "null"]},
         "additional_context_given": {"type": ["boolean", "null"]}
+      }
+    },
+    "capture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "adapter",
+        "endpoint",
+        "prompt_bundle_path",
+        "prompt_bundle_sha256",
+        "request_path",
+        "request_sha256",
+        "provider_response_path",
+        "provider_response_sha256",
+        "provider_request_id",
+        "response_model",
+        "request_parameters"
+      ],
+      "properties": {
+        "mode": {"const": "automated_api"},
+        "adapter": {"enum": ["openai-responses", "anthropic-messages"]},
+        "endpoint": {"type": "string", "pattern": "^https://"},
+        "prompt_bundle_path": {"type": "string", "minLength": 1},
+        "prompt_bundle_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "request_path": {"type": "string", "minLength": 1},
+        "request_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "provider_response_path": {"type": "string", "minLength": 1},
+        "provider_response_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "provider_request_id": {"type": "string", "minLength": 1},
+        "response_model": {"type": "string", "minLength": 1},
+        "request_parameters": {"type": "object"}
       }
     },
     "notes": {"type": ["string", "null"]}

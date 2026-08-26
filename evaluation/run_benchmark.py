@@ -209,8 +209,9 @@ def validate_run_record(
     elif not isinstance(tools.get("tools_enabled"), bool):
         errors.append("tool_profile.tools_enabled must be boolean for qualification runs")
 
-    if not isinstance(record.get("evaluator_blinded"), bool):
-        errors.append("evaluator_blinded must be boolean")
+    evaluator_blinded = record.get("evaluator_blinded")
+    if evaluator_blinded is not None and not isinstance(evaluator_blinded, bool):
+        errors.append("evaluator_blinded must be boolean or null")
 
     raw_output = None
     raw_value = record.get("raw_output_path")
@@ -249,8 +250,37 @@ def validate_run_record(
         except ValueError as exc:
             errors.append(f"judgement invalid: {exc}")
 
-    if manifest.get("require_judgement_for_full_benchmark") and not judgement_value:
-        errors.append("weighted judgement missing")
+    capture = record.get("capture")
+    if capture is not None:
+        if not isinstance(capture, dict):
+            errors.append("capture must be an object when present")
+        else:
+            if capture.get("mode") != "automated_api":
+                errors.append("capture.mode must be automated_api")
+            if capture.get("adapter") not in {"openai-responses", "anthropic-messages"}:
+                errors.append("capture.adapter is unsupported")
+            endpoint = capture.get("endpoint")
+            if not isinstance(endpoint, str) or not endpoint.startswith("https://"):
+                errors.append("capture.endpoint must use https")
+            for prefix in ("prompt_bundle", "request", "provider_response"):
+                path_value = capture.get(f"{prefix}_path")
+                expected_hash = capture.get(f"{prefix}_sha256")
+                if not isinstance(path_value, str) or not path_value.strip():
+                    errors.append(f"capture.{prefix}_path is required")
+                    continue
+                try:
+                    artifact_path = repo_path(path_value)
+                    if not artifact_path.is_file():
+                        errors.append(f"capture artifact missing: {path_value}")
+                    elif sha256_file(artifact_path) != expected_hash:
+                        errors.append(f"capture.{prefix}_sha256 mismatch")
+                except ValueError as exc:
+                    errors.append(f"capture.{prefix}_path invalid: {exc}")
+            for field in ("provider_request_id", "response_model"):
+                if not isinstance(capture.get(field), str) or not capture.get(field, "").strip():
+                    errors.append(f"capture.{field} is required")
+            if not isinstance(capture.get("request_parameters"), dict):
+                errors.append("capture.request_parameters must be an object")
 
     return errors, case, {"raw_output": raw_output, "judgement": judgement}
 
@@ -273,6 +303,18 @@ def summarize_case_results(
         "INVALID_JUDGEMENT",
     } for r in results)
     passed = complete and all(r.get("status") == "PASS" for r in results)
+    hard_gate_outcomes = {
+        r.get("hard_gates", {}).get("passed")
+        for r in results
+        if isinstance(r.get("hard_gates", {}).get("passed"), bool)
+    }
+    judged_outcomes = {
+        r.get("status") == "PASS"
+        for r in results
+        if r.get("status") not in {"UNSCORED", "HARD_GATE_PASS_UNSCORED", "HARD_GATE_FAIL"}
+    }
+    mixed_hard_gate = len(hard_gate_outcomes) > 1
+    mixed_pass_fail = len(judged_outcomes) > 1 or mixed_hard_gate
     return {
         "case_id": case["id"],
         "family": case.get("family", "legacy"),
@@ -291,7 +333,8 @@ def summarize_case_results(
         "min_weighted_score": min(weighted) if weighted else None,
         "max_weighted_score": max(weighted) if weighted else None,
         "score_range": round(max(weighted) - min(weighted), 2) if len(weighted) >= 2 else 0.0 if weighted else None,
-        "mixed_pass_fail": len({r.get("status") == "PASS" for r in results}) > 1,
+        "mixed_hard_gate": mixed_hard_gate,
+        "mixed_pass_fail": mixed_pass_fail,
         "run_details": [
             {
                 "run_index": r.get("run_index"),
@@ -389,21 +432,29 @@ def aggregate_model(
             "mean_weighted_score": round(statistics.mean(family_scores), 2) if family_scores else None,
             "hard_gate_failures": sum(x["hard_gate_failures"] for x in items),
             "base_pass_rate": (
-                round(sum(1 for x in base if x["passed"]) / len(base), 4) if base else None
+                round(sum(1 for x in base if x["passed"]) / len(base), 4)
+                if base and all(x["complete"] for x in base)
+                else None
             ),
             "mutation_pass_rate": (
-                round(sum(1 for x in mutation if x["passed"]) / len(mutation), 4) if mutation else None
+                round(sum(1 for x in mutation if x["passed"]) / len(mutation), 4)
+                if mutation and all(x["complete"] for x in mutation)
+                else None
             ),
         }
 
-    coverage_complete = (
+    capture_complete = (
         not duplicate_slots
         and plan_consistent
-        and complete_cases == len(case_summaries)
         and missing_slots == 0
     )
+    coverage_complete = capture_complete and complete_cases == len(case_summaries)
     hard_rate = hard_failures / total_runs if total_runs else None
-    case_pass_rate = passed_cases / len(case_summaries) if case_summaries else None
+    case_pass_rate = (
+        passed_cases / len(case_summaries)
+        if coverage_complete and case_summaries
+        else None
+    )
     mean_score = round(statistics.mean(all_scores), 2) if all_scores else None
 
     release = manifest.get("release_gate", {})
@@ -412,19 +463,24 @@ def aggregate_model(
     evaluator_profiles = sorted(
         {
             (
-                (item["score"].get("evaluator") or {}).get("id", "?"),
-                (item["score"].get("evaluator") or {}).get("type", "?"),
-                (item["score"].get("evaluator") or {}).get("version", "?"),
-                (item["score"].get("evaluator") or {}).get("blinded"),
+                item["score"]["evaluator"].get("id", "?"),
+                item["score"]["evaluator"].get("type", "?"),
+                item["score"]["evaluator"].get("version", "?"),
+                item["score"]["evaluator"].get("blinded"),
             )
             for item in records
+            if isinstance(item["score"].get("evaluator"), dict)
         }
     )
     minimum_family_pass_rate = float(release.get("minimum_family_pass_rate", 0))
-    family_floor_failures = sorted(
-        family
-        for family, data in families.items()
-        if data["passed_cases"] / data["cases"] < minimum_family_pass_rate
+    family_floor_failures = (
+        sorted(
+            family
+            for family, data in families.items()
+            if data["passed_cases"] / data["cases"] < minimum_family_pass_rate
+        )
+        if coverage_complete
+        else []
     )
     maximum_unstable_cases = int(release.get("maximum_unstable_cases", 0))
     if not coverage_complete:
@@ -451,6 +507,7 @@ def aggregate_model(
             for x in evaluator_profiles
         ],
         "release_status": release_status,
+        "capture_complete": capture_complete,
         "coverage_complete": coverage_complete,
         "planned_runs_per_case": planned_runs,
         "run_plan_consistent": plan_consistent,
@@ -501,10 +558,13 @@ def markdown_report(report: dict[str, Any]) -> str:
                 f"Benchmark status: **{model['release_status']}**",
                 f"Repository commit(s): {', '.join(model['repository_commits'])}",
                 f"Suite fingerprint(s): {', '.join(model['suite_fingerprints'])}",
-                "Evaluator profile(s): " + ", ".join(
-                    f"{x['id']} ({x['type']} {x['version']}, blinded={x['blinded']})"
-                    for x in model["evaluator_profiles"]
+                "Evaluator profile(s): " + (
+                    ", ".join(
+                        f"{x['id']} ({x['type']} {x['version']}, blinded={x['blinded']})"
+                        for x in model["evaluator_profiles"]
+                    ) or "None yet"
                 ),
+                f"Raw capture complete: **{model['capture_complete']}**",
                 f"Coverage complete: **{model['coverage_complete']}**",
                 f"Planned runs per case: {model['planned_runs_per_case']}",
                 f"Run plan consistent: **{model['run_plan_consistent']}**",

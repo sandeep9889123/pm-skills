@@ -1,0 +1,159 @@
+name: Capture behavioral baseline
+
+on:
+  workflow_dispatch:
+    inputs:
+      provider:
+        description: Model API provider
+        required: true
+        type: choice
+        options:
+          - openai
+          - anthropic
+      model:
+        description: Exact provider model ID
+        required: true
+        type: string
+      case_ids:
+        description: Comma-separated Wave 7 case IDs, or all
+        required: true
+        default: W7_MR_ZERO_RESULT_BASE
+        type: string
+      planned_runs:
+        description: Predeclared fresh runs per selected case
+        required: true
+        default: "3"
+        type: choice
+        options:
+          - "3"
+          - "5"
+          - "10"
+      max_output_tokens:
+        description: Maximum output tokens per response
+        required: true
+        default: "5000"
+        type: string
+      temperature:
+        description: Optional temperature; leave empty for provider default
+        required: false
+        type: string
+      reasoning_effort:
+        description: OpenAI reasoning effort; unset for provider default
+        required: true
+        default: unset
+        type: choice
+        options:
+          - unset
+          - low
+          - medium
+          - high
+      full_suite_ack:
+        description: I acknowledge that all means 26 cases times planned runs
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    env:
+      PROVIDER: ${{ inputs.provider }}
+      MODEL: ${{ inputs.model }}
+      CASE_IDS: ${{ inputs.case_ids }}
+      PLANNED_RUNS: ${{ inputs.planned_runs }}
+      MAX_OUTPUT_TOKENS: ${{ inputs.max_output_tokens }}
+      TEMPERATURE: ${{ inputs.temperature }}
+      REASONING_EFFORT: ${{ inputs.reasoning_effort }}
+      FULL_SUITE_ACK: ${{ inputs.full_suite_ack }}
+
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+
+      - name: Validate benchmark definition
+        run: python evaluation/validate_benchmark.py
+
+      - name: Capture predeclared first responses
+        shell: bash
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          set -euo pipefail
+
+          if [[ "$CASE_IDS" == "all" && "$FULL_SUITE_ACK" != "true" ]]; then
+            echo "Full-suite capture requires full_suite_ack=true." >&2
+            exit 2
+          fi
+
+          case "$PROVIDER" in
+            openai)
+              adapter="openai-responses"
+              ;;
+            anthropic)
+              adapter="anthropic-messages"
+              if [[ "$REASONING_EFFORT" != "unset" ]]; then
+                echo "reasoning_effort must be unset for Anthropic." >&2
+                exit 2
+              fi
+              ;;
+            *)
+              echo "Unsupported provider: $PROVIDER" >&2
+              exit 2
+              ;;
+          esac
+
+          args=(
+            --adapter "$adapter"
+            --model "$MODEL"
+            --case-ids "$CASE_IDS"
+            --planned-runs "$PLANNED_RUNS"
+            --max-output-tokens "$MAX_OUTPUT_TOKENS"
+          )
+          if [[ "$CASE_IDS" == "all" ]]; then
+            args+=(--allow-all)
+          fi
+          if [[ -n "$TEMPERATURE" ]]; then
+            args+=(--temperature "$TEMPERATURE")
+          fi
+          if [[ "$REASONING_EFFORT" != "unset" ]]; then
+            args+=(--reasoning-effort "$REASONING_EFFORT")
+          fi
+
+          python evaluation/capture_baseline.py "${args[@]}"
+
+      - name: Build hard-gate triage report
+        if: success()
+        shell: bash
+        run: |
+          set +e
+          python evaluation/run_benchmark.py \
+            --runs evaluation/runs \
+            --json-out evaluation/runs/hard-gate-report.json \
+            --md-out evaluation/runs/hard-gate-report.md
+          status=$?
+          set -e
+          if [[ "$status" -eq 2 ]]; then
+            echo "Run-record integrity validation failed." >&2
+            exit 2
+          fi
+          echo "An INCOMPLETE status is expected until independent judgements are added."
+
+      - name: Upload immutable capture artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: wave7-capture-${{ github.run_id }}-${{ github.run_attempt }}
+          path: evaluation/runs/
+          if-no-files-found: warn
+          retention-days: 90
