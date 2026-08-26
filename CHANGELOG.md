@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+### Operational Truth and Shipping Readiness Wave 5C
+
+- Hardened `strategy-red-team` and `/red-team-prd` so evidence gaps are not treated as negative evidence, supported claims can survive the attack, `PASS` is legitimate, and red-teams cannot manufacture a fixed quota of objections.
+- Hardened meeting summarization so discussion, proposals, decisions, actions, blockers, owners, dates, quotes, dissent, and source coverage remain distinct; missing owners/dates stay `UNKNOWN` rather than being inferred.
+- Rebuilt test-scenario generation around requirement traceability and explicit test oracles. Missing behavior now becomes `SPEC GAP` / `BLOCKED BY SPEC GAP` instead of invented counts, thresholds, permissions, timeouts, or expected results.
+- Hardened account expansion so relationship optimism, executive access, or one successful PoC cannot become buying proof; unresolved delivery/trust issues trigger `STABILIZE FIRST`, and concentration/capacity risk remains explicit.
+- Added fail-closed coverage states to static security/performance audits and `/ship-check`. Partial or failed inspection cannot become a clean readiness claim; zero static findings are scoped to inspected code and never mean secure, scalable, or guaranteed safe.
+- Added 16 Wave 5C adversarial scenarios plus semantic regression tests covering red-team theatre, decision/owner/date inflation, test-oracle invention, premature account expansion, partial-audit synthesis, zero-findings overclaiming, and proposed-tests-as-verified coverage.
+
 ### Reliability Kernel and P0 Hardening Waves 4-5B
 
 - Added a repo-wide Reliability Kernel with decision-context resolution, evidence/source precedence, claim-state preservation, freshness, contradiction checks, negative-conclusion burden of proof, fail-closed tool/retrieval behavior, forced-completion guards, decision gates, cross-skill lineage, and P0/P1/P2 admission rules.

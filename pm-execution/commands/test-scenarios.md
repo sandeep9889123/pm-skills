@@ -1,83 +1,83 @@
 ---
-description: Generate comprehensive test scenarios from user stories or feature specs — happy paths, edge cases, and error handling
+description: Generate traceable test scenarios from requirements without inventing product behavior, thresholds, permissions, or pass/fail expectations
 argument-hint: "<user stories, feature spec, or description>"
 ---
 
-# /test-scenarios -- Test Scenario Generator
+# /test-scenarios - Evidence-Grounded Test Scenario Generator
 
-Turn user stories or feature descriptions into comprehensive test scenarios that QA can execute immediately. Covers happy paths, edge cases, error handling, and cross-browser/device considerations.
-
-## Invocation
-
-```
-/test-scenarios [paste user stories or acceptance criteria]
-/test-scenarios [upload a PRD or feature spec]
-/test-scenarios User can reset their password via email link
-```
+Turn requirements into QA/UAT scenarios while keeping unknown product behavior explicit. A test scenario must not become an accidental requirements document.
 
 ## Workflow
 
-### Step 1: Accept Input
+### Step 1: Accept and Inventory Requirements
 
-Accept: user stories, acceptance criteria, PRD sections, feature descriptions, or any specification of expected behavior.
+Accept user stories, acceptance criteria, PRD sections, feature specs, API contracts, or documented intended behavior.
 
-### Step 2: Generate Test Scenarios
+For each material requirement classify:
+`SPECIFIED | AMBIGUOUS | MISSING | CONTRADICTED`
 
-Apply the **test-scenarios** skill:
+If only a one-line feature description is supplied, do not pretend the full expected behavior is known.
 
-For each user story or requirement, generate:
+### Step 2: Apply `test-scenarios`
 
-**Happy Path Scenarios**: The expected user flow works correctly
-**Edge Cases**: Boundary conditions, unusual inputs, concurrent operations
-**Error Scenarios**: What happens when things go wrong
-**Security Scenarios**: If applicable (auth, permissions, data access)
-**Performance Scenarios**: If applicable (load, timeout, large data)
+Mandatory rules:
+- never invent expected behavior, numeric thresholds, counts, timestamps, error copy, permissions, retry rules, browser support, performance targets, or state transitions
+- every pass/fail oracle must trace to a supplied/authoritative requirement
+- inferred risks may produce exploratory tests but not invented pass/fail expectations
+- unresolved behavior becomes `SPEC GAP`
+- include failure, permission, recovery, concurrency/idempotency, data-integrity, and dependency paths when applicable to the risk
+- source/tool access failure means `COVERAGE INCOMPLETE`
+- do not call coverage comprehensive when requirements or implementation paths were not fully assessed
 
-### Step 3: Structure Output
+### Step 3: Generate Scenarios
 
-```
+```text
 ## Test Scenarios: [Feature]
 
-**Source**: [user stories / PRD / description]
-**Total scenarios**: [count]
-**Coverage**: [happy path / edge cases / errors / security / performance]
+### Source Coverage
+[requirements inspected and limitations]
 
-### Scenario 1: [Title]
-**Tests**: [which story or requirement]
-**Preconditions**: [setup needed]
-**User role**: [who is performing this]
+### Specification Gaps
+| Gap | Why It Changes Expected Behavior | Owner/Source Needed | Status |
 
-| Step | Action | Expected Result |
-|------|--------|----------------|
-| 1 | [user action] | [expected system response] |
-| 2 | [user action] | [expected system response] |
+### Scenario: [Title]
+Requirement source: [ID / section / exact supplied behavior]
+Requirement state: SPECIFIED | AMBIGUOUS | MISSING | CONTRADICTED
+Objective: [what is validated]
+Preconditions: [specified or UNKNOWN]
+Actor: [specified or UNKNOWN]
 
-**Postconditions**: [state after completion]
-**Priority**: [Critical / High / Medium / Low]
+| Step | Action | Expected Result | Oracle Source |
 
----
-[Repeat for each scenario]
+Postconditions: [specified or UNKNOWN]
+Coverage status: COVERED | PARTIAL | BLOCKED BY SPEC GAP | NOT ASSESSED
+Priority: [risk rationale]
 
 ### Coverage Matrix
-| Requirement | Happy Path | Edge Cases | Error Handling | Notes |
-|------------|-----------|-----------|---------------|-------|
+| Requirement | State | Happy Path | Failure/Edge | Security/Permission | Recovery/Data Integrity | Coverage |
 
 ### Test Data Requirements
-[What test data is needed to execute these scenarios]
+[grounded in executable scenarios]
+
+### Not Assessed
+[paths or environments outside current evidence]
 ```
 
-Save as markdown.
+If expected behavior is unknown, write:
 
-### Step 4: Offer Next Steps
+`BLOCKED BY SPEC GAP: [specific decision/question]`
 
-- "Want me to **generate the test data** for these scenarios?"
-- "Should I **add more edge cases** for any specific scenario?"
-- "Want me to **create the user stories** that these scenarios test?"
+rather than choosing a plausible expected result.
+
+### Step 4: Release-Readiness Gate
+
+Do not describe the suite as release-ready when material requirements are missing/contradicted, critical oracles are invented, or high-consequence failure paths remain `NOT ASSESSED`.
+
+Valid outcomes:
+`READY FOR EXECUTION | PARTIAL COVERAGE | BLOCKED BY SPEC GAPS | COVERAGE INCOMPLETE`
 
 ## Notes
 
-- Happy paths first, then layer in edge cases — ensure basic flows work before testing boundaries
-- Every acceptance criterion from the original story should map to at least one test scenario
-- Include both positive tests (it works) and negative tests (it fails gracefully)
-- For APIs, include scenarios for rate limiting, timeout, malformed requests, and auth failures
-- Flag scenarios that require specific test environments or third-party service mocking
+- Happy paths do not have automatic priority over catastrophic failure paths.
+- An edge case without a defined expected outcome is a specification question, not an executable test.
+- Traceability matters more than scenario count.

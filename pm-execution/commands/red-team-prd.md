@@ -1,66 +1,79 @@
 ---
-description: Red-team a PRD, roadmap, or strategy — attack its load-bearing assumptions and return the cheapest test for each before you commit
+description: Red-team a PRD, roadmap, or strategy by testing load-bearing assumptions, evidence, alternatives, and falsifiable decision gates without manufacturing objections
 argument-hint: "<PRD, roadmap, strategy, or the current doc>"
 ---
 
-# /red-team-prd -- Attack the Plan Before Reality Does
+# /red-team-prd - Evidence-Calibrated Red Team
 
-Most plans only survived polite feedback. This command finds the assumptions that would make yours fail, attacks them honestly, and hands you the cheapest test for each — so you can kill a bad bet this week instead of at launch.
-
-## Invocation
-
-```
-/red-team-prd [paste or upload a PRD, roadmap, or strategy]
-/red-team-prd Prioritize AI onboarding — activation is our bottleneck
-/red-team-prd the current doc
-```
+Use this workflow to challenge a plan before commitment. The objective is decision quality, not a predetermined negative verdict.
 
 ## Workflow
 
-### Step 1: Accept the Plan
+### Step 1: Accept and Reconstruct the Plan
 
-Take it in any form — PRD, roadmap, strategy memo, one-line bet, or an uploaded doc. If the user says "the current doc," use the document in context.
+Take the PRD, roadmap, strategy memo, business case, one-line bet, or current document in context.
 
-### Step 2: Red-Team It
+State the decision, target actor, problem, mechanism, outcome, stage, constraints, and dependencies. If these cannot be reconstructed, return `NOT READY` with the missing inputs.
 
-Apply the **strategy-red-team** skill:
+### Step 2: Apply `strategy-red-team`
 
-- Extract every claim; keep only the **load-bearing** ones (false → plan dies).
-- **Steelman each, then attack the steelman** — no strawmen.
-- Write each failure mode as "**Fails if ___**."
-- Rank by **(impact if wrong) × (likelihood wrong) × (cheapness to test)**.
-- Default "the risk is real" unless the plan cites evidence against it — but **say plainly what's well-reasoned**, and never fabricate a weakness.
+Mandatory behavior:
+- extract load-bearing claims only
+- preserve `FACT | INFERENCE | ASSUMPTION | ESTIMATE | UNKNOWN | STALE | TARGET | PROPOSAL`
+- distinguish `NEGATIVE EVIDENCE` from `EVIDENCE GAP`
+- steelman before attacking
+- do not default to "the risk is real"
+- do not manufacture weaknesses to fill a quota
+- acknowledge `HOLDS UNDER CURRENT EVIDENCE` when appropriate
+- compare credible alternatives including current state / do nothing when decision-relevant
+- use proposed thresholds only when owner-approved thresholds do not exist
 
-### Step 3: Return the Output
+### Step 3: Return Decision-Focused Output
 
+```text
+## Red-Team: [decision / plan]
+
+### Readiness
+PASS | TEST FIRST | REDESIGN | NOT READY | KILL
+
+### Load-Bearing Claims
+| Claim | Evidence State | Evidence For | Evidence Against | Coverage Gap | Impact |
+
+### Surviving Risks
+For each material risk only:
+- Claim
+- Challenge type: NEGATIVE EVIDENCE | EVIDENCE GAP | ALTERNATIVE EXPLANATION
+- Steelman
+- Evidence-based challenge
+- Fails if
+- Cheapest credible test
+- Proposed decision gate
+
+### Credible Alternatives
+[Only alternatives that could change the decision]
+
+### What Holds Up
+[Supported claims and mitigated risks]
+
+### What Could Not Be Assessed
+[Missing/stale/unavailable evidence]
+
+### What Would Change the Recommendation
+[Specific evidence]
 ```
-## Red-Team: [plan in one line]
 
-### Top Kill-Assumptions (ranked)
-- **Claim:** [load-bearing assertion]
-  - **Fails if:** [concrete, falsifiable]
-  - **Evidence to get this week:** [specific]
-  - **Kill criterion:** [threshold]
-  - **Cheapest test:** [smallest experiment]
-[3–5 max]
+Do not force 3-5 risks. Zero material objections is a valid result when evidence is strong.
 
-### What's Well-Reasoned
-[State it explicitly — don't manufacture doubt.]
+### Step 4: Follow-On Action
 
-### What I Couldn't Assess
-[Where the plan didn't give enough to judge.]
-```
-
-### Step 4: Offer Next Steps
-
-- "Want me to **turn the top kill-assumption into an experiment** you can run this week?"
-- "Should I **run a pre-mortem** to complement this — imagine it already failed and trace the path?"
-- "Want me to **rewrite the riskiest section** of the plan to address what survived?"
+Offer the next highest-value action only when useful, such as:
+- convert one unresolved claim into a falsifiable experiment
+- retrieve missing evidence
+- revise the plan around a surviving blocker
+- run a pre-mortem for operational failure-path exploration
 
 ## Notes
 
-- Lead with the ranking — the cheapest high-impact test is the whole point.
-- Five real kill-assumptions with tests beat twenty generic risks. Cut ruthlessly.
-- Distinct from `/pre-mortem`: pre-mortem narrates failure after the fact; red-team attacks the live assumptions and hands you the test.
-- If the plan is genuinely strong, the most valuable output is saying so — and naming the one thing still worth checking.
-- For a second-opinion pass, ask the user before adding cross-model friction; different model families miss different things, but most plans don't need it.
+- Missing evidence is not proof that a claim is false.
+- A red-team that always finds fatal flaws is as unreliable as one that never challenges anything.
+- Preserve supported claims so strong decisions do not get endlessly reopened without new evidence.

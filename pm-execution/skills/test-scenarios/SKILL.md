@@ -1,86 +1,164 @@
 ---
 name: test-scenarios
-description: "Create comprehensive test scenarios from user stories with test objectives, starting conditions, user roles, step-by-step actions, and expected outcomes. Use when writing QA test cases, creating test plans, defining acceptance tests, or preparing for feature validation."
+description: "Create evidence-grounded test scenarios from user stories, requirements, or intended behavior without inventing product rules. Separates specified expectations from inferred risks, identifies specification gaps, and covers failure paths proportionally. Use for QA plans, acceptance tests, UAT, and feature validation."
 ---
-# Test Scenarios
 
-Create comprehensive test scenarios from user stories with test objectives, starting conditions, user roles, step-by-step test actions, and expected outcomes.
+# Evidence-Grounded Test Scenarios
 
-**Use when:** Writing QA test cases, creating test plans, defining acceptance test scenarios, or validating user story implementations.
+## Purpose
 
-**Arguments:**
-- `$PRODUCT`: The product or system name
-- `$USER_STORY`: The user story to test (title and acceptance criteria)
-- `$CONTEXT`: Additional testing context or constraints
+Convert intended behavior into executable test scenarios while preserving the boundary between **what the product is specified to do** and **what the tester thinks it might reasonably do**.
 
-## Step-by-Step Process
+A test suite must not create product requirements by accident.
 
-1. **Review the user story** and acceptance criteria
-2. **Define test objectives** - What specific behavior to validate
-3. **Establish starting conditions** - System state, data setup, configurations
-4. **Identify user roles** - Who performs the test actions
-5. **Create test steps** - Break down interactions step-by-step
-6. **Define expected outcomes** - Observable results after each step
-7. **Consider edge cases** - Invalid inputs, boundary conditions
-8. **Output detailed test scenarios** - Ready for QA execution
+## P0 Reliability Contract
 
-## Scenario Template
+1. Never invent expected behavior, thresholds, card counts, timeout limits, timestamps, status transitions, permissions, copy, data rules, or performance targets that are not in the supplied requirements or authoritative source.
+2. Classify each expected behavior as `SPECIFIED`, `INFERRED TEST RISK`, `UNKNOWN / SPEC GAP`, or `NON-FUNCTIONAL REQUIREMENT PROVIDED`.
+3. An `INFERRED TEST RISK` may justify a test exploration, but it must not be written as a pass/fail oracle until the product owner/requirement source confirms the expected behavior.
+4. Missing acceptance criteria become `SPEC GAP`, not fabricated expected results.
+5. Every pass/fail test must trace to a requirement, business rule, contract, documented system behavior, or explicitly approved test oracle.
+6. Do not assume authentication, role permissions, tenancy, retry behavior, error copy, browser/device support, accessibility level, latency target, rate limit, or data retention unless supplied.
+7. For high-risk flows, include failure, permission, recovery, concurrency/idempotency, data-integrity, and dependency-error paths where applicable.
+8. Do not call coverage `comprehensive` when source requirements are incomplete or code/runtime paths were not inspected.
+9. Tool/file access failure means `COVERAGE INCOMPLETE`.
+10. Unknown behavior must be resolved before the corresponding scenario can be used as a release gate.
 
-**Test Scenario:** [Clear scenario name]
+## Step 1: Build the Requirement Inventory
 
-**Test Objective:** [What this test validates]
+Capture:
+- source artifact / user story / PRD / API contract
+- requirement ID or traceable statement
+- actor/role if specified
+- preconditions
+- expected behavior
+- explicit non-functional requirements
+- acceptance criteria
+- known exclusions
 
-**Starting Conditions:**
-- [System state required]
-- [Data or configuration needed]
-- [User setup or permissions]
+Create a requirement state:
+`SPECIFIED | AMBIGUOUS | MISSING | CONTRADICTED`
 
-**User Role:** [Who performs the test]
+## Step 2: Identify Specification Gaps
 
-**Test Steps:**
-1. [First action and its expected result]
-2. [Second action and observable outcome]
-3. [Third action and system behavior]
-4. [Completion action and final state]
+Before generating tests, list gaps that would change the expected result, for example:
+- undefined role/permission
+- ambiguous status transition
+- missing empty-state behavior
+- unclear timeout/retry behavior
+- undefined error response
+- no data-retention rule
+- no performance threshold
 
-**Expected Outcomes:**
-- [Observable result 1]
-- [Observable result 2]
-- [Observable result 3]
+Do not choose a plausible answer. Mark `SPEC GAP` and identify the decision owner if known.
 
-## Example Test Scenario
+## Step 3: Derive Test Families
 
-**Test Scenario:** View Recently Viewed Products on Product Page
+For each specified requirement consider relevant families:
 
-**Test Objective:** Verify that the 'Recently viewed' section displays correctly and excludes the current product.
+### Functional happy path
+Validate the explicitly intended flow.
 
-**Starting Conditions:**
-- User is logged in or has browser history enabled
-- User has viewed at least 2 products in the current session
-- User is now on a product page different from previously viewed items
+### Boundary / validation
+Only when input ranges or rules are known. If boundaries are not specified, create a discovery question rather than a pass/fail expectation.
 
-**User Role:** Online Shopper
+### Failure / dependency
+Network errors, downstream failure, timeout, partial failure, retries, cancellation, or degraded service when applicable.
 
-**Test Steps:**
-1. Navigate to any product page → Section should appear at bottom with previously viewed items
-2. Scroll to bottom of page → "Recently viewed" section is visible with product cards
-3. Verify product thumbnails → Images, titles, and prices are displayed correctly
-4. Check current product → Current product is NOT in the recently viewed list
-5. Click on a product card → User navigates to the corresponding product page
+### Authorization / tenancy
+Role, object ownership, tenant isolation, escalation, or unauthorized access only when the system has such boundaries.
 
-**Expected Outcomes:**
-- Recently viewed section appears only after viewing at least 1 prior product
-- Section displays 4-8 product cards with complete information
-- Current product is excluded from the list
-- Each card shows "Viewed X minutes/hours ago" timestamp
-- Clicking cards navigates to correct product pages
-- Performance: Section loads within 2 seconds
+### Data integrity / state
+Duplicate submission, stale state, concurrent updates, idempotency, partial write, rollback, resume/retry where relevant.
 
-## Output Deliverables
+### Non-functional
+Performance, accessibility, compatibility, reliability, security, observability only when requirement/standard or risk context exists. Do not invent numeric targets.
 
-- Comprehensive test scenarios for each acceptance criterion
-- Clear test objectives aligned with user story intent
-- Detailed step-by-step test actions
-- Observable expected outcomes after each step
-- Edge case and error scenario coverage
-- Ready for QA team execution and documentation
+## Step 4: Define Test Oracle
+
+Every executable scenario must state:
+- requirement/source
+- precondition
+- action
+- expected observable result
+- postcondition
+- evidence needed
+
+If the expected result is unknown, set:
+
+`BLOCKED BY SPEC GAP: [question]`
+
+Do not silently convert a hypothesis into the expected result.
+
+## Step 5: Traceability and Coverage
+
+Create:
+
+| Requirement | Requirement State | Scenarios | Failure Paths | Coverage Status |
+|---|---|---|---|---|
+
+Coverage states:
+`COVERED | PARTIAL | BLOCKED BY SPEC GAP | NOT APPLICABLE | NOT ASSESSED`
+
+A requirement is not `COVERED` merely because a scenario title exists. The oracle must be executable and grounded.
+
+## Step 6: Prioritize by Risk
+
+Prioritize scenarios by:
+- customer/business consequence
+- security/privacy/data integrity
+- irreversible side effects
+- frequency/core-flow importance
+- likelihood of regression
+- complexity/dependency exposure
+
+Avoid arbitrary priority labels with no rationale.
+
+## Output Template
+
+```text
+## Test Scenario: [name]
+
+Requirement source: [ID / quote / section]
+Requirement state: SPECIFIED | AMBIGUOUS | MISSING | CONTRADICTED
+Test objective: [what is validated]
+Preconditions: [known setup]
+Actor: [specified role or UNKNOWN]
+
+| Step | Action | Expected Result | Oracle Source |
+
+Postconditions: [known expected state]
+Priority: [with rationale]
+Coverage status: COVERED | PARTIAL | BLOCKED BY SPEC GAP | NOT ASSESSED
+```
+
+Then provide:
+
+### Specification Gaps
+[questions that block executable tests]
+
+### Coverage Matrix
+[requirement to scenario traceability]
+
+### Test Data Requirements
+[only requirements grounded in scenarios]
+
+### Failure-Path Coverage
+[what was tested vs not assessed]
+
+## Hard Failures
+
+Do not call the suite release-ready when:
+- material requirements are missing/contradicted
+- critical expected outcomes are invented
+- security/permission boundaries are unknown for a sensitive flow
+- irreversible failure/recovery paths are untested
+- source coverage is incomplete but output claims completeness
+
+## Final Self-Check
+
+- Did I invent any expected behavior?
+- Does every pass/fail oracle trace to a source?
+- Did I convert missing requirements into questions instead of guesses?
+- Did I include failure paths proportional to risk?
+- Did I distinguish `PARTIAL` from `COVERED`?
