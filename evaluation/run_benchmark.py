@@ -16,14 +16,24 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
-from benchmark_utils import (
-    case_fingerprint,
-    get_case,
-    load_json,
-    validate_manifest,
-    validate_suite,
-)
-from score_output import score_case
+try:  # direct: python evaluation/run_benchmark.py
+    from benchmark_utils import (
+        case_fingerprint,
+        get_case,
+        load_json,
+        validate_manifest,
+        validate_suite,
+    )
+    from score_output import score_case
+except ModuleNotFoundError:  # imported from repository-root tests/tools
+    from evaluation.benchmark_utils import (
+        case_fingerprint,
+        get_case,
+        load_json,
+        validate_manifest,
+        validate_suite,
+    )
+    from evaluation.score_output import score_case
 
 EVAL_DIR = Path(__file__).resolve().parent
 REPO_ROOT = EVAL_DIR.parent
