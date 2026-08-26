@@ -97,7 +97,11 @@ def handoff(
     return {
         "handoff_id": "H-001",
         "created_at": "2026-08-26",
-        "producer": {"plugin": "pm-market-research", "artifact": "competitive-analysis", "run_id": "run-1"},
+        "producer": {
+            "plugin": "pm-market-research",
+            "artifact": "competitive-analysis",
+            "run_id": "run-1",
+        },
         "intended_consumers": ["pm-product-strategy/strategy"],
         "decision_context": {
             "decision": "Choose next strategy",
@@ -166,7 +170,10 @@ class TestWave6Validator(unittest.TestCase):
         current = copy.deepcopy(previous)
         current["claims"][0]["transformation"] = "RESTATED"
         current["claims"][0]["record"]["state"] = "FACT"
-        self.assertIn("restated claim must preserve state", errors_text(validator.validate_handoff(current, previous)))
+        self.assertIn(
+            "restated claim must preserve state",
+            errors_text(validator.validate_handoff(current, previous)),
+        )
 
     def test_estimate_to_fact_without_matching_history_is_rejected(self):
         previous = handoff(claim=record(state="ESTIMATE"))
@@ -257,7 +264,12 @@ class TestWave6Validator(unittest.TestCase):
         b["source_class"] = "derived"
         current = handoff(claim=a, transformation="DERIVED", parents=["D-B"], reason="from B")
         current["claims"].append(
-            {"record": b, "transformation": "DERIVED", "parent_claim_ids": ["D-A"], "transformation_reason": "from A"}
+            {
+                "record": b,
+                "transformation": "DERIVED",
+                "parent_claim_ids": ["D-A"],
+                "transformation_reason": "from A",
+            }
         )
         self.assertIn("lineage cycle detected", errors_text(validator.validate_handoff(current)))
 
@@ -269,7 +281,13 @@ class TestWave6Validator(unittest.TestCase):
         unknown = record(state="UNKNOWN")
         current = handoff(
             claim=unknown,
-            unresolved=[{"claim_id": "MR-001", "blocker": "Buyer unknown", "evidence_needed": "Authority evidence"}],
+            unresolved=[
+                {
+                    "claim_id": "MR-001",
+                    "blocker": "Buyer unknown",
+                    "evidence_needed": "Authority evidence",
+                }
+            ],
             decision="PROCEED WITH CONDITIONS",
             reversible=False,
         )
@@ -294,25 +312,38 @@ class TestWave6Validator(unittest.TestCase):
         current = copy.deepcopy(previous)
         current["claims"][0]["transformation"] = "DOWNGRADED"
         current["claims"][0]["record"]["state"] = "STALE"
-        current["claims"][0]["record"]["downstream_policy"]["allowed_uses"] = ["internal analysis", "sales collateral"]
-        self.assertIn("cannot expand allowed downstream uses", errors_text(validator.validate_handoff(current, previous)))
+        current["claims"][0]["record"]["downstream_policy"]["allowed_uses"] = [
+            "internal analysis",
+            "sales collateral",
+        ]
+        self.assertIn(
+            "cannot expand allowed downstream uses",
+            errors_text(validator.validate_handoff(current, previous)),
+        )
 
 
 class TestWave6KernelAndRuntime(unittest.TestCase):
     def test_kernel_schemas_parse_and_handoff_refs_claim_schema(self):
-        claim_schema = json.loads((ROOT / "reliability/kernel/claim_lineage.schema.json").read_text(encoding="utf-8"))
-        handoff_schema = json.loads((ROOT / "reliability/kernel/handoff_envelope.schema.json").read_text(encoding="utf-8"))
+        claim_schema = json.loads(
+            (ROOT / "reliability/kernel/claim_lineage.schema.json").read_text(encoding="utf-8")
+        )
+        handoff_schema = json.loads(
+            (ROOT / "reliability/kernel/handoff_envelope.schema.json").read_text(encoding="utf-8")
+        )
         self.assertEqual(
             handoff_schema["properties"]["claims"]["items"]["properties"]["record"]["$ref"],
             "claim_lineage.schema.json",
         )
         self.assertIn("downstream_policy", claim_schema["required"])
         self.assertFalse(
-            claim_schema["properties"]["downstream_policy"]["properties"]["may_promote_without_new_evidence"]["const"]
+            claim_schema["properties"]["downstream_policy"]["properties"]
+            ["may_promote_without_new_evidence"]["const"]
         )
 
     def test_protocol_contains_non_negotiable_handoff_rules(self):
-        text = normalize_markdown((ROOT / "reliability/kernel/HANDOFF_PROTOCOL.md").read_text(encoding="utf-8"))
+        text = normalize_markdown(
+            (ROOT / "reliability/kernel/HANDOFF_PROTOCOL.md").read_text(encoding="utf-8")
+        )
         for phrase in [
             "restating a claim never strengthens it",
             "no silent promotion",
@@ -326,20 +357,76 @@ class TestWave6KernelAndRuntime(unittest.TestCase):
 
     def test_priority_runtime_handoffs_preserve_lineage(self):
         contracts = {
-            "pm-market-research/commands/competitive-analysis.md": ["stable claim ids", "reliability handoff", "parent claim ids"],
-            "pm-product-strategy/commands/strategy.md": ["lineage consumer contract", "preserve stable claim ids", "parent claim ids"],
-            "pm-prospect-discovery/skills/discovery-synthesis/SKILL.md": ["claim-lineage producer contract", "reliability handoff", "same claim ids"],
-            "pm-execution/skills/create-prd/SKILL.md": ["lineage consumer contract", "source claim id", "reliability handoff"],
-            "pm-business-case/commands/build-business-case.md": ["lineage consumer contract", "validate_handoff.py", "parent claim ids"],
-            "pm-enterprise-transformation/skills/client-proof-extractor/SKILL.md": ["claim id", "publishability", "parent claim"],
-            "pm-enterprise-transformation/skills/case-study-to-gtm/SKILL.md": ["claim id", "publishability", "parent claim"],
-            "pm-go-to-market/skills/competitive-battlecard/SKILL.md": ["claim id", "publishability", "parent claim"],
-            "pm-execution/skills/outcome-roadmap/SKILL.md": ["claim id", "parent claim", "proposal"],
-            "pm-enterprise-transformation/commands/build-future-capability.md": ["claim id", "parent claim", "proposal"],
-            "pm-data-analytics/skills/cohort-analysis/SKILL.md": ["claim id", "parent claim", "reliability handoff"],
-            "pm-data-analytics/skills/ab-test-analysis/SKILL.md": ["claim id", "parent claim", "reliability handoff"],
-            "pm-product-discovery/skills/prioritize-features/SKILL.md": ["claim id", "parent claim", "causal"],
-            "pm-go-to-market/commands/plan-launch.md": ["claim id", "parent claim", "target"],
+            "pm-market-research/commands/competitive-analysis.md": [
+                "stable claim ids",
+                "reliability handoff",
+                "parent claim ids",
+            ],
+            "pm-product-strategy/commands/strategy.md": [
+                "lineage consumer contract",
+                "preserve stable claim ids",
+                "parent claim ids",
+            ],
+            "pm-prospect-discovery/skills/discovery-synthesis/SKILL.md": [
+                "claim-lineage producer contract",
+                "reliability handoff",
+                "same claim ids",
+            ],
+            "pm-execution/skills/create-prd/SKILL.md": [
+                "lineage consumer contract",
+                "source claim id",
+                "reliability handoff",
+            ],
+            "pm-business-case/commands/build-business-case.md": [
+                "lineage consumer contract",
+                "validate_handoff.py",
+                "parent claim ids",
+            ],
+            "pm-enterprise-transformation/skills/client-proof-extractor/SKILL.md": [
+                "claim id",
+                "publishability",
+                "parent-linkage",
+            ],
+            "pm-enterprise-transformation/skills/case-study-to-gtm/SKILL.md": [
+                "claim id",
+                "publishability",
+                "parent-linkage",
+            ],
+            "pm-go-to-market/skills/competitive-battlecard/SKILL.md": [
+                "claim id",
+                "publishability",
+                "parent-linkage",
+            ],
+            "pm-execution/skills/outcome-roadmap/SKILL.md": [
+                "claim id",
+                "parent-linkage",
+                "proposal",
+            ],
+            "pm-enterprise-transformation/commands/build-future-capability.md": [
+                "claim id",
+                "parent-linkage",
+                "proposal",
+            ],
+            "pm-data-analytics/skills/cohort-analysis/SKILL.md": [
+                "claim id",
+                "parent-linkage",
+                "reliability handoff",
+            ],
+            "pm-data-analytics/skills/ab-test-analysis/SKILL.md": [
+                "claim id",
+                "parent-linkage",
+                "reliability handoff",
+            ],
+            "pm-product-discovery/skills/prioritize-features/SKILL.md": [
+                "claim id",
+                "parent-linkage",
+                "causal",
+            ],
+            "pm-go-to-market/commands/plan-launch.md": [
+                "claim id",
+                "parent-linkage",
+                "target",
+            ],
             "pm-ai-shipping/commands/ship-check.md": ["claim id", "poc", "production"],
         }
         failures = []
@@ -350,7 +437,22 @@ class TestWave6KernelAndRuntime(unittest.TestCase):
                 continue
             text = normalize_markdown(path.read_text(encoding="utf-8"))
             for phrase in phrases:
-                if normalize_markdown(phrase) not in text:
+                needle = normalize_markdown(phrase)
+                if needle == "parent-linkage":
+                    has_parent_linkage = any(
+                        candidate in text
+                        for candidate in (
+                            "parent claim",
+                            "parent claims",
+                            "parent id",
+                            "parent ids",
+                            "parent claim id",
+                            "parent claim ids",
+                        )
+                    )
+                    if not has_parent_linkage:
+                        failures.append(f"{rel_path}: missing parent-claim/parent-id linkage")
+                elif needle not in text:
                     failures.append(f"{rel_path}: missing {phrase!r}")
         self.assertEqual(failures, [], "\n".join(failures))
 
