@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+### Cross-Skill Claim Lineage Wave 6
+
+- Added a repository-wide cross-skill handoff protocol so downstream P0 workflows preserve stable claim IDs, evidence state, source provenance, material scope, freshness, contradictions/caveats, confidentiality, downstream-use restrictions, coverage gaps, and unresolved P0 blockers.
+- Added a machine-readable `handoff_envelope.schema.json` around the existing claim-lineage schema plus a standard-library `validate_handoff.py` validator for deterministic handoff proof obligations.
+- Hardened the validator against silent state promotion, scope expansion under the same claim ID, source/caveat stripping, restricted-to-public leakage, downstream-policy weakening, lineage-type spoofing, circular derivations, untraceable promotions, and irreversible forward decisions with unresolved P0 or incomplete coverage.
+- Wired lineage contracts into six priority handoffs: Market Research → Strategy; Prospect Discovery → PRD/Business Case; Client Proof → Case Study/GTM/Battlecard; Business Case → Roadmap/Capability Investment; Analytics → Prioritization/Launch; and PoC → Production Readiness.
+- Added explicit producer/consumer handoff blocks to 15 high-consequence runtime artifacts so `ESTIMATE`, `TARGET`, `PROPOSAL`, `UNKNOWN`, `STALE`, client-specific proof, analytics caveats, and PoC scope cannot silently become stronger downstream claims.
+- Added 18 Wave 6 adversarial scenarios plus validator mutation tests and semantic runtime regression coverage. The validator is a lineage/proof-obligation check, not a factual-truth oracle or guarantee of hallucination-free model behavior.
+
 ### Operational Truth and Shipping Readiness Wave 5C
 
 - Hardened `strategy-red-team` and `/red-team-prd` so evidence gaps are not treated as negative evidence, supported claims can survive the attack, `PASS` is legitimate, and red-teams cannot manufacture a fixed quota of objections.
