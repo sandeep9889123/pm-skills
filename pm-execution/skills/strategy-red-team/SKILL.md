@@ -1,236 +1,195 @@
 ---
 name: strategy-red-team
-description: "Red-team a PRD, roadmap, strategy, business case, GTM plan, or capability thesis by attacking load-bearing assumptions, evidence quality, alternatives, failure modes, and kill criteria. Use before executive review or irreversible execution."
+description: "Red-team a PRD, roadmap, strategy, business case, GTM plan, or capability thesis by testing load-bearing assumptions, evidence quality, alternatives, failure modes, and decision gates without manufacturing objections. Use before executive review or irreversible execution."
 ---
 
 # Strategy Red-Team
 
 ## Operating principle
 
-Attack the assumptions before reality does.
+Attack the assumptions before reality does, but do not confuse skepticism with quality.
 
-A red-team is not a generic risk list. It identifies the few load-bearing claims that would kill or materially redirect the plan if false, then defines the cheapest evidence to test them.
+A red-team is not a generic risk list and not a pessimism generator. It identifies the few load-bearing claims that could materially change the decision if false, evaluates the evidence for and against them, and defines the cheapest credible test where uncertainty remains.
 
-The goal is better judgment, not more pessimism.
-
-## Non-negotiable rules
+## P0 Reliability Contract
 
 1. Steelman before attacking. Do not attack a weak version of the plan.
-2. Attack load-bearing claims, not cosmetic claims.
-3. Separate evidence gaps from negative evidence.
-4. Do not manufacture risks to sound smart.
-5. Do not create generic risks that could apply to any plan.
-6. Every failure mode must be falsifiable.
-7. Every kill criterion must be observable.
-8. Every top risk must have a cheapest test.
-9. If a claim is well supported, say so.
-10. Prefer 3 to 5 critical kill-assumptions over 20 vague concerns.
+2. Separate `NEGATIVE EVIDENCE` from `EVIDENCE GAP`. Missing evidence is not evidence the claim is false.
+3. Do not manufacture objections, failure modes, or alternatives merely to make the red-team look rigorous.
+4. If a load-bearing claim is strongly supported, say `HOLDS UNDER CURRENT EVIDENCE` and move on.
+5. Preserve `FACT`, `INFERENCE`, `ASSUMPTION`, `ESTIMATE`, `UNKNOWN`, `STALE`, `TARGET`, and `PROPOSAL` where relevant.
+6. Every surviving failure mode must be tied to a load-bearing mechanism and be falsifiable.
+7. Every kill/pivot criterion must be observable and labelled `PROPOSED` if not owner-approved.
+8. Do not force 3-5 risks. Return the number of material risks the evidence supports, including zero when appropriate.
+9. Compare credible alternatives including `DO NOTHING/current state` when they could change the decision.
+10. `PASS` is a legitimate outcome. A strong plan should not be downgraded to justify the exercise.
 
-## Step 1: Reconstruct the plan
+## Step 1: Reconstruct the Decision
 
-Summarize the plan in one paragraph:
-
-- target user/customer
-- problem or opportunity
-- proposed solution/strategy
+State:
+- decision being made
+- target user/customer/buyer
+- problem/opportunity
+- proposed strategy/solution
 - mechanism of value creation
 - expected outcome
-- timeline
-- constraints
+- timing/stage
+- constraints and dependencies
 
-If the plan cannot be reconstructed, output:
+If the decision cannot be reconstructed, return:
 
-`NOT READY: plan too ambiguous to red-team`
+`NOT READY: decision or plan too ambiguous to red-team`
 
-Then list missing inputs.
+List the missing inputs rather than inventing them.
 
-## Step 2: Extract claims
+## Step 2: Extract Load-Bearing Claims
 
-List explicit and implicit claims about:
-
-- customer/user
-- problem severity
-- market timing
+Capture explicit and implicit claims about:
+- customer/problem
+- market/timing
 - buyer willingness
 - technical feasibility
-- solution mechanism
+- mechanism of value
 - adoption
 - economics
 - GTM
-- delivery/operations
+- operations/delivery
 - dependencies
-- timeline
 - right-to-win
 - alternatives
 
-Classify each claim:
+Classify:
+- `LOAD-BEARING`: false changes or kills the decision
+- `IMPORTANT`: changes scope/sequencing/risk
+- `COSMETIC`: does not change the decision
 
-- LOAD-BEARING: if false, plan dies or changes materially
-- IMPORTANT: changes scope, sequencing, or risk
-- COSMETIC: does not affect decision
+Do not attack cosmetic claims for volume.
 
-Attack load-bearing claims first.
+## Step 3: Evidence Integrity
 
-## Step 3: Evidence quality check
+For each load-bearing claim capture:
 
-For each load-bearing claim, classify evidence:
-
-- VERIFIED FACT
-- INFERENCE
-- ASSUMPTION
-- ESTIMATE
-- UNKNOWN
-- STALE
-- CONTRADICTED
+| Claim | State | Evidence for | Evidence against | Coverage gap | Freshness |
+|---|---|---|---|---|---|
 
 Ask:
+- Does the source support the exact claim?
+- Is the claim broader than the sample/scope?
+- Is evidence current?
+- Is a stakeholder belief or target being treated as fact?
+- Is an estimate being treated as measured performance?
+- Is contradictory evidence being ignored?
 
-- What source supports this?
-- Is the source current?
-- Does it support the exact claim?
-- Is the claim broader than the evidence?
-- Is there contradictory evidence?
-- Is a stakeholder belief being treated as proof?
-- Is a modelled estimate being treated as measured fact?
+## Step 4: Steelman and Test
 
-## Step 4: Steelman then attack
+For each material unresolved claim:
+1. State the strongest case that it is true.
+2. State the strongest evidence-based challenge.
+3. Classify the challenge as `NEGATIVE EVIDENCE`, `EVIDENCE GAP`, or `ALTERNATIVE EXPLANATION`.
+4. Write `Fails if ...` only when the mechanism is specific enough to falsify.
+5. Define the cheapest credible evidence to obtain next.
+6. Define a proposed decision threshold when one is needed.
 
-For each load-bearing claim:
+Do not start from "the risk is real." Start from the evidence state.
 
-1. State the strongest version of why it could be true.
-2. Attack that strongest version.
-3. Write the failure mode as `Fails if ...`.
-4. Define evidence needed this week.
-5. Define kill or pivot criterion.
-6. Define the cheapest test.
+## Step 5: Alternatives Attack
 
-Do not strawman. Do not soften the real issue.
-
-## Step 5: Alternatives attack
-
-Ask what the plan ignores:
-
-- do nothing
+Consider only credible alternatives that could change the decision:
+- current state / do nothing
 - manual workflow
-- buyer already owns a tool
-- incumbent platform extension
-- vendor/buy option
-- partner/services option
+- existing owned tool or configuration
+- incumbent extension
+- buy/vendor
+- partner/services
 - internal build
 - narrower experiment
-- lower-cost path
-- sequencing alternative
+- different sequence
 
-If a credible alternative exists and has not been rebutted, mark it as a blocker or test item.
+For each alternative state why it is or is not credible. Do not invent a substitute to populate the section.
 
-## Step 6: Failure-mode ranking
+## Step 6: Rank Decision Risks
 
-Rank by:
+Rank by decision impact, uncertainty, and value of information.
 
-`impact if wrong x likelihood of being wrong x cheapness to test`
+Use qualitative levels if numeric scoring would create false precision.
 
-Use simple HIGH/MEDIUM/LOW if numbers would create fake precision.
+Prioritize risks that are:
+- high consequence if wrong
+- materially uncertain or contradicted
+- testable before commitment
+- likely to change the recommendation
 
-Prioritize assumptions that are:
+## Step 7: Decision Gates
 
-- high consequence
-- plausibly wrong
-- cheap to test now
-- likely to change the decision
+For each top unresolved risk specify:
+- observable signal/metric
+- proposed threshold if needed
+- scope/sample/time window where relevant
+- action if threshold is crossed
+- decision owner if known
 
-## Step 7: Kill criteria
+Unapproved thresholds remain `PROPOSED DECISION THRESHOLD`.
 
-Each top assumption needs a threshold.
+## Step 8: What Holds Up
 
-A kill criterion should specify:
+Explicitly identify:
+- claims supported by strong evidence
+- mitigated risks
+- assumptions that no longer deserve priority
+- areas that should not be reopened without new evidence
 
-- metric or observable evidence
-- threshold
-- sample or scope
-- time window
-- action if threshold is met
+This prevents red-team theatre and endless re-litigation.
 
-If a threshold is arbitrary, label it as proposed and ask for decision-owner calibration.
+## Required Output
 
-## Step 8: What holds up
+### Decision summary
+- decision in one line
+- readiness: `PASS | TEST FIRST | REDESIGN | NOT READY | KILL`
+- highest material uncertainty, if any
+- best next evidence action
 
-A good red-team also identifies what is well reasoned.
+### Load-bearing claim table
+[claim, evidence state, evidence for/against, decision impact]
 
-State:
+### Surviving risks
+For each material risk:
+- claim
+- challenge type
+- steelman
+- evidence-based challenge
+- `Fails if`
+- cheapest credible test
+- proposed threshold / gate
 
-- claims that are supported
-- areas with strong logic
-- risks already mitigated
-- assumptions that do not need immediate testing
+### Credible alternatives
+[only those that could change the decision]
 
-Do not manufacture doubt where evidence is strong.
+### What holds up
+[state what survives and why]
 
-## Required output
+### What could not be assessed
+[missing/stale/unavailable evidence]
 
-### 1. Red-team summary
+### Decision and change-my-mind evidence
+[state what evidence would upgrade/downgrade the recommendation]
 
-- plan in one line
-- overall readiness: PASS / TEST FIRST / REDESIGN / NOT READY / KILL
-- top decision risk
-- cheapest next test
+## Hard Stops
 
-### 2. Top kill-assumptions
+Return `NOT READY`, `REDESIGN`, or `KILL` when the evidence supports those outcomes, for example:
+- decision cannot be reconstructed
+- core customer/problem is unsupported and commitment is irreversible
+- critical economics/dependency is unknowable before commitment
+- a credible alternative dominates and is not addressed
+- contradicted evidence invalidates the mechanism
 
-For each, 3 to 5 max:
+Do not hard-stop merely because a template field is blank.
 
-- Claim
-- Evidence state
-- Steelman
-- Fails if
-- Impact if wrong
-- Likelihood wrong
-- Cheapness to test
-- Evidence to get this week
-- Kill criterion
-- Cheapest test
+## Final Self-Check
 
-### 3. Alternatives not sufficiently addressed
-
-List ignored or under-tested options.
-
-### 4. What is well reasoned
-
-State what survives attack and why.
-
-### 5. What could not be assessed
-
-List missing evidence, ambiguous scope, or unavailable sources.
-
-### 6. Action plan
-
-Return the next 3 actions in order:
-
-1. cheapest test
-2. evidence to retrieve
-3. decision gate to schedule
-
-## Hard stop conditions
-
-Return NOT READY, REDESIGN, or KILL when:
-
-- the plan cannot be reconstructed
-- no load-bearing claims are explicit
-- customer problem is assumed
-- success metric is absent
-- alternatives are ignored
-- economics cannot be reconstructed
-- timeline depends on unknown dependencies
-- kill criteria are absent
-- top assumptions cannot fail
-
-## Final self-check
-
-Before delivery, verify:
-
-- I attacked the strongest version of the plan.
-- I focused on load-bearing assumptions.
-- I did not create generic risk filler.
-- I included evidence state for claims.
-- I ranked by decision impact and cheapness to test.
-- I gave kill criteria and cheapest tests.
-- I acknowledged what holds up.
+- Did I distinguish evidence gap from evidence against?
+- Did I attack the strongest version?
+- Did I avoid generic risk filler?
+- Did I preserve claim states?
+- Did I acknowledge what holds up?
+- Would every surviving objection change a material decision?
+- Could `PASS` have been returned if the plan genuinely held up?
