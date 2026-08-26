@@ -255,32 +255,64 @@ def validate_run_record(
         if not isinstance(capture, dict):
             errors.append("capture must be an object when present")
         else:
-            if capture.get("mode") != "automated_api":
-                errors.append("capture.mode must be automated_api")
-            if capture.get("adapter") not in {"openai-responses", "anthropic-messages"}:
-                errors.append("capture.adapter is unsupported")
-            endpoint = capture.get("endpoint")
-            if not isinstance(endpoint, str) or not endpoint.startswith("https://"):
-                errors.append("capture.endpoint must use https")
-            for prefix in ("prompt_bundle", "request", "provider_response"):
-                path_value = capture.get(f"{prefix}_path")
-                expected_hash = capture.get(f"{prefix}_sha256")
-                if not isinstance(path_value, str) or not path_value.strip():
-                    errors.append(f"capture.{prefix}_path is required")
-                    continue
-                try:
-                    artifact_path = repo_path(path_value)
-                    if not artifact_path.is_file():
-                        errors.append(f"capture artifact missing: {path_value}")
-                    elif sha256_file(artifact_path) != expected_hash:
-                        errors.append(f"capture.{prefix}_sha256 mismatch")
-                except ValueError as exc:
-                    errors.append(f"capture.{prefix}_path invalid: {exc}")
-            for field in ("provider_request_id", "response_model"):
-                if not isinstance(capture.get(field), str) or not capture.get(field, "").strip():
-                    errors.append(f"capture.{field} is required")
-            if not isinstance(capture.get("request_parameters"), dict):
-                errors.append("capture.request_parameters must be an object")
+            mode = capture.get("mode")
+            if mode == "automated_api":
+                if capture.get("adapter") not in {"openai-responses", "anthropic-messages"}:
+                    errors.append("capture.adapter is unsupported")
+                endpoint = capture.get("endpoint")
+                if not isinstance(endpoint, str) or not endpoint.startswith("https://"):
+                    errors.append("capture.endpoint must use https")
+                for prefix in ("prompt_bundle", "request", "provider_response"):
+                    path_value = capture.get(f"{prefix}_path")
+                    expected_hash = capture.get(f"{prefix}_sha256")
+                    if not isinstance(path_value, str) or not path_value.strip():
+                        errors.append(f"capture.{prefix}_path is required")
+                        continue
+                    try:
+                        artifact_path = repo_path(path_value)
+                        if not artifact_path.is_file():
+                            errors.append(f"capture artifact missing: {path_value}")
+                        elif sha256_file(artifact_path) != expected_hash:
+                            errors.append(f"capture.{prefix}_sha256 mismatch")
+                    except ValueError as exc:
+                        errors.append(f"capture.{prefix}_path invalid: {exc}")
+                for field in ("provider_request_id", "response_model"):
+                    if not isinstance(capture.get(field), str) or not capture.get(field, "").strip():
+                        errors.append(f"capture.{field} is required")
+                if not isinstance(capture.get("request_parameters"), dict):
+                    errors.append("capture.request_parameters must be an object")
+            elif mode == "manual_ui":
+                if not isinstance(capture.get("interface"), str) or not capture.get("interface", "").strip():
+                    errors.append("capture.interface is required for manual_ui")
+                attestation = capture.get("operator_attestation")
+                if not isinstance(attestation, dict):
+                    errors.append("capture.operator_attestation is required for manual_ui")
+                else:
+                    for field in (
+                        "fresh_session",
+                        "first_response_only",
+                        "no_corrective_followup",
+                        "no_extra_context",
+                        "raw_output_unedited",
+                    ):
+                        if attestation.get(field) is not True:
+                            errors.append(f"capture.operator_attestation.{field} must be true")
+                for prefix in ("manual_plan", "prompt_bundle", "manual_prompt"):
+                    path_value = capture.get(f"{prefix}_path")
+                    expected_hash = capture.get(f"{prefix}_sha256")
+                    if not isinstance(path_value, str) or not path_value.strip():
+                        errors.append(f"capture.{prefix}_path is required")
+                        continue
+                    try:
+                        artifact_path = repo_path(path_value)
+                        if not artifact_path.is_file():
+                            errors.append(f"capture artifact missing: {path_value}")
+                        elif sha256_file(artifact_path) != expected_hash:
+                            errors.append(f"capture.{prefix}_sha256 mismatch")
+                    except ValueError as exc:
+                        errors.append(f"capture.{prefix}_path invalid: {exc}")
+            else:
+                errors.append("capture.mode must be automated_api or manual_ui")
 
     return errors, case, {"raw_output": raw_output, "judgement": judgement}
 

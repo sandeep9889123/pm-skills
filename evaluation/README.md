@@ -157,7 +157,67 @@ The manual GitHub Actions workflow `Capture behavioral baseline` exposes the sam
 
 Automated capture proves provenance and first-response isolation. It does not create the independent weighted judgements required for complete Wave 7 status.
 
-### Manual capture
+### Zero-cost manual UI capture
+
+Use this path when paid API calls are not allowed. It creates prompt packs that
+can be copied into ChatGPT, Claude, or a local model UI and later validates the
+copied first responses without calling any provider API.
+
+Manual UI evidence is cheaper but weaker than automated API capture because the
+fresh-session and unedited-output properties are operator-attested. Treat it as
+observed behavioral evidence, not as a fully automated provenance claim.
+
+Prepare a three-run smoke cell:
+
+```bash
+python evaluation/manual_capture.py prepare \
+  --provider ChatGPT \
+  --model GPT-5.6 \
+  --version manual-ui-2026-08-26 \
+  --interface chatgpt-web \
+  --case-ids W7_MR_ZERO_RESULT_BASE \
+  --planned-runs 3
+```
+
+The command writes:
+
+- `manual-plan.json`: predeclared model, cases, run slots, and zero-cost policy;
+- `run-N.manual-prompt.md`: copy-paste prompt pack for a fresh UI session;
+- `run-N.prompt.json`: exact model-visible system/user bundle;
+- `run-N.md`: placeholder for the unchanged first response.
+
+For every slot, open a fresh session, paste only the prompt pack's system/user
+sections, then replace the placeholder `run-N.md` with the unedited first
+response.
+
+Record the manual outputs:
+
+```bash
+python evaluation/manual_capture.py record \
+  --cell evaluation/manual-runs/ChatGPT-GPT-5.6-manual-ui-2026-08-26-manual-<digest>
+```
+
+Then build the hard-gate triage report:
+
+```bash
+python evaluation/run_benchmark.py \
+  --runs evaluation/manual-runs \
+  --json-out evaluation/reports/manual-smoke.json \
+  --md-out evaluation/reports/manual-smoke.md
+```
+
+The expected status is `INCOMPLETE` until evidence-backed weighted judgements are
+added. Hard-gate failures are still real observed failures and should be triaged
+before expanding the run set.
+
+Recommended zero-cost sequence:
+
+1. Run a 3-case smoke across competitor discovery, privacy/safety, and evidence/citation risk.
+2. Classify failures before editing skills.
+3. Patch only affected skills or command instructions.
+4. Re-run the same smoke cases to verify before/after behavior.
+5. Expand to one run across all 26 cases.
+6. Add judgements and regression fixtures for high-severity failures.
 
 ### 1. Run the frozen case
 

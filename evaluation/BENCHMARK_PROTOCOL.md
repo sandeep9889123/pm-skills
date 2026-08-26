@@ -46,6 +46,30 @@ Transport failure stops the capture cell. The runner does not retry, continue a 
 
 The API runner supplies no tools. Its results belong to the `no-external-tools-api` tool profile and cannot stand in for normal tool-enabled behavior.
 
+## Zero-cost manual UI capture
+
+`evaluation/manual_capture.py` is the reference path when paid API calls are not
+allowed. It creates copy-paste prompt packs and predeclared manual plans without
+calling a provider API.
+
+Valid manual capture requires:
+
+1. a predeclared `manual-plan.json` before the first output is seen;
+2. one fresh UI session per run slot;
+3. only the generated system/user prompt pack supplied to the model;
+4. unchanged first response pasted into the matching `run-N.md` file;
+5. `manual_capture.py record` creating the tamper-evident run record;
+6. explicit disclosure that freshness and unchanged output are operator-attested.
+
+Manual UI records include hashed prompt bundles, hashed copy-paste prompt packs,
+hashed raw outputs, repository commit, suite fingerprint, tool profile, and
+attestation fields. They do not include provider request IDs or provider-response
+JSON, because no API request exists.
+
+Manual UI evidence is useful for zero-cost smoke testing, failure discovery, and
+before/after skill hardening. It should not be represented as equivalent to
+automated API provenance.
+
 ## Repetition
 
 The default minimum is **3 fresh-session runs per case per model/configuration/tool profile**.

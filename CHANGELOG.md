@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+### Zero-Cost Manual Baseline Wave 9
+
+- Added a manual UI capture protocol for zero-cost Wave 7 evidence collection with predeclared prompt packs, run plans, placeholder detection, operator attestations, and tamper-evident run records.
+- Extended benchmark aggregation to accept `manual_ui` captures only when hashed plan, prompt bundle, copy-paste prompt, raw output, and first-response attestations are present.
+- Documented the unpaid smoke-test sequence, its evidence limits, and the recommended path from 3-case smoke to targeted skill hardening. No skill or command content changed.
+
 ### Tamper-Evident Live Capture Wave 8
 
 - Added a predeclared OpenAI Responses and Anthropic Messages API capture runner that isolates every case/run in a stateless request, performs no automatic retries, and preserves the exact prompt bundle, credential-free request, provider response, raw output, request ID, response-reported model, and hashes.
