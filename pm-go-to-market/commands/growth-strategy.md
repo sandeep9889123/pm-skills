@@ -1,116 +1,154 @@
 ---
-description: Design sustainable growth mechanisms — growth loops and GTM motions for product-led and sales-led strategies
+description: Design an evidence-led growth strategy using validated mechanisms, channel economics, experiments, and guardrails
 argument-hint: "<product or growth challenge>"
 ---
 
-# /growth-strategy -- Growth Loops & GTM Motions
+# /growth-strategy - Evidence-Led Growth Strategy
 
-Identify and design the growth mechanisms that will drive sustainable traction. Evaluates five growth loop types and seven GTM motions to build a balanced acquisition and expansion strategy.
+Design growth mechanisms from observed behavior and economics. Do not force viral loops, PLG, CAC/LTV rules, ROI estimates, timelines, or channel priorities without evidence.
 
-## Invocation
+## Reliability Contract
 
-```
-/growth-strategy B2B collaboration tool — growth has stalled at 5K users
-/growth-strategy Consumer fitness app looking for viral growth
-/growth-strategy [upload product metrics or growth data]
-```
+- Separate `FACT`, `INFERENCE`, `ASSUMPTION`, `ESTIMATE`, `UNKNOWN`, and `TARGET`.
+- Do not assume a growth loop exists because a framework lists one. A loop requires an observable reinforcing mechanism.
+- Do not invent CAC, LTV, payback, ROI, conversion, referral rate, virality, retention, or time-to-result.
+- Never use a universal rule such as `CAC < 1/3 of LTV` as a launch or scale gate. Economics depend on gross margin, retention, cash timing, service cost, capital constraints, and business model.
+- PLG, outbound, paid, community, partners, ABM, inbound, referral, or other motions are hypotheses until reachability, conversion, economics, and operational capacity are demonstrated.
+- A channel that generates volume but damages retention, deal quality, support load, margin, or trust is not a successful growth motion.
+- Correlation between a channel and growth is not attribution.
+- Scale only after evidence supports the mechanism and guardrails.
 
 ## Workflow
 
-### Step 1: Understand Growth Context
+### Step 1: Frame the Growth Problem
 
-Ask:
-- What is the product? Who uses it?
-- Current growth metrics: user count, growth rate, acquisition channels
-- What's working? What's not?
-- Business model: how does revenue relate to user growth?
-- Team and budget: what resources can you put toward growth?
+Capture:
+- product and stage
+- user, buyer, payer, and account where relevant
+- value moment and retention behavior
+- current acquisition/activation/retention/expansion data
+- revenue model and key cost structure
+- current motions and known bottleneck
+- constraints: budget, team, sales capacity, implementation, compliance
 
-### Step 2: Evaluate Growth Loops
+If no reliable baseline exists, output `INSTRUMENT FIRST` before prescribing scale.
 
-Apply the **growth-loops** skill:
+### Step 2: Diagnose the Constraint
 
-Analyze five growth loop types for your product:
+Determine whether the main constraint is actually:
+- awareness / reach
+- qualification
+- activation / time-to-value
+- retention
+- expansion
+- sales conversion
+- implementation capacity
+- pricing / packaging
+- product value
+- measurement quality
 
-1. **Viral Loop**: Users invite others as part of natural product use
-2. **Usage Loop**: More usage creates more value, bringing users back
-3. **Collaboration Loop**: Product becomes more valuable when used with others
-4. **User-Generated Content Loop**: Users create content that attracts new users
-5. **Referral Loop**: Satisfied users actively recommend to others
+Do not treat every growth problem as an acquisition problem.
 
-For each applicable loop: mechanism, requirements, expected impact, implementation effort.
+### Step 3: Evaluate Growth Mechanisms
 
-### Step 3: Evaluate GTM Motions
+Apply **growth-loops** and **gtm-motions**.
 
-Apply the **gtm-motions** skill:
+For each plausible mechanism, describe:
+- trigger
+- action
+- value created
+- how that output feeds the next cycle
+- required conditions
+- observable loop-health metric
+- likely break point
+- evidence status
 
-Assess seven GTM approaches:
+If the feedback path is not real or measurable, call it a tactic or hypothesis, not a loop.
 
-1. **Inbound**: Content, SEO, thought leadership
-2. **Outbound**: Sales, cold outreach, account-based
-3. **Paid Digital**: SEM, social ads, display, retargeting
-4. **Community**: Forums, events, user groups, developer relations
-5. **Partners**: Integrations, resellers, co-marketing
-6. **ABM (Account-Based Marketing)**: Targeted enterprise acquisition
-7. **PLG (Product-Led Growth)**: Free tier, self-serve, product virality
+### Step 4: Evaluate GTM Motions
 
-For each: fit for your product, expected CAC, timeline to results, tools needed.
+For each relevant motion evaluate:
+- ICP reachability
+- buyer fit
+- evidence of demand/intent
+- conversion evidence
+- cost and capacity
+- implementation / delivery implications
+- payback mechanics when reconstructable
+- quality guardrails
+- reversibility
 
-### Step 4: Design Growth Strategy
+Do not score motions 1-10 without a defined evidence-based rubric. Use `SUPPORTED | PARTIAL | UNKNOWN | REJECT` where more appropriate.
 
-```
+### Step 5: Design Experiments
+
+Each experiment must specify:
+- hypothesis
+- target segment
+- intervention
+- primary metric
+- guardrails
+- attribution method
+- minimum decision window / maturity logic where relevant
+- success, failure, and inconclusive rule
+- scale / stop / iterate action
+
+Prefer experiments that distinguish competing growth hypotheses.
+
+### Step 6: Economics
+
+When inputs are available, model:
+- acquisition cost by motion
+- contribution margin
+- retention / churn
+- expansion
+- sales/service cost
+- payback / cash timing
+- sensitivity to major assumptions
+
+Otherwise output `GROWTH ECONOMICS UNKNOWN` and identify the missing measurements.
+
+### Step 7: Decision
+
+`SCALE | PILOT | ITERATE | FIX INSTRUMENTATION | HOLD | STOP`
+
+`SCALE` requires evidence of mechanism, acceptable economics or a justified strategic exception, and healthy guardrails.
+
+## Output
+
+```text
 ## Growth Strategy: [Product]
 
-**Date**: [today]
-**Current state**: [user count, growth rate, key channels]
-**Growth goal**: [target]
+### Growth Decision
+[what is being decided]
 
-### Recommended Growth Loops
-| Loop Type | Mechanism | Fit | Impact | Effort | Priority |
-|----------|-----------|-----|--------|--------|----------|
+### Evidence / Baseline
+[FACT / INFERENCE / ASSUMPTION / ESTIMATE / UNKNOWN / TARGET]
 
-### Primary Growth Loop: [Type]
-**How it works**: [step-by-step mechanism]
-**Requirements**: [what needs to be true/built]
-**Key metrics**: [how to measure loop health]
-**Implementation plan**: [concrete next steps]
+### Primary Constraint
+[diagnosis + evidence]
 
-### Secondary Growth Loop: [Type]
-[same format]
+### Candidate Mechanisms
+| Mechanism | Loop/Tactic | ICP Fit | Evidence | Economics | Guardrails | Status |
 
-### GTM Motion Mix
-| Motion | Investment | Expected ROI | Timeline | Tools |
-|--------|-----------|-------------|----------|-------|
+### Recommended Experiment(s)
+[hypothesis, design, decision rule]
 
-### Growth Experiments
-| # | Experiment | Tests What | Effort | Expected Learning |
-|---|-----------|-----------|--------|------------------|
+### Economics
+[reconstructable model or GROWTH ECONOMICS UNKNOWN]
 
-### Growth Metrics Framework
-- **North Star**: [growth metric]
-- **Loop health**: [metrics per loop]
-- **CAC by channel**: [tracking approach]
-- **Payback period**: [target]
+### Risks and Counter-Metrics
+[quality, retention, support, margin, trust, compliance]
 
-### 90-Day Growth Plan
-**Month 1**: [focus areas and experiments]
-**Month 2**: [scale what works, cut what doesn't]
-**Month 3**: [optimize and systematize]
+### Decision
+[SCALE | PILOT | ITERATE | FIX INSTRUMENTATION | HOLD | STOP]
+
+### What Would Change the Recommendation
+[specific evidence]
 ```
-
-Save as markdown.
-
-### Step 5: Offer Next Steps
-
-- "Want me to **plan a specific launch campaign**?"
-- "Should I **create marketing content** for the inbound motion?"
-- "Want me to **set up metrics** to track growth loop health?"
-- "Should I **design a referral program** based on the referral loop?"
 
 ## Notes
 
-- Growth loops compound; growth tactics don't — prioritize loops over one-off campaigns
-- The best growth loop uses the product itself as the channel (PLG, viral, collaboration)
-- Not every loop works for every product — a B2B analytics tool won't go viral on TikTok
-- Budget should follow learning: invest small in experiments, then scale what proves out
-- CAC should be < 1/3 of LTV for sustainable growth — flag if projected CAC is too high
+- Growth is a system outcome, not a list of channels.
+- Budget should follow demonstrated learning and economics, not framework popularity.
+- A fast-growing low-quality cohort can destroy value while making top-line acquisition metrics look healthy.

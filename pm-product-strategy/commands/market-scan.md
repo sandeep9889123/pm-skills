@@ -1,127 +1,96 @@
 ---
-description: Comprehensive macro environment analysis — SWOT, PESTLE, Porter's Five Forces, and Ansoff Matrix in one scan
+description: Evidence-first strategic market scan using SWOT, PESTLE, Five Forces, and Ansoff with freshness, contradiction, and uncertainty gates
 argument-hint: "<product, market, or industry>"
 ---
 
-# /market-scan -- Macro Environment Analysis
+# /market-scan -- Evidence-First Strategic Market Scan
 
-Run multiple strategic analysis frameworks to understand your competitive and macro environment. Combines SWOT, PESTLE, Porter's Five Forces, and Ansoff Matrix into a single strategic overview.
+Use multiple strategic frameworks to structure evidence, not to manufacture four mutually reinforcing opinions from the same weak input.
 
-## Invocation
+## Step 1: Define Scope and Decision
 
-```
-/market-scan EdTech market for corporate learning
-/market-scan [upload a market brief or strategy doc]
-/market-scan Our fintech product — preparing for board strategy review
-```
+Resolve:
+- decision/purpose
+- product/company position
+- market boundary
+- geography
+- customer/buyer
+- time horizon
+- current date/freshness requirement
+- internal evidence available
 
-## Workflow
+If scope materially changes the result, state the working assumption before analysis.
 
-### Step 1: Understand the Context
+## Step 2: Build an Evidence Ledger First
 
-Ask:
-- What product, company, or market are you analyzing?
-- What's the purpose? (strategic planning, market entry, investor prep, annual review)
-- Any specific frameworks you want to focus on? Or run all four?
-- What's your current position in this market?
+For every material external claim use:
+`FACT | INFERENCE | ASSUMPTION | ESTIMATE | UNKNOWN | STALE`
 
-### Step 2: Run the Analysis
+Capture source/date where available. Search/tool failure means coverage incomplete, not a favorable market conclusion.
 
-Apply four skills in sequence, each building on insights from the previous:
+Internal strengths/weaknesses require actual company/product evidence. Do not invent capabilities, financial strength, brand, distribution, or execution weaknesses.
 
-**SWOT Analysis** (apply **swot-analysis** skill):
-- Internal: Strengths and Weaknesses
-- External: Opportunities and Threats
-- Actionable recommendations for each quadrant
+## Step 3: Apply Frameworks as Lenses
 
-**PESTLE Analysis** (apply **pestle-analysis** skill):
-- Political, Economic, Social, Technological, Legal, Environmental factors
-- Impact assessment and timeline for each factor
+### SWOT
+- internal S/W only from supported internal evidence
+- external O/T from current market evidence
+- distinguish fact from strategic interpretation
 
-**Porter's Five Forces** (apply **porters-five-forces** skill):
-- Competitive rivalry, supplier power, buyer power, threat of substitutes, threat of new entrants
-- Overall industry attractiveness rating
-
-**Ansoff Matrix** (apply **ansoff-matrix** skill):
-- Market penetration, market development, product development, diversification
-- Risk-adjusted growth opportunities
-
-### Step 3: Synthesize
-
-Cross-reference findings across frameworks to identify:
-- **Converging signals**: What multiple frameworks agree on
-- **Strategic imperatives**: Actions that appear critical across analyses
-- **Key risks**: Threats and forces to mitigate
-- **Growth opportunities**: Where the best risk-adjusted opportunities lie
-
-### Step 4: Generate Report
-
-```
-## Strategic Market Scan: [Market/Product]
-
-**Date**: [today]
-**Purpose**: [strategic planning / market entry / etc.]
-
-### Executive Summary
-[5-7 sentences covering the strategic situation and key recommendations]
-
-### SWOT Analysis
-| Strengths | Weaknesses |
-|-----------|-----------|
-| [internal positives] | [internal negatives] |
-
-| Opportunities | Threats |
-|-------------|---------|
-| [external positives] | [external negatives] |
-
-**SWOT Actions**: [leverage S+O, mitigate W+T]
-
-### PESTLE Analysis
-| Factor | Current State | Impact | Trend | Timeframe |
-|--------|-------------|--------|-------|-----------|
+### PESTLE
+- include only material factors
+- use current regulation/economic/technology evidence where freshness matters
+- do not fill all six categories with generic observations
 
 ### Porter's Five Forces
-| Force | Intensity | Key Drivers | Implications |
-|-------|----------|------------|-------------|
+Use hardened **porters-five-forces**:
+- explicit market boundary
+- current evidence
+- substitutes by JTBD
+- `LOW | MEDIUM | HIGH | MIXED | UNKNOWN`
+- no forced overall attractiveness rating
 
-**Industry Attractiveness**: [High / Medium / Low]
+### Ansoff
+Treat growth options as `PROPOSAL/HYPOTHESIS`, not evidence of opportunity. Do not invent investment amounts, market sizes, probability, or returns.
 
-### Ansoff Growth Matrix
-| Strategy | Opportunity | Risk Level | Investment | Priority |
-|----------|-----------|-----------|-----------|----------|
-| Market Penetration | [specifics] | Low | [est.] | [H/M/L] |
-| Market Development | [specifics] | Medium | [est.] | [H/M/L] |
-| Product Development | [specifics] | Medium | [est.] | [H/M/L] |
-| Diversification | [specifics] | High | [est.] | [H/M/L] |
+## Step 4: Cross-Framework Synthesis
 
+Important rule:
+
+> **Framework agreement is not independent corroboration.**
+
+If SWOT, PESTLE and Porter all draw from the same fact, count it as one evidence base, not three votes.
+
+Identify:
+- independent converging evidence
+- repeated interpretation of the same evidence
+- contradictions between sources/frameworks
+- stale or missing evidence
+- strategic choices actually implied
+
+## Step 5: Contradiction / Boundary Sensitivity
+
+Ask:
+- Does another market definition reverse Five Forces?
+- Is a “strength” relevant to this customer/segment?
+- Could an opportunity be inaccessible given right-to-win/channel constraints?
+- Are macro trends current enough for this decision?
+- What evidence most strongly rejects the preferred strategy?
+
+## Output
+
+### Decision / Scope
+### Evidence Ledger
+### SWOT
+### PESTLE
+### Five Forces
+### Ansoff Options
 ### Cross-Framework Synthesis
-**Converging signals**: [what all frameworks agree on]
-**Strategic imperatives**: [must-do actions]
-**Key risks**: [highest-priority threats]
-**Best opportunities**: [risk-adjusted growth plays]
+Distinguish `independent corroboration` from `same-evidence repetition`.
 
-### Strategic Recommendations
-1. [Recommendation with supporting evidence from multiple frameworks]
-2. ...
-3. ...
+### Freshness / Contradictions / Unknowns
+### Strategic Options
+### Decision
+`ACT | VALIDATE | REFINE MARKET BOUNDARY | HOLD | INSUFFICIENT EVIDENCE`
 
-### Monitoring Plan
-| Signal | What to Watch | Source | Check Frequency |
-|--------|-------------|--------|----------------|
-```
-
-Save as markdown.
-
-### Step 5: Offer Next Steps
-
-- "Want me to **build a product strategy** based on these findings?"
-- "Should I **analyze specific competitors** identified in Porter's analysis?"
-- "Want me to **design a pricing strategy** for the market penetration opportunity?"
-
-## Notes
-
-- Use web research to ground the analysis in current market data, not just general knowledge
-- PESTLE factors should include specific regulations, market data, and trend signals — not generic observations
-- Porter's is most useful when you identify the *specific* forces, not just rate them abstractly
-- Ansoff should include concrete opportunities, not just generic "enter new markets"
-- The synthesis section is the most valuable part — it's where the frameworks talk to each other
+Do not fabricate investment estimates, industry attractiveness, market facts, or confidence merely because the report template has a cell for them.

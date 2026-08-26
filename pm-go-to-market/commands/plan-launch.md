@@ -1,130 +1,183 @@
 ---
-description: Create a full go-to-market strategy — beachhead segment, ICP, messaging, channels, and launch plan
+description: Create an evidence-led go-to-market launch plan with beachhead, ICP, buying journey, proof, channels, readiness gates, and learning milestones
 argument-hint: "<product or feature to launch>"
 ---
 
-# /plan-launch -- Go-to-Market Strategy
+# /plan-launch - Evidence-Led Go-to-Market Plan
 
-Build a complete GTM plan from first principles: identify your beachhead market, define the ideal customer, craft messaging, choose channels, and create a launch timeline.
+Build a GTM plan from the evidence available. Do not invent TAM/SAM/SOM, ICP attributes, buyer titles, pricing, channel ROI, launch targets, timelines, proof points, or demand merely to produce a complete launch artifact.
 
-## Invocation
+## Reliability Contract
 
-```
-/plan-launch AI-powered proposal writer for consulting firms
-/plan-launch New enterprise tier for our project management tool
-/plan-launch [upload a PRD, strategy doc, or pitch deck]
-```
+- Separate `FACT`, `INFERENCE`, `ASSUMPTION`, `ESTIMATE`, `UNKNOWN`, and `TARGET`.
+- A launch deadline does not override unresolved product, customer, security, delivery, pricing, legal, or measurement blockers.
+- Do not force a single beachhead if evidence cannot distinguish segments. `TEST TWO SEGMENTS` or `NO BEACHHEAD READY` are valid outcomes.
+- ICP must distinguish account, buyer, champion, user, procurement, security, executive sponsor, and blocker where relevant. Unknown roles remain `UNKNOWN`.
+- Do not invent market size. If TAM/SAM/SOM is not needed for the immediate launch decision or cannot be reconstructed, omit it or mark `MARKET SIZE UNKNOWN`.
+- Do not rank channels by expected ROI without evidence. Use experiments when channel economics are unknown.
+- Never invent 30-day or 90-day targets. Use measured baselines, explicit `TARGET` values supplied by stakeholders, or define what must be calibrated.
+- A successful demo or pilot is not proof of production readiness, repeatable sales, retention, or scalable delivery.
+- Expansion is gated by beachhead learning and delivery quality, not an arbitrary market-share threshold.
+- Keep claims NDA-safe and evidence-backed.
 
 ## Workflow
 
-### Step 1: Understand the Launch
+### Step 1: Resolve Launch Context
 
-Ask:
-- What are you launching? (new product, new feature, new tier, market expansion)
-- What stage? (pre-launch planning, imminent launch, post-launch optimization)
-- Do you have existing customers? Or starting from zero?
-- What's the timeline? Any hard deadlines?
-- Budget constraints? Team size?
+Capture:
+- what is launching
+- launch stage and decision deadline
+- target geography / market boundary
+- user, buyer, payer, and account
+- current alternatives
+- product readiness and known limitations
+- pricing/packaging status
+- delivery / implementation model
+- security, privacy, regulatory, procurement constraints
+- available customer and market evidence
+- material unknowns
 
-### Step 2: Define Beachhead Segment
+### Step 2: Beachhead Decision
 
-Apply the **beachhead-segment** skill:
+Apply **beachhead-segment**.
 
-- Evaluate potential market segments against:
-  - Burning pain (how urgently they need this)
-  - Willingness to pay (budget and purchase authority)
-  - Winnable market share (can you reach and win them)
-  - Referral potential (will they tell others)
-- Recommend the single best starting segment with rationale
-- Map adjacent segments for expansion after beachhead is secured
+Evaluate plausible segments on evidence for:
+- problem urgency / consequence
+- observable buying trigger
+- WTP / budget pathway
+- reachability
+- right-to-win / proof
+- implementation fit
+- referenceability / expansion logic
+- strategic fit
 
-### Step 3: Define Ideal Customer Profile
+Outcome:
 
-Apply the **ideal-customer-profile** skill:
+`FOCUS | PILOT BEACHHEAD | TEST TWO SEGMENTS | HOLD | NO BEACHHEAD READY`
 
-- Demographics: company size, industry, geography, tech stack
-- Behaviors: how they discover solutions, buying process, decision makers
-- JTBD: specific jobs they're hiring your product for
-- Current alternatives: what they use today and why it falls short
-- Qualification criteria: how to identify them quickly
+Do not select a segment solely because TAM is large.
 
-### Step 4: Build GTM Strategy
+### Step 3: ICP and Buying Journey
 
-Apply the **gtm-strategy** skill:
+Apply **ideal-customer-profile**.
 
-- **Positioning**: How you describe yourself to this segment
-- **Messaging**: Key messages for different stakeholders (buyer, user, influencer)
-- **Channels**: Where and how to reach your ICP (ranked by expected ROI)
-- **Launch tactics**: Specific actions for pre-launch, launch day, and post-launch
-- **Pricing alignment**: How pricing supports the GTM motion
-- **Success metrics**: How you'll know the launch worked
+Define only supported attributes:
+- account characteristics
+- triggering situation
+- primary JTBD
+- current alternative
+- qualification signals
+- disqualification / anti-ICP signals
+- user / champion / buyer / approver / blocker roles
+- proof required at each decision stage
 
-### Step 5: Generate GTM Plan
+If the buying process is unknown, state `BUYING JOURNEY UNKNOWN` and include discovery actions.
 
+### Step 4: GTM Strategy
+
+Apply **gtm-strategy** and **gtm-motions**.
+
+For each plausible motion/channel evaluate:
+- why the ICP can be reached there
+- evidence of intent or prior response
+- sales / marketing / product capacity required
+- economics when reconstructable
+- time-to-learning
+- delivery consequences
+- guardrails
+
+Use `SUPPORTED | TEST | UNKNOWN | REJECT` rather than unsupported ROI rankings.
+
+### Step 5: Proof and Messaging
+
+For each stakeholder:
+- problem / outcome language
+- relevant proof
+- objection / risk
+- evidence gap
+
+Do not claim ROI, accuracy, speed, customer outcomes, integrations, security posture, or competitive superiority without support.
+
+### Step 6: Production Path and Launch Readiness
+
+Check:
+- product acceptance criteria
+- support / onboarding / implementation
+- observability and analytics
+- security/privacy/compliance
+- commercial terms
+- sales-to-delivery handoff
+- rollback / incident path
+- ownership
+
+Classify blockers `P0 | P1 | P2`.
+
+A launch is blocked when unresolved P0 issues can create unacceptable customer, legal, financial, security, or delivery risk.
+
+### Step 7: Metrics and Learning Milestones
+
+Define:
+- activation / value metric
+- qualification and conversion metrics
+- delivery / implementation quality
+- retention / repeat-use signal
+- economics where observable
+- guardrails
+
+Targets must be labelled `TARGET`; baselines must be observed. If neither exists, specify calibration rather than inventing a number.
+
+Use learning milestones instead of arbitrary calendar promises where evidence is immature.
+
+### Step 8: Decision
+
+`LAUNCH | LIMITED PILOT | TEST GTM | FIX P0 BLOCKERS | HOLD | NO-GO`
+
+For each decision state what would change it.
+
+## Output
+
+```text
+## Go-to-Market Decision: [Product]
+
+### Decision Context
+[stage, market, deadline, consequence]
+
+### Evidence Status
+[FACT / INFERENCE / ASSUMPTION / ESTIMATE / UNKNOWN / TARGET]
+
+### Beachhead
+[decision + evidence + alternatives]
+
+### ICP / Anti-ICP
+[account, JTBD, qualification, disqualification]
+
+### Buying Journey
+[roles and proof requirements, or BUYING JOURNEY UNKNOWN]
+
+### Positioning and Proof
+[stakeholder message + verified proof + gap]
+
+### GTM Motions
+| Motion | ICP Reachability | Evidence | Economics | Capacity | Guardrails | Status |
+
+### Production Readiness
+[P0/P1/P2 blockers]
+
+### Metrics and Learning Milestones
+[baselines, TARGETS, calibration needs]
+
+### Risks / Failure Modes
+[customer, delivery, commercial, security, compliance]
+
+### Decision
+[LAUNCH | LIMITED PILOT | TEST GTM | FIX P0 BLOCKERS | HOLD | NO-GO]
+
+### What Would Change the Recommendation
+[specific evidence]
 ```
-## Go-to-Market Plan: [Product/Feature]
-
-**Launch date**: [target]
-**Type**: [new product / feature / tier / market expansion]
-
-### Beachhead Segment
-**Who**: [specific segment definition]
-**Why them first**: [rationale against criteria]
-**Size**: [TAM/SAM/SOM estimate]
-
-### Ideal Customer Profile
-| Attribute | Definition |
-|-----------|-----------|
-| Company size | [range] |
-| Industry | [specific] |
-| Decision maker | [title/role] |
-| Key JTBD | [job they need done] |
-| Current solution | [what they use today] |
-| Qualification signal | [how to identify them] |
-
-### Positioning & Messaging
-**Positioning statement**: For [who] who [need], [product] is [category] that [benefit]. Unlike [alternative], we [differentiator].
-
-**Key messages by stakeholder**:
-| Audience | Message | Proof Point |
-|----------|---------|------------|
-
-### Channel Strategy
-| Channel | Tactic | Reach | Cost | Priority |
-|---------|--------|-------|------|----------|
-
-### Launch Timeline
-| Phase | Timing | Actions | Owner |
-|-------|--------|---------|-------|
-| Pre-launch | [dates] | [list] | [who] |
-| Launch week | [dates] | [list] | [who] |
-| Post-launch | [dates] | [list] | [who] |
-
-### Success Metrics
-| Metric | 30-day target | 90-day target |
-|--------|-------------|-------------|
-
-### Risks & Mitigations
-| Risk | Likelihood | Impact | Mitigation |
-|------|-----------|--------|-----------|
-
-### Expansion Plan
-[After beachhead: which adjacent segments, in what order, with what adaptations]
-```
-
-Save as markdown.
-
-### Step 6: Offer Next Steps
-
-- "Want me to **design growth loops** for post-launch traction?"
-- "Should I **create competitive battlecards** for sales?"
-- "Want me to **draft marketing copy** for the launch?"
-- "Should I **build a metrics dashboard** for launch tracking?"
 
 ## Notes
 
-- "Everyone" is not a segment — the tighter the beachhead, the faster you learn
-- The ICP should be specific enough that sales/marketing can identify prospects in 30 seconds
-- Messaging should use the customer's language, not your internal terminology
-- Pre-launch activities (waitlist, beta, early access) are as important as launch day
-- Plan for post-launch: the first 90 days after launch determine long-term trajectory
+- A polished launch calendar is not evidence of launch readiness.
+- Tight targeting improves learning only when the chosen segment is evidence-backed.
+- Post-launch expansion follows repeatable value, delivery, and economics, not arbitrary elapsed time.

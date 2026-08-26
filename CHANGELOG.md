@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+### Reliability Kernel and P0 Hardening Waves 4-5B
+
+- Added a repo-wide Reliability Kernel with decision-context resolution, evidence/source precedence, claim-state preservation, freshness, contradiction checks, negative-conclusion burden of proof, fail-closed tool/retrieval behavior, forced-completion guards, decision gates, cross-skill lineage, and P0/P1/P2 admission rules.
+- Classified all 96 skills and 55 workflows by reliability risk and added CI coverage that fails when future artifacts are unclassified or core kernel/schema obligations regress.
+- Added portable context-frame and claim-lineage schemas so downstream workflows can preserve `FACT`, `INFERENCE`, `ASSUMPTION`, `ESTIMATE`, `UNKNOWN`, `STALE`, `TARGET`, `PROPOSAL`, and `DECISION_THRESHOLD` states instead of silently promoting uncertainty.
+- Wave 5A hardened segmentation, sentiment, cohorts, SQL, interviews, metrics, and six workflow wrappers against forced segmentation, invented NPS/sentiment, right-censoring errors, causal overclaiming, schema invention, demand/WTP inflation, and fabricated targets/alerts; added 12 adversarial scenarios and semantic regression tests.
+- Wave 5B hardened business-model, monetization, Five Forces, ICP, beachhead, GTM-motion, pricing, strategy, battlecard, growth, launch, business-model orchestration, and market-scan behavior against generic unit-economics rules, forced framework completion, false cross-framework corroboration, invented WTP/market size/channel ROI, survivorship-biased ICPs, arbitrary beachhead-share rules, competitor weakness fabrication, and deadline-driven launch-readiness theatre.
+- Added 16 Wave 5B adversarial scenarios and semantic regression tests covering all 13 hardened strategy/GTM runtime artifacts. `UNKNOWN`, `TEST`, `HOLD`, `REFRAME`, `FIX P0 BLOCKERS`, and `NO-GO` remain valid outcomes when evidence does not support a stronger decision.
+
 ### Cross-LLM onboarding and repository cleanup
 
 - Reworked the root README into a user-first installation and usage guide for Claude Cowork/Desktop, Claude Code, Codex, ChatGPT, Agent Skills compatible tools, and generic LLMs.

@@ -1,139 +1,138 @@
 ---
 name: beachhead-segment
-description: "Identify the first beachhead market segment for a product launch. Evaluates segments against burning pain, willingness to pay, winnable market share, and referral potential. Use when choosing a first market, targeting an initial customer segment, or planning market entry strategy."
+description: "Select a beachhead segment using evidence of pain, willingness to act/pay, reachability, right-to-win, implementation fit, economics, referenceability, and learning value. Avoids arbitrary market-share targets, forced segment counts, and TAM-first selection."
 ---
-# Beachhead Segment
 
-## Overview
-Identify the first beachhead market segment for product launch. This skill evaluates potential market segments against key criteria to find your initial winning segment that enables fast PMF validation and adjacent expansion.
+# Evidence-Backed Beachhead Segment
 
-## When to Use
-- Choosing a first market for your product
-- Targeting an initial customer segment
-- Planning initial market entry strategy
-- Deciding where to focus limited resources
-- Validating GTM assumptions with early adopters
+## Purpose
 
-## Key Evaluation Criteria
+Choose the first segment for `$ARGUMENTS` where concentrated effort can produce **credible learning, customer value, repeatability, and commercial proof**.
 
-### 1. Burning Pain Point
-Does this segment experience an acute, unmet problem?
-- Daily frustration with the status quo
-- Significant productivity loss or cost impact
-- Emotional urgency to find a solution
-- Current workarounds are expensive or fragile
-- Problem is getting worse over time
+A beachhead is not simply the largest TAM or the segment with the highest enthusiasm score.
 
-### 2. Willingness to Pay
-Does this segment have budget and motivation to pay for a solution?
-- Documented budget allocation for this problem area
-- ROI is clear and compelling (value > cost)
-- Economic impact of problem justifies solution cost
-- Decision-maker has autonomy or influence over budget
-- No free or DIY alternatives that fully satisfy need
+## P0 Reliability Contract
 
-### 3. Winnable Market Share
-Can you realistically capture 60-70% of this segment in 3-18 months?
-- Segment is large enough but not oversaturated
-- Limited competition or easy differentiation
-- Market players are fragmented or complacent
-- Your product has clear competitive advantage
-- You have unique access or distribution advantage
+1. **Do not force 3-5 candidate segments.** Evaluate the defensible set available.
+2. **Do not invent WTP, budget, market share, revenue projection, pain severity, referral rate, sales cycle, or market size.**
+3. Remove arbitrary rules such as “capture 60-70% in 3-18 months” or “exit after 60% share.” Winnability is context-specific.
+4. A fixed interview count does not validate a beachhead. Evidence quality, diversity, behavior, commercial commitment and implementation proof matter more than “10 interviews.”
+5. Do not confuse a large/fast-growing market with company right-to-win.
+6. A successful PoC does not prove scalable implementation, renewal, referenceability, or GTM economics.
+7. Tool/search failure means `UNKNOWN / incomplete`, not weak competition or strong fit.
 
-### 4. Referral Potential
-Will customers naturally refer or recommend to others?
-- Segment contains professional communities
-- Customers interact with adjacent segments (expansion opportunity)
-- High word-of-mouth culture in this industry
-- Network effects within the segment
-- Solving problem for one creates demand in adjacent segments
+## Step 1: Decision Context and Candidate Set
 
-## How It Works
+Define:
 
-### Step 1: List Potential Segments
-Brainstorm all possible target segments:
-- Industry verticals (SaaS, healthcare, manufacturing, etc.)
-- Company size (SMB, mid-market, enterprise)
-- Job titles or roles
-- Geographic regions
-- Use cases or use-case variations
-- Customer maturity level
+- product/use case and stage
+- geography
+- resource/team/time constraints
+- target commercial motion
+- candidate segments supported by prior research
 
-### Step 2: Research Pain Points
-Validate burning pain in each segment:
-- Customer interviews and discovery calls
-- Problem validation through surveys
-- Market research and analyst reports
-- Competitor positioning and customer reviews
-- Quantify cost/impact of the problem
-- Identify current workarounds and limitations
+If segments are not evidenced, use `market-segments` first or label them `HYPOTHESIS`.
 
-### Step 3: Assess Willingness to Pay
-Determine budget and economic viability:
-- Segment's budget for this problem category
-- ROI calculation (value gained vs cost)
-- Current spending on solutions or workarounds
-- Budget decision-making process
-- Typical deal size expectations
-- Pricing sensitivity in the segment
+## Step 2: Beachhead Criteria
 
-### Step 4: Evaluate Winnability
-Assess realistic market share potential:
-- Total addressable market (TAM) size
-- Competitive landscape and positioning
-- Your differentiation or unfair advantage
-- Distribution access to this segment
-- Time and resources required
-- Market growth and momentum
+Evaluate each candidate using evidence, not arbitrary 1-10 scores unless the scoring scale is explicitly defined.
 
-### Step 5: Identify Referral Pathways
-Map expansion opportunities:
-- Adjacent segments that reference segment influences
-- Network effects within the segment
-- Professional communities and associations
-- Customer-to-customer recommendations
-- Natural expansion path to adjacent markets
-- Viral or network effects from solving core pain
+### Problem urgency
+- observed frequency/severity
+- consequence of current state
+- active workaround/search behavior
 
-### Step 6: Select Beachhead
-Choose your primary launch segment:
-- Highest combined score across four criteria
-- Most achievable for your current resources
-- Shortest path to PMF and revenue
-- Best reference for adjacent expansion
-- Most enthusiastic early customer cohort
+### Willingness to act/pay
+- current spend or resources
+- paid pilot/proposal behavior
+- budget/procurement evidence
+- switching commitment
 
-## Input Format
-Use $ARGUMENTS to pass:
-- Product description and capabilities
-- Initial market research and validation data
-- Potential segment options
-- Constraints and limitations
-- Timeline and resource constraints
-- Current customer data or feedback
+### Reachability
+- identifiable account/customer set
+- realistic access/channel
+- sales/marketing capacity
+- sales-cycle compatibility
+
+### Right-to-win
+- differentiated mechanism
+- proof/reference relevance
+- competitor/substitute position
+- team/domain/distribution advantage
+
+### Implementation fit
+- data/integration/security/change burden
+- time-to-value
+- support/customization demand
+- production readiness constraints
+
+### Economics
+- plausible value capture
+- acquisition/sales effort
+- delivery/support cost
+- margin/payback evidence where available
+
+### Reference / expansion value
+- similarity among buyers
+- credible peer reference paths
+- adjacent expansion mechanism
+
+### Learning value
+- can this segment test the load-bearing product/GTM assumptions quickly?
+
+## Step 3: Evidence Table
+
+| Candidate | Evidence state | Pain | WTP/action | Reachability | Right-to-win | Implementation | Economics | Confidence |
+|---|---|---|---|---|---|---|---|---|
+
+Use `UNKNOWN` rather than manufactured scores.
+
+## Step 4: Contradiction / Anti-Beachhead Pass
+
+For the leading segment ask:
+
+- What evidence says the pain is not urgent?
+- Are buyers enthusiastic but unable to procure?
+- Are implementations too custom to repeat?
+- Is the segment reachable only through expensive founder effort?
+- Would winning this segment create proof relevant to the next one?
+- Is one design partner creating false confidence?
+- Is the segment attractive only because the TAM looks large?
+
+## Step 5: Define Beachhead Test
+
+Before full concentration, define a falsifiable test:
+
+- target account/customer criteria
+- minimum commercial/behavioral commitment
+- implementation success condition
+- time-to-value
+- quality/retention/usage guardrails
+- sales-cycle or acquisition evidence
+- economics evidence
+- failure/kill condition
 
 ## Output
-A beachhead segment analysis including:
-- Top 3-5 recommended segments with scoring
-- Primary beachhead segment recommendation
-- Pain point validation and evidence
-- Willingness to pay assessment and pricing guidance
-- Realistic market share and revenue projections
-- Referral and expansion pathways to adjacent segments
-- 90-day customer acquisition plan for beachhead
-- Post-beachhead expansion roadmap
 
-## Framework
-Based on Geoffrey Moore's beachhead market strategy in "Crossing the Chasm." Focuses on finding the smallest winnable, referenceable market that validates PMF and enables expansion.
+### Candidate evidence
+### Beachhead comparison
+### Recommended beachhead
+[or `NO BEACHHEAD READY`]
 
-## Tips
-- Start absurdly specific. A niche beachhead is better than a vague mass market
-- Choose the segment most likely to evangelize your solution
-- Validate all four criteria with at least 10 customer interviews
-- Select segment with fastest path to revenue and references
-- Ensure beachhead can reference to adjacent market segments
-- Focus all resources on dominating the beachhead (not diluting efforts)
-- Plan exit from beachhead only after 60%+ market share
+### Why this segment first
+[evidence + strategic logic]
+
+### Anti-beachhead risks
+### 90-day validation plan
+Not an invented acquisition forecast. Specify evidence to collect and decisions it will unlock.
+
+### Expansion hypothesis
+Label adjacent expansion as `HYPOTHESIS` until supported.
+
+### Decision
+`FOCUS | PILOT BEACHHEAD | TEST TWO SEGMENTS | HOLD | NO BEACHHEAD READY`
+
+State what evidence would change the selection.
 
 ---
 
