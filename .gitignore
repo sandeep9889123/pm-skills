@@ -8,4 +8,5 @@ __pycache__/
 
 # Behavioral benchmark outputs contain provider responses and stay as artifacts
 evaluation/runs/
+evaluation/manual-runs/
 evaluation/reports/
