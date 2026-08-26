@@ -1,81 +1,133 @@
 ---
 name: summarize-meeting
-description: "Summarize a meeting transcript into structured notes with date, participants, topic, key decisions, summary points, and action items. Use when processing meeting recordings, creating meeting notes, writing meeting minutes, or recapping discussions."
+description: "Summarize a meeting transcript into evidence-grounded notes that separate discussion, proposals, decisions, unresolved items, and explicit action ownership. Use for meeting minutes, decision records, and follow-up summaries."
 ---
 
-# Summarize Meeting
+# Evidence-Grounded Meeting Summary
 
 ## Purpose
 
-You are an experienced product manager responsible for creating clear, actionable meeting summaries from $ARGUMENTS. This skill transforms raw meeting transcripts into structured, accessible summaries that keep teams aligned and accountable.
+Turn a transcript, recording-derived text, or rough notes into a faithful operational record. Meeting summaries must not upgrade discussion into decisions, suggestions into commitments, or implied responsibility into assigned ownership.
 
-## Context
+## P0 Reliability Contract
 
-Meeting summaries are how knowledge spreads and accountability stays clear in product teams. A well-structured summary captures decisions, key points, and action items in language everyone can understand, regardless of who attended.
+1. Treat the supplied meeting content as the source of truth for what happened in the meeting.
+2. Do not use external/web context to fill missing meeting facts unless the user explicitly asks for background enrichment. If external context is added, keep it in a separate `Background` section and never use it to manufacture meeting decisions.
+3. Separate `DISCUSSED`, `PROPOSED`, `DECIDED`, `ACTION ASSIGNED`, `OPEN`, `BLOCKED`, and `UNKNOWN`.
+4. A decision must be explicit enough that a reasonable attendee would understand commitment was reached. Consensus tone alone is not sufficient.
+5. Do not invent attendees, roles, dates, deadlines, owners, rationale, status, next meetings, or approval.
+6. If an action exists but no owner was assigned, write `OWNER UNKNOWN`. If no due date was stated, write `DUE DATE UNKNOWN`.
+7. Verify every verbatim quote against the supplied text. Otherwise paraphrase and label it as such.
+8. Preserve disagreement, uncertainty, conditional commitments, and dissent that could change execution.
+9. Do not infer that silence equals agreement.
+10. Sparse or partial notes must be labelled as incomplete coverage.
 
-## Instructions
+## Step 1: Establish Source Coverage
 
-1. **Gather the Meeting Content**: If the user provides a meeting transcript, recording, or notes file, read them thoroughly. If they mention a meeting that needs context, use web search to find any related materials or background documents.
+State:
+- source type: full transcript / partial transcript / rough notes / recap
+- known date/time
+- participant labels actually present
+- missing sections or inaudible/uncertain portions if known
 
-2. **Think Step by Step**:
-   - Who attended and what were their roles?
-   - What was the main topic or agenda?
-   - What decisions were made?
-   - What are the next steps and who owns them?
-   - Are there open questions or blockers?
+Coverage states:
+`FULL TRANSCRIPT | PARTIAL TRANSCRIPT | ROUGH NOTES | SECONDARY RECAP | UNKNOWN COVERAGE`
 
-3. **Extract Key Information**:
-   - Identify main discussion topics
-   - Note decisions made during the meeting
-   - Flag any disagreements or concerns
-   - Determine action items with owners and due dates
+Do not imply complete meeting coverage from partial notes.
 
-4. **Create Structured Summary**: Use this template:
+## Step 2: Extract Atomic Statements
 
-   ```
-   ## Meeting Summary
+Classify material statements as:
+- `DISCUSSION`: information or viewpoint shared
+- `PROPOSAL`: suggested future action/decision
+- `DECISION`: explicit commitment/conclusion
+- `ACTION`: explicit task commitment
+- `QUESTION`: unresolved information need
+- `BLOCKER/RISK`: execution constraint raised
 
-   **Date & Time**: [Date and start/end time]
+For ambiguous statements, preserve ambiguity rather than upgrading status.
 
-   **Participants**: [Full names and roles, if available]
+## Step 3: Decision Integrity
 
-   **Topic**: [Short title—what was the meeting about?]
+For each claimed decision capture:
+- decision text
+- evidence/paraphrase from transcript
+- decision owner/approver if explicit
+- scope/conditions
+- dissent or unresolved caveat
 
-   **Summary**
+If the meeting only explored an option, keep it under `Proposals / Discussion`, not `Decisions`.
 
-   - **Point 1**: [Key discussion point or decision]
-   - **Point 2**: [Key discussion point or decision]
-   - **Point 3**: [Key discussion point or decision]
-   - [Additional points as needed]
+## Step 4: Action Integrity
 
-   **Action Items**
+For each action item capture only what was explicit:
 
-   | Due Date | Owner | Action |
-   |----------|-------|--------|
-   | [Date] | [Name] | [What needs to happen] |
-   | [Date] | [Name] | [What needs to happen] |
+| Action | Owner | Due date | Status | Evidence |
+|---|---|---|---|---|
 
-   **Decisions Made**
-   - [Decision 1]
-   - [Decision 2]
+Use:
+- `OWNER UNKNOWN`
+- `DUE DATE UNKNOWN`
+- `STATUS UNKNOWN`
 
-   **Open Questions**
-   - [Unresolved question 1]
-   - [Unresolved question 2]
-   ```
+rather than guessing from role, hierarchy, or conversational context.
 
-5. **Use Accessible Language**: Write for a primary school graduate. Use simple terms. Avoid jargon or explain it briefly.
+## Step 5: Contradictions and Open Items
 
-6. **Prioritize Clarity**: Focus on:
-   - What decisions affect the roadmap or strategy?
-   - What does each person need to do?
-   - By when do they need to do it?
+Preserve:
+- conflicting views
+- unresolved dependencies
+- conditional commitments
+- decisions awaiting another stakeholder
+- follow-up evidence required
 
-7. **Save the Output**: Save as a markdown document: `Meeting-Summary-[date]-[topic].md`
+Do not flatten disagreement into false consensus.
 
-## Notes
+## Step 6: Quotes
 
-- Be objective—summarize what was discussed, not personal opinions
-- Highlight action items clearly so nothing falls through the cracks
-- If the meeting was large or complex, consider breaking points into sections by topic
-- Use "we" language to keep the team feel inclusive and collaborative
+Use a direct quote only when its exact wording exists in the source. Keep quoted text brief and relevant. If exact wording cannot be verified, paraphrase without quotation marks.
+
+## Output
+
+```text
+## Meeting Record
+
+### Source / Coverage
+[coverage state, source type, known date]
+
+### Participants
+[only participants supported by source; roles UNKNOWN when not stated]
+
+### Executive Summary
+[brief factual summary]
+
+### Decisions
+| Decision | Scope / Conditions | Evidence | Approver/Owner |
+
+### Proposals / Discussion
+[important items that were not decided]
+
+### Action Items
+| Action | Owner | Due Date | Status | Evidence |
+
+### Open Questions / Blockers
+[unresolved items]
+
+### Disagreements / Caveats
+[material dissent or conditions]
+
+### Verified Quotes
+[only when exact wording is supported]
+
+### Follow-Up Needed
+[missing owner/date/evidence or second decision needed]
+```
+
+## Final Self-Check
+
+- Did I turn any proposal into a decision?
+- Did I invent any owner or date?
+- Did I treat silence as agreement?
+- Are all quotes verifiable?
+- Did I preserve material disagreement?
+- Did I state coverage limitations?
