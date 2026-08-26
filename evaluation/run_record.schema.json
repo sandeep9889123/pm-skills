@@ -14,7 +14,8 @@
     "run_index",
     "captured_at",
     "fresh_session",
-    "raw_output_path"
+    "raw_output_path",
+    "raw_output_sha256"
   ],
   "properties": {
     "record_id": {"type": "string", "minLength": 1},
@@ -37,7 +38,9 @@
     "captured_at": {"type": "string", "minLength": 1},
     "fresh_session": {"type": "boolean"},
     "raw_output_path": {"type": "string", "minLength": 1},
+    "raw_output_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
     "judgement_path": {"type": ["string", "null"]},
+    "judgement_sha256": {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"},
     "evaluator_blinded": {"type": ["boolean", "null"]},
     "tool_profile": {
       "type": "object",
