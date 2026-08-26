@@ -12,6 +12,7 @@ changing the benchmark cases.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
 import sys
@@ -60,13 +61,35 @@ def evaluate_hard_gates(case: dict[str, Any], output: str) -> dict[str, Any]:
 
 
 def validate_judgement(
-    suite: dict[str, Any], case: dict[str, Any], judgement: dict[str, Any]
+    suite: dict[str, Any],
+    case: dict[str, Any],
+    judgement: dict[str, Any],
+    raw_output_sha256: str,
 ) -> tuple[float, list[str]]:
     errors: list[str] = []
     if judgement.get("case_id") != case.get("id"):
         errors.append(
             f"judgement case_id {judgement.get('case_id')!r} does not match {case.get('id')!r}"
         )
+
+    if str(suite.get("schema_version", "1.0")).startswith("2"):
+        if judgement.get("rubric_version") != suite.get("rubric_version"):
+            errors.append("judgement rubric_version does not match suite")
+        if judgement.get("raw_output_sha256") != raw_output_sha256:
+            errors.append("judgement raw_output_sha256 does not match scored output")
+        evaluator = judgement.get("evaluator")
+        if not isinstance(evaluator, dict):
+            errors.append("judgement evaluator object is required")
+        else:
+            for field in ("id", "type", "version"):
+                if not isinstance(evaluator.get(field), str) or not evaluator.get(field, "").strip():
+                    errors.append(f"judgement evaluator.{field} is required")
+            if evaluator.get("type") not in {"human", "model"}:
+                errors.append("judgement evaluator.type must be human or model")
+            if evaluator.get("independent") is not True:
+                errors.append("judgement evaluator.independent must be true")
+            if not isinstance(evaluator.get("blinded"), bool):
+                errors.append("judgement evaluator.blinded must be boolean")
 
     rubric = suite.get("rubric", {})
     dimensions = judgement.get("dimensions", {})
@@ -79,11 +102,18 @@ def validate_judgement(
             continue
         raw = item.get("score")
         rationale = item.get("rationale", "")
+        evidence = item.get("evidence", [])
         if not isinstance(raw, (int, float)) or raw < 0 or raw > 5:
             errors.append(f"{name}: score must be numeric from 0 to 5")
             continue
         if not isinstance(rationale, str) or not rationale.strip():
             errors.append(f"{name}: rationale is required")
+        if str(suite.get("schema_version", "1.0")).startswith("2") and (
+            not isinstance(evidence, list)
+            or not evidence
+            or not all(isinstance(x, str) and x.strip() for x in evidence)
+        ):
+            errors.append(f"{name}: at least one output evidence reference is required")
         weight = spec.get("weight", 0)
         score += float(weight) * (float(raw) / 5.0)
 
@@ -99,6 +129,7 @@ def score_case(
     case: dict[str, Any],
     output: str,
     judgement: dict[str, Any] | None = None,
+    raw_output_sha256: str | None = None,
 ) -> dict[str, Any]:
     hard = evaluate_hard_gates(case, output)
     threshold = case.get("pass_threshold", suite.get("default_pass_threshold", 90))
@@ -118,9 +149,13 @@ def score_case(
         result["status"] = "HARD_GATE_PASS_UNSCORED" if hard["passed"] else "HARD_GATE_FAIL"
         return result
 
-    weighted_score, errors = validate_judgement(suite, case, judgement)
+    raw_output_sha256 = raw_output_sha256 or hashlib.sha256(output.encode("utf-8")).hexdigest()
+    weighted_score, errors = validate_judgement(
+        suite, case, judgement, raw_output_sha256
+    )
     result["weighted_score"] = weighted_score
     result["judgement_errors"] = errors
+    result["evaluator"] = judgement.get("evaluator")
 
     if errors:
         result["status"] = "INVALID_JUDGEMENT"
@@ -156,7 +191,13 @@ def main() -> int:
 
     output = args.output.read_text(encoding="utf-8")
     judgement = load_json(args.judgement) if args.judgement else None
-    result = score_case(suite, case, output, judgement)
+    result = score_case(
+        suite,
+        case,
+        output,
+        judgement,
+        hashlib.sha256(args.output.read_bytes()).hexdigest(),
+    )
 
     if args.json:
         print(json.dumps(result, indent=2))

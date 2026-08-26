@@ -1,0 +1,80 @@
+{
+  "schema_version": "1.0",
+  "benchmark_id": "pm-skills-wave7-p0-behavioral",
+  "primary_suite": "evaluation/wave7_cases.json",
+  "regression_suite": "evaluation/cases.json",
+  "minimum_runs_per_case": 3,
+  "mutation_policy": "unpaired_family_challenges",
+  "require_fresh_session": true,
+  "require_raw_output_unchanged": true,
+  "require_judgement_for_full_benchmark": true,
+  "required_families": [
+    "market_research",
+    "product_discovery",
+    "product_strategy",
+    "business_case",
+    "analytics",
+    "execution",
+    "gtm",
+    "client_proof",
+    "automation",
+    "ai_shipping",
+    "roadmap_prioritization",
+    "legal_privacy"
+  ],
+  "workflow_subjects": {
+    "pm-market-research:competitive-analysis": ["pm-market-research/commands/competitive-analysis.md"],
+    "pm-product-discovery:interview-script": ["pm-product-discovery/skills/interview-script/SKILL.md"],
+    "pm-product-discovery:summarize-interview": ["pm-product-discovery/skills/summarize-interview/SKILL.md"],
+    "pm-product-strategy:market-scan": ["pm-product-strategy/commands/market-scan.md"],
+    "pm-product-strategy:strategy": ["pm-product-strategy/commands/strategy.md"],
+    "pm-business-case:build-business-case": ["pm-business-case/commands/build-business-case.md"],
+    "pm-data-analytics:cohort-analysis": ["pm-data-analytics/skills/cohort-analysis/SKILL.md"],
+    "pm-data-analytics:ab-test-analysis": ["pm-data-analytics/skills/ab-test-analysis/SKILL.md"],
+    "pm-execution:create-prd": ["pm-execution/skills/create-prd/SKILL.md"],
+    "pm-execution:meeting-notes": ["pm-execution/skills/summarize-meeting/SKILL.md"],
+    "pm-product-strategy:pricing": ["pm-product-strategy/commands/pricing.md"],
+    "pm-go-to-market:plan-launch": ["pm-go-to-market/commands/plan-launch.md"],
+    "pm-enterprise-transformation:case-study-to-gtm": ["pm-enterprise-transformation/skills/case-study-to-gtm/SKILL.md"],
+    "pm-enterprise-transformation:proof-to-gtm": ["pm-enterprise-transformation/commands/proof-to-gtm.md"],
+    "pm-enterprise-transformation:automate-pm-workflow": ["pm-enterprise-transformation/commands/automate-pm-workflow.md"],
+    "pm-ai-shipping:ship-check": ["pm-ai-shipping/commands/ship-check.md"],
+    "pm-execution:outcome-roadmap": ["pm-execution/skills/outcome-roadmap/SKILL.md"],
+    "pm-product-discovery:prioritize-features": ["pm-product-discovery/skills/prioritize-features/SKILL.md"],
+    "pm-toolkit:privacy-policy": ["pm-toolkit/skills/privacy-policy/SKILL.md"],
+    "cross-skill:market-research-to-strategy": ["reliability/kernel/RELIABILITY_KERNEL.md", "pm-market-research/commands/competitive-analysis.md", "pm-product-strategy/commands/strategy.md"],
+    "cross-skill:client-proof-to-gtm": ["reliability/kernel/RELIABILITY_KERNEL.md", "pm-enterprise-transformation/commands/proof-to-gtm.md"]
+  },
+  "systemic_case_ids": [
+    "W7_LIN_ESTIMATE_PROMOTION_BASE",
+    "W7_LIN_CLIENT_SCOPE_MUT"
+  ],
+  "completion_policy": {
+    "all_primary_cases_required": true,
+    "minimum_runs_apply_per_model": true,
+    "all_runs_require_hard_gate_scoring": true,
+    "all_runs_require_weighted_judgement_for_full_status": true,
+    "missing_cases_make_benchmark_incomplete": true,
+    "missing_mutation_runs_make_family_incomplete": true
+  },
+  "reporting_policy": {
+    "report_hard_gate_failure_rate": true,
+    "report_case_pass_rate": true,
+    "report_mean_score": true,
+    "report_score_range": true,
+    "report_family_breakdown": true,
+    "report_base_vs_mutation": true,
+    "report_run_to_run_consistency": true,
+    "report_missing_run_slots": true,
+    "never_claim_universal_reliability": true
+  },
+  "release_gate": {
+    "maximum_hard_gate_failure_rate": 0.0,
+    "minimum_case_pass_rate": 0.9,
+    "minimum_mean_weighted_score": 90.0,
+    "minimum_family_pass_rate": 1.0,
+    "maximum_unstable_cases": 0,
+    "minimum_runs_per_case": 3,
+    "requires_complete_coverage": true
+  }
+}

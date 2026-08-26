@@ -24,5 +24,8 @@ jobs:
       - name: Plugin validator
         run: python validate_plugins.py
 
+      - name: Behavioral benchmark definition validator
+        run: python evaluation/validate_benchmark.py
+
       - name: Unit + consistency tests
         run: python -m unittest discover -s tests -v
