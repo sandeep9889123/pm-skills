@@ -71,7 +71,7 @@ def main() -> int:
     parser.add_argument("--workflow-invoked")
     parser.add_argument("--corrective-followup", action="store_true")
     parser.add_argument("--additional-context", action="store_true")
-    parser.add_argument("--evaluator-blinded", choices=["true", "false"], required=True)
+    parser.add_argument("--evaluator-blinded", choices=["true", "false"])
     parser.add_argument("--manifest", type=Path, default=DEFAULT_MANIFEST)
     parser.add_argument("--record", type=Path, help="Destination .run.json")
     parser.add_argument("--notes")
@@ -132,7 +132,13 @@ def main() -> int:
         parser.error(f"cannot resolve repository commit: {exc}")
 
     tools_enabled = {"true": True, "false": False}[args.tools_enabled]
-    blinded = {"true": True, "false": False}[args.evaluator_blinded]
+    if args.judgement and args.evaluator_blinded is None:
+        parser.error("--evaluator-blinded is required when --judgement is supplied")
+    blinded = (
+        {"true": True, "false": False}[args.evaluator_blinded]
+        if args.evaluator_blinded is not None
+        else None
+    )
 
     raw_output_path = repo_relative(args.output)
     judgement_path = repo_relative(args.judgement) if args.judgement else None

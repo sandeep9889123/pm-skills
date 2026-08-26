@@ -36,6 +36,16 @@ A valid primary benchmark run must:
 
 A run that violates these rules may still be useful diagnostically, but it does not count toward full Wave 7 coverage.
 
+## Automated API capture
+
+`evaluation/capture_baseline.py` is the reference capture path for OpenAI Responses and Anthropic Messages API cells without external tools. Before the first request it freezes the case list, run count, suite fingerprint, repository commit, endpoint, model, inference parameters, execution order, and no-retry policy in `run-plan.json`.
+
+Each slot is one stateless API request. The runner records the exact model-visible workflow/case bundle, exact credential-free request JSON, full provider response, raw assistant text, provider request ID, response-reported model, and SHA-256 hashes. It refuses to overwrite partial or completed slots. `--resume` may only skip fully captured slots under an identical plan.
+
+Transport failure stops the capture cell. The runner does not retry, continue a partial response, or send corrective context. A new plan/cell is required if evidence must be discarded, and the discarded attempt must be disclosed in any comparison.
+
+The API runner supplies no tools. Its results belong to the `no-external-tools-api` tool profile and cannot stand in for normal tool-enabled behavior.
+
 ## Repetition
 
 The default minimum is **3 fresh-session runs per case per model/configuration/tool profile**.
@@ -206,7 +216,7 @@ Repository CI can validate:
 - benchmark scripts;
 - known-good/known-bad scoring behavior.
 
-Repository CI cannot create genuine fresh-session Claude/Codex/Gemini observations unless an authorized model runner is explicitly connected to CI.
+Ordinary repository CI cannot create genuine fresh-session model observations. The manual capture workflow can do so only for a supported API with the corresponding repository credential. It produces raw and hard-gate evidence, not independent weighted judgements.
 
 Therefore CI passing means **the benchmark machinery is valid**, not that any model has passed Wave 7.
 

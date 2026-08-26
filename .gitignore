@@ -5,3 +5,7 @@ CLAUDE.local.md
 # Local tooling artifacts
 __pycache__/
 .claude/
+
+# Behavioral benchmark outputs contain provider responses and stay as artifacts
+evaluation/runs/
+evaluation/reports/
