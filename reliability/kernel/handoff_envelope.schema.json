@@ -1,0 +1,136 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/sandeep9889123/pm-skills/reliability/kernel/handoff_envelope.schema.json",
+  "title": "PM Cross-Skill Handoff Envelope",
+  "description": "Portable envelope for transferring decision context, claim lineage, coverage, blockers, and downstream restrictions between PM skills without silent evidence promotion.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "handoff_id",
+    "producer",
+    "intended_consumers",
+    "decision_context",
+    "coverage",
+    "claims",
+    "unresolved_p0",
+    "decision",
+    "prohibited_interpretations"
+  ],
+  "properties": {
+    "handoff_id": {"type": "string", "minLength": 1},
+    "created_at": {"type": ["string", "null"]},
+    "producer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["plugin", "artifact"],
+      "properties": {
+        "plugin": {"type": "string", "minLength": 1},
+        "artifact": {"type": "string", "minLength": 1},
+        "run_id": {"type": ["string", "null"]}
+      }
+    },
+    "intended_consumers": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "decision_context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["decision"],
+      "properties": {
+        "decision": {"type": "string", "minLength": 1},
+        "actor": {"type": ["string", "null"]},
+        "stage": {"type": ["string", "null"]},
+        "geography": {"type": ["string", "null"]},
+        "constraints": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "source_artifacts": {
+      "type": "array",
+      "items": {"type": "string"},
+      "uniqueItems": true
+    },
+    "coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "gaps"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["COMPLETE FOR DECLARED SCOPE", "PARTIAL", "BLOCKED"]
+        },
+        "declared_scope": {"type": ["string", "null"]},
+        "gaps": {"type": "array", "items": {"type": "string"}},
+        "tool_or_retrieval_failures": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "claims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["record", "transformation", "parent_claim_ids"],
+        "properties": {
+          "record": {"$ref": "claim_lineage.schema.json"},
+          "transformation": {
+            "type": "string",
+            "enum": ["ORIGINAL", "RESTATED", "DERIVED", "PROMOTED", "DOWNGRADED"]
+          },
+          "parent_claim_ids": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {"type": "string", "minLength": 1}
+          },
+          "transformation_reason": {"type": ["string", "null"]}
+        },
+        "allOf": [
+          {
+            "if": {"properties": {"transformation": {"const": "DERIVED"}}},
+            "then": {"properties": {"parent_claim_ids": {"minItems": 1}}}
+          },
+          {
+            "if": {"properties": {"transformation": {"const": "PROMOTED"}}},
+            "then": {
+              "properties": {
+                "record": {"required": ["promotion_history"]}
+              }
+            }
+          }
+        ]
+      }
+    },
+    "unresolved_p0": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["claim_id", "blocker", "evidence_needed"],
+        "properties": {
+          "claim_id": {"type": "string", "minLength": 1},
+          "blocker": {"type": "string", "minLength": 1},
+          "evidence_needed": {"type": "string", "minLength": 1},
+          "owner": {"type": ["string", "null"]}
+        }
+      }
+    },
+    "decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "blockers"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["PROCEED", "PROCEED WITH CONDITIONS", "TEST", "HOLD", "REFRAME", "NOT READY", "NO-GO"]
+        },
+        "reversible": {"type": ["boolean", "null"]},
+        "blockers": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "prohibited_interpretations": {
+      "type": "array",
+      "items": {"type": "string"}
+    }
+  }
+}

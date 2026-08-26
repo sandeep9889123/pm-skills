@@ -1,5 +1,5 @@
 ---
-description: Build an evidence-led product strategy with explicit choices, uncertainties, alternatives, right-to-win, and falsification gates
+description: Build an evidence-led product strategy with explicit choices, uncertainties, alternatives, right-to-win, falsification gates, and claim-lineage preservation
 argument-hint: "<product or company>"
 ---
 
@@ -9,7 +9,7 @@ Create a strategy that makes choices under uncertainty. Do not fill every strate
 
 ## Reliability Contract
 
-- Separate `FACT`, `INFERENCE`, `ASSUMPTION`, `ESTIMATE`, `UNKNOWN`, and `TARGET`.
+- Separate `FACT`, `INFERENCE`, `ASSUMPTION`, `ESTIMATE`, `UNKNOWN`, `STALE`, `TARGET`, and `PROPOSAL`.
 - A strategy is not a list of initiatives. It must contain choices, trade-offs, opportunity cost, and a theory of why this path can win.
 - Do not invent segment size, pain severity, market attractiveness, moat, growth engine, investment level, timeline, or economics.
 - Do not force a North Star metric when the value-delivery mechanism is not yet validated.
@@ -19,9 +19,30 @@ Create a strategy that makes choices under uncertainty. Do not fill every strate
 - Explicitly state the strongest evidence against the preferred strategy.
 - If decision-critical evidence is missing, choose `TEST`, `HOLD`, or `REFRAME` rather than fabricating a complete strategy.
 
+## Cross-Skill Lineage Consumer Contract
+
+If upstream research, discovery, analytics, client proof, or another P0 artifact provides claim IDs or a `Reliability Handoff`:
+
+1. ingest the handoff before strategy synthesis;
+2. preserve stable claim IDs when restating the same claim;
+3. preserve state, scope, freshness, source references, contradictions, caveats, and publishability;
+4. do not promote an upstream claim without explicit new evidence and promotion history;
+5. do not broaden geography/segment/time/product scope under the same claim ID;
+6. create a **new claim ID with parent claim IDs** for strategic inferences derived from upstream evidence;
+7. propagate unresolved P0 blockers when they are material to the strategy decision;
+8. preserve prohibited downstream uses, including confidential or non-publishable evidence;
+9. do not treat repeated use across multiple strategy frameworks as independent corroboration;
+10. if the upstream handoff is `PARTIAL` or `BLOCKED`, do not silently represent strategy evidence coverage as complete.
+
+Examples:
+- market-size `ESTIMATE` remains `ESTIMATE` in the strategy;
+- competitor absence `UNKNOWN` cannot become "white space";
+- one account's verified pain cannot become a global market `FACT`;
+- a customer target cannot become an achieved outcome.
+
 ## Workflow
 
-### Step 1: Resolve the Decision Context
+### Step 1: Resolve the Decision Context and Inherited Evidence
 
 Capture:
 - strategic decision to be made
@@ -32,6 +53,7 @@ Capture:
 - constraints and non-negotiables
 - evidence available
 - material unknowns
+- upstream claim IDs / coverage / blockers when supplied
 
 A strategy for an idea should not be written with the certainty of a scaled product strategy.
 
@@ -47,7 +69,7 @@ Establish:
 - why now
 - what evidence contradicts the problem framing
 
-If this is not sufficiently supported, label the framing `HYPOTHESIS`.
+If this is not sufficiently supported, label the framing `ASSUMPTION` or `INFERENCE` as appropriate rather than upgrading it through narrative.
 
 ### Step 3: Generate Strategic Options
 
@@ -62,6 +84,8 @@ Create only materially distinct options supported by the context. For each:
 - biggest invalidating assumption
 
 Include a credible alternative and current-state / do-nothing comparison when relevant.
+
+Any new strategic thesis derived from upstream claims receives a new claim ID and parent IDs.
 
 ### Step 4: Evaluate Choices
 
@@ -101,6 +125,7 @@ For the recommended option state:
 - strongest rejection case
 - disconfirming evidence already known
 - riskiest assumptions
+- inherited unresolved P0 blockers
 - cheapest evidence needed next
 - trigger to stop, pivot, or reframe
 
@@ -110,7 +135,7 @@ Decision outcome:
 
 `COMMIT` requires enough evidence for the consequence and reversibility of the decision. It does not mean all uncertainty is gone.
 
-## Output
+### Step 7: Emit Strategy + Downstream Handoff
 
 ```text
 ## Product Strategy: [Product]
@@ -119,7 +144,7 @@ Decision outcome:
 [decision, stage, constraints, evidence maturity]
 
 ### Evidence Ledger
-[FACT / INFERENCE / ASSUMPTION / ESTIMATE / UNKNOWN / TARGET]
+| Claim ID | Claim | State | Scope | Evidence | Freshness | Caveats |
 
 ### Strategic Diagnosis
 [problem, alternatives, why now, contradiction]
@@ -153,6 +178,24 @@ Decision outcome:
 
 ### What Would Change the Recommendation
 [specific evidence]
+
+## Reliability Handoff
+Coverage: COMPLETE FOR DECLARED SCOPE | PARTIAL | BLOCKED
+
+### Material Claims
+| Claim ID | Claim | State | Scope | Source/Evidence | Freshness | Publishability | Downstream Restrictions |
+
+### Derived Claims
+| Claim ID | Parent IDs | Derivation | State | Caveats |
+
+### Unresolved P0
+[Claim IDs + evidence needed]
+
+### Decision Status
+[strategy decision + inherited blockers]
+
+### Prohibited Interpretations
+[what roadmap/business case/GTM must not infer]
 ```
 
 ## Notes
@@ -161,3 +204,4 @@ Decision outcome:
 - Trade-offs are mandatory for strategy; fabricated precision is not.
 - Early-stage strategies should often look like falsifiable theses rather than final answers.
 - A moat is an outcome of a defensibility mechanism, not a label.
+- Restating upstream evidence never strengthens it.
