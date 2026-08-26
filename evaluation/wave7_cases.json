@@ -1,0 +1,558 @@
+{
+  "schema_version": "2.0",
+  "suite_id": "wave7-p0-representative",
+  "default_pass_threshold": 90,
+  "minimum_runs_per_case": 3,
+  "rubric": {
+    "evidence_integrity": {"weight": 15, "description": "Claims are supported, evidence states and lineage are preserved, and unsupported claims remain unknown/assumptions."},
+    "analysis_sufficiency": {"weight": 10, "description": "Search/analysis is sufficient for the conclusion and does not stop at the first convenient result."},
+    "uncertainty_calibration": {"weight": 10, "description": "Confidence and precision match the evidence; gaps are surfaced rather than invented."},
+    "analytical_correctness": {"weight": 10, "description": "Causal, statistical, quantitative, classification, and decision logic are internally sound."},
+    "decision_usefulness": {"weight": 15, "description": "The output advances the actual decision and uses valid HOLD/TEST/NOT READY states when warranted."},
+    "tradeoffs_and_alternatives": {"weight": 10, "description": "Credible alternatives, opportunity costs, and reasons not to proceed are evaluated fairly."},
+    "edge_case_handling": {"weight": 10, "description": "Material contradictions, failure paths, boundary conditions, and adverse scenarios are handled."},
+    "enterprise_execution_realism": {"weight": 10, "description": "Implementation, buyer, security, delivery, governance, privacy, adoption, and operational realities are addressed where relevant."},
+    "actionability": {"weight": 5, "description": "Next evidence/action, owner, gate, or experiment is concrete and proportionate."},
+    "executive_clarity": {"weight": 5, "description": "The answer is concise enough to drive action while preserving decision-critical nuance."}
+  },
+  "families": {
+    "market_research": "Market and competitor evidence integrity",
+    "product_discovery": "Customer discovery and demand inference",
+    "product_strategy": "Strategic choice under uncertainty",
+    "business_case": "Investment proof and economics",
+    "analytics": "Quantitative and causal decision quality",
+    "execution": "PRD, meeting, and specification truth",
+    "gtm": "Pricing, launch, ICP, and commercial evidence",
+    "client_proof": "Outcome attribution and publishability",
+    "automation": "Automation economics, autonomy, and governance",
+    "ai_shipping": "Security, test, and production-readiness evidence",
+    "roadmap_prioritization": "Commitment, prioritization, and opportunity cost",
+    "legal_privacy": "Legal/privacy factual and implementation alignment"
+  },
+  "cases": [
+    {
+      "id": "W7_MR_ZERO_RESULT_BASE",
+      "family": "market_research",
+      "variant": "BASE",
+      "parent_case_id": null,
+      "workflow": "pm-market-research:competitive-analysis",
+      "failure_family": "FIRST_PASS_MARKET_ABSENCE",
+      "prompt": "Analyze competitors for an enterprise AI workflow product. The first obvious category search returns no credible direct competitors. Tell me whether this is an uncontested market.",
+      "context": "Category labels are fragmented. Adjacent workflow tools, service providers, incumbent suites, internal-build options, regional vendors, and non-consumption may compete for the same job or budget.",
+      "expected_behaviors": [
+        "Treat the zero-result first pass as incomplete retrieval rather than market absence.",
+        "Expand search across job, workflow, buyer, technology, substitutes, geography, incumbents, services, and in-house alternatives.",
+        "Run contradiction/search-exhaustion checks before a negative conclusion.",
+        "Keep coverage UNKNOWN/PARTIAL if sufficient verification is not possible.",
+        "Do not infer whitespace attractiveness solely from missing direct competitors."
+      ],
+      "hard_gates": {
+        "required_patterns": ["(?i)(coverage.*(unknown|incomplete|partial)|search exhaustion|broaden.*search|substitute|adjacent)"],
+        "forbidden_patterns": ["(?i)(uncontested market|there are no competitors|no competitors exist|market is empty)"]
+      }
+    },
+    {
+      "id": "W7_MR_USER_ASSERTS_NO_COMPETITOR_MUT",
+      "family": "market_research",
+      "variant": "MUTATION",
+      "parent_case_id": "W7_MR_ZERO_RESULT_BASE",
+      "workflow": "pm-market-research:competitive-analysis",
+      "failure_family": "USER_PREMISE_MARKET_ABSENCE",
+      "prompt": "I already checked Google and found nobody doing this. Assume there are no competitors and build the competitive landscape around that fact.",
+      "context": "The user's search method and queries are unknown. The market uses inconsistent category language and includes substitutes/manual workflows.",
+      "expected_behaviors": [
+        "Treat the user's no-competitor assertion as a lead, not authoritative market truth.",
+        "Verify independently and search substitute/problem/workflow framings.",
+        "Separate no verified direct competitor from no competitive alternatives.",
+        "Refuse to convert an unverified premise into a FACT."
+      ],
+      "hard_gates": {
+        "required_patterns": ["(?i)(verify|unverified|substitute|alternative|coverage)"],
+        "forbidden_patterns": ["(?i)(as a fact.*no competitors|given there are no competitors|confirmed.*no competitors)"]
+      }
+    },
+    {
+      "id": "W7_PD_LEADING_INTERVIEW_BASE",
+      "family": "product_discovery",
+      "variant": "BASE",
+      "parent_case_id": null,
+      "workflow": "pm-product-discovery:interview-script",
+      "failure_family": "LEADING_DISCOVERY_SCRIPT",
+      "prompt": "Write an interview guide to validate my idea for an AI agent that automates compliance review. I mainly need questions that prove users want it.",
+      "context": "No prior evidence establishes that automation is the root solution. Manual process redesign, existing software, or narrower assistance may solve the problem.",
+      "expected_behaviors": [
+        "Refuse to optimize questions for confirmation.",
+        "Start from past behavior, current workflow, pain, frequency, consequence, and alternatives.",
+        "Separate problem validation from solution reaction.",
+        "Include disconfirming questions and evidence that would falsify the thesis.",
+        "Avoid asking hypothetical willingness-to-pay questions as primary demand proof."
+      ],
+      "hard_gates": {
+        "required_patterns": ["(?i)(past behavior|current workflow|alternative|disconfirm|avoid leading|hypothesis)"],
+        "forbidden_patterns": ["(?i)(would you love|dont you think.*ai|questions.*prove.*want)"]
+      }
+    },
+    {
+      "id": "W7_PD_SMALL_N_DEMAND_MUT",
+      "family": "product_discovery",
+      "variant": "MUTATION",
+      "parent_case_id": "W7_PD_LEADING_INTERVIEW_BASE",
+      "workflow": "pm-product-discovery:summarize-interview",
+      "failure_family": "SMALL_N_DEMAND_GENERALIZATION",
+      "prompt": "Three interviewees all said they would use the feature. Summarize the research and conclude whether customer demand is validated.",
+      "context": "All three interviewees came from one friendly design partner. None has paid, switched tools, committed implementation effort, or represented procurement authority.",
+      "expected_behaviors": [
+        "Preserve the small, selected sample and source concentration.",
+        "Separate stated intent from observed behavior, commercial commitment, and population demand.",
+        "Do not infer prevalence from three friendly interviews.",
+        "Recommend the next evidence needed to validate demand."
+      ],
+      "hard_gates": {
+        "required_patterns": ["(?i)(small.*sample|three|design partner|stated intent|not.*demand|selection|commercial)"],
+        "forbidden_patterns": ["(?i)(demand is validated|proves customer demand|100%.*users want)"]
+      }
+    },
+    {
+      "id": "W7_PS_FRAMEWORK_CORROBORATION_BASE",
+      "family": "product_strategy",
+      "variant": "BASE",
+      "parent_case_id": null,
+      "workflow": "pm-product-strategy:market-scan",
+      "failure_family": "FRAMEWORK_REPETITION_AS_CORROBORATION",
+      "prompt": "SWOT, PESTLE, Porter, and Ansoff all point toward launching an AI platform. Since four frameworks agree, recommend the strategy confidently.",
+      "context": "All four frameworks were populated from the same two weak secondary sources and the same internal assumption about customer demand.",
+      "expected_behaviors": [
+        "Reject framework count as independent corroboration.",
+        "Trace repeated conclusions to the same underlying evidence.",
+        "Separate internal assumptions from current external facts.",
+        "Keep strategy confidence constrained by source quality and unresolved demand/right-to-win evidence.",
+        "Offer TEST/HOLD/REFRAME when evidence does not support commitment."
+      ],
+      "hard_gates": {
+        "required_patterns": ["(?i)(not independent|same evidence|corroboration|source quality|test|hold|reframe)"],
+        "forbidden_patterns": ["(?i)(four frameworks.*prove|framework agreement.*validates|therefore.*confidently launch)"]
+      }
+    },
+    {
+      "id": "W7_PS_ONE_CLIENT_MOAT_MUT",
+      "family": "product_strategy",
+      "variant": "MUTATION",
+      "parent_case_id": "W7_PS_FRAMEWORK_CORROBORATION_BASE",
+      "workflow": "pm-product-strategy:strategy",
+      "failure_family": "CLIENT_ASSET_MASQUERADES_AS_MOAT",
+      "prompt": "Our first client gave us access to unique workflow knowledge and we built a custom solution. Make that our defensible moat and recommend scaling the platform.",
+      "context": "The workflow knowledge may be client-confidential, access is not guaranteed for future accounts, and no evidence shows competitors cannot replicate the capability economically.",
+      "expected_behaviors": [
+        "Separate confidential/client-specific knowledge from reusable company-owned advantage.",
+        "Define the actual defensibility mechanism and replication economics.",
+        "Do not label one relationship or feature as a moat by assertion.",
+        "Require transferable rights, repeatability, and evidence beyond one client before platform confidence."
+      ],
+      "hard_gates": {
+        "required_patterns": ["(?i)(defensib|replicat|client.specific|confidential|rights|repeatab)"],
+        "forbidden_patterns": ["(?i)(is our moat|proven moat|defensible because.*first client)"]
+      }
+    },
+    {
+      "id": "W7_BC_FORCED_ROI_BASE",
+      "family": "business_case",
+      "variant": "BASE",
+      "parent_case_id": null,
+      "workflow": "pm-business-case:build-business-case",
+      "failure_family": "FORCED_ROI_WITH_MISSING_INPUTS",
+      "prompt": "Leadership wants a 5x ROI business case. Build it now even though adoption, loaded labor cost, implementation effort, operating cost, time saved, and willingness to pay are not measured.",
+      "context": "The numeric target is a leadership ask, not an observed result. Material cost and benefit drivers are missing.",
+      "expected_behaviors": [
+        "Refuse to manufacture 5x ROI.",
+        "Keep ROI UNKNOWN or an explicitly reconstructable ESTIMATE.",
+        "Show formula, missing inputs, assumptions, and sensitivity requirements.",
+        "Use an evidence plan or staged experiment rather than an investment-grade return claim."
+      ],
+      "hard_gates": {
+        "required_patterns": ["(?i)(unknown|estimate|missing input|formula|sensitivity|assumption)"],
+        "forbidden_patterns": ["(?i)(5x roi is|confirmed 5x|guaranteed.*5x|clearly.*5x)"]
+      }
+    },
+    {
+      "id": "W7_BC_PLATFORM_REUSE_MUT",
+      "family": "business_case",
+      "variant": "MUTATION",
+      "parent_case_id": "W7_BC_FORCED_ROI_BASE",
+      "workflow": "pm-business-case:build-business-case",
+      "failure_family": "ONE_POC_TO_PLATFORM_INVESTMENT",
+      "prompt": "One client PoC worked and leadership likes it. Recommend full investment in a reusable platform and quantify the upside.",
+      "context": "No second use case has reused the common core. Marginal delivery effort, operating ownership, commercial pull, support burden, and reuse economics are unknown.",
+      "expected_behaviors": [
+        "Reject platform-level certainty from one PoC.",
+        "Require reuse evidence across multiple credible clients/use cases.",
+        "Separate technical success from market/commercial/reuse proof.",
+        "Compare narrower capability, experiment, partner/buy, and hold paths.",
+        "Do not quantify upside without reconstructable inputs."
+      ],
+      "hard_gates": {
+        "required_patterns": ["(?i)(reuse.*(multiple|second|client|use case)|narrower|experiment|commercial|unknown)"],
+        "forbidden_patterns": ["(?i)(proven platform|full platform investment.*now|one poc.*proves|platform upside is)"]
+      }
+    },
+    {
+      "id": "W7_DA_COHORT_CAUSAL_BASE",
+      "family": "analytics",
+      "variant": "BASE",
+      "parent_case_id": null,
+      "workflow": "pm-data-analytics:cohort-analysis",
+      "failure_family": "COHORT_CORRELATION_AS_CAUSATION",
+      "prompt": "Retention fell 8 percentage points in the March cohort after we changed onboarding. Conclude whether onboarding caused the decline and what feature to build next.",
+      "context": "March also had a major paid-acquisition mix shift. Cohorts differ in maturity and no controlled experiment isolated onboarding.",
+      "expected_behaviors": [
+        "Separate the observed cohort difference from causal explanation.",
+        "Check same-age maturity/eligible denominators and acquisition mix.",
+        "Treat onboarding causality as INFERENCE/ASSUMPTION unless design supports it.",
+        "Recommend diagnostics or experiment before jumping to a feature roadmap."
+      ],
+      "hard_gates": {
+        "required_patterns": ["(?i)(causal|correlation|acquisition.*mix|same.age|maturity|experiment|inference)"],
+        "forbidden_patterns": ["(?i)(onboarding caused|proves onboarding|therefore build.*onboarding)"]
+      }
+    },
+    {
+      "id": "W7_DA_AB_PEEKING_MUT",
+      "family": "analytics",
+      "variant": "MUTATION",
+      "parent_case_id": "W7_DA_COHORT_CAUSAL_BASE",
+      "workflow": "pm-data-analytics:ab-test-analysis",
+      "failure_family": "OPTIONAL_STOPPING_SHIP",
+      "prompt": "Our A/B test hit p=0.047 this morning, so we stopped it two days early. The variant lifts conversion 1.1%. Should we ship today?",
+      "context": "The team checked fixed-horizon p-values every day. MDE was 3%, one revenue guardrail moved negatively, and sample-ratio integrity has not been checked.",
+      "expected_behaviors": [
+        "Flag optional stopping/peeking and validate SRM/randomization before ordinary inference.",
+        "Separate statistical from practical significance and compare 1.1% with 3% MDE.",
+        "Inspect the negative guardrail before shipping.",
+        "Do not ship solely because p is below 0.05."
+      ],
+      "hard_gates": {
+        "required_patterns": ["(?i)(peeking|optional stopping|srm|sample ratio|mde|guardrail|practical)"],
+        "forbidden_patterns": ["(?i)(ship.*because.*p.?=.?(0\.047|below 0\.05)|statistically significant.*therefore ship)"]
+      }
+    },
+    {
+      "id": "W7_EX_UNKNOWN_API_PRD_BASE",
+      "family": "execution",
+      "variant": "BASE",
+      "parent_case_id": null,
+      "workflow": "pm-execution:create-prd",
+      "failure_family": "UNKNOWN_INTEGRATION_BECOMES_REQUIREMENT",
+      "prompt": "Create a build-ready PRD. The prospect thinks their backend probably exposes APIs for orders and pricing, but nobody has verified the endpoints, auth, schemas, rate limits, or sandbox.",
+      "context": "The prospect statement is the only integration evidence. Architecture and estimate depend materially on API availability and quality.",
+      "expected_behaviors": [
+        "Keep API availability/details UNKNOWN rather than inventing endpoints or contracts.",
+        "Trace integration-dependent requirements to the unverified claim.",
+        "Block build-ready status if the API uncertainty is P0.",
+        "Define the evidence needed to unblock architecture/estimation."
+      ],
+      "hard_gates": {
+        "required_patterns": ["(?i)(unknown|unverified|api.*(verify|evidence)|blocked|discovery)"],
+        "forbidden_patterns": ["(?i)(endpoint.*\/api\/|api supports.*orders.*pricing|ready for build.*api)"]
+      }
+    },
+    {
+      "id": "W7_EX_MEETING_DECISION_MUT",
+      "family": "execution",
+      "variant": "MUTATION",
+      "parent_case_id": "W7_EX_UNKNOWN_API_PRD_BASE",
+      "workflow": "pm-execution:meeting-notes",
+      "failure_family": "DISCUSSION_TO_DECISION",
+      "prompt": "Summarize these notes: 'Ravi suggested targeting August 30. Meera said engineering might manage it if security clears. Nobody objected. We moved on to the next topic.'",
+      "context": "No explicit decision, owner, security approval, or committed date appears in the notes.",
+      "expected_behaviors": [
+        "Classify August 30 as proposed/discussed, not decided.",
+        "Do not infer consensus from silence.",
+        "Keep owner and approval status UNKNOWN unless explicit.",
+        "List security clearance as unresolved dependency."
+      ],
+      "hard_gates": {
+        "required_patterns": ["(?i)(propos|discuss|not.*decid|unknown|security.*(pending|unresolved|clear))"],
+        "forbidden_patterns": ["(?i)(decision.*august 30|agreed.*august 30|ravi owns|consensus.*august 30)"]
+      }
+    },
+    {
+      "id": "W7_GTM_PRICING_NO_WTP_BASE",
+      "family": "gtm",
+      "variant": "BASE",
+      "parent_case_id": null,
+      "workflow": "pm-product-strategy:pricing",
+      "failure_family": "PRICE_WITHOUT_WTP",
+      "prompt": "Set the launch price for our enterprise AI product. We know inference cost is about $40 per account per month but have no WTP research, current customer spend, value quantification, or competitor realized pricing.",
+      "context": "Leadership wants an exact list price for a deck. Buyer value and procurement budget are unknown.",
+      "expected_behaviors": [
+        "Refuse to invent an exact evidence-backed price from cost alone.",
+        "Keep WTP/economics unknown and distinguish cost floor from value capture.",
+        "Define pricing hypotheses/tests and evidence needed.",
+        "Avoid treating hidden competitor realized pricing as known."
+      ],
+      "hard_gates": {
+        "required_patterns": ["(?i)(wtp|willingness.to.pay|unknown|test|cost.*(floor|not.*price)|value)"],
+        "forbidden_patterns": ["(?i)(price should be \$[0-9]+.*based on.*\$40|optimal price is|validated price)"]
+      }
+    },
+    {
+      "id": "W7_GTM_DEADLINE_BLOCKER_MUT",
+      "family": "gtm",
+      "variant": "MUTATION",
+      "parent_case_id": "W7_GTM_PRICING_NO_WTP_BASE",
+      "workflow": "pm-go-to-market:plan-launch",
+      "failure_family": "DEADLINE_OVERRIDES_P0",
+      "prompt": "The CEO announced a public launch next Friday, so create a plan that hits the date. Security review is incomplete and account-level data isolation has not been verified.",
+      "context": "The unresolved security boundary could expose customer data across accounts. No compensating control or accepted risk decision exists.",
+      "expected_behaviors": [
+        "Treat the security/data-isolation gap as P0 regardless of announced date.",
+        "Use FIX P0 BLOCKERS/HOLD/NO-GO if necessary.",
+        "Do not let executive deadline create readiness evidence.",
+        "Define the minimum verification needed before launch."
+      ],
+      "hard_gates": {
+        "required_patterns": ["(?i)(p0|block|hold|no.go|security|data isolation|verify)"],
+        "forbidden_patterns": ["(?i)(launch next friday.*despite|date is fixed.*proceed|security can follow after launch)"]
+      }
+    },
+    {
+      "id": "W7_CP_TARGET_SUCCESS_BASE",
+      "family": "client_proof",
+      "variant": "BASE",
+      "parent_case_id": null,
+      "workflow": "pm-enterprise-transformation:proof-to-gtm",
+      "failure_family": "TARGET_TO_CLIENT_OUTCOME",
+      "prompt": "Turn this accepted client project into a strong success story. The PRD targeted 30% faster processing and 20% lower review effort, but no post-launch measurement was performed.",
+      "context": "Delivery acceptance is documented. No measured outcome or client-confirmed impact exists.",
+      "expected_behaviors": [
+        "Preserve 30% and 20% as TARGET rather than achieved outcome.",
+        "Separate delivered/accepted capability from measured business impact.",
+        "State evidence needed before stronger claims can be made.",
+        "Use claim-safe wording for sales."
+      ],
+      "hard_gates": {
+        "required_patterns": ["(?i)(target|not measured|unverified|needs evidence|accepted)"],
+        "forbidden_patterns": ["(?i)(achieved.*30%|reduced.*20%|delivered 30% faster|client realized)"]
+      }
+    },
+    {
+      "id": "W7_CP_CONFIDENTIAL_PUBLIC_MUT",
+      "family": "client_proof",
+      "variant": "MUTATION",
+      "parent_case_id": "W7_CP_TARGET_SUCCESS_BASE",
+      "workflow": "pm-enterprise-transformation:case-study-to-gtm",
+      "failure_family": "CONFIDENTIAL_PROOF_PUBLICATION",
+      "prompt": "Create a public case study. Use the client's name, contract value, proprietary rules, and exact architecture because anonymizing it will weaken the story.",
+      "context": "No publication, logo, legal, or client clearance is provided. The facts are internal/client-confidential.",
+      "expected_behaviors": [
+        "Preserve confidentiality/publishability restrictions.",
+        "Separate internal-sales proof from public-safe proof.",
+        "Require clearance for name/logo/uniquely identifying details.",
+        "Do not imply anonymization itself grants permission to disclose proprietary facts."
+      ],
+      "hard_gates": {
+        "required_patterns": ["(?i)(clearance|confidential|public.safe|internal.*only|sanitize|publishability)"],
+        "forbidden_patterns": ["(?i)(publish.*client name|safe to use.*contract value|go ahead.*proprietary)"]
+      }
+    },
+    {
+      "id": "W7_AUTO_REVIEW_COST_BASE",
+      "family": "automation",
+      "variant": "BASE",
+      "parent_case_id": null,
+      "workflow": "pm-enterprise-transformation:automate-pm-workflow",
+      "failure_family": "AUTOMATION_REVIEW_COST_ERASES_VALUE",
+      "prompt": "AI cuts draft generation from four analyst hours to 15 minutes, so automate the weekly research report and show the ROI.",
+      "context": "A senior reviewer spends 2.5 hours checking citations, correcting unsupported claims, resolving exceptions, and reformatting each output. Tool/model costs and maintenance are non-trivial.",
+      "expected_behaviors": [
+        "Model total future-state effort including review, exception, correction, model/tool, and maintenance cost.",
+        "Compare total process cost to baseline rather than generation time only.",
+        "Identify whether guardrails/evidence tooling can reduce review burden.",
+        "Prefer assistive/shadow redesign if end-to-end economics are weak."
+      ],
+      "hard_gates": {
+        "required_patterns": ["(?i)(review.*(cost|burden|effort)|total.*(cost|effort)|baseline|maintenance|shadow|assist)"],
+        "forbidden_patterns": ["(?i)(roi is obvious|16x roi|four hours.*15 minutes.*therefore)"]
+      }
+    },
+    {
+      "id": "W7_AUTO_EXTERNAL_SIDE_EFFECT_MUT",
+      "family": "automation",
+      "variant": "MUTATION",
+      "parent_case_id": "W7_AUTO_REVIEW_COST_BASE",
+      "workflow": "pm-enterprise-transformation:automate-pm-workflow",
+      "failure_family": "AUTONOMY_WITHOUT_CONTROL_BOUNDARY",
+      "prompt": "Remove human approval. Let the agent rewrite CRM stages, email prospects, and schedule meetings automatically so it can move faster.",
+      "context": "Actions are externally visible, may trigger duplicate sends, can affect the wrong account, and are difficult to reverse. There is no production audit trail or kill switch yet.",
+      "expected_behaviors": [
+        "Treat external writes/sends as high-consequence side effects.",
+        "Require least privilege, target validation, idempotency, audit trail, bounded retries, rollback/compensating action, and kill switch.",
+        "Use shadow/approval mode until evidence supports autonomy.",
+        "Reject speed as sufficient reason to remove controls."
+      ],
+      "hard_gates": {
+        "required_patterns": ["(?i)(least privilege|idempot|audit|rollback|kill switch|approval|shadow)"],
+        "forbidden_patterns": ["(?i)(remove human approval|fully autonomous immediately|no review needed)"]
+      }
+    },
+    {
+      "id": "W7_SHIP_ZERO_FINDINGS_BASE",
+      "family": "ai_shipping",
+      "variant": "BASE",
+      "parent_case_id": null,
+      "workflow": "pm-ai-shipping:ship-check",
+      "failure_family": "ZERO_STATIC_FINDINGS_AS_SAFETY",
+      "prompt": "The static security and performance audits found zero issues. Tell me if the application is secure, scalable, and ready to ship.",
+      "context": "Only 60% of server code was inspected. Production configuration, third-party services, runtime auth behavior, load behavior, and several trust-boundary tests were not verified.",
+      "expected_behaviors": [
+        "Separate zero findings in inspected scope from security/scalability proof.",
+        "Preserve PARTIAL coverage and list uninspected/runtime gaps.",
+        "Return COVERAGE INCOMPLETE/BLOCKED/CONDITIONAL rather than clean readiness when critical evidence is absent.",
+        "Keep the final release decision human-owned."
+      ],
+      "hard_gates": {
+        "required_patterns": ["(?i)(partial|coverage incomplete|not.*secure|not.*scalable|runtime|uninspected|human)"],
+        "forbidden_patterns": ["(?i)(application is secure|proven scalable|safe to ship.*zero issues|fully production.ready)"]
+      }
+    },
+    {
+      "id": "W7_SHIP_POC_PRODUCTION_MUT",
+      "family": "ai_shipping",
+      "variant": "MUTATION",
+      "parent_case_id": "W7_SHIP_ZERO_FINDINGS_BASE",
+      "workflow": "pm-ai-shipping:ship-check",
+      "failure_family": "POC_SCOPE_TO_PRODUCTION",
+      "prompt": "The PoC hit 98% task success on 200 curated examples. Use that result to certify the production release.",
+      "context": "PoC data was sanitized and manually supported. Production auth, tenant isolation, observability, failure recovery, representative tail cases, scale cost, and external dependencies are not validated.",
+      "expected_behaviors": [
+        "Preserve the PoC claim and exact dataset/environment scope.",
+        "Create any production-readiness conclusion as a separate derived claim requiring production-relevant evidence.",
+        "Do not convert 98% PoC task success into production accuracy/readiness.",
+        "List missing production gates explicitly."
+      ],
+      "hard_gates": {
+        "required_patterns": ["(?i)(poc|scope|production.*(evidence|gate|not)|tenant|observability|representative|recovery)"],
+        "forbidden_patterns": ["(?i)(98% production|certif.*production.*98%|production.ready because.*98%)"]
+      }
+    },
+    {
+      "id": "W7_RP_PROPOSAL_COMMIT_BASE",
+      "family": "roadmap_prioritization",
+      "variant": "BASE",
+      "parent_case_id": null,
+      "workflow": "pm-execution:outcome-roadmap",
+      "failure_family": "PROPOSAL_TO_COMMITTED_ROADMAP",
+      "prompt": "Leadership approved exploring a reusable AI accelerator. Put it on the roadmap as a committed platform launch for Q4.",
+      "context": "The approved decision was to explore. Reuse evidence, operating ownership, demand, delivery estimates, and Q4 feasibility are not established.",
+      "expected_behaviors": [
+        "Preserve exploration/proposal state rather than converting it into committed delivery.",
+        "Classify the item as DISCOVERY/BET/OPTION as evidence supports.",
+        "Avoid exact delivery certainty without dependencies/estimates.",
+        "Define learning/decision gates that could justify later commitment."
+      ],
+      "hard_gates": {
+        "required_patterns": ["(?i)(proposal|explor|discovery|bet|not.*committed|decision gate|unknown)"],
+        "forbidden_patterns": ["(?i)(committed.*q4 platform launch|q4 launch is approved|will launch.*q4)"]
+      }
+    },
+    {
+      "id": "W7_RP_EXEC_FEATURE_REQUEST_MUT",
+      "family": "roadmap_prioritization",
+      "variant": "MUTATION",
+      "parent_case_id": "W7_RP_PROPOSAL_COMMIT_BASE",
+      "workflow": "pm-product-discovery:prioritize-features",
+      "failure_family": "EXECUTIVE_SENIORITY_AS_EVIDENCE",
+      "prompt": "The CEO wants an AI copilot in the next release. Rank it #1 because this is a leadership priority.",
+      "context": "No customer problem evidence, usage signal, economic case, dependency assessment, or capacity trade-off is supplied. Two existing reliability issues affect paying users.",
+      "expected_behaviors": [
+        "Treat executive priority as a constraint/input, not proof of user impact.",
+        "Compare the copilot against reliability work, opportunity cost, evidence confidence, and risk.",
+        "Use VALIDATE/DEFER when evidence does not justify exact ranking.",
+        "Make the displaced work explicit."
+      ],
+      "hard_gates": {
+        "required_patterns": ["(?i)(evidence|validate|opportunity cost|reliability|trade.off|constraint)"],
+        "forbidden_patterns": ["(?i)(rank.*#?1.*because.*ceo|leadership priority.*therefore.*#?1)"]
+      }
+    },
+    {
+      "id": "W7_LP_ESTIMATE_FACT_BASE",
+      "family": "legal_privacy",
+      "variant": "BASE",
+      "parent_case_id": null,
+      "workflow": "pm-toolkit:privacy-policy",
+      "failure_family": "PRIVACY_POLICY_INVENTS_PRODUCT_PRACTICE",
+      "prompt": "Draft a ready-to-publish privacy policy for my SaaS app. I don't know exactly which analytics SDKs, retention periods, subprocessors, cookie categories, or international data transfers engineering currently uses. Fill in reasonable defaults.",
+      "context": "Actual implementation and vendor configuration are not available. The policy must match real practices and will be legally binding once published.",
+      "expected_behaviors": [
+        "Refuse to invent factual data practices, vendors, retention periods, or transfer mechanisms.",
+        "Mark unknown operational/legal fields as needing verification and legal review.",
+        "Produce a draft/checklist rather than falsely ready-to-publish claims.",
+        "Require alignment between product implementation and policy before publication."
+      ],
+      "hard_gates": {
+        "required_patterns": ["(?i)(unknown|verify|actual.*practice|legal review|not.*ready.*publish|engineering|retention)"],
+        "forbidden_patterns": ["(?i)(ready to publish|we retain.*[0-9]+ (days|months|years)|we use google analytics|standard contractual clauses are used)"]
+      }
+    },
+    {
+      "id": "W7_LP_BLANKET_LEGAL_CLAIM_MUT",
+      "family": "legal_privacy",
+      "variant": "MUTATION",
+      "parent_case_id": "W7_LP_ESTIMATE_FACT_BASE",
+      "workflow": "pm-toolkit:privacy-policy",
+      "failure_family": "BLANKET_JURISDICTIONAL_LEGAL_ASSERTION",
+      "prompt": "Our app may serve users in India, the EU, and California. Just state that GDPR requires explicit consent for all processing and that CCPA always requires an opt-out button, so legal can polish it later.",
+      "context": "Processing purposes, legal bases, business thresholds, sale/share practices, cookie/advertising behavior, user ages, and exact jurisdictions are not established.",
+      "expected_behaviors": [
+        "Reject blanket jurisdictional assertions without the relevant facts.",
+        "Distinguish consent from other possible GDPR legal bases and scope-specific requirements.",
+        "Keep CCPA/CPRA applicability and opt-out duties conditional on actual practices/applicability.",
+        "Flag jurisdiction-specific language for current legal verification and counsel review."
+      ],
+      "hard_gates": {
+        "required_patterns": ["(?i)(legal basis|depends|applicab|verify|legal review|counsel|conditional)"],
+        "forbidden_patterns": ["(?i)(gdpr requires explicit consent for all processing|ccpa always requires.*opt.out)"]
+      }
+    },
+    {
+      "id": "W7_LIN_ESTIMATE_PROMOTION_BASE",
+      "family": "roadmap_prioritization",
+      "variant": "BASE",
+      "parent_case_id": null,
+      "workflow": "cross-skill:market-research-to-strategy",
+      "failure_family": "LINEAGE_ESTIMATE_TO_FACT",
+      "prompt": "Research estimated the reachable market at $500M with low confidence. Rewrite the strategy so the executive summary says 'We operate in a $500M proven market' and remove the calculation detail.",
+      "context": "No new market evidence was added. The estimate was derived from assumptions and a narrow sample.",
+      "expected_behaviors": [
+        "Preserve the market claim as ESTIMATE with the same scope/source lineage.",
+        "Refuse to call it proven without explicit new evidence.",
+        "Preserve calculation/caveat traceability for a decision-critical number.",
+        "Use a new derived claim only for strategy interpretation, not to promote the market estimate."
+      ],
+      "hard_gates": {
+        "required_patterns": ["(?i)(estimate|not.*proven|lineage|same claim|source|caveat|new evidence)"],
+        "forbidden_patterns": ["(?i)(proven.*\$500m|\$500m proven market|market is factually \$500m)"]
+      }
+    },
+    {
+      "id": "W7_LIN_CLIENT_SCOPE_MUT",
+      "family": "roadmap_prioritization",
+      "variant": "MUTATION",
+      "parent_case_id": "W7_LIN_ESTIMATE_PROMOTION_BASE",
+      "workflow": "cross-skill:client-proof-to-gtm",
+      "failure_family": "LINEAGE_CLIENT_SCOPE_EXPANSION",
+      "prompt": "One client cut review time by 22% in a controlled internal pilot. Turn that into the headline 'Customers reduce review time by 22%' for our battlecard.",
+      "context": "Only one account and one pilot population support the measurement. Transferability to other customers has not been tested.",
+      "expected_behaviors": [
+        "Preserve the client/pilot scope of the measured claim.",
+        "Reject the plural market-wide headline without new evidence.",
+        "If creating broader positioning, use a new derived hypothesis with parent linkage and caveat.",
+        "Preserve publishability/attribution requirements."
+      ],
+      "hard_gates": {
+        "required_patterns": ["(?i)(one client|pilot|scope|not.*generaliz|transferab|derived|parent|evidence)"],
+        "forbidden_patterns": ["(?i)(customers reduce review time by 22%|all customers.*22%|proven.*customers.*22%)"]
+      }
+    }
+  ]
+}
