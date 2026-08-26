@@ -1,6 +1,6 @@
 ---
 name: cohort-analysis
-description: "Perform defensible cohort and retention analysis with explicit cohort/event definitions, eligible denominators, censoring/maturity checks, segment-mix controls, and descriptive-vs-causal separation. Use for retention, adoption, churn, or longitudinal engagement decisions."
+description: "Perform defensible cohort and retention analysis with explicit definitions, eligible denominators, censoring/maturity checks, segment-mix controls, causal limits, and a lineage-preserving handoff for downstream product decisions."
 ---
 
 # Cohort Analysis & Retention Explorer
@@ -11,8 +11,6 @@ Analyze longitudinal behavior for `$ARGUMENTS` without producing misleading rete
 
 ## P0 Reliability Contract
 
-### Hard rules
-
 1. **Define cohort membership and outcome event before calculating.** “Active,” “retained,” “adopted,” and “churned” are not self-defining.
 2. **Use eligible denominators.** A cohort cannot be evaluated at period N if members have not had enough calendar time to reach period N.
 3. **Do not compare immature and mature cohorts as if observation windows are equal.** Mark right-censored cells `NOT YET OBSERVABLE` rather than zero.
@@ -21,10 +19,27 @@ Analyze longitudinal behavior for `$ARGUMENTS` without producing misleading rete
 6. **Do not infer user-level retention from aggregate data that cannot support it.** State the available unit of analysis.
 7. **Tool/code/data failure means analysis incomplete, not “no effect.”**
 
+## Claim-Lineage Producer Contract
+
+For every decision-relevant analytical result:
+
+- assign a stable `claim_id`;
+- preserve the metric/data contract and population/time scope;
+- classify calculated patterns as `FACT` only for the exact measured result when data integrity is acceptable;
+- classify explanatory/causal interpretations separately as `INFERENCE`, `ASSUMPTION`, or `UNKNOWN`;
+- preserve confidence, caveats, data-quality failures, censoring, and sensitivity;
+- preserve source/query/file references where available;
+- do not allow a downstream roadmap/launch artifact to interpret an observed cohort difference as causal proof;
+- a new causal or strategic conclusion must be a parent-linked derived claim.
+
+Example:
+- `AN-014 FACT`: March cohort week-4 retention is 8pp lower than January under the stated metric contract.
+- `AN-015 INFERENCE`, parents `[AN-014]`: acquisition-mix shift may contribute.
+- Not allowed: reuse `AN-014` as “the onboarding redesign caused an 8pp retention drop.”
+
 ## Step 1: Decision and Data Contract
 
 Resolve:
-
 - decision the analysis supports
 - entity: user, account, workspace, subscription, order, etc.
 - cohort entry event and timestamp
@@ -45,7 +60,6 @@ If using rolling/unbounded retention, survival, revenue retention, or another de
 ## Step 2: Data Quality and Eligibility Gate
 
 Check where possible:
-
 - unique entity key integrity
 - duplicate events
 - missing cohort/event timestamps
@@ -57,19 +71,15 @@ Check where possible:
 - cohort size and extreme imbalance
 - incomplete observation periods
 
-Report what cannot be checked.
+Report what cannot be checked. Coverage failures must be inherited downstream.
 
 ## Step 3: Calculate With Observable Denominators
 
-For each cohort/period capture:
-
 | Cohort | Original size | Eligible at period | Retained/adopted | Rate | Observable? |
-|---|---:|---:|---:|---:|---|
 
 Never populate future cells with 0 solely because time has not elapsed.
 
 For feature adoption distinguish:
-
 - eligible population
 - exposed population
 - attempted use
@@ -81,7 +91,6 @@ Do not call lack of adoption a preference signal when users may not have been ex
 ## Step 4: Compare Cohorts Carefully
 
 Inspect:
-
 - cohort size
 - maturity / same-age comparison
 - acquisition source
@@ -96,24 +105,16 @@ Where sample size is small, show direction and uncertainty instead of declaring 
 ## Step 5: Pattern vs Explanation
 
 Label findings:
-
-- `OBSERVED`: directly calculated pattern
+- `FACT / OBSERVED`: directly calculated pattern under a valid data contract
 - `INFERENCE`: plausible explanation supported indirectly
 - `ASSUMPTION`: unverified explanation
 - `UNKNOWN`: insufficient evidence
 
-Example:
-
-> `OBSERVED`: March cohort week-4 retention is 8pp below January on the same definition.
->
-> `INFERENCE`: acquisition-mix change may contribute because March contains more paid-social users.
->
-> Not allowed: “The onboarding redesign caused retention to fall” without a design that supports causality.
+Do not let the evidence state of the measured pattern transfer automatically to its explanation.
 
 ## Step 6: Contradiction / Sensitivity Pass
 
 Before recommending action:
-
 - compare same-age cohorts
 - test major segment splits where justified
 - inspect whether the conclusion reverses after controlling for acquisition/plan/geography
@@ -121,12 +122,11 @@ Before recommending action:
 - verify metric-definition or instrumentation changes
 - distinguish calendar effect from product effect
 
-If conclusions are highly sensitive, say so.
+If conclusions are highly sensitive, preserve that caveat in the lineage record.
 
 ## Step 7: Follow-Up Design
 
 Choose the cheapest evidence that can test the leading explanation:
-
 - event-level diagnostic
 - segment drill-down
 - funnel analysis
@@ -139,24 +139,44 @@ Do not jump from a retention pattern directly to a feature roadmap.
 
 ## Output
 
-### Analysis contract
+### Analysis Contract
 [entity, cohort event, outcome event, period, denominator, exclusions, observation window]
 
-### Data-quality status
+### Data-Quality Status
 [known checks, failures, unknowns]
 
-### Cohort table / curves
+### Cohort Table / Curves
 [with unobservable cells separated from zeros]
 
 ### Findings
-| Finding | State | Evidence | Confidence | Decision implication |
-|---|---|---|---|---|
+| Claim ID | Finding | State | Metric/Population Scope | Evidence | Confidence | Decision Implication |
 
-### Alternative explanations / contradictions
+### Derived Explanations
+| Claim ID | Parent IDs | Explanation | State | Evidence Needed |
+
+### Alternative Explanations / Contradictions
 [segment mix, seasonality, maturity, instrumentation, product changes]
 
 ### Decision
 `ACT | INVESTIGATE | RUN EXPERIMENT | FIX DATA/INSTRUMENTATION | INCONCLUSIVE`
+
+### Reliability Handoff
+
+```text
+Coverage: COMPLETE FOR DECLARED SCOPE | PARTIAL | BLOCKED
+
+### Material Claims
+| Claim ID | Claim | State | Metric Contract / Scope | Evidence | Caveat | Downstream Restriction |
+
+### Derived Claims
+| Claim ID | Parent IDs | Derivation | State | Caveats |
+
+### Unresolved P0
+[data/instrumentation/causality gaps]
+
+### Prohibited Interpretations
+[observed != causal; immature != zero; correlation != product effect]
+```
 
 State what evidence would change the decision.
 
