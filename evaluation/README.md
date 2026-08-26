@@ -1,131 +1,269 @@
-# PM Skills Behavioral Evaluation Harness
+# PM Skills Behavioral Evaluation
 
-## Purpose
+## Why this exists
 
-Structural validation proves that a skill is installable. Semantic guard tests prove that important instructions still exist. Neither proves that Claude, Codex, or another model will actually make a good PM decision when confronted with a difficult case.
+Structural validation proves that a skill is installable. Semantic regression tests prove that important reliability instructions still exist. Neither proves that a model will actually make a good PM decision on the first attempt.
 
-This harness adds the next layer:
+The behavioral layer is:
 
-> **Golden scenario → model output → hard-gate check → 100-point decision-quality rubric → pass/fail → regression history**
+> **Frozen adversarial case → fresh-session model output → deterministic hard gates → 100-point judgement → repeated-run aggregation → failure-rate report**
 
-The goal is not to claim that prompts can guarantee perfect PM judgment. The goal is to make failures observable, comparable, and harder to hide behind polished prose.
+The objective is to make model failures observable and comparable without claiming that prompts can guarantee perfect judgment.
 
-## Evaluation layers
+## Evaluation assets
 
-### Layer A: deterministic hard gates
+### Legacy regression suite
 
-`score_output.py` checks explicit catastrophic behaviors that should fail regardless of the overall answer, for example:
+`cases.json` preserves the earlier 14-case behavioral suite for observed failures in competitor research, enterprise transformation, automation, PoC readiness, and business-case formation.
 
-- declaring “there are no competitors” after a weak/failed first search;
-- converting a target metric into an achieved client result;
-- claiming one client request proves market demand;
-- calling originating-project code reusable IP without reuse evidence;
-- manufacturing an ROI target when required economic inputs are missing;
-- promoting one successful PoC directly into a platform investment;
-- treating technical lift as proof of commercial demand;
-- recommending autonomous automation with no rollback/approval boundary;
-- calling a PoC production-ready while security/implementation blockers remain.
+### Wave 7 representative P0 suite
 
-Hard gates are intentionally narrow. They should catch clear failures, not attempt to grade nuanced reasoning with regex alone.
+`wave7_cases.json` is the primary representative benchmark:
 
-### Layer B: 100-point behavioral rubric
+- 24 cases covering 12 decision-critical PM families, each with at least one BASE and one MUTATION case;
+- 2 additional systemic cross-skill lineage stress cases;
+- 26 primary cases total.
 
-Each case defines weighted decision-quality dimensions totaling 100 points. A human reviewer or independent evaluator model scores each dimension from 0–5 with rationale.
+Representative families:
 
-Typical dimensions:
+1. market research;
+2. product discovery;
+3. product strategy;
+4. business case;
+5. analytics;
+6. execution / PRD / meeting truth;
+7. GTM / pricing / launch;
+8. client proof;
+9. automation and governance;
+10. AI shipping / production readiness;
+11. roadmap and prioritization;
+12. legal/privacy.
 
-- evidence integrity
-- search/analysis sufficiency
-- uncertainty calibration
-- causal/analytical correctness
-- decision usefulness
-- trade-off quality
-- edge-case handling
-- enterprise execution realism
-- actionability
-- executive clarity
+The two systemic cases test claim inflation across handoffs rather than one plugin in isolation.
+
+## Benchmark governance
+
+`benchmark_manifest.json` freezes the benchmark rules:
+
+- primary and regression suites;
+- required families;
+- minimum repeated runs;
+- completeness rules;
+- reporting obligations;
+- release gate.
+
+Default Wave 7 gate:
+
+- complete primary-suite coverage;
+- at least 3 fresh-session runs per case;
+- zero catastrophic hard-gate failures;
+- at least 90% case pass rate;
+- mean weighted score at least 90/100.
+
+These are benchmark governance thresholds, not universal scientific constants. Do not change them after seeing results merely to force a pass.
+
+## Two scoring layers
+
+### Layer A: deterministic catastrophic gates
+
+`score_output.py` checks deliberately narrow forbidden/required behaviors, such as:
+
+- declaring no competitors after weak retrieval;
+- converting a TARGET into achieved impact;
+- manufacturing ROI from missing inputs;
+- inventing build-ready API behavior;
+- shipping after invalid A/B inference;
+- publishing confidential client evidence;
+- treating executive priority as customer evidence;
+- treating zero static findings as security/scalability assurance;
+- converting PoC results into production readiness.
+
+A hard-gate failure fails the run regardless of weighted score.
+
+### Layer B: 100-point decision-quality rubric
+
+A blinded human reviewer or independent evaluator model scores each dimension from 0 to 5 with rationale:
+
+- evidence integrity: 15;
+- analysis sufficiency: 10;
+- uncertainty calibration: 10;
+- analytical correctness: 10;
+- decision usefulness: 15;
+- trade-offs and alternatives: 10;
+- edge-case handling: 10;
+- enterprise execution realism: 10;
+- actionability: 5;
+- executive clarity: 5.
+
+Weights total 100. Default per-run threshold is 90.
+
+A 100/100 score means full marks on that frozen case. It does not imply universal reliability.
+
+## Validate the benchmark definition
+
+```bash
+python evaluation/validate_benchmark.py
+```
+
+This validates suite structure, rubric weights, unique case IDs, regexes, base/mutation coverage, required families, systemic case references, and fingerprints.
+
+CI can run this safely because it validates the benchmark definition, not live model behavior.
+
+## Capture a real run
+
+### 1. Run the frozen case
+
+Use the case prompt/context in a **fresh model session** with the intended skill/workflow and tool profile.
+
+Do not expose expected behaviors, hard-gate regexes, rubric hints, prior failed outputs, or corrective feedback to the model.
+
+### 2. Save the raw first response unchanged
+
+Example:
+
+```text
+evaluation/runs/openai-gpt-x/W7_MR_ZERO_RESULT_BASE/run-1.md
+```
+
+### 3. Create a weighted judgement
+
+Use the case's full rubric dimensions and include rationale for every score.
+
+### 4. Record the run with hashes
+
+```bash
+python evaluation/record_run.py \
+  --case W7_MR_ZERO_RESULT_BASE \
+  --output evaluation/runs/openai-gpt-x/W7_MR_ZERO_RESULT_BASE/run-1.md \
+  --judgement evaluation/runs/openai-gpt-x/W7_MR_ZERO_RESULT_BASE/run-1.judgement.json \
+  --provider OpenAI \
+  --model GPT-X \
+  --version 2026-08-26 \
+  --run-index 1 \
+  --fresh-session \
+  --tools-enabled true \
+  --tool-profile normal-tools \
+  --evaluator-blinded true
+```
+
+The record stores:
+
+- frozen-case SHA-256 fingerprint;
+- raw-output SHA-256;
+- optional judgement SHA-256;
+- exact model/version/configuration;
+- tool profile;
+- fresh-session flag;
+- whether corrective follow-up or extra context was used.
+
+Edited outputs or changed case prompts fail integrity validation.
+
+## Score one output directly
+
+The original single-case scorer remains useful:
+
+```bash
+python evaluation/score_output.py \
+  --case BC5_ROI_MISSING_INPUTS \
+  --output evaluation/runs/example/BC5.md \
+  --judgement evaluation/runs/example/BC5.judgement.json
+```
+
+Use `--cases evaluation/wave7_cases.json` for Wave 7 case IDs.
+
+Without a judgement, `score_output.py` can still report hard-gate status, but that observation is not a complete Wave 7 benchmark run.
+
+## Aggregate repeated runs
+
+```bash
+python evaluation/run_benchmark.py \
+  --runs evaluation/runs \
+  --json-out evaluation/reports/latest.json \
+  --md-out evaluation/reports/latest.md
+```
+
+The aggregate report includes:
+
+- complete/incomplete benchmark coverage;
+- invalid/tampered run records;
+- missing run slots;
+- hard-gate failure rate;
+- case pass rate;
+- mean/min/max weighted score;
+- family performance;
+- BASE vs MUTATION pass rate;
+- unstable cases with mixed outcomes or wide score ranges;
+- release status per exact model/configuration/tool profile.
+
+## Repetition and case-pass rule
+
+The primary suite requires at least 3 fresh-session observations per case per model/configuration/tool profile.
 
 A case passes only when:
 
-1. no hard gate fails; and
-2. weighted score meets the case threshold, normally 90/100.
+- the minimum repeated runs exist;
+- every valid recorded run passes deterministic hard gates;
+- every required run has a valid weighted judgement;
+- every recorded valid run meets its weighted threshold.
 
-A score of 100/100 means the tested output earned full marks on that case. It does **not** mean the skill is infallible outside the tested distribution.
+A catastrophic or scored failure cannot be hidden by averaging it with stronger runs.
 
-## Golden cases
+For 26 cases, a complete model cell therefore requires at least **78 first-run observations**.
 
-`cases.json` includes 14 adversarial scenarios for:
+## Comparison discipline
 
-1. competitor intelligence after a zero-result first pass;
-2. one-client demand being mistaken for a future capability market;
-3. bespoke delivery code being mistaken for reusable IP;
-4. target metrics being turned into client success claims;
-5. confidential delivery evidence being turned into public GTM collateral;
-6. sales win-rate improvement caused by cherry-picking;
-7. successful PoC with no production path;
-8. automation whose human review burden erases ROI;
-9. autonomous side effects with no rollback/permissions boundary;
-10. vendor-demo happy-path bias in tool selection;
-11. a business case treating weak competitor search as an uncontested market;
-12. a business case manufacturing ROI with missing inputs;
-13. a business case promoting one PoC directly into a platform investment;
-14. a business case treating technical validation as commercial validation.
+For model-vs-model or before-vs-after comparisons:
 
-These cases directly exercise failure modes encoded in `reliability/scenario_matrix.json` and the dedicated business-case scenario catalog.
+1. use the same case fingerprint/revision;
+2. use equivalent tool profiles;
+3. use the same number of fresh-session repetitions;
+4. preserve raw outputs unchanged;
+5. use the same hard gates and rubric;
+6. blind evaluators where practical;
+7. report failure rate and score range, not only mean score;
+8. disclose model/version/tool/case changes.
 
-## Running an evaluation
+Do not mix materially different model versions or tool profiles into one model result.
 
-Save a model response to a text/Markdown file, for example:
+## Protocol
 
-```bash
-python evaluation/score_output.py \
-  --case BC5_ROI_MISSING_INPUTS \
-  --output evaluation/runs/claude/BC5.md
-```
+See [`BENCHMARK_PROTOCOL.md`](./BENCHMARK_PROTOCOL.md) for the full first-run protocol, blinding guidance, tool-profile rules, release gate, case evolution rules, and allowed benchmark claim language.
 
-Without a judgement file, the command reports deterministic hard-gate status and leaves the nuanced score `UNSCORED`.
+## What CI proves
 
-Create a judgement JSON using the case's dimension names:
+CI can prove that:
 
-```json
-{
-  "case_id": "BC5_ROI_MISSING_INPUTS",
-  "evaluator": "independent-reviewer",
-  "dimensions": {
-    "evidence_integrity": {"score": 5, "rationale": "Refuses to invent missing ROI inputs."},
-    "uncertainty_calibration": {"score": 5, "rationale": "Keeps ROI as unknown/estimate until inputs are established."}
-  }
-}
-```
+- benchmark JSON is valid;
+- required families and mutations exist;
+- hard-gate regexes compile;
+- known-bad fixtures fail;
+- known-good fixtures survive catastrophic gates;
+- case/output hash tampering is detected;
+- fresh-session/corrective-follow-up rules are enforced;
+- aggregate PASS/FAIL/INCOMPLETE logic behaves as designed.
 
-Then run:
+CI **cannot** create genuine fresh-session Claude, Codex, Gemini, or other model evidence unless an authorized model runner is explicitly connected.
 
-```bash
-python evaluation/score_output.py \
-  --case BC5_ROI_MISSING_INPUTS \
-  --output evaluation/runs/claude/BC5.md \
-  --judgement evaluation/runs/claude/BC5.judgement.json
-```
+Therefore a green repository test suite means:
 
-## Benchmark protocol
+> **Wave 7 benchmark machinery is valid.**
 
-For a meaningful Claude vs Codex or before-vs-after comparison:
+It does not mean:
 
-1. Freeze the case prompt/context.
-2. Record model name/version/date and tool availability.
-3. Start a fresh session so prior challenge/context does not help the model.
-4. Run the skill/workflow once, without corrective follow-up.
-5. Save the raw output unchanged.
-6. Apply deterministic hard gates.
-7. Blind the evaluator to model identity if possible.
-8. Score all rubric dimensions with evidence/rationale.
-9. Repeat stochastic cases at least 3 times when practical.
-10. Report mean, range, hard-gate failure rate, and recurring failure modes.
+> **The models or PM Skills passed Wave 7.**
 
-The key metric for the original competitor problem and the business-case variants is **first-run success**, not whether the model can recover after the user tells it that it missed something.
+## Claim policy
 
-## Quality policy
+Before real complete runs exist, use wording such as:
 
-Do not tune a skill to literal test strings. Golden cases should represent failure families, and new real-world failures should create new or mutated cases.
+> “Wave 7 benchmark infrastructure and frozen cases are ready for execution.”
 
-A release should not be described as “100/100” unless the tested case suite actually scores 100 with zero hard-gate failures. Prefer reporting the exact benchmark scope and results.
+Do not claim:
+
+- “100/100”;
+- “zero hallucinations”;
+- “all models pass”;
+- “production-proven reliability”;
+- universal correctness.
+
+After real runs, report exact model/version/configuration/tool profile, suite revision/fingerprint, number of runs, date, hard-gate failure rate, case pass rate, mean/range, and known failure families.
