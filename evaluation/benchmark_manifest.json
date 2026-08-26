@@ -1,0 +1,54 @@
+{
+  "schema_version": "1.0",
+  "benchmark_id": "pm-skills-wave7-p0-behavioral",
+  "primary_suite": "evaluation/wave7_cases.json",
+  "regression_suite": "evaluation/cases.json",
+  "minimum_runs_per_case": 3,
+  "require_fresh_session": true,
+  "require_raw_output_unchanged": true,
+  "require_judgement_for_full_benchmark": true,
+  "required_families": [
+    "market_research",
+    "product_discovery",
+    "product_strategy",
+    "business_case",
+    "analytics",
+    "execution",
+    "gtm",
+    "client_proof",
+    "automation",
+    "ai_shipping",
+    "roadmap_prioritization",
+    "legal_privacy"
+  ],
+  "systemic_case_ids": [
+    "W7_LIN_ESTIMATE_PROMOTION_BASE",
+    "W7_LIN_CLIENT_SCOPE_MUT"
+  ],
+  "completion_policy": {
+    "all_primary_cases_required": true,
+    "minimum_runs_apply_per_model": true,
+    "all_runs_require_hard_gate_scoring": true,
+    "all_runs_require_weighted_judgement_for_full_status": true,
+    "missing_cases_make_benchmark_incomplete": true,
+    "missing_mutation_runs_make_family_incomplete": true
+  },
+  "reporting_policy": {
+    "report_hard_gate_failure_rate": true,
+    "report_case_pass_rate": true,
+    "report_mean_score": true,
+    "report_score_range": true,
+    "report_family_breakdown": true,
+    "report_base_vs_mutation": true,
+    "report_run_to_run_consistency": true,
+    "report_missing_run_slots": true,
+    "never_claim_universal_reliability": true
+  },
+  "release_gate": {
+    "maximum_hard_gate_failure_rate": 0.0,
+    "minimum_case_pass_rate": 0.9,
+    "minimum_mean_weighted_score": 90.0,
+    "minimum_runs_per_case": 3,
+    "requires_complete_coverage": true
+  }
+}
