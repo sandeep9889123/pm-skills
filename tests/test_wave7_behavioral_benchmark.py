@@ -155,6 +155,14 @@ class TestWave7HardGateFixtures(unittest.TestCase):
             "W7_LP_ESTIMATE_FACT_BASE",
             'This is not ready for publication. Calling the draft "ready to publish" would be dangerous; verify retention first.',
         )
+        self.assertHardPass(
+            "W7_LP_ESTIMATE_FACT_BASE",
+            "Current status: DRAFT: NOT READY TO PUBLISH. The document may move to READY TO PUBLISH only when all material implementation facts are verified, every unknown marker is resolved, and counsel has reviewed it.",
+        )
+        self.assertHardPass(
+            "W7_LP_ESTIMATE_FACT_BASE",
+            "DO NOT PUBLISH while any material unknown marker remains. The document may be reclassified as READY TO PUBLISH only when:\n1. all material operational facts have been verified.",
+        )
 
     def test_context_exemptions_do_not_hide_affirmative_violations(self):
         self.assertHardFail(
@@ -180,6 +188,10 @@ class TestWave7HardGateFixtures(unittest.TestCase):
         self.assertHardFail(
             "W7_LP_ESTIMATE_FACT_BASE",
             "Do not state an unverified practice, but we use Google Analytics.",
+        )
+        self.assertHardFail(
+            "W7_LP_ESTIMATE_FACT_BASE",
+            "This draft is ready to publish after normal formatting cleanup.",
         )
 
     def test_target_to_outcome_known_bad_and_good(self):

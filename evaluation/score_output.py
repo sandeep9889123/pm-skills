@@ -21,7 +21,7 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parent
 DEFAULT_CASES = ROOT / "cases.json"
-SCORER_REVISION = "2.0-context-aware-forbidden-gates"
+SCORER_REVISION = "2.1-conditional-readiness-gates"
 
 
 def load_json(path: Path) -> dict[str, Any]:
@@ -67,6 +67,7 @@ def _is_meta_or_rejected_mention(sentence: str, match_start: int, match_end: int
     # "Do not hesitate/delay" is not a refusal and must never create an escape.
     plain_whole = re.sub(r"[*_`]+", "", whole)
     plain_prefix = re.sub(r"[*_`]+", "", prefix)
+    match_text = sentence[match_start:match_end].lower()
     scrubbed_prefix = re.sub(r"\bdo not (?:hesitate|delay)\b", "", plain_prefix)
     rejected_before = re.search(
         r"(?:"
@@ -84,12 +85,26 @@ def _is_meta_or_rejected_mention(sentence: str, match_start: int, match_end: int
         suffix,
     )
     explicit_refusal = bool(re.search(r"\bdo not publish\b", whole))
+    conditional_readiness = (
+        "ready to publish" in match_text
+        and re.search(
+            r"\b(?:only when|only after|may (?:be )?(?:move|moved|reclassif(?:y|ied))|can (?:be )?(?:move|moved|reclassif(?:y|ied)))\b",
+            plain_whole,
+        )
+        and (
+            re.search(
+                r"\b(?:verified|verification|resolve|resolved|counsel|legal review|production behavior|unknown markers?)\b",
+                suffix,
+            )
+            or re.search(r"\bonly (?:when|after)\s*:\s*$", suffix)
+        )
+    )
     adversatives = list(re.finditer(r"\b(?:but|however|yet|nevertheless)\b", plain_whole))
-    if (rejected_before or explicit_refusal) and any(
+    if (rejected_before or explicit_refusal or conditional_readiness) and any(
         marker.start() < match_end for marker in adversatives
     ):
         return False
-    return bool(rejected_before or rejected_after or explicit_refusal)
+    return bool(rejected_before or rejected_after or explicit_refusal or conditional_readiness)
 
 
 def forbidden_regex_present(pattern: str, text: str) -> bool:
