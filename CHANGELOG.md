@@ -5,6 +5,7 @@
 ### Observed-Evidence Benchmark Hardening Wave 10
 
 - Corrected deterministic hard-gate scoring so explicit refusals, rejected conclusions, and quoted bad examples are not misclassified as catastrophic violations merely because they repeat the prohibited phrase.
+- Corrected deterministic hard-gate scoring for conditional publication-readiness language, so "ready to publish only when verified" is not misclassified while unconditional ready-to-publish claims still fail.
 - Added regression coverage proving the contextual exclusions do not excuse contradictory or affirmative unsafe claims, and added a scorer revision to every benchmark report.
 - Added post-capture tool-observation provenance for manual UI runs where provider-driven browsing or other tool availability differs from the predeclared plan.
 - Added explicit one-run exploratory capture for breadth-first full-suite triage while preserving the three-run qualification minimum, closing a docs-versus-runner contradiction without weakening the release gate.
