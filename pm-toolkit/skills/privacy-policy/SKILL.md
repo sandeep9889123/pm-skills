@@ -21,14 +21,32 @@ Draft a detailed privacy policy for a product or service. The policy covers data
 - `$INFORMATION_TYPES`: Types of data collected (e.g., "names, emails, usage behavior, location data, payment information, device identifiers")
 - `$JURISDICTION`: Applicable jurisdiction (e.g., "United States," "European Union (GDPR)," "California (CCPA)")
 
+## Factual Practice Gate
+
+A privacy policy is a representation of actual operations, not a place to select plausible defaults.
+
+Before drafting, classify every implementation-dependent disclosure as `VERIFIED`, `UNKNOWN`, or `PROPOSAL`. This includes data categories, SDKs, cookies, processors/subprocessors, storage and access locations, transfer mechanisms, retention and deletion behavior, sale/sharing/advertising practices, AI/model use, rights operations, and security controls.
+
+If any material practice is `UNKNOWN`:
+
+- set the deliverable status to **`DRAFT: NOT READY TO PUBLISH`**;
+- use an explicit `[UNKNOWN: VERIFY BEFORE PUBLICATION: owner/evidence needed]` marker in place of factual policy language;
+- do not insert vendor names, exact retention periods, cookie categories, transfer mechanisms, sale/no-sale statements, or security controls merely because they are common;
+- do not put exact values into policy-shaped text under labels such as "recommended," "proposed," or "default." This is a copy-forward risk and can silently convert a proposal into a public factual claim;
+- keep any product or policy design proposal outside the policy in a separate decision register with state `PROPOSAL`, owner, rationale, evidence needed, and approval status;
+- require operational verification from Engineering/Product/Security or the relevant system owner. Legal review does not verify how the product is configured.
+
+Only label the document **ready to publish** after all material implementation facts are verified, placeholders are resolved, the public wording matches production behavior, and qualified privacy counsel has reviewed the applicable legal language.
+
 ## Process
 
 ### Step 1: Research (if URL provided)
 If $PRODUCT_URL is provided:
 - Visit the product website
-- Identify what data is collected (forms, tracking, login, payments)
-- Note any third-party integrations (analytics, payment processors, SDKs)
+- Identify externally observable collection surfaces (forms, tracking, login, payments)
+- Note directly observed third-party integrations (analytics, payment processors, SDKs)
 - Understand the product's primary features and use cases
+- Treat website inspection as partial coverage. It cannot prove the complete production data inventory, retention behavior, backend processors, access locations, or contractual transfer mechanism.
 
 ### Step 2: Clarify Data Collection
 Map out all data your product collects:
@@ -202,8 +220,8 @@ Quick reference:
 - Retention periods
 - Contact information
 
-### Part 2: Full Privacy Policy Document
-A complete, ready-to-publish privacy policy.
+### Part 2: Privacy Policy Document
+A complete policy structure populated only with verified practices. If material facts are unknown, label it `DRAFT: NOT READY TO PUBLISH` and preserve verification markers rather than filling them with defaults.
 
 ### Part 3: Customization and Compliance Notes
 Guidance on:
@@ -236,3 +254,5 @@ Guidance on:
 - [ ] Document your legal basis for each type of processing
 - [ ] Have a Data Processing Agreement (DPA) with all third-party processors
 - [ ] Notify users of material changes; consider giving them a choice to opt-out
+- [ ] Remove no verification marker until the named owner supplies evidence for the replacement wording
+- [ ] Confirm that no `PROPOSAL`, recommended default, example vendor, or placeholder value survived into factual public language

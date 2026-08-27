@@ -114,8 +114,13 @@ def prepare_manual(args: argparse.Namespace) -> Path:
     suite = load_json(REPO_ROOT / manifest["primary_suite"])
     case_ids = select_cases(suite, args.case_ids, args.allow_all)
     minimum_runs = int(manifest["minimum_runs_per_case"])
-    if args.planned_runs < minimum_runs:
-        raise ManualCaptureError(f"--planned-runs must be at least {minimum_runs}")
+    exploratory = bool(getattr(args, "exploratory", False))
+    if args.planned_runs < 1:
+        raise ManualCaptureError("--planned-runs must be at least 1")
+    if args.planned_runs < minimum_runs and not exploratory:
+        raise ManualCaptureError(
+            f"--planned-runs must be at least {minimum_runs} unless --exploratory is set"
+        )
 
     tool_profile = {
         "tools_enabled": args.tools_enabled,
@@ -124,6 +129,7 @@ def prepare_manual(args: argparse.Namespace) -> Path:
     }
     configuration = {
         "capture_mode": "manual_ui",
+        "qualification_scope": "exploratory" if exploratory else "qualification",
         "interface": args.interface,
         "model": args.model,
         "version": args.version,
@@ -142,6 +148,7 @@ def prepare_manual(args: argparse.Namespace) -> Path:
         "suite_fingerprint": suite_fingerprint(suite),
         "repository_commit": repository_commit(),
         "capture_mode": "manual_ui",
+        "qualification_scope": "exploratory" if exploratory else "qualification",
         "provider": args.provider,
         "model": args.model,
         "version": args.version,
@@ -208,10 +215,49 @@ def record_manual(args: argparse.Namespace) -> Path:
 
     case_ids = plan.get("case_ids")
     planned_runs = plan.get("planned_runs")
+    qualification_scope = plan.get("qualification_scope", "qualification")
     if not isinstance(case_ids, list) or not all(isinstance(item, str) for item in case_ids):
         raise ManualCaptureError("manual plan case_ids must be a string array")
-    if not isinstance(planned_runs, int) or planned_runs < int(manifest["minimum_runs_per_case"]):
+    if qualification_scope not in {"qualification", "exploratory"}:
+        raise ManualCaptureError("manual plan qualification_scope is invalid")
+    if not isinstance(planned_runs, int) or planned_runs < 1:
         raise ManualCaptureError("manual plan planned_runs is invalid")
+    if planned_runs < int(manifest["minimum_runs_per_case"]) and qualification_scope != "exploratory":
+        raise ManualCaptureError("sub-minimum manual plan must be exploratory")
+
+    actual_tools_mode = getattr(args, "actual_tools", "as-planned")
+    planned_tool_profile = plan["configuration"]["tool_profile"]
+    actual_tools_enabled = planned_tool_profile["tools_enabled"]
+    if actual_tools_mode == "enabled":
+        actual_tools_enabled = True
+    elif actual_tools_mode == "disabled":
+        actual_tools_enabled = False
+    actual_tool_profile = (
+        getattr(args, "actual_tool_profile", None)
+        or planned_tool_profile["profile"]
+    )
+    observation_notes = (
+        getattr(args, "tool_observation_notes", None)
+        or planned_tool_profile.get("notes")
+        or "Manual UI capture."
+    )
+    actual_configuration = json.loads(json.dumps(plan["configuration"]))
+    actual_configuration["tool_profile"] = {
+        "tools_enabled": actual_tools_enabled,
+        "profile": actual_tool_profile,
+        "notes": observation_notes,
+    }
+    deviation = None
+    if actual_configuration["tool_profile"] != planned_tool_profile:
+        deviation = {
+            "type": "post_capture_tool_observation",
+            "planned_tools_enabled": planned_tool_profile["tools_enabled"],
+            "observed_tools_enabled": actual_tools_enabled,
+            "planned_profile": planned_tool_profile["profile"],
+            "observed_profile": actual_tool_profile,
+            "basis": observation_notes,
+            "provider_tool_trace_available": False,
+        }
 
     recorded = 0
     for run_index in range(1, planned_runs + 1):
@@ -219,8 +265,9 @@ def record_manual(args: argparse.Namespace) -> Path:
             case = get_case(suite, case_id)
             case_dir = cell_dir / case_id
             output_path = case_dir / f"run-{run_index}.md"
+            judgement_path = case_dir / f"run-{run_index}.judgement.json"
             record_path = case_dir / f"run-{run_index}.run.json"
-            if record_path.exists():
+            if record_path.exists() and not getattr(args, "overwrite_records", False):
                 continue
             if not output_path.is_file():
                 raise ManualCaptureError(f"manual raw output missing: {output_path}")
@@ -240,25 +287,47 @@ def record_manual(args: argparse.Namespace) -> Path:
                 "--version",
                 str(plan["version"]),
                 "--configuration",
-                canonical_json(plan["configuration"]),
+                canonical_json(actual_configuration),
                 "--run-index",
                 str(run_index),
                 "--planned-runs",
                 str(planned_runs),
                 "--fresh-session",
                 "--tools-enabled",
-                "true" if plan["configuration"]["tool_profile"]["tools_enabled"] else "false",
+                "true" if actual_tools_enabled else "false",
                 "--tool-profile",
-                str(plan["configuration"]["tool_profile"]["profile"]),
+                str(actual_tool_profile),
                 "--tool-notes",
-                str(plan["configuration"]["tool_profile"].get("notes") or "Manual UI capture."),
+                str(observation_notes),
                 "--workflow-invoked",
                 case["workflow"],
                 "--record",
                 str(record_path),
                 "--notes",
-                "Zero-cost manual UI capture; weighted judgement pending.",
+                (
+                    "Zero-cost manual UI capture; independent weighted judgement attached."
+                    if judgement_path.is_file()
+                    else "Zero-cost manual UI capture; weighted judgement pending."
+                ),
             ]
+            if judgement_path.is_file():
+                judgement = load_json(judgement_path)
+                evaluator = judgement.get("evaluator") if isinstance(judgement, dict) else None
+                blinded = evaluator.get("blinded") if isinstance(evaluator, dict) else None
+                if not isinstance(blinded, bool):
+                    raise ManualCaptureError(
+                        f"judgement evaluator.blinded must be boolean: {judgement_path}"
+                    )
+                command.extend(
+                    [
+                        "--judgement",
+                        str(judgement_path),
+                        "--evaluator-blinded",
+                        "true" if blinded else "false",
+                    ]
+                )
+            if qualification_scope == "exploratory":
+                command.append("--exploratory")
             completed = subprocess.run(command, cwd=REPO_ROOT, text=True, capture_output=True)
             if completed.returncode != 0:
                 raise ManualCaptureError(f"record_run.py rejected manual slot: {completed.stderr}{completed.stdout}")
@@ -282,6 +351,8 @@ def record_manual(args: argparse.Namespace) -> Path:
                     "raw_output_unedited": True,
                 },
             }
+            if deviation is not None:
+                record["capture"]["execution_deviation"] = deviation
             write_json(record_path, record)
             recorded += 1
     print(f"Recorded manual slots: {recorded}")
@@ -300,6 +371,11 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     prepare.add_argument("--case-ids", required=True, help="Comma-separated IDs or 'all'")
     prepare.add_argument("--allow-all", action="store_true")
     prepare.add_argument("--planned-runs", type=int, default=3)
+    prepare.add_argument(
+        "--exploratory",
+        action="store_true",
+        help="Allow fewer than the qualification minimum for breadth-first triage",
+    )
     prepare.add_argument("--tools-enabled", action="store_true")
     prepare.add_argument("--tool-profile", default="manual-ui-no-external-tools")
     prepare.add_argument("--tool-notes", default="Manual UI run; no paid API calls.")
@@ -310,6 +386,15 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     record = subparsers.add_parser("record", help="Create run records for pasted manual outputs")
     record.add_argument("--cell", type=Path, required=True)
     record.add_argument("--manifest", type=Path, default=DEFAULT_MANIFEST)
+    record.add_argument(
+        "--actual-tools",
+        choices=("as-planned", "enabled", "disabled"),
+        default="as-planned",
+        help="Post-capture observation of tool availability/use; preserves any deviation from the plan",
+    )
+    record.add_argument("--actual-tool-profile")
+    record.add_argument("--tool-observation-notes")
+    record.add_argument("--overwrite-records", action="store_true")
     return parser.parse_args(argv)
 
 

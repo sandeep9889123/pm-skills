@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+### Observed-Evidence Benchmark Hardening Wave 10
+
+- Corrected deterministic hard-gate scoring so explicit refusals, rejected conclusions, and quoted bad examples are not misclassified as catastrophic violations merely because they repeat the prohibited phrase.
+- Added regression coverage proving the contextual exclusions do not excuse contradictory or affirmative unsafe claims, and added a scorer revision to every benchmark report.
+- Added post-capture tool-observation provenance for manual UI runs where provider-driven browsing or other tool availability differs from the predeclared plan.
+- Added explicit one-run exploratory capture for breadth-first full-suite triage while preserving the three-run qualification minimum, closing a docs-versus-runner contradiction without weakening the release gate.
+- Brought the run-record JSON schema into parity with manual UI capture and its post-capture deviation provenance.
+- Hardened `privacy-policy` against the observed proposed-default loophole: unknown operational practices now force `DRAFT: NOT READY TO PUBLISH`, exact proposed values stay outside policy-shaped text, and legal review cannot substitute for implementation verification.
+- Added the scoped Wave 9 smoke findings report with capture limitations, weighted results, observed evaluator/provenance defects, the privacy failure, and the evidence-gated next sequence.
+
 ### Zero-Cost Manual Baseline Wave 9
 
 - Added a manual UI capture protocol for zero-cost Wave 7 evidence collection with predeclared prompt packs, run plans, placeholder detection, operator attestations, and tamper-evident run records.

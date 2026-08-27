@@ -48,6 +48,7 @@
     },
     "run_index": {"type": "integer", "minimum": 1},
     "planned_runs": {"type": "integer", "minimum": 1},
+    "qualification_scope": {"enum": ["qualification", "exploratory"]},
     "captured_at": {"type": "string", "minLength": 1},
     "fresh_session": {"type": "boolean"},
     "raw_output_path": {"type": "string", "minLength": 1},
@@ -76,36 +77,68 @@
       }
     },
     "capture": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "mode",
-        "adapter",
-        "endpoint",
-        "prompt_bundle_path",
-        "prompt_bundle_sha256",
-        "request_path",
-        "request_sha256",
-        "provider_response_path",
-        "provider_response_sha256",
-        "provider_request_id",
-        "response_model",
-        "request_parameters"
-      ],
-      "properties": {
-        "mode": {"const": "automated_api"},
-        "adapter": {"enum": ["openai-responses", "anthropic-messages"]},
-        "endpoint": {"type": "string", "pattern": "^https://"},
-        "prompt_bundle_path": {"type": "string", "minLength": 1},
-        "prompt_bundle_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
-        "request_path": {"type": "string", "minLength": 1},
-        "request_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
-        "provider_response_path": {"type": "string", "minLength": 1},
-        "provider_response_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
-        "provider_request_id": {"type": "string", "minLength": 1},
-        "response_model": {"type": "string", "minLength": 1},
-        "request_parameters": {"type": "object"}
-      }
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["mode", "adapter", "endpoint", "prompt_bundle_path", "prompt_bundle_sha256", "request_path", "request_sha256", "provider_response_path", "provider_response_sha256", "provider_request_id", "response_model", "request_parameters"],
+          "properties": {
+            "mode": {"const": "automated_api"},
+            "adapter": {"enum": ["openai-responses", "anthropic-messages"]},
+            "endpoint": {"type": "string", "pattern": "^https://"},
+            "prompt_bundle_path": {"type": "string", "minLength": 1},
+            "prompt_bundle_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+            "request_path": {"type": "string", "minLength": 1},
+            "request_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+            "provider_response_path": {"type": "string", "minLength": 1},
+            "provider_response_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+            "provider_request_id": {"type": "string", "minLength": 1},
+            "response_model": {"type": "string", "minLength": 1},
+            "request_parameters": {"type": "object"}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["mode", "interface", "manual_plan_path", "manual_plan_sha256", "prompt_bundle_path", "prompt_bundle_sha256", "manual_prompt_path", "manual_prompt_sha256", "operator_attestation"],
+          "properties": {
+            "mode": {"const": "manual_ui"},
+            "interface": {"type": "string", "minLength": 1},
+            "manual_plan_path": {"type": "string", "minLength": 1},
+            "manual_plan_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+            "prompt_bundle_path": {"type": "string", "minLength": 1},
+            "prompt_bundle_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+            "manual_prompt_path": {"type": "string", "minLength": 1},
+            "manual_prompt_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+            "operator_attestation": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["fresh_session", "first_response_only", "no_corrective_followup", "no_extra_context", "raw_output_unedited"],
+              "properties": {
+                "fresh_session": {"const": true},
+                "first_response_only": {"const": true},
+                "no_corrective_followup": {"const": true},
+                "no_extra_context": {"const": true},
+                "raw_output_unedited": {"const": true}
+              }
+            },
+            "execution_deviation": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["type", "planned_tools_enabled", "observed_tools_enabled", "planned_profile", "observed_profile", "basis", "provider_tool_trace_available"],
+              "properties": {
+                "type": {"const": "post_capture_tool_observation"},
+                "planned_tools_enabled": {"type": "boolean"},
+                "observed_tools_enabled": {"type": "boolean"},
+                "planned_profile": {"type": "string", "minLength": 1},
+                "observed_profile": {"type": "string", "minLength": 1},
+                "basis": {"type": "string", "minLength": 1},
+                "provider_tool_trace_available": {"type": "boolean"}
+              }
+            }
+          }
+        }
+      ]
     },
     "notes": {"type": ["string", "null"]}
   }

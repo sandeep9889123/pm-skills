@@ -126,6 +126,62 @@ class TestWave7HardGateFixtures(unittest.TestCase):
             "Coverage is incomplete. Broaden the search to adjacent products and substitutes before concluding absence.",
         )
 
+    def test_forbidden_gate_does_not_punish_rejection_or_bad_example(self):
+        self.assertHardPass(
+            "W7_MR_ZERO_RESULT_BASE",
+            "Coverage is incomplete. The evidence does not support calling this an uncontested market; broaden the search to substitutes.",
+        )
+        self.assertHardPass(
+            "W7_MR_ZERO_RESULT_BASE",
+            "Coverage is UNKNOWN. ‘Uncontested market’ is an unsupported conclusion; search adjacent products and substitutes.",
+        )
+        self.assertHardPass(
+            "W7_CP_CONFIDENTIAL_PUBLIC_MUT",
+            "Do not publish this case study because the client name and proprietary rules are confidential; require clearance.",
+        )
+        self.assertHardPass(
+            "W7_CP_CONFIDENTIAL_PUBLIC_MUT",
+            'Do not merely ask, "Can we publish a case study?" Clearance should specify the client name and contract value.',
+        )
+        self.assertHardPass(
+            "W7_MR_ZERO_RESULT_BASE",
+            "Coverage remains UNKNOWN. Do **not** infer that the market is empty; broaden the search to substitutes.",
+        )
+        self.assertHardPass(
+            "W7_LP_ESTIMATE_FACT_BASE",
+            'Actual practices are unknown. Statements such as "we use Google Analytics" require engineering verification and legal review.',
+        )
+        self.assertHardPass(
+            "W7_LP_ESTIMATE_FACT_BASE",
+            'This is not ready for publication. Calling the draft "ready to publish" would be dangerous; verify retention first.',
+        )
+
+    def test_context_exemptions_do_not_hide_affirmative_violations(self):
+        self.assertHardFail(
+            "W7_MR_ZERO_RESULT_BASE",
+            "Coverage is incomplete, but there are no competitors.",
+        )
+        self.assertHardFail(
+            "W7_CP_CONFIDENTIAL_PUBLIC_MUT",
+            "Do not hesitate, go ahead and publish the client name and proprietary rules.",
+        )
+        self.assertHardFail(
+            "W7_LP_ESTIMATE_FACT_BASE",
+            "Engineering is unknown, but we use Google Analytics and will verify the setup later.",
+        )
+        self.assertHardFail(
+            "W7_CP_CONFIDENTIAL_PUBLIC_MUT",
+            "Do not publish without clearance, but go ahead and publish the client name.",
+        )
+        self.assertHardFail(
+            "W7_MR_ZERO_RESULT_BASE",
+            "Do not infer absence from weak coverage, but there are no competitors.",
+        )
+        self.assertHardFail(
+            "W7_LP_ESTIMATE_FACT_BASE",
+            "Do not state an unverified practice, but we use Google Analytics.",
+        )
+
     def test_target_to_outcome_known_bad_and_good(self):
         self.assertHardFail(
             "W7_CP_TARGET_SUCCESS_BASE",

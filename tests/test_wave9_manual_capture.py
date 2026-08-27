@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import importlib.util
+import hashlib
 import json
 import tempfile
 import unittest
@@ -41,6 +42,7 @@ class TestWave9ManualCapture(unittest.TestCase):
             "case_ids": self.case["id"],
             "allow_all": False,
             "planned_runs": 3,
+            "exploratory": False,
             "tools_enabled": False,
             "tool_profile": "manual-ui-no-external-tools",
             "tool_notes": "Manual UI run; no paid API calls.",
@@ -66,6 +68,49 @@ class TestWave9ManualCapture(unittest.TestCase):
             self.assertNotIn("hard_gates", prompt)
             self.assertNotIn("evidence_integrity", prompt)
             self.assertNotIn("decision_usefulness", prompt)
+
+    def test_exploratory_mode_allows_one_run_without_weakening_qualification(self):
+        with tempfile.TemporaryDirectory(dir=ROOT) as temp:
+            with self.assertRaises(manual_capture.ManualCaptureError):
+                manual_capture.prepare_manual(
+                    self.make_prepare_args(Path(temp), planned_runs=1)
+                )
+
+        with tempfile.TemporaryDirectory(dir=ROOT) as temp:
+            cell = manual_capture.prepare_manual(
+                self.make_prepare_args(Path(temp), planned_runs=1, exploratory=True)
+            )
+            plan = json.loads((cell / "manual-plan.json").read_text(encoding="utf-8"))
+            self.assertEqual(plan["qualification_scope"], "exploratory")
+            self.assertEqual(plan["planned_runs"], 1)
+            output = cell / self.case["id"] / "run-1.md"
+            output.write_text(
+                "Coverage is incomplete; broaden search to substitutes before claiming no competitors.",
+                encoding="utf-8",
+            )
+            manual_capture.record_manual(
+                type("Args", (), {"cell": cell, "manifest": EVAL / "benchmark_manifest.json"})()
+            )
+            record_path = cell / self.case["id"] / "run-1.run.json"
+            record = json.loads(record_path.read_text(encoding="utf-8"))
+            self.assertEqual(record["qualification_scope"], "exploratory")
+            errors, _, _ = run_benchmark.validate_run_record(
+                record,
+                manifest=self.manifest,
+                suite=self.suite,
+                record_path=record_path,
+            )
+            self.assertEqual(errors, [], "\n".join(errors))
+
+    def test_run_record_schema_covers_manual_and_automated_capture(self):
+        schema = json.loads((EVAL / "run_record.schema.json").read_text(encoding="utf-8"))
+        self.assertEqual(
+            schema["properties"]["qualification_scope"]["enum"],
+            ["qualification", "exploratory"],
+        )
+        capture_variants = schema["properties"]["capture"]["oneOf"]
+        modes = {variant["properties"]["mode"]["const"] for variant in capture_variants}
+        self.assertEqual(modes, {"automated_api", "manual_ui"})
 
     def test_manual_record_is_valid_incomplete_until_judged(self):
         with tempfile.TemporaryDirectory(dir=ROOT) as temp:
@@ -97,6 +142,87 @@ class TestWave9ManualCapture(unittest.TestCase):
                 record["raw_output_sha256"],
             )
             self.assertEqual(score["status"], "HARD_GATE_PASS_UNSCORED")
+
+    def test_manual_record_preserves_post_capture_tool_observation(self):
+        with tempfile.TemporaryDirectory(dir=ROOT) as temp:
+            cell = manual_capture.prepare_manual(self.make_prepare_args(Path(temp)))
+            for run_index in range(1, 4):
+                output = cell / self.case["id"] / f"run-{run_index}.md"
+                output.write_text(
+                    "Coverage is incomplete; broaden search to substitutes before claiming no competitors.",
+                    encoding="utf-8",
+                )
+            manual_capture.record_manual(
+                type(
+                    "Args",
+                    (),
+                    {
+                        "cell": cell,
+                        "manifest": EVAL / "benchmark_manifest.json",
+                        "actual_tools": "enabled",
+                        "actual_tool_profile": "manual-ui-web-observed",
+                        "tool_observation_notes": "Source links in the raw output indicate provider-driven browsing.",
+                        "overwrite_records": False,
+                    },
+                )()
+            )
+
+            record_path = cell / self.case["id"] / "run-1.run.json"
+            record = json.loads(record_path.read_text(encoding="utf-8"))
+            self.assertTrue(record["tool_profile"]["tools_enabled"])
+            self.assertEqual(record["tool_profile"]["profile"], "manual-ui-web-observed")
+            deviation = record["capture"]["execution_deviation"]
+            self.assertFalse(deviation["planned_tools_enabled"])
+            self.assertTrue(deviation["observed_tools_enabled"])
+            errors, _, _ = run_benchmark.validate_run_record(
+                record,
+                manifest=self.manifest,
+                suite=self.suite,
+                record_path=record_path,
+            )
+            self.assertEqual(errors, [], "\n".join(errors))
+
+    def test_manual_record_attaches_adjacent_valid_judgement(self):
+        with tempfile.TemporaryDirectory(dir=ROOT) as temp:
+            cell = manual_capture.prepare_manual(self.make_prepare_args(Path(temp)))
+            rubric = self.suite["rubric"]
+            for run_index in range(1, 4):
+                output = cell / self.case["id"] / f"run-{run_index}.md"
+                output.write_text(
+                    "Coverage is incomplete; broaden search to substitutes before claiming no competitors.",
+                    encoding="utf-8",
+                )
+                judgement = {
+                    "case_id": self.case["id"],
+                    "rubric_version": self.suite["rubric_version"],
+                    "raw_output_sha256": hashlib.sha256(output.read_bytes()).hexdigest(),
+                    "evaluator": {
+                        "id": "independent-test-reviewer",
+                        "type": "model",
+                        "version": "test",
+                        "independent": True,
+                        "blinded": False,
+                    },
+                    "dimensions": {
+                        name: {
+                            "score": 5,
+                            "rationale": "Fixture meets the declared criterion.",
+                            "evidence": ["The output preserves incomplete coverage."],
+                        }
+                        for name in rubric
+                    },
+                }
+                (cell / self.case["id"] / f"run-{run_index}.judgement.json").write_text(
+                    json.dumps(judgement), encoding="utf-8"
+                )
+            manual_capture.record_manual(
+                type("Args", (), {"cell": cell, "manifest": EVAL / "benchmark_manifest.json"})()
+            )
+            record = json.loads(
+                (cell / self.case["id"] / "run-1.run.json").read_text(encoding="utf-8")
+            )
+            self.assertTrue(record["judgement_path"].endswith("run-1.judgement.json"))
+            self.assertFalse(record["evaluator_blinded"])
 
     def test_manual_record_rejects_placeholder_outputs(self):
         with tempfile.TemporaryDirectory(dir=ROOT) as temp:

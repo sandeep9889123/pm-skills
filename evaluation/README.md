@@ -167,6 +167,20 @@ Manual UI evidence is cheaper but weaker than automated API capture because the
 fresh-session and unedited-output properties are operator-attested. Treat it as
 observed behavioral evidence, not as a fully automated provenance claim.
 
+If the UI invokes browsing or another provider tool despite a no-tools plan,
+preserve the deviation rather than relabeling the run silently:
+
+```bash
+python evaluation/manual_capture.py record \
+  --cell evaluation/manual-runs/<cell> \
+  --actual-tools enabled \
+  --actual-tool-profile manual-ui-web-observed \
+  --tool-observation-notes "Source links in the raw output indicate provider-driven browsing."
+```
+
+This is post-capture evidence, not an API tool trace. The resulting cell must
+not be compared with a no-tools cell as if only the model changed.
+
 Prepare a three-run smoke cell:
 
 ```bash
@@ -218,6 +232,28 @@ Recommended zero-cost sequence:
 4. Re-run the same smoke cases to verify before/after behavior.
 5. Expand to one run across all 26 cases.
 6. Add judgements and regression fixtures for high-severity failures.
+
+The first executed three-case smoke, its limitations, observed defects, and
+evidence-backed hardening decision are documented in
+[`WAVE9_SMOKE_FINDINGS.md`](WAVE9_SMOKE_FINDINGS.md).
+
+For breadth-first triage after the smoke, prepare one exploratory run per case:
+
+```bash
+python evaluation/manual_capture.py prepare \
+  --provider ChatGPT \
+  --model <visible-model-name> \
+  --version <visible-version-or-date> \
+  --interface chatgpt-web \
+  --case-ids all \
+  --allow-all \
+  --planned-runs 1 \
+  --exploratory
+```
+
+Exploratory records are reported separately and can reveal which cases deserve
+three-run stability testing. They can never satisfy the qualification gate or
+be reported as a complete benchmark baseline.
 
 ### 1. Run the frozen case
 

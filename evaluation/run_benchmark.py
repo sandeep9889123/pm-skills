@@ -29,7 +29,7 @@ try:  # direct: python evaluation/run_benchmark.py
         validate_manifest,
         validate_suite,
     )
-    from score_output import score_case
+    from score_output import SCORER_REVISION, score_case
 except ModuleNotFoundError:  # imported from repository-root tests/tools
     from evaluation.benchmark_utils import (
         case_fingerprint,
@@ -40,7 +40,7 @@ except ModuleNotFoundError:  # imported from repository-root tests/tools
         validate_manifest,
         validate_suite,
     )
-    from evaluation.score_output import score_case
+    from evaluation.score_output import SCORER_REVISION, score_case
 
 EVAL_DIR = Path(__file__).resolve().parent
 REPO_ROOT = EVAL_DIR.parent
@@ -70,6 +70,7 @@ def model_key(record: dict[str, Any]) -> str:
     return (
         f"{model.get('provider','?')}/{model.get('name','?')}@{model.get('version','?')}"
         f" | config={configuration} | tools={tool_state}:{tool_digest}"
+        f" | scope={record.get('qualification_scope', 'qualification')}"
         f" | commit={str(record.get('repository_commit', '?'))[:12]}"
     )
 
@@ -171,9 +172,14 @@ def validate_run_record(
     if not isinstance(run_index, int) or run_index < 1:
         errors.append("run_index must be integer >= 1")
     planned_runs = record.get("planned_runs")
+    qualification_scope = record.get("qualification_scope", "qualification")
+    if qualification_scope not in {"qualification", "exploratory"}:
+        errors.append("qualification_scope must be qualification or exploratory")
     minimum_runs = int(manifest.get("minimum_runs_per_case", 3))
-    if not isinstance(planned_runs, int) or planned_runs < minimum_runs:
-        errors.append(f"planned_runs must be integer >= {minimum_runs}")
+    if not isinstance(planned_runs, int) or planned_runs < 1:
+        errors.append("planned_runs must be integer >= 1")
+    elif planned_runs < minimum_runs and qualification_scope != "exploratory":
+        errors.append(f"planned_runs below {minimum_runs} must be exploratory")
     elif isinstance(run_index, int) and run_index > planned_runs:
         errors.append("run_index cannot exceed planned_runs")
 
@@ -311,6 +317,20 @@ def validate_run_record(
                             errors.append(f"capture.{prefix}_sha256 mismatch")
                     except ValueError as exc:
                         errors.append(f"capture.{prefix}_path invalid: {exc}")
+                deviation = capture.get("execution_deviation")
+                if deviation is not None:
+                    if not isinstance(deviation, dict):
+                        errors.append("capture.execution_deviation must be an object")
+                    else:
+                        if deviation.get("type") != "post_capture_tool_observation":
+                            errors.append("capture.execution_deviation.type is unsupported")
+                        for field in ("planned_tools_enabled", "observed_tools_enabled"):
+                            if not isinstance(deviation.get(field), bool):
+                                errors.append(f"capture.execution_deviation.{field} must be boolean")
+                        if not isinstance(deviation.get("basis"), str) or not deviation.get("basis", "").strip():
+                            errors.append("capture.execution_deviation.basis is required")
+                        if isinstance(tools, dict) and tools.get("tools_enabled") != deviation.get("observed_tools_enabled"):
+                            errors.append("tool_profile.tools_enabled must match the observed execution deviation")
             else:
                 errors.append("capture.mode must be automated_api or manual_ui")
 
@@ -398,11 +418,26 @@ def aggregate_model(
     planned_run_values = {
         item.get("record", {}).get("planned_runs", minimum_runs) for item in records
     }
+    scope_values = {
+        item.get("record", {}).get("qualification_scope", "qualification") for item in records
+    }
+    scope_consistent = len(scope_values) == 1
+    qualification_scope = next(iter(scope_values)) if scope_consistent and scope_values else "qualification"
     plan_consistent = len(planned_run_values) == 1
     planned_runs = next(iter(planned_run_values)) if plan_consistent and planned_run_values else minimum_runs
-    if not isinstance(planned_runs, int) or planned_runs < minimum_runs:
+    if (
+        not isinstance(planned_runs, int)
+        or planned_runs < 1
+        or qualification_scope not in {"qualification", "exploratory"}
+        or (planned_runs < minimum_runs and qualification_scope != "exploratory")
+    ):
         plan_consistent = False
         planned_runs = minimum_runs
+    plan_consistent = plan_consistent and scope_consistent
+
+    qualification_runs = (
+        minimum_runs if qualification_scope == "exploratory" else planned_runs
+    )
 
     for item in records:
         case_id = item["case"]["id"]
@@ -427,7 +462,7 @@ def aggregate_model(
             summarize_case_results(
                 case,
                 by_case.get(case["id"], []),
-                planned_runs,
+                qualification_runs,
                 by_case_indices.get(case["id"], set()),
             )
         )
@@ -441,6 +476,11 @@ def aggregate_model(
     total_runs = sum(summary["runs"] for summary in case_summaries)
     hard_failures = sum(summary["hard_gate_failures"] for summary in case_summaries)
     missing_slots = sum(summary["missing_runs"] for summary in case_summaries)
+    planned_indices = set(range(1, planned_runs + 1))
+    planned_missing_slots = sum(
+        len(planned_indices - by_case_indices.get(case["id"], set()))
+        for case in suite.get("cases", [])
+    )
     complete_cases = sum(1 for summary in case_summaries if summary["complete"])
     passed_cases = sum(1 for summary in case_summaries if summary["passed"])
     unstable_cases = [
@@ -478,7 +518,7 @@ def aggregate_model(
     capture_complete = (
         not duplicate_slots
         and plan_consistent
-        and missing_slots == 0
+        and planned_missing_slots == 0
     )
     coverage_complete = capture_complete and complete_cases == len(case_summaries)
     hard_rate = hard_failures / total_runs if total_runs else None
@@ -542,6 +582,8 @@ def aggregate_model(
         "capture_complete": capture_complete,
         "coverage_complete": coverage_complete,
         "planned_runs_per_case": planned_runs,
+        "qualification_scope": qualification_scope,
+        "qualification_runs_per_case": qualification_runs,
         "run_plan_consistent": plan_consistent,
         "expected_cases": len(case_summaries),
         "complete_cases": complete_cases,
@@ -549,6 +591,7 @@ def aggregate_model(
         "case_pass_rate": round(case_pass_rate, 4) if case_pass_rate is not None else None,
         "total_valid_runs": total_runs,
         "missing_run_slots": missing_slots,
+        "planned_missing_run_slots": planned_missing_slots,
         "duplicate_slots": sorted(duplicate_slots),
         "hard_gate_failures": hard_failures,
         "hard_gate_failure_rate": round(hard_rate, 4) if hard_rate is not None else None,
@@ -567,6 +610,7 @@ def markdown_report(report: dict[str, Any]) -> str:
         f"# Behavioral Benchmark Report: {report['benchmark_id']}",
         "",
         f"Definition status: **{report['definition_status']}**",
+        f"Scorer revision: **{report['scorer_revision']}**",
         f"Mutation policy: **{report['mutation_policy']}**",
         f"Invalid run records: **{len(report['invalid_records'])}**",
         "",
@@ -599,9 +643,12 @@ def markdown_report(report: dict[str, Any]) -> str:
                 f"Raw capture complete: **{model['capture_complete']}**",
                 f"Coverage complete: **{model['coverage_complete']}**",
                 f"Planned runs per case: {model['planned_runs_per_case']}",
+                f"Qualification scope: **{model['qualification_scope']}**",
+                f"Qualification runs required per case: {model['qualification_runs_per_case']}",
                 f"Run plan consistent: **{model['run_plan_consistent']}**",
                 f"Complete cases: {model['complete_cases']}/{model['expected_cases']}",
                 f"Missing run slots: {model['missing_run_slots']}",
+                f"Missing predeclared capture slots: {model['planned_missing_run_slots']}",
                 f"Hard-gate failure rate: {model['hard_gate_failure_rate']}",
                 f"Case pass rate: {model['case_pass_rate']}",
                 f"Mean weighted score: {model['mean_weighted_score']}",
@@ -729,6 +776,7 @@ def main() -> int:
 
     report = {
         "benchmark_id": manifest.get("benchmark_id"),
+        "scorer_revision": SCORER_REVISION,
         "definition_status": "VALID" if not definition_errors else "INVALID",
         "definition_errors": definition_errors,
         "mutation_policy": manifest.get("mutation_policy"),
