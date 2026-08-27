@@ -64,6 +64,7 @@ def main() -> int:
     parser.add_argument("--configuration", default="default")
     parser.add_argument("--run-index", required=True, type=int)
     parser.add_argument("--planned-runs", type=int)
+    parser.add_argument("--exploratory", action="store_true")
     parser.add_argument("--fresh-session", action="store_true")
     parser.add_argument("--tools-enabled", choices=["true", "false"], required=True)
     parser.add_argument("--tool-profile", required=True)
@@ -112,7 +113,9 @@ def main() -> int:
         return 2
 
     planned_runs = args.planned_runs or int(manifest["minimum_runs_per_case"])
-    if planned_runs < int(manifest["minimum_runs_per_case"]):
+    if planned_runs < 1:
+        parser.error("--planned-runs must be at least 1")
+    if planned_runs < int(manifest["minimum_runs_per_case"]) and not args.exploratory:
         parser.error("--planned-runs cannot be below the manifest minimum")
     if args.run_index > planned_runs:
         parser.error("--run-index cannot exceed --planned-runs")
@@ -176,6 +179,7 @@ def main() -> int:
         },
         "run_index": args.run_index,
         "planned_runs": planned_runs,
+        "qualification_scope": "exploratory" if args.exploratory else "qualification",
         "captured_at": datetime.now(timezone.utc).isoformat(),
         "fresh_session": args.fresh_session,
         "raw_output_path": raw_output_path,

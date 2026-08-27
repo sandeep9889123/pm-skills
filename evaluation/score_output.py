@@ -21,6 +21,7 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parent
 DEFAULT_CASES = ROOT / "cases.json"
+SCORER_REVISION = "2.0-context-aware-forbidden-gates"
 
 
 def load_json(path: Path) -> dict[str, Any]:
@@ -41,6 +42,75 @@ def regex_present(pattern: str, text: str) -> bool:
         raise ValueError(f"Invalid regex {pattern!r}: {exc}") from exc
 
 
+def _sentence_for_match(text: str, start: int, end: int) -> tuple[str, int]:
+    """Return a bounded sentence/line window and its absolute start offset."""
+    left = max(text.rfind("\n", 0, start), text.rfind(".", 0, start), text.rfind("?", 0, start), text.rfind("!", 0, start))
+    right_candidates = [position for marker in ("\n", ".", "?", "!") if (position := text.find(marker, end)) >= 0]
+    right = min(right_candidates) + 1 if right_candidates else len(text)
+    sentence_start = left + 1
+    return text[sentence_start:right], sentence_start
+
+
+def _is_meta_or_rejected_mention(sentence: str, match_start: int, match_end: int) -> bool:
+    """Suppress forbidden phrases that are explicitly rejected or cited as bad examples.
+
+    Regex gates are narrow tripwires, not semantic judges. A phrase such as
+    "does not support calling this an uncontested market" must not be scored the
+    same way as an affirmative conclusion. The exclusions stay deliberately
+    narrow and do not excuse contradictory claims such as "coverage is
+    incomplete, but there are no competitors."
+    """
+    prefix = sentence[:match_start].lower()
+    suffix = sentence[match_end:].lower()
+    whole = sentence.lower()
+
+    # "Do not hesitate/delay" is not a refusal and must never create an escape.
+    plain_whole = re.sub(r"[*_`]+", "", whole)
+    plain_prefix = re.sub(r"[*_`]+", "", prefix)
+    scrubbed_prefix = re.sub(r"\bdo not (?:hesitate|delay)\b", "", plain_prefix)
+    rejected_before = re.search(
+        r"(?:"
+        r"\b(?:does|do|is|are|was|were|should|must|can|cannot|can't|will|would)\s+not\b"
+        r"|\b(?:reject|rejected|unsupported|unsubstantiated|prohibited|avoid|dangerous|"
+        r"false precision|weak approach|critical flaw|flaws? in|not evidence|not support|"
+        r"cannot conclude|do not infer|do not publish|do not state|must not repeat|"
+        r"statements? such as|writing|calling|claiming|label(?:ing)?)\b"
+        r")[^\n.!?]{0,180}$",
+        scrubbed_prefix,
+    )
+    rejected_after = re.match(
+        r"[^\n.!?]{0,100}\b(?:claim|conclusion|statement)?\s*(?:is|are)?\s*"
+        r"(?:unsupported|unverified|false|dangerous|prohibited|not supported)\b",
+        suffix,
+    )
+    explicit_refusal = bool(re.search(r"\bdo not publish\b", whole))
+    adversatives = list(re.finditer(r"\b(?:but|however|yet|nevertheless)\b", plain_whole))
+    if (rejected_before or explicit_refusal) and any(
+        marker.start() < match_end for marker in adversatives
+    ):
+        return False
+    return bool(rejected_before or rejected_after or explicit_refusal)
+
+
+def forbidden_regex_present(pattern: str, text: str) -> bool:
+    """Return true only for non-negated, non-meta forbidden assertions."""
+    try:
+        expression = re.compile(pattern, flags=re.MULTILINE)
+    except re.error as exc:
+        raise ValueError(f"Invalid regex {pattern!r}: {exc}") from exc
+    for match in expression.finditer(text):
+        # A broad `.*` gate crossing a sentence/question boundary is not a
+        # single prohibited assertion. Score each bounded claim separately.
+        if re.search(r"[?\n]", match.group(0)):
+            continue
+        sentence, sentence_start = _sentence_for_match(text, match.start(), match.end())
+        local_start = match.start() - sentence_start
+        local_end = match.end() - sentence_start
+        if not _is_meta_or_rejected_mention(sentence, local_start, local_end):
+            return True
+    return False
+
+
 def evaluate_hard_gates(case: dict[str, Any], output: str) -> dict[str, Any]:
     gates = case.get("hard_gates", {})
     missing_required = [
@@ -51,7 +121,7 @@ def evaluate_hard_gates(case: dict[str, Any], output: str) -> dict[str, Any]:
     matched_forbidden = [
         pattern
         for pattern in gates.get("forbidden_patterns", [])
-        if regex_present(pattern, output)
+        if forbidden_regex_present(pattern, output)
     ]
     return {
         "passed": not missing_required and not matched_forbidden,
