@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "pm-skills",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Reliability-first PM operating system with 102 domain-specific skills and 60 chained workflows across 13 PM plugins. Includes model-agnostic prospect discovery, evidence-first business cases, enterprise transformation, GTM, market intelligence, automation, analytics, growth, and AI shipping.",
   "owner": {
     "name": "Sandeep Kumar M",
