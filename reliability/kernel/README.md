@@ -7,7 +7,7 @@ It exists so reliability does not depend on every individual `SKILL.md` repeatin
 ## Assets
 
 - [`RELIABILITY_KERNEL.md`](RELIABILITY_KERNEL.md): normative context, evidence, contradiction, lineage, decision, and admission rules.
-- [`risk_tiers.json`](risk_tiers.json): complete P0/P1/P2 classification of all 96 skills and 55 workflows.
+- [`risk_tiers.json`](risk_tiers.json): complete P0/P1/P2 classification of all 102 skills and 60 workflows.
 - [`context_frame.schema.json`](context_frame.schema.json): portable decision-context contract.
 - [`claim_lineage.schema.json`](claim_lineage.schema.json): portable evidence/claim handoff contract.
 - [`../../docs/audit/RELIABILITY_RISK_MAP_V1.md`](../../docs/audit/RELIABILITY_RISK_MAP_V1.md): audit summary and Wave 5-7 hardening priorities.
