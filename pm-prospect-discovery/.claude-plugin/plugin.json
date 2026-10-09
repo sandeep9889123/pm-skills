@@ -1,6 +1,6 @@
 {
   "name": "pm-prospect-discovery",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Model-agnostic enterprise pre-RFP discovery for validating prospect problems, use cases, solution paths, assumptions, dependencies, and proposal readiness.",
   "author": {
     "name": "sandeep9889123",

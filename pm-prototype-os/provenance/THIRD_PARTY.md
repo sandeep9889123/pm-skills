@@ -1,0 +1,2 @@
+# Provenance
+This plugin adds independently written guidance informed by: UI UX Pro Max (NextLevelBuilder, MIT), Impeccable (Paul Bakaus, Apache-2.0), and Taste Skill (Leonxlnx, MIT). No source code, runtime binaries, screenshots, fonts or assets from those projects are vendored here. External executables are optional and require separate inspection and approval. Existing PM Skills retains upstream attribution to phuryn/pm-skills (MIT). Refer to the canonical skill's provenance file for applicability limits and source URLs.

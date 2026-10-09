@@ -1,0 +1,2 @@
+# AI engineering teaching + design
+Relevant topics: why model vs rules; model selection; prompt and context; structured output; grounding; vector and keyword/hybrid retrieval; RAG; orchestration/tool calling; evals; cost/latency; prompt injection; privacy/tenant boundaries; tracing and observability; safe fallback; deployment. Each technical milestone: concept → why → chosen trade-off → how to test. Explain alternatives and consequences without inventing vendor prices.

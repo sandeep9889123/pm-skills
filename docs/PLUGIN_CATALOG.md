@@ -1,6 +1,6 @@
 # PM Skills Plugin Catalog
 
-This is the browseable inventory for the 12-plugin PM Skills repository.
+This is the browseable inventory for the 13-plugin PM Skills repository.
 
 For installation instructions, see [USING_WITH_LLMS.md](USING_WITH_LLMS.md).
 
@@ -278,4 +278,25 @@ Use pm-enterprise-transformation to evaluate this future capability. Separate re
 
 ```text
 Use pm-business-case to evaluate this initiative. Build the evidence ledger before the narrative, test market/customer/right-to-win proof, compare alternatives, model reconstructable economics, define a falsifiable PoC, and include the strongest rejection case.
+```
+
+## 13. pm-prototype-os
+
+**Use for:** gated product idea → credible prototype workflow, AI architecture, UX quality, engineering reviews, technical learning and evidence-based evolution.
+
+**Skills (6):**
+
+- `ai-product-prototype-os`
+- `prototype-ai-architecture`
+- `prototype-engineering`
+- `prototype-ux-quality`
+- `prototype-evaluation`
+- `prototype-technical-mentor`
+
+**Workflows (5):** `/start-prototype`, `/review-phase`, `/build-prototype`, `/evaluate-prototype`, `/handoff-prototype`
+
+**Starter prompt:**
+
+```text
+Use ai-product-prototype-os to scope an enterprise RAG copilot. Ask 5–10 relevant questions, challenge assumptions, and stop for discovery approval. No installs, paid services or implementation yet.
 ```

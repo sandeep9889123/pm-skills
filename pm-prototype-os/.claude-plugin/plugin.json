@@ -1,0 +1,23 @@
+{
+  "name": "pm-prototype-os",
+  "version": "2.2.0",
+  "description": "Standalone approval-controlled AI Product Prototype OS for PM discovery, AI architecture, UX, technical learning and tested prototypes.",
+  "author": {
+    "name": "Sandeep Kumar M",
+    "email": "211499229+sandeep9889123@users.noreply.github.com"
+  },
+  "keywords": [
+    "product-management",
+    "prototype",
+    "ai-copilot",
+    "rag",
+    "agents",
+    "ux",
+    "evaluation",
+    "claude",
+    "chatgpt",
+    "codex"
+  ],
+  "homepage": "https://github.com/sandeep9889123/pm-skills",
+  "license": "MIT"
+}

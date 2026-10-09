@@ -95,8 +95,8 @@ class TestRiskClassification(unittest.TestCase):
         workflow_counts = {
             tier: sum(len(v[tier]) for v in self.risk["workflows"].values()) for tier in TIERS
         }
-        self.assertEqual(skill_counts, {"P0": 65, "P1": 28, "P2": 3})
-        self.assertEqual(workflow_counts, {"P0": 45, "P1": 9, "P2": 1})
+        self.assertEqual(skill_counts, {"P0": 68, "P1": 31, "P2": 3})
+        self.assertEqual(workflow_counts, {"P0": 49, "P1": 10, "P2": 1})
 
 
 class TestKernelSchemas(unittest.TestCase):

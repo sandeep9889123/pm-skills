@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.1",
+  "project_id": "UNSET",
+  "phase": "NOT_STARTED",
+  "approval_status": "NOT_STARTED",
+  "authorized_next_action": null,
+  "approved_scope": null,
+  "approval_receipt": null,
+  "model_provider": "PORTABLE",
+  "incremental_cost_limit_inr": 0,
+  "archetypes": [],
+  "known_issues": [],
+  "test_results": [],
+  "updated_at": null
+}

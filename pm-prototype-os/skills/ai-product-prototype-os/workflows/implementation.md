@@ -1,0 +1,2 @@
+# Phase 5 Implementation
+Operate only within agreed stack, files, scope and zero-incremental cost. Functional critical-path controls, transparent mocks, input validation, simulated vs real integration markers, versioned evidence. Stop at unexpected paid dependency, private data, deployment, authentication or architecture change. Collect screenshots/tests only with available tools; no fabricated results.

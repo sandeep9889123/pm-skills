@@ -1,0 +1,2 @@
+# Portable project state
+The files PROJECT_STATE.json, CONTEXT_CAPSULE.md and DECISION_LEDGER.md travel between providers. Store approved scope and version, current phase, user decisions, claims/lineage refs, costs, evidence, unresolved risks, next permitted action and source freshness. When changing LLMs, ask user for the latest capsule and reconcile timestamp, approved phase and artifact hashes/versions. Never claim live synchronization, platform memory or approval access you lack. Conflicting capsules block new phase actions until resolved.

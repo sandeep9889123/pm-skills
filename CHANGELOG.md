@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+## v2.2.0 — 2026-10-10
+
+### AI Product Prototype OS V1.1
+
+- Introduced the 13th PM plugin `pm-prototype-os` with six provider-neutral prototype skills and five workflow commands.
+- Added eight product archetypes, 5–10 question intake, explicit phase approval, evidence-lineage support, ₹0 incremental-cost governance, portable context capsules, UX and AI architecture guidance.
+- Added Claude, Codex, ChatGPT and generic LLM adapters, 51 behavioral scenario definitions and 15 synthetic RAG cases; these are not claims of live model or RAG-app validation.
+- Updated marketplace catalogs, plugin inventories and the reliability risk classifications while preserving the existing PM Skills suite and upstream attribution.
+
 ### Observed-Evidence Benchmark Hardening Wave 10
 
 - Corrected deterministic hard-gate scoring so explicit refusals, rejected conclusions, and quoted bad examples are not misclassified as catastrophic violations merely because they repeat the prohibited phrase.

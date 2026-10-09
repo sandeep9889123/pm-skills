@@ -1,0 +1,2 @@
+# Prototype OS evaluation data
+51 behavioral scenario definitions and 15 synthetic RAG test definitions. Every scenario starts as NOT_RUN. No runtime model comparison and no RAG application are included. Run deterministic structure/contract checks in tests/test_prototype_os_*.py as part of the repo's normal unittest discover. Future live testing requires separate approval and verified zero incremental cost.

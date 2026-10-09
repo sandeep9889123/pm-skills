@@ -1,0 +1,2 @@
+# RAG copilots
+Define question classes, corpus ownership, access/tenant filtering, update frequency, ingestion/chunking, retrieval/reranking, grounding, citation behavior, abstention, answer quality and feedback. Separate simple text matching, retrieval+simulated reply and genuine retrieval-augmented generation. Evaluate document-level recall, answer groundedness, unsupported questions, contradictory sources, stale documents, irrelevant results and retrieved prompt-injection. Local LLM capability is hardware-conditional.

@@ -1,6 +1,6 @@
 # PM Skills: Reliability-First Enterprise AI Edition
 
-> **96 PM skills and 55 chained workflows across 12 plugins.** Built for Claude, ChatGPT, Codex, Agent Skills compatible tools, and any capable LLM that can read Markdown.
+> **102 PM skills and 60 chained workflows across 13 plugins.** Built for Claude, ChatGPT, Codex, Agent Skills compatible tools, and any capable LLM that can read Markdown.
 
 A model-agnostic PM operating system for repeatable, evidence-led work across discovery, prospect discovery, strategy, execution, market research, analytics, GTM, growth, AI shipping, enterprise transformation, and business-case formation.
 
@@ -26,6 +26,7 @@ The reliability loop is:
 | Audit an AI-built product before shipping | `pm-ai-shipping` |
 | Build reusable capabilities or sales transformation plays | `pm-enterprise-transformation` |
 | Build an evidence-first investment/business case | `pm-business-case` |
+| Build an approval-gated, evaluated AI or SaaS prototype | `pm-prototype-os` |
 
 ## How the repository works
 
@@ -92,6 +93,7 @@ claude plugin install pm-toolkit@pm-skills
 claude plugin install pm-ai-shipping@pm-skills
 claude plugin install pm-enterprise-transformation@pm-skills
 claude plugin install pm-business-case@pm-skills
+claude plugin install pm-prototype-os@pm-skills
 ```
 
 Claude can use skills automatically when relevant. To force a specific skill, reference the skill explicitly or use the namespaced skill form supported by your Claude surface. Workflows can be invoked with their slash command.
@@ -121,6 +123,7 @@ codex plugin add pm-toolkit@pm-skills
 codex plugin add pm-ai-shipping@pm-skills
 codex plugin add pm-enterprise-transformation@pm-skills
 codex plugin add pm-business-case@pm-skills
+codex plugin add pm-prototype-os@pm-skills
 ```
 
 Codex installs the skill bundles natively. Claude-style slash commands are not assumed to exist in Codex. Use a plain-language workflow prompt instead, for example:
@@ -236,6 +239,7 @@ See [Using PM Skills with Claude, ChatGPT, Codex, and other LLMs](docs/USING_WIT
 | [`pm-ai-shipping`](pm-ai-shipping/) | 2 | 5 | Intended-vs-implemented audits, tests, docs, security, performance, ship checks |
 | [`pm-enterprise-transformation`](pm-enterprise-transformation/) | 12 | 4 | Future capabilities, proof-to-GTM, sales transformation, tooling and automation |
 | [`pm-business-case`](pm-business-case/) | 6 | 5 | Evidence-led market/customer/economic proof and investment decisions |
+| [`pm-prototype-os`](pm-prototype-os/) | 6 | 5 | Model-neutral PM-to-prototype workflow, approval controls, AI engineering and UX quality |
 
 For every skill and workflow name, plus starter prompts, see [Full plugin and skill catalog](docs/PLUGIN_CATALOG.md).
 
@@ -347,3 +351,7 @@ This fork is maintained and extended by Sandeep Kumar M. Upstream attribution is
 ## License
 
 MIT, following the upstream project license.
+
+### AI Product Prototype OS
+
+Use `pm-prototype-os` (primary skill `ai-product-prototype-os`) for question-first and approval-gated product discovery, requirements, functional flows, AI architecture, prototype design, implementation planning, technical learning and evaluations. Six skills and five workflows cover enterprise SaaS, internal workflows, RAG copilots, agents, AI-native, mobile and consumer concepts. No incremental spend, no silent installations or deployments. The primary skill is standalone and its portable context capsule can be transferred between Claude, ChatGPT, Codex or other LLMs. See [plugin README](pm-prototype-os/README.md). The RAG pilot is an evaluation specification, NOT an implemented application.

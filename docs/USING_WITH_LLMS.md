@@ -357,3 +357,14 @@ Refresh or upgrade the marketplace for the relevant runtime, reinstall if requir
 ### I only need one skill
 
 Install or upload only that skill if your runtime supports standalone Skills. Otherwise installing the whole plugin is safer because related workflows may depend on multiple skills.
+
+## AI Product Prototype OS: independent use across LLMs
+
+Plugin `pm-prototype-os`; primary skill `ai-product-prototype-os`.
+
+- **Claude Code/Cowork:** from the existing marketplace, install `pm-prototype-os` and use `/pm-prototype-os:start-prototype` when supported. Or load the primary standalone skill.
+- **ChatGPT Skills:** where account supports native Skills, upload only the full folder `pm-prototype-os/skills/ai-product-prototype-os/`, keeping references. Otherwise copy `pm-prototype-os/adapters/chatgpt/PROJECT_INSTRUCTIONS.md` into project instructions and attach the main skill and latest context capsule.
+- **Codex:** use the Codex marketplace bundle or copy skills into the provider's Agent Skills location; do not assume Claude slash-command support.
+- **Other LLMs:** attach the main skill and the relevant canonical references and use `pm-prototype-os/adapters/portable-direct-chat/START_HERE.md`.
+
+The user must answer 5–10 questions at the start of each new task; no duplicate intake at a phase-approval reply. User approval controls meaningful phase changes; zero incremental spend is enforced. Provider/tool capability is conditional and unrun tests remain NOT_RUN. No automatic cross-model state synchronization.

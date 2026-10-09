@@ -1,0 +1,2 @@
+# AI agents
+Specify goal, observable success, bounded autonomy, available tools, authority boundaries, tool schemas, human checkpoints, rate/credit limits, trace/logging, retries and rollback/compensation. Evaluate erroneous action attempts, malicious tool responses, loop termination, permission violations and graceful degradation. Never execute side-effecting agent tools outside separately approved scope.
