@@ -1,0 +1,2 @@
+# Enterprise SaaS
+Ask about tenants, organizations, personas, roles and permissions, SSO needs, provisioning, domain entities, auditability, integration contracts and compliance boundaries. Diagram core task flow and RBAC/tenant boundaries. Test users with distinct entitlements, empty data, failed access, concurrent edits and representative dense tables. Clearly separate fake login from actual authentication.

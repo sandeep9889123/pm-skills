@@ -1,0 +1,2 @@
+# Taste Skill derived method
+Read the approved brief before styling. Tune design variance, motion and information density to context; use a coherent visual hierarchy, typography and restrained motion; audit existing app before redesign; preserve functionality. Primary Taste Skill is geared toward marketing, portfolios and redesigns rather than dashboard/data-table/multi-step UI. Do not impose visual novelty or animations on enterprise product workflows. Source https://github.com/Leonxlnx/taste-skill (MIT).

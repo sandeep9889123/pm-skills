@@ -1,0 +1,2 @@
+# Impeccable derived method
+Separate Persuade (marketing) from Operate (product UI), Read (docs) and Experience (portfolio). Critique first for functional clarity, task completion, a11y, responsiveness, content and edge cases; then polish. Optional deterministic detector and live browser iteration are separate executable dependencies and cannot be claimed as run unless actually used. Source https://github.com/pbakaus/impeccable (Apache-2.0).

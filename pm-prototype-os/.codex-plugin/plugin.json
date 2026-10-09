@@ -1,0 +1,36 @@
+{
+  "name": "pm-prototype-os",
+  "version": "2.1.0",
+  "description": "Standalone approval-controlled AI Product Prototype OS for PM discovery, AI architecture, UX, technical learning and tested prototypes.",
+  "author": {
+    "name": "Sandeep Kumar M",
+    "email": "211499229+sandeep9889123@users.noreply.github.com"
+  },
+  "keywords": [
+    "product-management",
+    "prototype",
+    "ai-copilot",
+    "rag",
+    "agents",
+    "ux",
+    "evaluation",
+    "claude",
+    "chatgpt",
+    "codex"
+  ],
+  "homepage": "https://github.com/sandeep9889123/pm-skills",
+  "license": "MIT",
+  "repository": "https://github.com/sandeep9889123/pm-skills",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "AI Product Prototype OS",
+    "shortDescription": "Approval-gated product-to-prototype workflow",
+    "longDescription": "Model-independent PM lifecycle and AI-native prototyping with questions, human approval, honest evaluation and zero incremental spend.",
+    "developerName": "Sandeep Kumar M",
+    "category": "Developer Tools",
+    "defaultPrompt": [
+      "Use ai-product-prototype-os to scope my product idea. Ask 5–10 questions and stop before the first approval gate.",
+      "Review this prototype against the approved PRD and explain the technical trade-offs."
+    ]
+  }
+}

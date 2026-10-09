@@ -1,0 +1,2 @@
+# Minimal standalone PM discipline
+Core: evidence-led problem, users/jobs, current alternatives, hypotheses, value, success indicators, scope/non-goals, stakeholder constraints, product evolution, and acceptance tests. Prefer validated discovery over feature wishlists. Apply simple decision matrices and pre-mortems for consequential choices. If upstream PM plugins available, invoke their specialized skill within authorized scope, without forcing installation.

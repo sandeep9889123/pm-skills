@@ -1,0 +1,2 @@
+# UI UX Pro Max derived method
+Search by product type, real user task, density, platform, data visualization, constraints and existing stack. Establish coherent design tokens (typography, contrast, scale, spacing, states). For dashboards prefer scanning, tables, filters and accessible charts over ornamental animations. External search.py design-system generator is OPTIONAL in coding hosts after specific approval; never an installation prerequisite. Sources: https://github.com/nextlevelbuilder/ui-ux-pro-max-skill (MIT).

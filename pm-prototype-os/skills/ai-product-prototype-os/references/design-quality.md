@@ -1,0 +1,2 @@
+# UX and functional minimum
+Product UX over decorative defaults. Real information hierarchy, navigable states, consistent components, content clarity, keyboard and focus, color contrast, responsive/adaptive behavior, loading/empty/error/success states, realistic sample data, meaningful feedback, accessibility. No dead controls in core demo flow. Verify critical paths, not visual screenshots alone.

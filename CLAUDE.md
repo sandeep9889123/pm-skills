@@ -4,7 +4,7 @@ Guidance for AI agents, including Claude Code, Cowork, Codex, and other capable 
 
 ## Project Overview
 
-**PM Skills: Reliability-First Enterprise AI Edition** (`sandeep9889123/pm-skills`) is a fork of `phuryn/pm-skills` with **12 independent plugins, 96 skills, and 55 commands/workflows**.
+**PM Skills: Reliability-First Enterprise AI Edition** (`sandeep9889123/pm-skills`) is a fork of `phuryn/pm-skills` with **13 independent plugins, 102 skills, and 60 commands/workflows**.
 
 The upstream project supplies the core PM framework foundation. This fork adds reliability contracts, adversarial scenarios, semantic behavior guards, enterprise transformation, reliability-first business-case automation, model-agnostic prospect discovery, behavioral evaluation, and cross-LLM packaging for Claude, Codex, ChatGPT Skills, and Agent Skills compatible runtimes.
 
@@ -13,6 +13,10 @@ Upstream creator/maintainer: Paweł Huryn, https://github.com/phuryn/pm-skills
 Fork maintainer: Sandeep Kumar M, https://github.com/sandeep9889123
 
 Preserve upstream MIT attribution. Do not relabel upstream skills as fork-original work.
+
+## AI Product Prototype OS plugin
+
+The new `pm-prototype-os` plugin contains six skills and five commands. The canonical primary skill is `ai-product-prototype-os`, independently operable without any of the other 12 plugins. Require 5–10 nonduplicate questions at every NEW task boundary, human approval before phase transitions, no incremental spending, and accurate mock/real/tested status. Preserve claim lineage with the existing reliability kernel. Claude/ChatGPT/Codex adapters are packaging only and may not override the canonical contract. No draft PR authorizes paid benchmarks or a RAG application build.
 
 ## Model-Agnostic Principle
 
@@ -67,7 +71,7 @@ pm-skills/
 
 User-facing installation guidance lives in `README.md` and `docs/USING_WITH_LLMS.md`. The complete inventory lives in `docs/PLUGIN_CATALOG.md`.
 
-### The 12 plugins
+### The 13 plugins
 
 | Plugin | Focus |
 |---|---|

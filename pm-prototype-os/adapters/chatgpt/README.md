@@ -1,0 +1,2 @@
+# ChatGPT adapter
+Native Skills support is workspace-dependent. For supported Skills environments package ONLY skills/ai-product-prototype-os as a single skill folder with its references, or use the direct-chat instruction below in a Project/direct chat with the skill material attached. No extra OpenAI plugin/MCP server is required. Always load the latest project capsule; platform memory is not automatic synchronization.
