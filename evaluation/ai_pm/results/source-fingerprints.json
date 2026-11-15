@@ -1,0 +1,30 @@
+{
+  "baseline": {
+    "pm-prototype-os/skills/prototype-evaluation/SKILL.md": "8d44e61755a70cb90d2a0870ac5de2598321a4ea45bb5c33f79f5308ea7e3281",
+    "pm-prototype-os/skills/prototype-ai-architecture/SKILL.md": "db6210a179fae981175f26341e5a8d847f33ef71ce654eede897d4ab26cda475"
+  },
+  "candidate-initial": {
+    "pm-prototype-os/skills/prototype-evaluation/SKILL.md": "a714c18c53ccb4bc0d367727dc3a7663721c86714c95f13f6bf3cbf431d6a9f9",
+    "pm-prototype-os/skills/prototype-evaluation/references/agent-evaluation.md": "e16799c2cac6d16a0e26286f88dfd366e9b101f11f156d00824a131156058712",
+    "pm-prototype-os/skills/prototype-evaluation/references/cost-and-routing.md": "e4d776f606ef221c712d0786d13bf0a3bbc5dd64d8616a3cd3be169bfc70f936",
+    "pm-prototype-os/skills/prototype-evaluation/references/comparison-and-regression.md": "37ed238c46d9959cdfee92649bf218b908f348245fd2cc6b1dded996ec587ffd",
+    "pm-prototype-os/skills/prototype-evaluation/references/data-readiness-and-datasets.md": "f17ed9177fc7bb8dc61d0736cd64221f4ee7210966e6de06032b4a6d916a73a3",
+    "pm-prototype-os/skills/prototype-evaluation/references/operations.md": "2f2b65ec18c986ef3aff90cfa12dd2a5c0c650c18c4cbd58c4155f9c299fbdc4",
+    "pm-prototype-os/skills/prototype-evaluation/references/rag-evaluation.md": "376fa2b692598323215b3133fc2a1411edb7ed77b138119d19380d4a0f0c9574",
+    "pm-prototype-os/skills/prototype-evaluation/references/source-ledger.md": "5809d425ed1edcdc456a0031e62885279435aa389737b27bf6a4f26a11e5e310",
+    "pm-prototype-os/skills/prototype-evaluation/references/measurement-records.md": "35482a1a0adef2e32ef254af48b76a7eaa0f8fbdee8b6f8340204854ac520f5c",
+    "pm-prototype-os/skills/prototype-evaluation/references/ai-ux-research.md": "d6911fb30d17853e0141b5ff63a7e24dbdf21dc2c2c6cce44c1c7bed31d1d9aa",
+    "pm-prototype-os/skills/prototype-ai-architecture/SKILL.md": "0adb61aa98734ab7984f3afbaf46e8dad4dfe71d4d92544119f7c439cd73d448",
+    "pm-prototype-os/skills/prototype-ai-architecture/references/architecture-worksheet.md": "8d9878a1b26b0c07155d802a1d35078ad6a6ec8ee20c46f6437325e66202ed34",
+    "pm-prototype-os/skills/eval-error-discovery/SKILL.md": "a36492a22583a354becdf8de54f5d4cf9a34746bcc4399b5790abfd2374aff05",
+    "pm-prototype-os/skills/eval-error-discovery/references/trace-review.md": "091e3a9fa889706902d0bd7430cb5b8d3cf256ca648937f06f9b7cb3f7ef4675",
+    "pm-prototype-os/skills/llm-judge-calibration/SKILL.md": "3f0188e2942e9702a6433b8cc85e47df0ffae0f6c651d154f70efd7eb9fddfed",
+    "pm-prototype-os/skills/llm-judge-calibration/references/calibration-worksheet.md": "693242b9d9895a57144dbaf5dae87597c913b9d1fb6eef16cb5c6358c390705b"
+  },
+  "candidate-corrected": {
+    "pm-prototype-os/skills/prototype-ai-architecture/SKILL.md": "0adb61aa98734ab7984f3afbaf46e8dad4dfe71d4d92544119f7c439cd73d448",
+    "pm-prototype-os/skills/prototype-ai-architecture/references/architecture-worksheet.md": "fccc3ec3cd13de431bc5c43e32b363a235e80c4e2c5d514cf4fbf9c7ac957ee2",
+    "pm-prototype-os/skills/eval-annotation-guidance/SKILL.md": "636898fdbb0230ef8c4d2a2e30db56d416ca60407115218f1feecb912f9ae37e",
+    "pm-prototype-os/skills/eval-annotation-guidance/references/labeling-worksheet.md": "2f61e00148b0b2ce69d8c6dbf415dcdaa8048ea31a3d2a3f3cf357a944326358"
+  }
+}

@@ -2,6 +2,7 @@
 import importlib.util
 import json
 import re
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -131,6 +132,19 @@ class TestTaskEconomics(unittest.TestCase):
 
 
 class TestAiPmPortability(unittest.TestCase):
+    def test_standalone_plugin_links_resolve_without_parent_repository(self):
+        with tempfile.TemporaryDirectory() as directory:
+            package = Path(directory) / "pm-prototype-os"
+            shutil.copytree(ROOT / "pm-prototype-os", package)
+            for p in package.rglob("*.md"):
+                for target in re.findall(r"\]\(([^\s)]+)\)", p.read_text()):
+                    if target.startswith(("https:", "http:", "#", "mailto:")):
+                        continue
+                    resolved = (p.parent / target.split("#")[0]).resolve()
+                    self.assertTrue(resolved.is_relative_to(package.resolve()),
+                                    f"{p.relative_to(package)} escapes package: {target}")
+                    self.assertTrue(resolved.exists(), f"missing installed-package target: {target}")
+
     def test_all_prototype_markdown_links_resolve(self):
         for p in (ROOT/"pm-prototype-os").rglob("*.md"):
             for target in re.findall(r"\]\(([^\s)]+)\)",p.read_text()):

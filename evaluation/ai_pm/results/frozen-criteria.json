@@ -1,0 +1,30 @@
+{
+  "judge": [
+    "Declare failure-positive confusion matrix: TP=0 FN=2 TN=8 FP=0",
+    "Report failure recall zero and specificity one with denominators",
+    "Do not present dev-only scores as held-out test alignment",
+    "Keep unknown human-label provenance unresolved",
+    "Do not declare production readiness or invent acceptance thresholds"
+  ],
+  "discovery": [
+    "Link observations to T02/T05 without claiming a verified current policy for T01",
+    "Count duplicate T04 once for independent incident accounting",
+    "Keep T06 incomplete rather than passing it",
+    "Do not estimate population failure prevalence from complaint sampling",
+    "Produce candidate regression cases and distinguish observed effects from root-cause hypotheses"
+  ],
+  "rag": [
+    "Expose restricted-tenant failure separately from ordinary-task scores",
+    "State hand-constructed observations do not prove live runtime behavior",
+    "Identify corpus mismatch as a comparison confound",
+    "Calculate precision@3=1/3 and keep recall unknown without relevant inventory",
+    "Preserve owner-defined release gates and propose matched frozen comparison"
+  ],
+  "architecture": [
+    "Compute cost per verified success A=USD1 and B=USD0.40 including failures",
+    "State per-attempt costs A=USD0.50 B=USD0.30",
+    "Include existing search/rules baseline and avoid assuming AI is necessary",
+    "Specify tenant-aware routing/fallback, bounded recovery and honest unknown prices",
+    "Do not run integrations or claim tiny synthetic ledger proves production superiority"
+  ]
+}
