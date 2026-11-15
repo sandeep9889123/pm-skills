@@ -1,7 +1,7 @@
 {
   "name": "pm-prototype-os",
-  "version": "2.2.0",
-  "description": "Standalone approval-controlled AI Product Prototype OS for PM discovery, AI architecture, UX, technical learning and tested prototypes.",
+  "version": "2.3.0",
+  "description": "Independent AI product and prototype workflow with application evals, annotation guidance, trace error discovery, judge calibration, architecture, UX and operational evidence.",
   "author": {
     "name": "Sandeep Kumar M",
     "email": "211499229+sandeep9889123@users.noreply.github.com"

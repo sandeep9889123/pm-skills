@@ -2,7 +2,7 @@
 name: ai-product-prototype-os
 description: "Model-neutral, approval-gated product management and prototype workflow for enterprise SaaS, internal workflows, AI agents, RAG copilots, AI-native products, mobile and consumer applications. Invoke for product ideas, technical discovery, PRDs, UX flows, architecture, implementation planning, prototype changes, evaluations, or technical learning. Always conduct 5–10 fresh relevant questions at a new task boundary and wait for explicit approval at phase boundaries."
 metadata:
-  version: 1.1.0
+  version: 1.2.0
   portable: true
   dependencies: none
 ---
@@ -75,17 +75,21 @@ Use portable Markdown/JSON artifacts. `PROJECT_STATE.json` carries the current p
 
 Each environment offers different execution support. When code editing, shell, browser testing, or native skills are unavailable, produce the best feasible *specification* or review, and label checks `NOT_RUN`. Never invent a tool, a test run, or a platform setting. Adapters are under `adapters/`; the canonical procedures remain here.
 
-## Skill index
+## Skill index and automatic task routing
 
-- `skills/product-discovery/SKILL.md`
-- `skills/requirements-and-flows/SKILL.md`
-- `skills/ai-solution-architecture/SKILL.md`
-- `skills/prototype-engineering/SKILL.md`
-- `skills/ux-quality/SKILL.md`
-- `skills/evaluation-and-qa/SKILL.md`
-- `skills/technical-mentor/SKILL.md`
+Within approved scope, load only the module matching the task. These links resolve in the complete plugin:
 
-Load only the needed module. `skills/prototype-os/SKILL.md` is an entrypoint explaining task routing.
+- Discovery and requirements: [discovery](workflows/discovery.md), [requirements](workflows/requirements.md) and [functional design](workflows/functional-design.md).
+- Architecture, mechanism selection and routing: [prototype-ai-architecture](../prototype-ai-architecture/SKILL.md).
+- Implementation: [prototype-engineering](../prototype-engineering/SKILL.md).
+- Interaction and trust: [prototype-ux-quality](../prototype-ux-quality/SKILL.md).
+- Application evals, datasets, RAG/agent quality, comparisons, costs and production learning: [prototype-evaluation](../prototype-evaluation/SKILL.md).
+- Human label definitions and disagreement: [eval-annotation-guidance](../eval-annotation-guidance/SKILL.md).
+- Trace failure discovery and regression candidates: [eval-error-discovery](../eval-error-discovery/SKILL.md).
+- Automated grader alignment: [llm-judge-calibration](../llm-judge-calibration/SKILL.md).
+- Technical learning: [prototype-technical-mentor](../prototype-technical-mentor/SKILL.md).
+
+For an individually uploaded copy without sibling modules, use the contained workflows, archetypes and evaluation template; disclose missing specialist depth rather than claiming a sibling was loaded. Request the relevant complete skill folder only when needed. A complete plugin has all nine skills and requires no other plugin. Loading a reference is not a new action authorization; preserve the existing question, phase and cost gates.
 
 ## Provenance
 

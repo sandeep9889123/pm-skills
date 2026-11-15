@@ -112,3 +112,7 @@ if __name__ == "__main__":
 **SQL:** INSERT statements, directly executable on relational databases
 
 **Python Script:** Executable generator for custom or large datasets
+
+## Synthetic AI evaluation data
+
+When generating eval cases, mark origin SYNTHETIC and preserve generating inputs, source/rubric versions, case/group IDs and intended failure family. Include passing, failing and unjudgeable examples for task-specific criteria; do not fabricate a human label, reviewer approval or production prevalence. Keep paraphrases and related documents in the same split. Separate development examples from final assessment, retain counterexamples and arrange domain review before treating labels as authority. A synthetic fixture passing its own expected result is not evidence of a live AI application.

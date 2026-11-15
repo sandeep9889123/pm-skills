@@ -146,10 +146,10 @@ class TestChangelogFormat(unittest.TestCase):
         for heading in headings:
             if heading.strip() == "## Unreleased":
                 continue
-            m = re.match(r"^## v(\d+\.\d+\.\d+) — \d{4}-\d{2}-\d{2}$", heading)
+            m = re.match(r"^## v(\d+\.\d+\.\d+) (?:\u2014|-) \d{4}-\d{2}-\d{2}$", heading)
             self.assertIsNotNone(
                 m,
-                f"malformed CHANGELOG heading {heading!r}: expected '## vX.Y.Z — YYYY-MM-DD'",
+                f"malformed CHANGELOG heading {heading!r}: expected a dated release heading with a hyphen or legacy separator",
             )
             versions.append(tuple(int(x) for x in m.group(1).split(".")))
 

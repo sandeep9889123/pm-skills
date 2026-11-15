@@ -110,3 +110,7 @@ Think step by step. Save as markdown. Flag any assumptions that need validation 
 
 - [Product Pricing Strategies 101](https://www.productcompass.pm/p/product-pricing-strategies-101)
 - [The AI Product Pricing Masterclass: OpenAI Product Lead on Why SaaS Pricing Fails in AI (and How to Fix It)](https://www.productcompass.pm/p/ai-product-pricing) (video course)
+
+## AI usage and quality sensitivity
+
+Compare value delivered with all-in cost per verified successful task, including failures, retries, retrieval/tools and human review. Keep currencies, current price sources and marginal versus fully loaded costs explicit. Test whether usage-based packaging rewards customer value or merely passes through compute cost. Stress task mix, context length, router/cache changes, review burden, quotas and quality floors. Keep a pricing hypothesis separate from observed willingness to pay; no precise price, margin or adoption forecast may be invented to complete a table.

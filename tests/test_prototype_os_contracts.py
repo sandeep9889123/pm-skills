@@ -6,7 +6,7 @@ PLUGIN=ROOT/"pm-prototype-os"
 CORE=PLUGIN/"skills"/"ai-product-prototype-os"
 class TestPrototypeOSContracts(unittest.TestCase):
  def test_skill_and_command_counts(self):
-  self.assertEqual(len([x for x in (PLUGIN/"skills").iterdir() if x.is_dir()]),6)
+  self.assertEqual(len([x for x in (PLUGIN/"skills").iterdir() if x.is_dir()]),9)
   self.assertEqual(len(list((PLUGIN/"commands").glob("*.md"))),5)
  def test_skill_self_contained(self):
   for name in ("governance","archetypes","references","workflows","templates","project-starter","provenance"):

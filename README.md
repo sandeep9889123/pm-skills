@@ -1,6 +1,6 @@
 # PM Skills: Reliability-First Enterprise AI Edition
 
-> **102 PM skills and 60 chained workflows across 13 plugins.** Built for Claude, ChatGPT, Codex, Agent Skills compatible tools, and any capable LLM that can read Markdown.
+> **105 PM skills and 60 chained workflows across 13 plugins.** Built for Claude, ChatGPT, Codex, Agent Skills compatible tools, and any capable LLM that can read Markdown.
 
 A model-agnostic PM operating system for repeatable, evidence-led work across discovery, prospect discovery, strategy, execution, market research, analytics, GTM, growth, AI shipping, enterprise transformation, and business-case formation.
 
@@ -239,7 +239,7 @@ See [Using PM Skills with Claude, ChatGPT, Codex, and other LLMs](docs/USING_WIT
 | [`pm-ai-shipping`](pm-ai-shipping/) | 2 | 5 | Intended-vs-implemented audits, tests, docs, security, performance, ship checks |
 | [`pm-enterprise-transformation`](pm-enterprise-transformation/) | 12 | 4 | Future capabilities, proof-to-GTM, sales transformation, tooling and automation |
 | [`pm-business-case`](pm-business-case/) | 6 | 5 | Evidence-led market/customer/economic proof and investment decisions |
-| [`pm-prototype-os`](pm-prototype-os/) | 6 | 5 | Model-neutral PM-to-prototype workflow, approval controls, AI engineering and UX quality |
+| [`pm-prototype-os`](pm-prototype-os/) | 9 | 5 | Model-neutral PM-to-prototype workflow, approval controls, AI engineering and UX quality |
 
 For every skill and workflow name, plus starter prompts, see [Full plugin and skill catalog](docs/PLUGIN_CATALOG.md).
 
@@ -354,4 +354,12 @@ MIT, following the upstream project license.
 
 ### AI Product Prototype OS
 
-Use `pm-prototype-os` (primary skill `ai-product-prototype-os`) for question-first and approval-gated product discovery, requirements, functional flows, AI architecture, prototype design, implementation planning, technical learning and evaluations. Six skills and five workflows cover enterprise SaaS, internal workflows, RAG copilots, agents, AI-native, mobile and consumer concepts. No incremental spend, no silent installations or deployments. The primary skill is standalone and its portable context capsule can be transferred between Claude, ChatGPT, Codex or other LLMs. See [plugin README](pm-prototype-os/README.md). The RAG pilot is an evaluation specification, NOT an implemented application.
+Use `pm-prototype-os` (primary skill `ai-product-prototype-os`) for question-first and approval-gated product discovery, requirements, functional flows, AI architecture, prototype design, implementation planning, technical learning and evaluations. Nine skills and five workflows cover enterprise SaaS, internal workflows, RAG copilots, agents, AI-native, mobile and consumer concepts. No incremental spend, no silent installations or deployments. The primary skill is standalone and its portable context capsule can be transferred between Claude, ChatGPT, Codex or other LLMs. See [plugin README](pm-prototype-os/README.md). The RAG pilot is an evaluation specification, NOT an implemented application.
+
+## AI application evaluation, v2.3.0
+
+The repository now contains **105 PM skills and 60 chained workflows across 13 plugins**. The pm-prototype-os plugin contains nine skills, including eval-annotation-guidance, eval-error-discovery and llm-judge-calibration. Its application-eval procedure covers datasets, RAG and agent outcomes, graders, comparisons, task economics, observability, drift, feedback, incidents and AI UX evidence.
+
+Use plain language, for example: “Use prototype-evaluation to design an eval suite for this assistant,” “Use eval-error-discovery on these traces,” or “Use llm-judge-calibration to assess these labels.” The same question/approval and zero-incremental-spend contracts apply. See [AI PM workflow guide](docs/AI_PM_WORKFLOWS.md) and [update instructions](docs/UPDATING.md).
+
+A repository update is available to the next use of current main. Previously installed plugins and manually uploaded skills may still be cached; verify the installed version before assuming an update loaded.

@@ -1,2 +1,5 @@
-# Router
-Read ../../SKILL.md from this skill's root, classify Explore/Build/Improve, perform question gate, load only necessary workflow and archetype references. User owns all decisions.
+# Prototype OS
+
+Route the current task without restarting an approved phase.
+
+In the complete plugin load [the procedure](../../SKILL.md). If unavailable, follow the canonical contained workflow and mark missing specialist coverage; do not fabricate a loaded module.

@@ -185,3 +185,7 @@ Use accessible language. Save substantial output as `PRD-[product-name].md`.
 
 - [How to Write a Product Requirements Document? The Best PRD Template.](https://www.productcompass.pm/p/prd-template)
 - [A Proven AI PRD Template by Miqdad Jaffer (Product Lead @ OpenAI)](https://www.productcompass.pm/p/ai-prd-template)
+
+## AI behavior and evaluation contract
+
+For an AI product, record supported and unsupported tasks, current policy/source authority, schema/output constraints, uncertainty/abstention, permissions and human escalation. Trace each behavior to a requirement and observable oracle; verify actual final state for actions. Specify model/prompt/tool/corpus/rubric versions, representative and adversarial cases, label provenance, development/test separation, critical gates and affected slices. Keep data rights, unknown APIs, costs and performance as evidence gaps until established. A proposed evaluation is NOT_RUN. Preserve owner approval before implementation or deployment.

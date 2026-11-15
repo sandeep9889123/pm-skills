@@ -276,3 +276,7 @@ Do not make a confident ROI, revenue, payback, margin, or pricing claim when:
 - one-time and recurring costs are mixed;
 - pilot economics ignore production conversion;
 - platform economics assume reuse that has not been demonstrated.
+
+## AI task economics
+
+Use verified task success as the denominator for cost per successful task. Include costs from failed attempts, retries, retrieval/embedding/reranking, model input/output, tools, review, support and allocated operating work without double-counting totals and spans. Report marginal versus fully loaded costs, attempted-task cost, currency, price/as-of source, usage assumptions and missing components. If no task succeeds, successful-task cost is undefined; unknown costs are not zero. Sensitize task mix, failures, review burden, routing/cache behavior and quality requirements. Published token price, a tiny synthetic ledger and prototype success do not establish production unit economics or commercial validation.

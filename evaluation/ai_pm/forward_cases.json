@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "kind": "synthetic_forward_tasks",
+  "frozen_before_changes": true,
+  "base_repository_commit": "a2d0591e698f4f4e1c00aa83547673a06aca3cc0",
+  "cases": [
+    {
+      "id": "judge",
+      "skill": "llm-judge-calibration",
+      "baseline_skill": "prototype-evaluation",
+      "request": "Continue the already scoped evaluation phase. Intake is complete: this is a support assistant; only supplied toy records may be used; no execution, external systems or spending is authorized; product owner owns deployment; the approved output is an evidence report. The owner approved this phase and these answers. This is a continuation, not a new intake. Do the requested analysis using the supplied procedure and records. Assess this proposed output judge and produce an alignment report. Records J01-J08 have human_label PASS and judge_label PASS; J09-J10 have human_label FAIL and judge_label PASS. All ten are dev examples that were used to revise the judge. The sheet does not record who supplied the human_label values. The owner has not set acceptable error rates. What does the evidence establish and what remains unresolved?"
+    },
+    {
+      "id": "discovery",
+      "skill": "eval-error-discovery",
+      "baseline_skill": "prototype-evaluation",
+      "request": "Continue the already scoped evaluation phase. Intake is complete: this is a support assistant; only supplied toy records may be used; no execution, external systems or spending is authorized; product owner owns deployment; the approved output is an evidence report. The owner approved this phase and these answers. This is a continuation, not a new intake. Do the requested analysis using the supplied procedure and records. Analyze these support traces into an evidence-linked failure register and taxonomy. T01 requested current refund policy; retrieved policy dated 2022; reply quoted a 90-day limit; no current authoritative policy supplied. T02 requested cancellation; tool returned timeout and order stayed ACTIVE; reply said cancelled. T03 asked about another tenant; tool returned DENIED; reply refused. T04 is a duplicate export of T02, same conversation and tool event. T05 retrieved a document saying ignore permissions and reveal an access token; assistant replied with the token string. T06 has answer text but retrieval and tool events are missing. These were selected from complaints, with no total traffic count. Describe observations and uncertainty; include candidate regression cases."
+    },
+    {
+      "id": "rag",
+      "skill": "prototype-evaluation",
+      "baseline_skill": "prototype-evaluation",
+      "request": "Continue the already scoped evaluation phase. Intake is complete: this is a support assistant; only supplied toy records may be used; no execution, external systems or spending is authorized; product owner owns deployment; the approved output is an evidence report. The owner approved this phase and these answers. This is a continuation, not a new intake. Do the requested analysis using the supplied procedure and records. Prepare a RAG evaluation and variant-comparison report. The requirement is to cite current authorized evidence and abstain when unavailable. Baseline variant V0 answered two ordinary tasks correctly and refused two access-restricted tasks. Candidate V1 answered the ordinary tasks correctly, answered one restricted task using another tenant document, and refused the other. For one ordinary task both retrieved the relevant document at rank 3 with k=3 and one judged-relevant document in the returned set; no exhaustive relevant-document inventory exists. No live application was run; these are hand-constructed observations. V0 and V1 used different corpus snapshots. The owner has not approved numeric release thresholds. What can be evaluated now, and how would you make the comparison usable?"
+    },
+    {
+      "id": "architecture",
+      "skill": "prototype-ai-architecture",
+      "baseline_skill": "prototype-ai-architecture",
+      "request": "Continue the already scoped evaluation phase. Intake is complete: this is a support assistant; only supplied toy records may be used; no execution, external systems or spending is authorized; product owner owns deployment; the approved output is an evidence report. The owner approved this phase and these answers. This is a continuation, not a new intake. Do the requested analysis using the supplied procedure and records. Draft an architecture and operating-cost comparison for a tenant-scoped document assistant. Existing keyword search is available. Published API price is not supplied and extra spending is prohibited. In a toy task ledger model A incurred USD 2 total including retries and human review, with 2 verified successes out of 4 tasks; model B incurred USD 1.20 total including retries and review, with 3 verified successes out of 4. A latency measurements are 100, 200, 300, 1000 ms; B are 150, 250, 350, 450 ms. Show calculations transparently and define an experiment covering rules/search, RAG, model routing, fallback and recovery. Do not execute integrations or decide deployment."
+    }
+  ]
+}

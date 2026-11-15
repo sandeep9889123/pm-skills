@@ -57,3 +57,9 @@ Make automation accountable. A workflow is not production-ready because it works
 `PRODUCTION READY | LIMITED PILOT | SHADOW ONLY | BLOCKED`.
 
 List blocking controls, evidence required, incident owner, and kill-switch procedure.
+
+## AI quality evidence and operational learning
+
+Correlate task/run/trace and parent/child span IDs across model, retrieval, tool, router, review and final verification. Record safe metadata, versions, authorization, retry/idempotency, measured latency and known costs; minimize sensitive payloads and define retention/access. Verify propagation with an authorized trace before relying on logs.
+
+Use representative review sampling plus separately reported targeted-risk cases. Define human-label authority, grader calibration, unjudgeable cases, drift investigation, feedback-to-regression, incident timeline and verified recovery. Preserve raw evidence and versions; distinguish model/prompt/corpus/tool defects from telemetry gaps. Do not infer population failure rates from complaints. A stronger average score cannot erase an unauthorized action, cross-tenant leak or false completion. Stop or escalate only within approved authority, with an accountable owner for unresolved controls.
