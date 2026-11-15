@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "inventory": {
     "plugins": 13,
-    "skills": 102,
+    "skills": 105,
     "workflows": 60
   },
   "tier_policy": {
@@ -226,7 +226,10 @@
       "P0": [
         "ai-product-prototype-os",
         "prototype-ai-architecture",
-        "prototype-evaluation"
+        "prototype-evaluation",
+        "eval-annotation-guidance",
+        "eval-error-discovery",
+        "llm-judge-calibration"
       ],
       "P1": [
         "prototype-engineering",

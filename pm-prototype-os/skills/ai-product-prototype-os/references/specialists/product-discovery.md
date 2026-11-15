@@ -1,2 +1,5 @@
-# product-discovery
-Start with governed 5–10 questions, user/problem/evidence, alternatives and missing validation. Do not create fake interviews.
+# Product discovery
+
+Frame user job, problem evidence, alternatives, assumptions and success measures.
+
+In the complete plugin load [the procedure](../../workflows/discovery.md). If unavailable, follow the canonical contained workflow and mark missing specialist coverage; do not fabricate a loaded module.

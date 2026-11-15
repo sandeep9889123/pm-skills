@@ -1,8 +1,8 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "pm-skills",
-  "version": "2.2.0",
-  "description": "Reliability-first PM operating system with 102 domain-specific skills and 60 chained workflows across 13 PM plugins. Includes model-agnostic prospect discovery, evidence-first business cases, enterprise transformation, GTM, market intelligence, automation, analytics, growth, and AI shipping.",
+  "version": "2.3.0",
+  "description": "Reliability-first PM operating system with 105 domain-specific skills and 60 chained workflows across 13 PM plugins. Includes model-agnostic prospect discovery, evidence-first business cases, enterprise transformation, GTM, market intelligence, automation, analytics, growth, and AI shipping.",
   "owner": {
     "name": "Sandeep Kumar M",
     "email": "211499229+sandeep9889123@users.noreply.github.com",
@@ -314,7 +314,7 @@
     {
       "name": "pm-prototype-os",
       "displayName": "AI Product Prototype OS",
-      "description": "Standalone approval-gated product-to-prototype orchestration across AI, SaaS, mobile and consumer products.",
+      "description": "Nine portable AI product skills: discovery-to-prototype, architecture, UX, application evals, annotation guidance, trace failure discovery and LLM judge calibration.",
       "source": {
         "source": "git-subdir",
         "url": "https://github.com/sandeep9889123/pm-skills.git",

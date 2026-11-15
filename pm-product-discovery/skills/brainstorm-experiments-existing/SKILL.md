@@ -79,3 +79,7 @@ Recommend the **single best next experiment** based on information value / effor
 - [Testing Product Ideas: The Ultimate Validation Experiments Library](https://www.productcompass.pm/p/the-ultimate-experiments-library)
 - [Assumption Prioritization Canvas: How to Identify And Test The Right Assumptions](https://www.productcompass.pm/p/assumption-prioritization-canvas)
 - [What Is Product Discovery? The Ultimate Guide Step-by-Step](https://www.productcompass.pm/p/what-exactly-is-product-discovery)
+
+## Controlled AI comparisons
+
+Freeze matched tasks/groups, source/corpus snapshots, prompts/models, tools/permissions, graders and trial budgets. Isolate prompt, retrieval, model and routing changes or disclose confounding. Keep rubric development apart from untouched test evidence. Report critical and slice failures, unjudgeable outcomes, independent task denominators and repeated-run variation alongside full task cost and elapsed latency. Synthetic examples support exploratory coverage, not production prevalence or causal superiority. Link confirmed feedback failures to versioned regression cases before claiming a fix.

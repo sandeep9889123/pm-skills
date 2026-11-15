@@ -205,3 +205,7 @@ If any answer is no, revise before delivery.
 
 - [User Interviews: The Ultimate Guide to Research Interviews](https://www.productcompass.pm/p/interviewing-customers-the-ultimate)
 - [Continuous Product Discovery Masterclass (CPDM)](https://www.productcompass.pm/p/cpdm) (video course)
+
+## AI interaction evidence
+
+For AI product research separate reported trust from observed task completion, error detection, verification effort, correction and recovery. Keep participant selection, task/variant and real/mock status attached to observations. Link permitted session evidence to product hypotheses or traces without upgrading preference into willingness to pay, adoption or causal impact. Preserve negative cases and uncertainty; an articulate participant or fluent model answer is not evidence of correctness.

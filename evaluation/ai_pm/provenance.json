@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0",
+  "date": "2026-11-15",
+  "remote_base_commit": "a2d0591e698f4f4e1c00aa83547673a06aca3cc0",
+  "remote_base_tree": "ff6e49d7dd2861b09d719fff70a6f005f15ceada",
+  "local_baseline_commit": "fab8975125c41489b840fcaf89cdce3ab3d6e8b9",
+  "baseline_integrity": "identical full Git tree, 348 files",
+  "case_definition_sha256": "2265ea376025c0a442627ed10b08c14a01c131ac47c332faad71b66537e66dd9",
+  "capture_kind": "fresh-agent task artifact; no raw provider API response",
+  "provider_model_identifier": "not exposed by host; inherited host model configuration",
+  "tool_profile": "read named procedure and directly linked local resources; write only the task artifact",
+  "repetitions": "one completed output per task and procedure version; exploratory",
+  "interruptions": "Two initial candidate sessions were interrupted before saving complete outputs; replacement runs use fresh sessions.",
+  "author_case_awareness": "task definitions frozen before procedure edits; author knew the synthetic scenarios",
+  "limits": [
+    "Not a Claude-native execution test",
+    "Not a complete Wave 7 benchmark",
+    "Not a production AI application test",
+    "No paid model API calls or service integrations used"
+  ],
+  "initial_candidate_remote_commit": "edc5d8b0175cd5305a96557137be7c04b744751e",
+  "completed_artifacts": 10,
+  "comparative_tasks": 4,
+  "additional_checks": [
+    "architecture rerun after correcting task-versus-attempt example",
+    "annotation transfer case authored after procedure freeze"
+  ],
+  "scoring": "separate fresh-context model review with source-version labels masked; semantic equivalents accepted",
+  "score_limits": "same host model family; author knew scenarios; no provider-level traces or human evaluation; one completed output per condition",
+  "blind_grading_clarification": "Before root read scores, reviewer was told to accept equivalent explicitly stated label conventions."
+}

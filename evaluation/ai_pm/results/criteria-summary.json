@@ -1,0 +1,115 @@
+{
+  "kind": "exploratory checklist observations, not a quality score",
+  "samples": [
+    {
+      "sample_id": "sample-01",
+      "case": "architecture",
+      "version": "candidate",
+      "raw_file": "raw/candidate-architecture.md",
+      "criteria_met": 5,
+      "criteria_not_met": 0,
+      "criteria_uncertain": 0,
+      "criteria_total": 5,
+      "issues": []
+    },
+    {
+      "sample_id": "sample-02",
+      "case": "rag",
+      "version": "base",
+      "raw_file": "raw/base-rag.md",
+      "criteria_met": 5,
+      "criteria_not_met": 0,
+      "criteria_uncertain": 0,
+      "criteria_total": 5,
+      "issues": []
+    },
+    {
+      "sample_id": "sample-03",
+      "case": "discovery",
+      "version": "candidate",
+      "raw_file": "raw/candidate-discovery.md",
+      "criteria_met": 5,
+      "criteria_not_met": 0,
+      "criteria_uncertain": 0,
+      "criteria_total": 5,
+      "issues": []
+    },
+    {
+      "sample_id": "sample-04",
+      "case": "discovery",
+      "version": "base",
+      "raw_file": "raw/base-discovery.md",
+      "criteria_met": 5,
+      "criteria_not_met": 0,
+      "criteria_uncertain": 0,
+      "criteria_total": 5,
+      "issues": []
+    },
+    {
+      "sample_id": "sample-05",
+      "case": "judge",
+      "version": "candidate",
+      "raw_file": "raw/candidate-judge.md",
+      "criteria_met": 5,
+      "criteria_not_met": 0,
+      "criteria_uncertain": 0,
+      "criteria_total": 5,
+      "issues": []
+    },
+    {
+      "sample_id": "sample-06",
+      "case": "judge",
+      "version": "base",
+      "raw_file": "raw/base-judge.md",
+      "criteria_met": 5,
+      "criteria_not_met": 0,
+      "criteria_uncertain": 0,
+      "criteria_total": 5,
+      "issues": []
+    },
+    {
+      "sample_id": "sample-07",
+      "case": "rag",
+      "version": "candidate",
+      "raw_file": "raw/candidate-rag.md",
+      "criteria_met": 5,
+      "criteria_not_met": 0,
+      "criteria_uncertain": 0,
+      "criteria_total": 5,
+      "issues": []
+    },
+    {
+      "sample_id": "sample-08",
+      "case": "architecture",
+      "version": "base",
+      "raw_file": "raw/base-architecture.md",
+      "criteria_met": 5,
+      "criteria_not_met": 0,
+      "criteria_uncertain": 0,
+      "criteria_total": 5,
+      "issues": []
+    },
+    {
+      "sample_id": "sample-09",
+      "case": "architecture",
+      "version": "candidate-corrected",
+      "raw_file": "raw/candidate-architecture-corrected.md",
+      "criteria_met": 5,
+      "criteria_not_met": 0,
+      "criteria_uncertain": 0,
+      "criteria_total": 5,
+      "issues": []
+    },
+    {
+      "sample_id": "sample-10",
+      "case": "annotation-transfer",
+      "version": "candidate",
+      "raw_file": "raw/annotation-transfer.md",
+      "criteria_met": 5,
+      "criteria_not_met": 0,
+      "criteria_uncertain": 0,
+      "criteria_total": 5,
+      "issues": []
+    }
+  ]
+}

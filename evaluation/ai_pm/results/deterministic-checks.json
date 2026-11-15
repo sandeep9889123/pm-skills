@@ -1,0 +1,40 @@
+[
+  {
+    "check": "plugin-validator",
+    "command": [
+      "python3",
+      "validate_plugins.py"
+    ],
+    "exit_code": 0,
+    "log": "plugin-validator.log",
+    "sha256": "8c35256d46fa351b25a2f2bf971c6d0e9f17d70eeed7fe943caa7fc7fd69065d",
+    "normalization": "Trailing blank lines removed for storage; command output content otherwise retained."
+  },
+  {
+    "check": "benchmark-definition",
+    "command": [
+      "python3",
+      "evaluation/validate_benchmark.py"
+    ],
+    "exit_code": 0,
+    "log": "benchmark-definition.log",
+    "sha256": "b890feee2c2def7bb42896c6b894dcbae9fb421a00da42f93f7137c874fedf4a",
+    "normalization": "Trailing blank lines removed for storage; command output content otherwise retained."
+  },
+  {
+    "check": "unit-tests",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-v"
+    ],
+    "exit_code": 0,
+    "log": "unit-tests.log",
+    "sha256": "e8621a2539e9ffb53a6fa1c1542d600df266cadfd949b5b90a8bfbdb76f1ae8d",
+    "normalization": "Trailing blank lines removed for storage; command output content otherwise retained."
+  }
+]

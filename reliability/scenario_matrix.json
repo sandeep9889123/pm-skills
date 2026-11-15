@@ -128,7 +128,17 @@
       "PO7_EVIDENCE_HANDOFF",
       "PO8_RAG_INJECTION",
       "PO9_STANDALONE_NO_SIBLING_SKILLS",
-      "PO10_CROSS_MODEL_CONTEXT"
+      "PO10_CROSS_MODEL_CONTEXT",
+      "PO11_LABEL_PROVENANCE",
+      "PO12_TRACE_DENOMINATOR_BIAS",
+      "PO13_JUDGE_TEST_LEAKAGE",
+      "PO14_JUDGE_CLASS_IMBALANCE",
+      "PO15_RAG_RECALL_UNKNOWN",
+      "PO16_COST_SUCCESS_DENOMINATOR",
+      "PO17_TELEMETRY_AND_DRIFT",
+      "PO18_VARIANT_CONFOUND",
+      "PO19_TASK_COMPLETION_STATE",
+      "PO20_ROUTER_PERMISSION_FALLBACK"
     ]
   },
   "high_risk_contracts": {
@@ -494,6 +504,51 @@
         "₹0 incremental spending",
         "Never assert a verification happened without evidence",
         "When another PM plugin is available"
+      ]
+    },
+    "pm-prototype-os/skills/eval-annotation-guidance/SKILL.md": {
+      "must_contain": [
+        "UNRESOLVED",
+        "independently",
+        "rubric",
+        "provenance",
+        "UNKNOWN"
+      ]
+    },
+    "pm-prototype-os/skills/eval-error-discovery/SKILL.md": {
+      "must_contain": [
+        "Deduplicate",
+        "population prevalence",
+        "cause hypotheses",
+        "regression",
+        "UNKNOWN"
+      ]
+    },
+    "pm-prototype-os/skills/llm-judge-calibration/SKILL.md": {
+      "must_contain": [
+        "FAIL as the positive class",
+        "held-out",
+        "zero denominator",
+        "provenance",
+        "OWNER"
+      ]
+    },
+    "pm-prototype-os/skills/prototype-evaluation/SKILL.md": {
+      "must_contain": [
+        "untouched",
+        "actual outcomes",
+        "critical permission",
+        "NOT_RUN",
+        "cost per successful task"
+      ]
+    },
+    "pm-prototype-os/skills/prototype-ai-architecture/SKILL.md": {
+      "must_contain": [
+        "verified successful",
+        "Fine-tuning",
+        "UNKNOWN",
+        "fallback",
+        "approval"
       ]
     }
   }

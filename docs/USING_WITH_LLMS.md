@@ -368,3 +368,7 @@ Plugin `pm-prototype-os`; primary skill `ai-product-prototype-os`.
 - **Other LLMs:** attach the main skill and the relevant canonical references and use `pm-prototype-os/adapters/portable-direct-chat/START_HERE.md`.
 
 The user must answer 5–10 questions at the start of each new task; no duplicate intake at a phase-approval reply. User approval controls meaningful phase changes; zero incremental spend is enforced. Provider/tool capability is conditional and unrun tests remain NOT_RUN. No automatic cross-model state synchronization.
+
+## Updated repository and cached installations
+
+Release 2.3.0 adds three evaluation skills to pm-prototype-os and expands application-eval procedures. Read [update instructions](UPDATING.md) for marketplace/plugin refresh, copied or uploaded folders and version verification. Direct current-main access reads the new files; installed or manually uploaded snapshots may retain old contents. See [AI PM workflow map](AI_PM_WORKFLOWS.md) for task routing and evidence limits.

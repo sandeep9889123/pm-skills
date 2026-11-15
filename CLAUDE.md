@@ -4,7 +4,7 @@ Guidance for AI agents, including Claude Code, Cowork, Codex, and other capable 
 
 ## Project Overview
 
-**PM Skills: Reliability-First Enterprise AI Edition** (`sandeep9889123/pm-skills`) is a fork of `phuryn/pm-skills` with **13 independent plugins, 102 skills, and 60 commands/workflows**.
+**PM Skills: Reliability-First Enterprise AI Edition** (`sandeep9889123/pm-skills`) is a fork of `phuryn/pm-skills` with **13 independent plugins, 105 skills, and 60 commands/workflows**.
 
 The upstream project supplies the core PM framework foundation. This fork adds reliability contracts, adversarial scenarios, semantic behavior guards, enterprise transformation, reliability-first business-case automation, model-agnostic prospect discovery, behavioral evaluation, and cross-LLM packaging for Claude, Codex, ChatGPT Skills, and Agent Skills compatible runtimes.
 
@@ -16,7 +16,7 @@ Preserve upstream MIT attribution. Do not relabel upstream skills as fork-origin
 
 ## AI Product Prototype OS plugin
 
-The new `pm-prototype-os` plugin contains six skills and five commands. The canonical primary skill is `ai-product-prototype-os`, independently operable without any of the other 12 plugins. Require 5–10 nonduplicate questions at every NEW task boundary, human approval before phase transitions, no incremental spending, and accurate mock/real/tested status. Preserve claim lineage with the existing reliability kernel. Claude/ChatGPT/Codex adapters are packaging only and may not override the canonical contract. No draft PR authorizes paid benchmarks or a RAG application build.
+The new `pm-prototype-os` plugin contains nine skills and five commands. The canonical primary skill is `ai-product-prototype-os`, independently operable without any of the other 12 plugins. Require 5–10 nonduplicate questions at every NEW task boundary, human approval before phase transitions, no incremental spending, and accurate mock/real/tested status. Preserve claim lineage with the existing reliability kernel. Claude/ChatGPT/Codex adapters are packaging only and may not override the canonical contract. No draft PR authorizes paid benchmarks or a RAG application build.
 
 ## Model-Agnostic Principle
 
@@ -60,7 +60,7 @@ pm-skills/
 ├── evaluation/                      <- golden cases + captured-output scorer
 ├── docs/                            <- LLM usage guidance + quality/reliability standards
 ├── tests/                           <- structural + semantic + eval-harness tests
-└── pm-{name}/                       <- 12 plugin directories
+└── pm-{name}/                       <- 13 plugin directories
     ├── .claude-plugin/plugin.json   <- Claude plugin metadata
     ├── .codex-plugin/plugin.json    <- Codex plugin metadata; exposes ./skills/
     ├── skills/{skill}/SKILL.md      <- portable capability source
@@ -87,6 +87,7 @@ User-facing installation guidance lives in `README.md` and `docs/USING_WITH_LLMS
 | `pm-ai-shipping` | AI-built app reviewability, intended-vs-implemented, tests, security/performance |
 | `pm-enterprise-transformation` | Future capabilities, client proof to GTM, sales transformation, tooling/automation |
 | `pm-business-case` | Evidence-led business cases, proof gates, economics, falsification, investment decisions |
+| `pm-prototype-os` | AI product workflow, architecture, UX, application evals, annotation, error discovery and judge calibration |
 
 ## Key Design Rules
 
@@ -256,3 +257,7 @@ The behavioral harness makes quality measurable on defined cases. It does not pr
 - Generic correctness/reliability fixes that cleanly benefit upstream can be proposed to `phuryn/pm-skills`.
 - Enterprise transformation, Enterprise AI PM, opinionated evidence contracts, business-case reliability, prospect-discovery reliability, behavioral evaluation, and cross-LLM packaging can evolve independently in this fork.
 - Preserve neutral attribution and never imply upstream endorsement of fork-specific behavior.
+
+## AI PM evaluation routing, v2.3.0
+
+Use the matching pm-prototype-os procedure for approved AI PM tasks: prototype-evaluation for application evals and operating evidence; eval-annotation-guidance for labels/adjudication; eval-error-discovery for trace review; llm-judge-calibration for automated-grader alignment; prototype-ai-architecture for mechanisms, routing and task economics. Core procedures remain self-contained. Preserve the existing question, phase, spending and lineage contracts. The optional local arithmetic in evaluation/ai_pm has no provider calls. Do not silently equate its synthetic fixtures with measured application or Claude performance.

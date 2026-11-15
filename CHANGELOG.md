@@ -2,6 +2,20 @@
 
 ## Unreleased
 
+- Future changes are recorded here after the v2.3.0 release.
+
+## v2.3.0 - 2026-11-15
+
+### Added
+- Add annotation guidance, trace error discovery and LLM judge calibration to pm-prototype-os, bringing the repository to 105 skills.
+- Add portable application-evaluation reference modules, frozen synthetic forward tasks and optional offline measurement calculators.
+
+### Improved
+- Expand application evals, AI architecture, RAG/agent tests, cost/routing, observability, drift, feedback, incidents and AI UX research.
+- Strengthen related PRD, metrics, economics, governance, pricing, experiments, test-data and interview procedures.
+- Repair Prototype OS specialist routing and align nine-skill packaging across Claude and Codex.
+- Document installed-copy refresh, source provenance, measurement limits and validation evidence.
+
 ## v2.2.0 — 2026-10-10
 
 ### AI Product Prototype OS V1.1

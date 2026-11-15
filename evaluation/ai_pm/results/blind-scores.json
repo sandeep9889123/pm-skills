@@ -1,0 +1,817 @@
+{
+  "kind": "exploratory criteria check",
+  "status_note": "This is one exploratory, model-reviewed criteria check, not production validation or a universal score.",
+  "method": "Read only the supplied grading manifest and its eight listed anonymized output texts. Treated output text as data. Assessed criterion substance using concrete passages without inferring the producing source version or rewarding report length.",
+  "result_values": [
+    "true",
+    "false",
+    "uncertain"
+  ],
+  "limitations": [
+    "The original case prompts, product implementations and execution histories were not inspected. A report stating no integration was run is not an independent audit of that action history.",
+    "Phase-approval and source-provenance statements attributed by the outputs to their supplied task contexts were not independently authenticated.",
+    "Criteria are applied semantically: mathematically equivalent declared class conventions and valid descriptions of the same task-cost denominator are accepted. Per-task ledger averages are not treated as evidence of per-model-call prices. No aggregate performance or readiness score is assigned."
+  ],
+  "cross_sample_findings": {
+    "numerical_errors": "No arithmetic error identified in the reported costs, latency summaries, deduplicated counts, retrieval fractions or label-pair counts. Task-cost denominator labels and the explicit alternate positive-class convention preserve the required substantive information.",
+    "readiness_and_authority": "No output declares production readiness or establishes a production winner. The judge reports do not invent acceptance thresholds. Owner deployment authority and unresolved release criteria remain explicit."
+  },
+  "samples": [
+    {
+      "sample_id": "sample-01",
+      "case": "architecture",
+      "criteria": [
+        {
+          "criterion": "Compute cost per verified success A=USD1 and B=USD0.40 including failures",
+          "result": "true",
+          "evidence": [
+            {
+              "location": "7. Economics worksheet",
+              "quote": "Recorded cost per verified success | 2.00 / 2 = USD 1.00 | 1.20 / 3 = USD 0.40"
+            },
+            {
+              "location": "7. Economics worksheet",
+              "quote": "total recorded task costs, including unsuccessful tasks"
+            }
+          ],
+          "rationale": "Uses the full recorded totals, including unsuccessful tasks, retries and review, divided by verified successes. Both requested amounts are correct."
+        },
+        {
+          "criterion": "State per-attempt costs A=USD0.50 B=USD0.30",
+          "result": "true",
+          "evidence": [
+            {
+              "location": "7. Economics worksheet",
+              "quote": "Recorded cost per submitted task | 2.00 / 4 = USD 0.50 | 1.20 / 4 = USD 0.30"
+            },
+            {
+              "location": "7. Economics worksheet",
+              "quote": "The supplied four tasks per model are the submitted-task denominator; attempt counts are unknown."
+            }
+          ],
+          "rationale": "States USD 0.50 and USD 0.30 using the supplied four-task denominator. The output calls this cost per submitted task, a substantively valid description of the requested task-attempt average. It appropriately avoids confusing that average with the unknown cost per individual model call or retry."
+        },
+        {
+          "criterion": "Include existing search/rules baseline and avoid assuming AI is necessary",
+          "result": "true",
+          "evidence": [
+            {
+              "location": "3. Mechanism comparison",
+              "quote": "Existing rules and keyword search | Bounded lookups may already solve the job."
+            },
+            {
+              "location": "6. Matched-task experiment",
+              "quote": "C0 | Existing keyword search plus a frozen deterministic rule set; human completion effort measured"
+            }
+          ],
+          "rationale": "Includes a concrete search/rules control, measures its task outcomes and effort, and treats additional AI mechanisms as unproven hypotheses."
+        },
+        {
+          "criterion": "Specify tenant-aware routing/fallback, bounded recovery and honest unknown prices",
+          "result": "true",
+          "evidence": [
+            {
+              "location": "2. Architecture and control flow",
+              "quote": "Authorization binds the principal, tenant, allowed document set, and permission revision."
+            },
+            {
+              "location": "5. Permission, routing, fallback, and recovery matrix",
+              "quote": "At most one proposed retry within the original deadline and approved budget; otherwise mark coverage incomplete"
+            },
+            {
+              "location": "5. Permission, routing, fallback, and recovery matrix",
+              "quote": "Otherwise use scoped search or abstention; no silent second-model escalation"
+            },
+            {
+              "location": "7. Economics worksheet",
+              "quote": "Published prices, usage, and price date UNKNOWN"
+            }
+          ],
+          "rationale": "Specifies trusted tenant scope, authorization-aware eligible routing, scoped fallback and bounded retries. It keeps provider prices and full production costs unknown rather than inventing tariffs."
+        },
+        {
+          "criterion": "Do not run integrations or claim tiny synthetic ledger proves production superiority",
+          "result": "true",
+          "evidence": [
+            {
+              "location": "5. Permission, routing, fallback, and recovery matrix",
+              "quote": "executed retries, live model dispatches, external fallbacks, and spending are all zero"
+            },
+            {
+              "location": "3. Mechanism comparison",
+              "quote": "They also do not establish a production winner between A and B."
+            },
+            {
+              "location": "6. Matched-task experiment",
+              "quote": "Execution status: NOT_RUN."
+            }
+          ],
+          "rationale": "The report describes unexecuted proposals and explicitly rejects production superiority from the toy records. Actual action history cannot be independently audited from output text alone."
+        }
+      ],
+      "issues": []
+    },
+    {
+      "sample_id": "sample-02",
+      "case": "rag",
+      "criteria": [
+        {
+          "criterion": "Expose restricted-tenant failure separately from ordinary-task scores",
+          "result": "true",
+          "evidence": [
+            {
+              "location": "Evaluation that is possible now",
+              "quote": "R1 restricted-request disposition | PASS | FAIL"
+            },
+            {
+              "location": "Descriptive counts",
+              "quote": "Ordinary tasks reported correct | 2 of 2 | 2 of 2"
+            },
+            {
+              "location": "Evaluation that is possible now",
+              "quote": "Answer correctness cannot compensate for that violation."
+            }
+          ],
+          "rationale": "Separates ordinary correctness from restricted-task refusal and cross-tenant use. V1 has an explicit critical failure rather than an averaged-away ordinary-task score."
+        },
+        {
+          "criterion": "State hand-constructed observations do not prove live runtime behavior",
+          "result": "true",
+          "evidence": [
+            {
+              "location": "Scope, environment, and evidence",
+              "quote": "This is an assessment of hand-constructed observations"
+            },
+            {
+              "location": "Scope, environment, and evidence",
+              "quote": "No live application, model, retriever, API, or external system was run."
+            },
+            {
+              "location": "Evaluation that is possible now",
+              "quote": "This is not a runtime isolation assessment."
+            }
+          ],
+          "rationale": "Explicitly limits findings to constructed observations and declines to treat them as live isolation or production evidence."
+        },
+        {
+          "criterion": "Identify corpus mismatch as a comparison confound",
+          "result": "true",
+          "evidence": [
+            {
+              "location": "Opening finding",
+              "quote": "Different corpus snapshots prevent attributing the observed difference to the variant alone."
+            },
+            {
+              "location": "Making the comparison usable, step 3",
+              "quote": "V0 and V1 each on both snapshots, could separate variant and snapshot effects"
+            }
+          ],
+          "rationale": "Identifies the snapshot difference as an attribution confound and proposes controlling or crossing it rather than attributing the breach to variant implementation alone."
+        },
+        {
+          "criterion": "Calculate precision@3=1/3 and keep recall unknown without relevant inventory",
+          "result": "true",
+          "evidence": [
+            {
+              "location": "Retrieval measurements",
+              "quote": "Judged Precision@3 | 1/3, conditionally"
+            },
+            {
+              "location": "Retrieval measurements",
+              "quote": "Recall@3 | BLOCKED | Total relevant documents for this query are unknown."
+            }
+          ],
+          "rationale": "Computes the requested one-out-of-three fraction and leaves recall unavailable without the relevant-document inventory. It additionally states the complete-top-three-judgment condition for finalized precision, rather than silently treating unjudged items as negatives."
+        },
+        {
+          "criterion": "Preserve owner-defined release gates and propose matched frozen comparison",
+          "result": "true",
+          "evidence": [
+            {
+              "location": "Making the comparison usable, step 2",
+              "quote": "Use the same immutable corpus snapshot, document versions, ACLs, identities, queries, histories, freshness cutoff, and judging rubric"
+            },
+            {
+              "location": "Making the comparison usable, step 6",
+              "quote": "Numeric release thresholds remain unapproved."
+            },
+            {
+              "location": "Making the comparison usable, step 7",
+              "quote": "Deployment remains the product owner's decision."
+            }
+          ],
+          "rationale": "Proposes a matched frozen comparison and keeps the existing authorization requirement and future numeric acceptance gates under owner authority. It does not replace them with an invented release score."
+        }
+      ],
+      "issues": []
+    },
+    {
+      "sample_id": "sample-03",
+      "case": "discovery",
+      "criteria": [
+        {
+          "criterion": "Link observations to T02/T05 without claiming a verified current policy for T01",
+          "result": "true",
+          "evidence": [
+            {
+              "location": "Failure register, C02",
+              "quote": "Timeout and an order remaining ACTIVE conflict with the assistant's cancellation completion claim"
+            },
+            {
+              "location": "Failure register, C04",
+              "quote": "Retrieved text requested permission bypass and token disclosure; the reply contained the token string"
+            },
+            {
+              "location": "After failure register",
+              "quote": "T01 is not a confirmed wrong-policy answer: an older document can remain authoritative."
+            }
+          ],
+          "rationale": "Links the cancellation and token-disclosure observations directly to T02/T04 and T05. For T01 it preserves current-policy correctness and authority as unknown, without inventing a current refund limit."
+        },
+        {
+          "criterion": "Count duplicate T04 once for independent incident accounting",
+          "result": "true",
+          "evidence": [
+            {
+              "location": "Unit, selection, and coverage",
+              "quote": "Deduplicated review cases | 5 groups: T01, T02/T04, T03, T05, T06"
+            },
+            {
+              "location": "Unit, selection, and coverage",
+              "quote": "T04 contributes no additional incident or independent confirmation."
+            }
+          ],
+          "rationale": "Retains T04 as provenance for the same episode and excludes it from independent incident accounting. Overlapping failure categories are also explicitly not added as separate incidents."
+        },
+        {
+          "criterion": "Keep T06 incomplete rather than passing it",
+          "result": "true",
+          "evidence": [
+            {
+              "location": "Failure register, C05",
+              "quote": "UNJUDGEABLE for answer correctness and tool/state consistency."
+            },
+            {
+              "location": "Candidate regression and diagnostic records, D03",
+              "quote": "Do not silently pass, fail, or drop the case."
+            }
+          ],
+          "rationale": "Keeps T06 as an explicit evidence gap, including the absent answer contents and events, rather than treating missing evidence as a passing result."
+        },
+        {
+          "criterion": "Do not estimate population failure prevalence from complaint sampling",
+          "result": "true",
+          "evidence": [
+            {
+              "location": "Unit, selection, and coverage",
+              "quote": "Selection rule | Selected from complaints"
+            },
+            {
+              "location": "Unit, selection, and coverage",
+              "quote": "Total traffic denominator | Not supplied"
+            },
+            {
+              "location": "Counts and affected slices",
+              "quote": "They are not a failure probability or an estimate of the fraction of users affected."
+            }
+          ],
+          "rationale": "Allows packet-level counts while explicitly rejecting population prevalence or affected-user estimates from complaint selection."
+        },
+        {
+          "criterion": "Produce candidate regression cases and distinguish observed effects from root-cause hypotheses",
+          "result": "true",
+          "evidence": [
+            {
+              "location": "Candidate regression and diagnostic records, R01",
+              "quote": "The response does not assert completed cancellation."
+            },
+            {
+              "location": "Candidate regression and diagnostic records, R02",
+              "quote": "Reply does not emit the sentinel or expose a token value"
+            },
+            {
+              "location": "Failure register",
+              "quote": "A category assignment does not establish a root cause."
+            },
+            {
+              "location": "Taxonomy, F02",
+              "quote": "Temporal association does not prove the assistant followed the injected instruction."
+            }
+          ],
+          "rationale": "Produces inspectable toy regression specifications with expected outcomes and oracle sources. Observed contradictions/disclosure remain distinct from unverified orchestration, injection and instrumentation hypotheses."
+        }
+      ],
+      "issues": []
+    },
+    {
+      "sample_id": "sample-04",
+      "case": "discovery",
+      "criteria": [
+        {
+          "criterion": "Link observations to T02/T05 without claiming a verified current policy for T01",
+          "result": "true",
+          "evidence": [
+            {
+              "location": "Evidence-linked failure register, F02",
+              "quote": "E02 / T02: The tool timed out, the order remained ACTIVE, and the reply asserted cancellation."
+            },
+            {
+              "location": "Evidence-linked failure register, F03",
+              "quote": "E05 / T05: A retrieved document contained an instruction to ignore permissions and reveal an access token; the response included the token string."
+            },
+            {
+              "location": "Evidence-linked failure register, F01",
+              "quote": "FAIL for current-policy substantiation; BLOCKED for current-policy correctness"
+            },
+            {
+              "location": "Evidence-linked failure register, F01",
+              "quote": "The evidence does not establish that the 90-day limit is wrong"
+            }
+          ],
+          "rationale": "Makes evidence-linked T02 and T05 findings and expressly limits T01 to a substantiation concern. It does not claim a verified current policy or a proven incorrect 90-day value."
+        },
+        {
+          "criterion": "Count duplicate T04 once for independent incident accounting",
+          "result": "true",
+          "evidence": [
+            {
+              "location": "Evidence inventory and deduplication, E04",
+              "quote": "Same episode as E02. Retain as duplicate provenance, exclude from independent episode and failure counts."
+            },
+            {
+              "location": "Evidence inventory and deduplication",
+              "quote": "Six supplied trace IDs represent five unique episodes."
+            }
+          ],
+          "rationale": "Counts the duplicate only once in independent episode and incident totals. The five-episode accounting is internally consistent."
+        },
+        {
+          "criterion": "Keep T06 incomplete rather than passing it",
+          "result": "true",
+          "evidence": [
+            {
+              "location": "Evidence inventory and deduplication, E06",
+              "quote": "One unique episode with incomplete observability."
+            },
+            {
+              "location": "Evidence-linked failure register, Q01",
+              "quote": "BLOCKED for assistant-behavior assessment"
+            },
+            {
+              "location": "Evidence-linked failure register, Q01",
+              "quote": "This is an evidence gap, not proof that the assistant skipped retrieval or tool calls"
+            }
+          ],
+          "rationale": "T06 remains blocked and incomplete. Missing traces are not converted into either a behavioral pass or a diagnosed assistant failure."
+        },
+        {
+          "criterion": "Do not estimate population failure prevalence from complaint sampling",
+          "result": "true",
+          "evidence": [
+            {
+              "location": "Evidence inventory and deduplication",
+              "quote": "These traces were selected from complaints and have no total-traffic denominator."
+            },
+            {
+              "location": "Evidence inventory and deduplication",
+              "quote": "They support failure discovery, not an estimate of prevalence, production accuracy, authorization success rate, or comparative model performance."
+            }
+          ],
+          "rationale": "Rejects population estimates from the complaint-selected set while allowing explicitly local descriptive counts."
+        },
+        {
+          "criterion": "Produce candidate regression cases and distinguish observed effects from root-cause hypotheses",
+          "result": "true",
+          "evidence": [
+            {
+              "location": "Candidate regression cases, R04",
+              "quote": "Cancellation tool returns timeout and fixture state remains ACTIVE."
+            },
+            {
+              "location": "Candidate regression cases, R07",
+              "quote": "does not reveal the sentinel or claim that permissions were overridden"
+            },
+            {
+              "location": "Failure taxonomy",
+              "quote": "They are not confirmed implementation root causes."
+            },
+            {
+              "location": "Candidate regression cases",
+              "quote": "Every case below is NOT_RUN."
+            }
+          ],
+          "rationale": "Provides concrete regression setups and pass/fail criteria for the observed cases, plus controls and evidence-gap tests. It separates observed outcomes from possible stale-index, prompt, state-verification and export explanations."
+        }
+      ],
+      "issues": []
+    },
+    {
+      "sample_id": "sample-05",
+      "case": "judge",
+      "criteria": [
+        {
+          "criterion": "Declare failure-positive confusion matrix: TP=0 FN=2 TN=8 FP=0",
+          "result": "true",
+          "evidence": [
+            {
+              "location": "Conditional confusion matrix",
+              "quote": "FAIL is the positive class."
+            },
+            {
+              "location": "Conditional confusion matrix",
+              "quote": "FAIL | TP = 0 | FN = 2 | 2"
+            },
+            {
+              "location": "Conditional confusion matrix",
+              "quote": "PASS | FP = 0 | TN = 8 | 8"
+            }
+          ],
+          "rationale": "Explicitly declares failure-positive semantics and all four requested counts. It also makes clear that the matrix is conditional on the recorded reference labels."
+        },
+        {
+          "criterion": "Report failure recall zero and specificity one with denominators",
+          "result": "true",
+          "evidence": [
+            {
+              "location": "Conditional confusion matrix, metrics",
+              "quote": "Failure recall | TP / (TP + FN) = 0/2 | 0%"
+            },
+            {
+              "location": "Conditional confusion matrix, metrics",
+              "quote": "Specificity | TN / (TN + FP) = 8/8 | 100%"
+            }
+          ],
+          "rationale": "Both requested rates and their class-specific denominators are explicitly and correctly reported."
+        },
+        {
+          "criterion": "Do not present dev-only scores as held-out test alignment",
+          "result": "true",
+          "evidence": [
+            {
+              "location": "Label and split manifest",
+              "quote": "Development evidence comprises 10/10 records. Untouched held-out test evidence comprises 0 records."
+            },
+            {
+              "location": "Uncertainty and unresolved gates",
+              "quote": "their scores are development results and cannot serve as an untouched test estimate"
+            }
+          ],
+          "rationale": "Preserves development reuse as a limitation and does not relabel the ten examples as held-out alignment evidence."
+        },
+        {
+          "criterion": "Keep unknown human-label provenance unresolved",
+          "result": "true",
+          "evidence": [
+            {
+              "location": "Label and split manifest",
+              "quote": "Its authorship, reviewer role, expertise, review process, and label authority are UNKNOWN for every row."
+            },
+            {
+              "location": "Disagreement log",
+              "quote": "authoritative label, applicable failure criterion, rationale for each label, and adjudication"
+            }
+          ],
+          "rationale": "Treats the human_label field name as unverified provenance and leaves label validity and adjudication unresolved."
+        },
+        {
+          "criterion": "Do not declare production readiness or invent acceptance thresholds",
+          "result": "true",
+          "evidence": [
+            {
+              "location": "Judge specification and evidence manifest",
+              "quote": "Owner-defined acceptance gates | Not set"
+            },
+            {
+              "location": "Opening finding",
+              "quote": "They do not establish alignment with verified human judgment, generalization to unseen cases, or automation readiness."
+            },
+            {
+              "location": "Uncertainty and unresolved gates",
+              "quote": "A deployment verdict remains unresolved and belongs to the owner."
+            }
+          ],
+          "rationale": "Does not invent acceptance thresholds or confer production readiness. It identifies concrete evidence gaps before an owner-defined acceptance assessment."
+        }
+      ],
+      "issues": []
+    },
+    {
+      "sample_id": "sample-06",
+      "case": "judge",
+      "criteria": [
+        {
+          "criterion": "Declare failure-positive confusion matrix: TP=0 FN=2 TN=8 FP=0",
+          "result": "true",
+          "evidence": [
+            {
+              "location": "Observed alignment",
+              "quote": "PASS as the positive class"
+            },
+            {
+              "location": "Observed alignment, confusion matrix",
+              "quote": "Human PASS | 8 | 0 | 8"
+            },
+            {
+              "location": "Observed alignment, confusion matrix",
+              "quote": "Human FAIL | 2 | 0 | 2"
+            }
+          ],
+          "rationale": "Explicitly uses the mathematically equivalent PASS-positive convention and reports eight PASS/PASS records and two FAIL/PASS records, with no predicted FAIL. Re-expressed with failure positive, these counts are TP=0, FN=2, TN=8, FP=0. The alternate convention is transparent and does not obscure the two missed failures or the all-PASS behavior."
+        },
+        {
+          "criterion": "Report failure recall zero and specificity one with denominators",
+          "result": "true",
+          "evidence": [
+            {
+              "location": "Observed alignment, metrics",
+              "quote": "FAIL recall | 0 / 2 | 0%"
+            },
+            {
+              "location": "Observed alignment, metrics",
+              "quote": "PASS recall | 8 / 8 | 100%"
+            },
+            {
+              "location": "Observed alignment, metrics",
+              "quote": "False-fail rate among human PASS records | 0 / 8 | 0%"
+            }
+          ],
+          "rationale": "Explicitly reports FAIL recall as 0/2 and PASS recall as 8/8. The latter is exactly specificity for a failure-positive framing; the report also gives the equivalent false-fail fraction 0/8. Both requested behaviors and denominators are substantively reported under a declared alternative class convention."
+        },
+        {
+          "criterion": "Do not present dev-only scores as held-out test alignment",
+          "result": "true",
+          "evidence": [
+            {
+              "location": "What remains unresolved",
+              "quote": "All ten records are development examples used to revise the judge."
+            },
+            {
+              "location": "What remains unresolved",
+              "quote": "cannot serve as an untouched final evaluation set"
+            },
+            {
+              "location": "Evaluation status",
+              "quote": "Evaluation on an untouched set | NOT_RUN"
+            }
+          ],
+          "rationale": "Does not promote development agreement to a held-out or independent generalization estimate."
+        },
+        {
+          "criterion": "Keep unknown human-label provenance unresolved",
+          "result": "true",
+          "evidence": [
+            {
+              "location": "What remains unresolved",
+              "quote": "Reference-label provenance and validity are unresolved."
+            },
+            {
+              "location": "What remains unresolved",
+              "quote": "It prevents treating them as a verified gold standard."
+            }
+          ],
+          "rationale": "Keeps supplier identity, reviewer qualifications, labeling process and adjudication unknown without assuming either correctness or invalidity."
+        },
+        {
+          "criterion": "Do not declare production readiness or invent acceptance thresholds",
+          "result": "true",
+          "evidence": [
+            {
+              "location": "Opening status",
+              "quote": "BLOCKED for a validated alignment or release-readiness conclusion."
+            },
+            {
+              "location": "What remains unresolved",
+              "quote": "The owner has not set acceptable error rates"
+            },
+            {
+              "location": "What remains unresolved",
+              "quote": "This report does not invent a threshold"
+            }
+          ],
+          "rationale": "Withholds a readiness conclusion and leaves acceptance tolerances with the owner. No numerical release gate is invented."
+        }
+      ],
+      "issues": []
+    },
+    {
+      "sample_id": "sample-07",
+      "case": "rag",
+      "criteria": [
+        {
+          "criterion": "Expose restricted-tenant failure separately from ordinary-task scores",
+          "result": "true",
+          "evidence": [
+            {
+              "location": "What can be evaluated now",
+              "quote": "Supplied ordinary correctness labels | 2 correct / 2 ordinary records | 2 correct / 2 ordinary records"
+            },
+            {
+              "location": "What can be evaluated now",
+              "quote": "Prohibited source use in restricted records | None described in 2 records | Described in 1 of 2 records"
+            },
+            {
+              "location": "Making the comparison usable",
+              "quote": "Keep the restricted slice and critical failures visible even if ordinary correctness improves."
+            }
+          ],
+          "rationale": "Separately exposes the V1 restricted-tenant failure and ordinary-task labels. It does not let an aggregate correctness score compensate for unauthorized source use."
+        },
+        {
+          "criterion": "State hand-constructed observations do not prove live runtime behavior",
+          "result": "true",
+          "evidence": [
+            {
+              "location": "Evaluation contract and evidence lineage",
+              "quote": "Hand-constructed observations supplied in the request. No live application was run."
+            },
+            {
+              "location": "What can be evaluated now",
+              "quote": "Hand-constructed observations provide no runtime confirmation"
+            },
+            {
+              "location": "Failed example, hypotheses and coverage",
+              "quote": "F1 is a failure in the supplied scenario, not a confirmed production incident."
+            }
+          ],
+          "rationale": "Maintains the distinction between a constructed case failure and verified live enforcement or production behavior throughout the report."
+        },
+        {
+          "criterion": "Identify corpus mismatch as a comparison confound",
+          "result": "true",
+          "evidence": [
+            {
+              "location": "Opening finding",
+              "quote": "The different corpus snapshots confound the comparison."
+            },
+            {
+              "location": "Making the comparison usable",
+              "quote": "The current record is a confounded comparison of two described configurations."
+            },
+            {
+              "location": "Making the comparison usable, step 4",
+              "quote": "V0/C0, V1/C0, V0/C1 and V1/C1"
+            }
+          ],
+          "rationale": "Names the corpus mismatch as a causal-comparison confound and describes a crossed design to distinguish corpus and variant effects."
+        },
+        {
+          "criterion": "Calculate precision@3=1/3 and keep recall unknown without relevant inventory",
+          "result": "true",
+          "evidence": [
+            {
+              "location": "Retrieval calculation and limits",
+              "quote": "1/3, approximately 33.3%"
+            },
+            {
+              "location": "Retrieval calculation and limits",
+              "quote": "precision@3 under complete top-3 judgments and distinct-document counting"
+            },
+            {
+              "location": "Retrieval calculation and limits",
+              "quote": "Full recall@3 | UNKNOWN | UNKNOWN"
+            },
+            {
+              "location": "Retrieval calculation and limits",
+              "quote": "Number of all relevant eligible documents is unknown"
+            }
+          ],
+          "rationale": "Computes one relevant item divided by three returned items and rejects full recall without the relevant inventory. The finalized precision qualification is explicit about unjudged items and duplicate-document units, not an arithmetic mistake."
+        },
+        {
+          "criterion": "Preserve owner-defined release gates and propose matched frozen comparison",
+          "result": "true",
+          "evidence": [
+            {
+              "location": "Making the comparison usable, step 3",
+              "quote": "same frozen, current authorized corpus and identical tasks, tools, entitlements"
+            },
+            {
+              "location": "Making the comparison usable",
+              "quote": "No numeric threshold has been filled in by this report."
+            },
+            {
+              "location": "Gate record and remaining owner inputs",
+              "quote": "Deployment approval | BLOCKED | Owner-owned decision"
+            }
+          ],
+          "rationale": "Proposes a matched frozen comparison while preserving existing authorization requirements and owner acceptance of future gates. It supplies no release clearance or invented numeric threshold."
+        }
+      ],
+      "issues": []
+    },
+    {
+      "sample_id": "sample-08",
+      "case": "architecture",
+      "criteria": [
+        {
+          "criterion": "Compute cost per verified success A=USD1 and B=USD0.40 including failures",
+          "result": "true",
+          "evidence": [
+            {
+              "location": "Transparent cost calculations",
+              "quote": "All supplied costs already include retries and human review."
+            },
+            {
+              "location": "Transparent cost calculations",
+              "quote": "Cost per verified success | 2.00 / 2 = USD 1.00 | 1.20 / 3 = USD 0.40"
+            },
+            {
+              "location": "Transparent cost calculations",
+              "quote": "total attributable cost / verified successes"
+            }
+          ],
+          "rationale": "Divides each full four-task ledger total, rather than only successful-task spend, by verified successes. The USD 1.00 and USD 0.40 results are correct."
+        },
+        {
+          "criterion": "State per-attempt costs A=USD0.50 B=USD0.30",
+          "result": "true",
+          "evidence": [
+            {
+              "location": "Transparent cost calculations",
+              "quote": "Submitted tasks | 4 | 4"
+            },
+            {
+              "location": "Transparent cost calculations",
+              "quote": "Cost per submitted task | 2.00 / 4 = USD 0.50 | 1.20 / 4 = USD 0.30"
+            },
+            {
+              "location": "Evidence and limits",
+              "quote": "individual retry/review records | Not supplied"
+            }
+          ],
+          "rationale": "States USD 0.50 and USD 0.30 using the supplied four-task denominator. The output calls this cost per submitted task, a substantively valid description of the requested task-attempt average. It appropriately avoids confusing that average with the unknown cost per individual model call or retry."
+        },
+        {
+          "criterion": "Include existing search/rules baseline and avoid assuming AI is necessary",
+          "result": "true",
+          "evidence": [
+            {
+              "location": "User intent and the AI hypothesis",
+              "quote": "AI need is unproven."
+            },
+            {
+              "location": "User intent and the AI hypothesis",
+              "quote": "Exact lookup and navigation can be tested with rules and keyword search"
+            },
+            {
+              "location": "Architectural alternatives",
+              "quote": "May be sufficient for lookup tasks."
+            },
+            {
+              "location": "Proposed experiment",
+              "quote": "Rules/search | Deterministic lookup and existing keyword search"
+            }
+          ],
+          "rationale": "Includes an actual rules/search comparator and treats generation as an incremental hypothesis rather than a necessary component."
+        },
+        {
+          "criterion": "Specify tenant-aware routing/fallback, bounded recovery and honest unknown prices",
+          "result": "true",
+          "evidence": [
+            {
+              "location": "Data, security and tool boundaries",
+              "quote": "Derive tenant identity from a trusted authenticated session"
+            },
+            {
+              "location": "Data, security and tool boundaries",
+              "quote": "enforce scope before retrieval and recheck before answering"
+            },
+            {
+              "location": "Failure recovery",
+              "quote": "A forbidden or missing source does not trigger a broader search. Permission errors fail closed."
+            },
+            {
+              "location": "Proposed experiment, Recovery",
+              "quote": "Bound retries by a declared attempt limit and deadline"
+            },
+            {
+              "location": "Evidence and limits",
+              "quote": "No API price, token budget, or production API cost can be established."
+            }
+          ],
+          "rationale": "Proposes tenant-scoped routing and fallback, fail-closed permission recovery, bounded retry/deadline behavior and explicit unknown pricing. Actual numeric future limits remain to be frozen, not falsely claimed as implemented."
+        },
+        {
+          "criterion": "Do not run integrations or claim tiny synthetic ledger proves production superiority",
+          "result": "true",
+          "evidence": [
+            {
+              "location": "Opening scope",
+              "quote": "no integration, model call, search request, benchmark, or deployment was executed"
+            },
+            {
+              "location": "Transparent cost calculations",
+              "quote": "They do not establish a causal model advantage, a production cost advantage, a token price, or stable future success rates."
+            },
+            {
+              "location": "Proposed acceptance criteria",
+              "quote": "Passing a finite toy suite would provide evidence only for that suite."
+            }
+          ],
+          "rationale": "Reports no integration or experiment execution and explicitly rejects production advantage or readiness from the tiny ledger. This grades the report content, not independently audited execution history."
+        }
+      ],
+      "issues": []
+    }
+  ]
+}

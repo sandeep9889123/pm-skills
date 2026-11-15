@@ -1,0 +1,23 @@
+{
+  "sample-map.json": "cd48b233543dc3eec5f968617a8fb6f136f80ef54ce44cb32b2680d9a53f31a0",
+  "deterministic-checks.json": "02f4043add9dbf8c428cff50df1db31c5e5b1221df3ce1e6cc54d03663abda3b",
+  "frozen-criteria.json": "02aa67c19543219cfc4cb89263492b469f4fe3a9708d0b159a7c0f46742b4d1e",
+  "benchmark-definition.log": "b890feee2c2def7bb42896c6b894dcbae9fb421a00da42f93f7137c874fedf4a",
+  "unit-tests.log": "e8621a2539e9ffb53a6fa1c1542d600df266cadfd949b5b90a8bfbdb76f1ae8d",
+  "criteria-summary.json": "2f96a5001691ca4800cbe5075c84c550422fc869816694d841c69ca581dec188",
+  "plugin-validator.log": "8c35256d46fa351b25a2f2bf971c6d0e9f17d70eeed7fe943caa7fc7fd69065d",
+  "release-review-original.md": "7468c02085ed9eaad59fa02ddc93ca725540f360705d2c18ab41963b35ba4c79",
+  "additional-blind-scores.json": "227a1f5aa78fffd9414310cc40cf943887b9844bae630984c928a8c350a8b48b",
+  "blind-scores.json": "d6efbb2513e418ea8b2e32130545453364135ab3bca2467e78587e0a3e9a6caf",
+  "source-fingerprints.json": "43624c07a381d94baba95423d36ace1b854c039a57146616c448e7416030fa5a",
+  "raw/base-rag.md": "c9562c6de73a527c7c8c0025b79bc9ba0707e31d2069aacd1cb52d96956ef8f2",
+  "raw/annotation-transfer.md": "b05758fad35e9a81da0ebeb8eaee043a2e24f6596f766c45238c1956b1c106e5",
+  "raw/candidate-architecture.md": "41bdd3b2c8eba3e27d1664c85194ea14e4f2140f9c15947c7ae2c209cb707158",
+  "raw/base-architecture.md": "d1e5b76b8e792b64ad322090f090cbb400a679830e64bdb2f02268732ca02ec2",
+  "raw/candidate-architecture-corrected.md": "7225697bff515b62458be53085b675aa22e5014a06dd548352293300acbb6423",
+  "raw/base-discovery.md": "74cc9143dc65c3958940e14c897050cc8aa7f18d4e8a453481ef55185744e1d3",
+  "raw/candidate-rag.md": "dca7430682f4a7eb0a0079a80279d15946a82cc16a2b1c9354de81b20332dfe2",
+  "raw/candidate-discovery.md": "e8c57cc3afb27dfb0d0da2430e2561ea1b1b28fcb50caf52cd9a3cedaabc895b",
+  "raw/base-judge.md": "fa48767b5fe8156da354cb98f276745a68870151307ac02abede03cdc96f912c",
+  "raw/candidate-judge.md": "927a82320c78cc35561e861e5b83662d202016fe60fd0f7deaa42292443e7b0b"
+}

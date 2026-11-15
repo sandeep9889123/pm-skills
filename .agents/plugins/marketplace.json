@@ -184,7 +184,8 @@
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
-      "category": "Productivity"
+      "category": "Productivity",
+      "description": "AI product workflow and application evaluations with nine portable skills"
     }
   ]
 }

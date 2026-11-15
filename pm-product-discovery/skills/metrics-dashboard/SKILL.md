@@ -180,3 +180,7 @@ State what evidence would change the metric architecture.
 - [Funnel Analysis 101: How to Track and Optimize Your User Journey](https://www.productcompass.pm/p/funnel-analysis)
 - [Are You Tracking the Right Metrics?](https://www.productcompass.pm/p/are-you-tracking-the-right-metrics)
 - [Continuous Product Discovery Masterclass (CPDM)](https://www.productcompass.pm/p/cpdm) (video course)
+
+## AI application measurement
+
+For AI workflows distinguish attempted tasks, attempts/retries, verified successful tasks, grader coverage and human reviews. Define success from authorized outcome evidence, not a completion message. Include critical permission failures, answerable/unanswerable behavior, quality by task/language/tenant slice, all-in cost per successful task and measured end-to-end latency. Separate representative traffic metrics from stress-suite coverage and complaint-enriched samples. Keep unjudgeable cases and missing telemetry visible. Specify trace/run/version correlation, review sampling, drift investigation, alert basis, incident ownership and feedback-to-regression. A configured dashboard is not observed instrumentation evidence.

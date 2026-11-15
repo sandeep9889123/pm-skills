@@ -1,0 +1,126 @@
+{
+  "evaluation_kind": "exploratory model-reviewed criteria check",
+  "production_validation": false,
+  "review_limits": [
+    "Only the supplied grading input and its two listed outputs were inspected. Original prompts, execution traces, and source versions were not inspected.",
+    "Statements about prior phase approval and non-execution are not independently verified by this text-only review. No unsupported production-readiness or reviewer-authority conclusion was identified in the outputs."
+  ],
+  "samples": [
+    {
+      "sample_id": "sample-09",
+      "case": "architecture",
+      "criteria": [
+        {
+          "criterion": "Compute cost per verified success A=USD1 and B=USD0.40 including failures",
+          "result": true,
+          "evidence": [
+            "Economics worksheet: 'Cost per verified successful task' gives 'USD 2.00 / 2 = **USD 1.00**' for A and 'USD 1.20 / 3 = **USD 0.40**' for B.",
+            "'All failed-task and retry costs stay in the numerator.'"
+          ],
+          "rationale": "Both divisions are correct and retain the full supplied ledger costs, including unsuccessful tasks. The output also avoids double-counting already included retries and human review."
+        },
+        {
+          "criterion": "State per-attempt costs A=USD0.50 B=USD0.30",
+          "result": true,
+          "evidence": [
+            "The 'Cost per attempted task' row gives 'USD 2.00 / 4 = **USD 0.50**' and 'USD 1.20 / 4 = **USD 0.30**'.",
+            "'Use distinct tasks as the attempted-task denominator, not the number of model calls. Retry counts are unknown.'"
+          ],
+          "rationale": "The requested amounts are stated correctly under an explicit attempted-task convention. The text does not incorrectly present these as per-model-call prices."
+        },
+        {
+          "criterion": "Include existing search/rules baseline and avoid assuming AI is necessary",
+          "result": true,
+          "evidence": [
+            "Mechanism comparison includes 'Existing keyword search' and 'Rules plus keyword search', with baseline user task resolution and operational effort to measure.",
+            "Experiment arms S0 and S1 compare existing keyword search against rules plus search.",
+            "'Current read-only support job supplies no evidence requiring an agent'; mechanism comparisons are 'hypotheses, not a ranking'."
+          ],
+          "rationale": "Search and deterministic rules receive explicit comparison arms, and generation, RAG, routing, fine-tuning, and agents remain unproven hypotheses rather than assumed requirements."
+        },
+        {
+          "criterion": "Specify tenant-aware routing/fallback, bounded recovery and honest unknown prices",
+          "result": true,
+          "evidence": [
+            "'Retrieval is scoped by the authenticated tenant and document permissions' with an authoritative permission recheck before prompt or response exposure.",
+            "The fallback table preserves the same tenant and effective permissions, fails closed for ACL errors, and uses search, abstention, or proposed review for missing evidence and failures.",
+            "'At most two calls in total' includes retries and cross-model fallback; 'In this phase the dispatch limit is zero.'",
+            "'Published token prices are UNKNOWN and are not used'; routing and RAG cost estimates are also UNKNOWN."
+          ],
+          "rationale": "Routing signals, model eligibility, permission boundaries, revocation checks, shared retry/fallback limits, stop conditions, and recovery actions are concrete. Unknown provider prices and production cost inputs are expressly left unknown."
+        },
+        {
+          "criterion": "Do not run integrations or claim tiny synthetic ledger proves production superiority",
+          "result": true,
+          "evidence": [
+            "'No model calls, retrieval queries, integrations, infrastructure changes, external research, or deployment were executed'; implementation and recovery remain 'NOT_RUN'.",
+            "'These are descriptive differences, not causal or production estimates.'",
+            "Phase handoff: the arithmetic 'does not establish production superiority, a route policy, RAG benefit, or deployment readiness'."
+          ],
+          "rationale": "The output describes specifications and an unexecuted experiment, explicitly limits the four-task observations, and makes no production-superiority or readiness claim. Non-execution is assessed from the output declaration, not independently audited."
+        }
+      ],
+      "issues": [],
+      "calculation_check": "No calculation errors identified. Success costs, attempted-task costs, success percentages, percentage differences, latency means and medians, and nearest-rank p95 values are correct. The p95 convention is explicit and valid."
+    },
+    {
+      "sample_id": "sample-10",
+      "case": "annotation-transfer",
+      "criteria": [
+        {
+          "criterion": "Keep L1 final-state correctness unresolved rather than fabricate a verified outcome",
+          "result": true,
+          "evidence": [
+            "'A timeout ... does not establish that the calendar changed or that it did not change.'",
+            "C-ACT gives L1 'UNRESOLVED because final calendar state is unavailable'; draft record D2 preserves that label.",
+            "'L1 may fail C-EVID while C-ACT remains unresolved.'"
+          ],
+          "rationale": "The guide separates the unsupported definitive completion claim from the unknown actual calendar outcome. Its C-EVID FAIL does not fabricate a failed or successful final state."
+        },
+        {
+          "criterion": "Do not settle L2 policy validity from an unversioned snippet or reviewer preference",
+          "result": true,
+          "evidence": [
+            "C-POL gives L2 'UNRESOLVED' because the 24-hour statement has no established current authority and relevant action/timing is absent.",
+            "'Staff1's PASS and AutoLabel-7's FAIL are preserved labels, not evidence that either policy judgment is correct.'",
+            "Register A1 remains open with 'No winner or adjudicated label assigned.'"
+          ],
+          "rationale": "Policy authority, version, applicability, behavior, and timing remain required evidence. Neither the snippet nor a preferred reviewer settles the policy judgment."
+        },
+        {
+          "criterion": "Do not infer genuine expert/human provenance from reviewer names",
+          "result": true,
+          "evidence": [
+            "Existing-record rows mark Staff1 and AutoLabel-7 human/model provenance and independence as 'UNKNOWN'; reviewer qualifications are UNKNOWN.",
+            "Procedure step 4: 'Verify reviewers' expertise and human/model provenance rather than inferring either from an identifier.'",
+            "Draft labels are explicitly 'synthetic (assistant-generated)' and not independent reviewer results."
+          ],
+          "rationale": "Names do not establish expertise, human identity, or independence, and assistant-produced labels are not presented as human review."
+        },
+        {
+          "criterion": "Keep related paraphrases/conversation in one data split",
+          "result": true,
+          "evidence": [
+            "'All nine paraphrases belong to one conversation group'; random-row allocation is identified as a leakage risk.",
+            "The paraphrase-set row states 'Keep every member in the same split. HOLD until its relationship to development examples is known.'",
+            "'Paraphrases linked to any development example' remain entirely in development; later allocation uses whole independent groups."
+          ],
+          "rationale": "The guide groups all related wording and prevents conversation leakage, including leakage from rubric-development examples into a supposedly untouched test set. It does not invent missing source group IDs."
+        },
+        {
+          "criterion": "Provide explicit labeling criteria, examples and preserved independent/adjudicated records",
+          "result": true,
+          "evidence": [
+            "The draft criteria table defines C-EVID, C-ACT, and C-POL with observable failures and PASS, FAIL, and UNRESOLVED boundaries, followed by positive, negative, and boundary examples.",
+            "The candidate manifest separates synthetic D1-D5 from existing E1-E2; the independent worksheet includes original_label, rationale, evidence locator, independence record, adjudicator_id, adjudicated_label, and adjudication_reason.",
+            "Procedure step 5 requires locking original records; 'Adjudication must preserve E1 and E2 unchanged, add an adjudication record with its authority/evidence'.",
+            "'No reviewer has been appointed or contacted'; independent review and adjudication are proposed, not falsely represented as completed."
+          ],
+          "rationale": "Definitions, examples, an independent-first procedure, record fields, and preservation rules are explicit. Existing judgments are preserved separately from draft labels and future adjudications, while genuinely independent or adjudicated outcomes remain pending rather than fabricated."
+        }
+      ],
+      "issues": [],
+      "calculation_check": "No calculation errors identified. One discordant label pair has a nominal string-match rate of 0/1 = 0%, explicitly disclaimed as established reliability. The five draft criterion judgments are correctly counted as two PASS, one FAIL, and two UNRESOLVED across three cases. No readiness or human sign-off claim is made."
+    }
+  ]
+}

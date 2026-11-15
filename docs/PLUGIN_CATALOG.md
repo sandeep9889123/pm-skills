@@ -282,9 +282,9 @@ Use pm-business-case to evaluate this initiative. Build the evidence ledger befo
 
 ## 13. pm-prototype-os
 
-**Use for:** gated product idea → credible prototype workflow, AI architecture, UX quality, engineering reviews, technical learning and evidence-based evolution.
+**Use for:** approved AI product and prototype work, architecture, UX research, application evals, labeling, trace discovery, judge calibration, costs and operational learning.
 
-**Skills (6):**
+**Skills (9):**
 
 - `ai-product-prototype-os`
 - `prototype-ai-architecture`
@@ -292,11 +292,10 @@ Use pm-business-case to evaluate this initiative. Build the evidence ledger befo
 - `prototype-ux-quality`
 - `prototype-evaluation`
 - `prototype-technical-mentor`
+- `eval-annotation-guidance`
+- `eval-error-discovery`
+- `llm-judge-calibration`
 
 **Workflows (5):** `/start-prototype`, `/review-phase`, `/build-prototype`, `/evaluate-prototype`, `/handoff-prototype`
 
-**Starter prompt:**
-
-```text
-Use ai-product-prototype-os to scope an enterprise RAG copilot. Ask 5–10 relevant questions, challenge assumptions, and stop for discovery approval. No installs, paid services or implementation yet.
-```
+For application quality, request prototype-evaluation. For human labels, trace failures or automated judges, request the matching specialized skill. All nine remain portable Markdown; optional repository calculators require only Python's standard library. See [AI PM workflow guide](AI_PM_WORKFLOWS.md) and [updates](UPDATING.md).
